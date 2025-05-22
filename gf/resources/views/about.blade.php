@@ -21,9 +21,9 @@
 
         <!-- Page Heading with Parallax Effect -->
         <div class="parallax-header max-w-4xl mx-auto px-4 text-center mb-16">
-            <h2 class="text-4xl sm:text-6xl font-extrabold text-white mb-4 transform transition duration-1000">About God's
+            <h2 class="text-4xl sm:text-6xl font-extrabold text-black mb-4 transform transition duration-1000">About God's
                 Family Choir</h2>
-            <p class="text-xl text-emerald-100 font-light tracking-wider">Rooted in worship, united in harmony.</p>
+            <p class="text-xl text-emerald-500 font-light tracking-wider">Rooted in worship, united in harmony.</p>
             <div class="mt-8">
                 <button
                     class="play-history-audio bg-white text-emerald-800 px-6 py-3 rounded-full font-medium hover:bg-emerald-100 transition flex items-center mx-auto gap-2">

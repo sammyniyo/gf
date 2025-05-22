@@ -11,7 +11,7 @@
             <nav class="hidden md:flex items-center space-x-1">
                 <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
                 <x-nav-link href="/about" :active="request()->is('about*')">About</x-nav-link>
-                <x-nav-link href="/music" :active="request()->is('music*')">Our Music</x-nav-link>
+                <x-nav-link href="/story" :active="request()->is('story*')">Music Behind</x-nav-link>
                 <x-nav-link href="/events" :active="request()->is('events*')">Events</x-nav-link>
                 <x-nav-link href="/devotions" :active="request()->is('devotions*')">Devotions</x-nav-link>
                 <x-nav-link href="/contact" :active="request()->is('contact*')">Contact</x-nav-link>
@@ -72,7 +72,7 @@
                 class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-emerald-700 transition">Home</a>
             <a href="/about"
                 class="block px-3 py-2 rounded-md text-base font-medium bg-emerald-700 text-white">About</a>
-            <a href="/music"
+            <a href="/story"
                 class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-emerald-700 transition">Our
                 Music</a>
             <a href="/events"

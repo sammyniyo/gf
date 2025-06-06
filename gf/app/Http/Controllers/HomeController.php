@@ -18,6 +18,14 @@ class HomeController extends Controller
     {
         return view('story');
     }
+    public function privacy()
+    {
+        return view('privacy');
+    }
+    public function showMemberForm()
+    {
+        return view('member-registration');
+    }
     public function contact()
     {
         return view('contact');

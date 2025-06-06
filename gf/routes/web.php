@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ChoirRegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +22,13 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/privacy', function () {
+    return view('privacy');
+})->name('privacy');
+
+Route::get('/member-registration', [HomeController::class, 'showMemberForm'])->name('member-registration');
+Route::post('/choir-register', [ChoirRegistrationController::class, 'store'])->name('choir.register');
 
 Route::get('/about', function () {
     return view('about');

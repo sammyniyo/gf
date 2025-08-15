@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Song extends Model
 {
-    use HasFactory;
+    public function writers()
+{
+    return $this->belongsToMany(Member::class, 'song_writer')
+               ->withPivot('contribution');
+}
 }

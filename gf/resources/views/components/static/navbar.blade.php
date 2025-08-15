@@ -11,7 +11,7 @@
             <nav class="hidden md:flex items-center space-x-1">
                 <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
                 <x-nav-link href="/about" :active="request()->is('about*')">About</x-nav-link>
-                <x-nav-link href="/story" :active="request()->is('story*')">Music Behind</x-nav-link>
+                <x-nav-link href="/story" :active="request()->is('story*')">Behind</x-nav-link>
                 <x-nav-link href="/events" :active="request()->is('events*')">Events</x-nav-link>
                 <x-nav-link href="/devotions" :active="request()->is('devotions*')">Devotions</x-nav-link>
                 <x-nav-link href="/contact" :active="request()->is('contact*')">Contact</x-nav-link>

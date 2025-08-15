@@ -7,5 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
 {
-    use HasFactory;
+    public function writtenSongs()
+{
+    return $this->belongsToMany(Song::class, 'song_writer')
+               ->withPivot('contribution');
+}
+
+public function attendedEvents()
+{
+    return $this->belongsToMany(Event::class, 'event_attendee')
+               ->withPivot('status');
+}
 }

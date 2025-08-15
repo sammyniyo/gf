@@ -29,7 +29,7 @@
                     </svg>
                     Members
                 </a>
-                <a href="/join"
+                <a href="/member-registration"
                     class="px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-lime-500 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:from-emerald-600 hover:to-lime-600 flex items-center">
                     Join Us
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20"
@@ -87,7 +87,7 @@
                 class="block w-full px-4 py-2 text-center rounded-md text-white bg-emerald-600 hover:bg-emerald-500 transition mb-2">
                 Member Login
             </a>
-            <a href="/join"
+            <a href="/members-registation"
                 class="block w-full px-4 py-2 text-center rounded-md text-white bg-gradient-to-r from-emerald-500 to-lime-500 hover:from-emerald-600 hover:to-lime-600 transition">
                 Join Our Choir
             </a>

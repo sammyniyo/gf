@@ -159,18 +159,10 @@
         .animate-fade-in {
             animation: fadeIn 1.5s ease-out;
         }
-
-        .music-note {
-            position: absolute;
-            font-size: 24px;
-            color: rgba(16, 185, 129, 0.6);
-            animation: floatNote 5s linear infinite;
-            pointer-events: none;
-        }
     </style>
 
     <script>
-        // Music Notes Animation
+        // Music Notes Animation (reduced frequency)
         const canvas = document.getElementById('musicNotesCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -178,74 +170,45 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
-
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
         const notes = [];
-        const noteSymbols = ['♪', '♫', '♩', '♬'];
+        const noteSymbols = ['♪', '♫'];
 
         function createNote() {
-            const note = {
-                x: Math.random() * canvas.width,
-                y: canvas.height,
-                speed: 1 + Math.random() * 3,
-                symbol: noteSymbols[Math.floor(Math.random() * noteSymbols.length)],
-                size: 20 + Math.random() * 20,
-                rotation: 0,
-            };
-            notes.push(note);
+            if (notes.length < 10) {
+                const note = {
+                    x: Math.random() * canvas.width,
+                    y: canvas.height,
+                    speed: 1 + Math.random() * 2,
+                    symbol: noteSymbols[Math.floor(Math.random() * noteSymbols.length)],
+                    size: 20 + Math.random() * 15,
+                    rotation: 0,
+                };
+                notes.push(note);
+            }
         }
 
         function animateNotes() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             notes.forEach((note, index) => {
                 note.y -= note.speed;
-                note.rotation += 0.05;
+                note.rotation += 0.02;
                 ctx.save();
                 ctx.translate(note.x, note.y);
                 ctx.rotate(note.rotation);
                 ctx.font = `${note.size}px Arial`;
-                ctx.fillStyle = 'rgba(16, 185, 129, 0.6)';
+                ctx.fillStyle = 'rgba(16, 185, 129, 0.5)';
                 ctx.fillText(note.symbol, 0, 0);
                 ctx.restore();
-
-                if (note.y < -50) {
-                    notes.splice(index, 1);
-                }
+                if (note.y < -50) notes.splice(index, 1);
             });
-
-            if (Math.random() < 0.1) {
-                createNote();
-            }
-
+            if (Math.random() < 0.05) createNote();
             requestAnimationFrame(animateNotes);
         }
 
         animateNotes();
-
-        // Form Interactivity
-        const form = document.getElementById('contactForm');
-        const inputs = form.querySelectorAll('input, textarea, select');
-
-        inputs.forEach(input => {
-            input.addEventListener('focus', () => {
-                input.parentElement.classList.add('animate-pulse');
-            });
-            input.addEventListener('blur', () => {
-                input.parentElement.classList.remove('animate-pulse');
-            });
-        });
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const button = form.querySelector('button[type="submit"]');
-            button.classList.add('animate-spin');
-            setTimeout(() => {
-                button.classList.remove('animate-spin');
-                form.submit();
-            }, 1000);
-        });
     </script>
     <x-static.footer />
 @endsection

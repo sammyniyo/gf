@@ -7,15 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
 {
-    public function writtenSongs()
-{
-    return $this->belongsToMany(Song::class, 'song_writer')
-               ->withPivot('contribution');
-}
+protected $fillable = [
+    'names',
+    'email',
+    'phone',
+    'physical_address',
+    'job_title',
+    'work_place',
+    'church',
+    'talent',
+    'hobbies',
+    'status',
+    'gf_join_date',
+    'voice',
+    'roles',
+    'birthday',
+    'photo',
+    'message',
+];
 
-public function attendedEvents()
-{
-    return $this->belongsToMany(Event::class, 'event_attendee')
-               ->withPivot('status');
-}
 }

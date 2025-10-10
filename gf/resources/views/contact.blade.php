@@ -1,214 +1,240 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="relative bg-white py-20 overflow-hidden">
-        <!-- Background Glow -->
-        <div class="absolute -right-32 -top-32 w-64 h-64 rounded-full bg-lime-400 opacity-20 blur-3xl"></div>
-        <div class="absolute -left-32 -bottom-32 w-64 h-64 rounded-full bg-emerald-500 opacity-20 blur-3xl"></div>
+<!-- Hero Section -->
+<section class="relative min-h-[50vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-emerald-950 via-emerald-900 to-black">
+    <!-- Animated Background -->
+    <div class="absolute inset-0">
+        <img src="{{ asset('images/gf-2.jpg') }}" alt="Contact Us" class="w-full h-full object-cover opacity-15" />
+        <div class="absolute inset-0 bg-gradient-to-b from-emerald-950/90 to-emerald-900/95"></div>
+    </div>
 
-        <!-- Music Notes Canvas -->
-        <canvas id="musicNotesCanvas" class="absolute inset-0 pointer-events-none"></canvas>
+    <!-- Mesh Gradient -->
+    <div class="absolute inset-0 opacity-20">
+        <div class="absolute top-20 left-20 w-96 h-96 bg-amber-500 rounded-full blur-3xl animate-blob"></div>
+        <div class="absolute bottom-20 right-20 w-96 h-96 bg-emerald-500 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
+    </div>
 
-        <!-- Main Content -->
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl sm:text-6xl font-bold text-emerald-900 mb-6 animate-fade-in">
-                    Get In <span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-lime-500">Touch</span>
-                </h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
-                    Reach out to us for any questions, collaborations, or spiritual support. We’d love to hear from you!
-                </p>
-                <div
-                    class="inline-flex items-center bg-emerald-100 px-6 py-3 rounded-full border border-emerald-200 animate-pulse">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-500 mr-2" viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    <span class="text-emerald-700 font-medium">We respond within 24 hours</span>
+    <!-- Content -->
+    <div class="relative z-10 max-w-4xl mx-auto px-6 py-16 text-center">
+        <div class="inline-block mb-6 animate-fade-in-up">
+            <span class="px-4 py-2 bg-amber-500/20 backdrop-blur-xl border border-amber-400/30 rounded-full text-amber-300 text-sm font-semibold">
+                GET IN TOUCH
+            </span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-black text-white mb-6 leading-tight animate-fade-in-up animation-delay-200">
+            We'd Love to <span class="bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">Hear From You</span>
+        </h1>
+        <p class="text-xl text-emerald-100 max-w-2xl mx-auto leading-relaxed animate-fade-in-up animation-delay-400">
+            Whether you have a question, feedback, or want to book us for an event, reach out and let's connect
+        </p>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-2 gap-12">
+
+            <!-- Contact Information -->
+            <div class="space-y-8">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                        Let's Start a <span class="text-emerald-600">Conversation</span>
+                    </h2>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        We're here to answer your questions, discuss collaboration opportunities, or simply chat about our ministry. Reach out through any of these channels.
+                    </p>
+                </div>
+
+                <!-- Contact Cards -->
+                <div class="space-y-4">
+                    <!-- Email -->
+                    <a href="mailto:asa.godsfamilychoir2017@gmail.com" class="group block p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-emerald-300">
+                        <div class="flex items-start gap-4">
+                            <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-gray-900 mb-1">Email Us</h3>
+                                <p class="text-emerald-600 font-medium">asa.godsfamilychoir2017@gmail.com</p>
+                                <p class="text-sm text-gray-500 mt-1">We respond within 24 hours</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Phone -->
+                    <a href="tel:+250783871782" class="group block p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-amber-300">
+                        <div class="flex items-start gap-4">
+                            <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-gray-900 mb-1">Call Us</h3>
+                                <p class="text-amber-600 font-medium">+250 783 871 782</p>
+                                <p class="text-sm text-gray-500 mt-1">Mon-Sat, 9AM-6PM</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Location -->
+                    <div class="group block p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-300">
+                        <div class="flex items-start gap-4">
+                            <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-gray-900 mb-1">Visit Us</h3>
+                                <p class="text-blue-600 font-medium">ASA UR Nyarugenge SDA</p>
+                                <p class="text-sm text-gray-500 mt-1">Kigali, Rwanda</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Follow Our Journey</h3>
+                    <div class="flex gap-3">
+                        @foreach([
+                            ['name' => 'Facebook', 'icon' => 'FB.png', 'color' => 'from-blue-600 to-blue-700'],
+                            ['name' => 'Instagram', 'icon' => 'instagram.png', 'color' => 'from-pink-600 to-purple-600'],
+                            ['name' => 'YouTube', 'icon' => 'youtube_BIG.png', 'color' => 'from-red-600 to-red-700'],
+                            ['name' => 'Spotify', 'icon' => 'SPOT_BIG.png', 'color' => 'from-green-600 to-green-700'],
+                            ['name' => 'TikTok', 'icon' => 'tiktok_BIG.png', 'color' => 'from-gray-800 to-gray-900'],
+                        ] as $social)
+                            <a href="#" class="group w-12 h-12 bg-gradient-to-br {{ $social['color'] }} rounded-xl flex items-center justify-center hover:scale-110 transition-transform shadow-lg">
+                                <img src="{{ asset('images/' . $social['icon']) }}" alt="{{ $social['name'] }}" class="w-6 h-6 opacity-90 group-hover:opacity-100" />
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Quick Response Badge -->
+                <div class="inline-flex items-center gap-3 px-6 py-3 bg-emerald-50 rounded-xl border border-emerald-200">
+                    <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <span class="text-emerald-800 font-semibold">⚡ We respond within 24 hours</span>
                 </div>
             </div>
 
-            <!-- Interactive Form Section -->
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-white shadow-2xl rounded-3xl overflow-hidden border border-gray-200">
+            <!-- Contact Form -->
+            <div>
+                <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
                     <!-- Form Header -->
-                    <div class="bg-gradient-to-r from-emerald-500 to-lime-500 p-6">
-                        <h3 class="text-2xl font-bold text-white flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3 animate-pulse" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    <div class="bg-gradient-to-r from-emerald-600 to-emerald-700 p-8">
+                        <h3 class="text-2xl font-bold text-white flex items-center gap-3">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
                             </svg>
-                            Send a Message
+                            Send us a Message
                         </h3>
+                        <p class="text-emerald-100 mt-2">Fill out the form and we'll get back to you soon</p>
                     </div>
 
                     <!-- Form Body -->
-                    <form method="POST" action="{{ route('contact.submit') }}" class="p-6 md:p-8 grid gap-6"
-                        id="contactForm">
+                    <form method="POST" action="{{ route('contact.submit') }}" class="p-8 space-y-6">
                         @csrf
 
                         <div class="relative">
                             <input type="text" name="name" required
-                                class="peer w-full border border-gray-300 rounded-lg px-4 pt-6 pb-2 text-gray-800 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all duration-300 focus:scale-[1.01]"
-                                placeholder="Your Name">
-                            <label
-                                class="absolute left-4 top-2 text-sm text-emerald-600 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 transition-all">Your
-                                Name</label>
+                                class="peer w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all outline-none"
+                                placeholder=" ">
+                            <label class="absolute left-4 -top-3 bg-white px-2 text-sm font-semibold text-emerald-600">
+                                Your Name <span class="text-red-500">*</span>
+                            </label>
                         </div>
 
                         <div class="relative">
                             <input type="email" name="email" required
-                                class="peer w-full border border-gray-300 rounded-lg px-4 pt-6 pb-2 text-gray-800 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all duration-300 focus:scale-[1.01]"
-                                placeholder="Your Email">
-                            <label
-                                class="absolute left-4 top-2 text-sm text-emerald-600 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 transition-all">Your
-                                Email</label>
+                                class="peer w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all outline-none"
+                                placeholder=" ">
+                            <label class="absolute left-4 -top-3 bg-white px-2 text-sm font-semibold text-emerald-600">
+                                Email Address <span class="text-red-500">*</span>
+                            </label>
                         </div>
 
                         <div class="relative">
                             <select name="subject" required
-                                class="peer w-full border border-gray-300 rounded-lg px-4 pt-6 pb-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all duration-300 focus:scale-[1.01]">
-                                <option value="" disabled selected hidden>Choose a subject</option>
+                                class="peer w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all outline-none">
+                                <option value="">Choose a subject</option>
                                 <option value="General Inquiry">General Inquiry</option>
                                 <option value="Prayer Request">Prayer Request</option>
-                                <option value="Booking">Booking/Invitation</option>
+                                <option value="Booking">Event Booking / Invitation</option>
+                                <option value="Join Choir">Joining the Choir</option>
+                                <option value="Partnership">Partnership Opportunity</option>
                                 <option value="Feedback">Feedback</option>
                             </select>
-                            <label class="absolute left-4 top-2 text-sm text-emerald-600 transition-all">Subject</label>
+                            <label class="absolute left-4 -top-3 bg-white px-2 text-sm font-semibold text-emerald-600">
+                                Subject <span class="text-red-500">*</span>
+                            </label>
                         </div>
 
                         <div class="relative">
-                            <textarea name="message" rows="5" required
-                                class="peer w-full border border-gray-300 rounded-lg px-4 pt-6 pb-2 text-gray-800 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all duration-300 focus:scale-[1.01]"
-                                placeholder="Your Message"></textarea>
-                            <label
-                                class="absolute left-4 top-2 text-sm text-emerald-600 peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 transition-all">Your
-                                Message</label>
+                            <textarea name="message" rows="6" required
+                                class="peer w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all outline-none resize-none"
+                                placeholder=" "></textarea>
+                            <label class="absolute left-4 -top-3 bg-white px-2 text-sm font-semibold text-emerald-600">
+                                Your Message <span class="text-red-500">*</span>
+                            </label>
                         </div>
 
-                        <!-- Submit Button -->
-                        <div>
-                            <button type="submit"
-                                class="w-full bg-gradient-to-r from-emerald-500 to-lime-500 hover:from-emerald-600 hover:to-lime-600 text-white font-bold py-4 px-6 rounded-lg shadow-lg transition-all duration-300 flex items-center justify-center transform hover:scale-105">
-                                <span>Send Message</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 animate-bounce-x" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                </svg>
-                            </button>
-                        </div>
+                        <button type="submit"
+                            class="w-full py-4 px-6 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold rounded-xl hover:shadow-xl hover:shadow-emerald-500/50 transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
+                            <span>Send Message</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                        </button>
                     </form>
                 </div>
             </div>
+        </div>
 
-            <!-- Scripture Footer -->
-            <div class="text-center mt-20">
-                <blockquote class="text-xl italic text-emerald-800 animate-fade-in">“Let your speech always be gracious,
-                    seasoned with salt...”</blockquote>
-                <p class="text-emerald-600 font-medium mt-2">— Colossians 4:6</p>
+        <!-- Scripture Quote -->
+        <div class="mt-20 text-center">
+            <div class="inline-block bg-gradient-to-r from-emerald-50 to-amber-50 rounded-2xl p-8 max-w-3xl border border-emerald-200">
+                <svg class="w-10 h-10 text-emerald-600/50 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6.5 10c-.223 0-.437.034-.65.065.069-.232.14-.468.254-.68.114-.308.292-.575.469-.844.148-.291.409-.488.601-.737.201-.242.475-.403.692-.604.213-.21.492-.315.714-.463.232-.133.434-.28.65-.35.208-.086.39-.16.539-.222.302-.125.474-.197.474-.197L9.758 4.03c0 0-.218.052-.597.144C8.97 4.222 8.737 4.278 8.472 4.345c-.271.05-.56.187-.882.312C7.272 4.799 6.904 4.895 6.562 5.123c-.344.218-.741.4-1.091.692C5.132 6.116 4.723 6.377 4.421 6.76c-.33.358-.656.734-.909 1.162C3.219 8.33 3.02 8.778 2.81 9.221c-.19.443-.343.896-.468 1.336-.237.882-.343 1.72-.384 2.437-.034.718-.014 1.315.028 1.747.015.204.043.402.063.539.017.109.025.168.025.168l.026-.006C2.535 17.474 4.338 19 6.5 19c2.485 0 4.5-2.015 4.5-4.5S8.985 10 6.5 10zM17.5 10c-.223 0-.437.034-.65.065.069-.232.14-.468.254-.68.114-.308.292-.575.469-.844.148-.291.409-.488.601-.737.201-.242.475-.403.692-.604.213-.21.492-.315.714-.463.232-.133.434-.28.65-.35.208-.086.39-.16.539-.222.302-.125.474-.197.474-.197L20.758 4.03c0 0-.218.052-.597.144-.191.048-.424.104-.689.171-.271.05-.56.187-.882.312-.317.143-.686.238-1.028.467-.344.218-.741.4-1.091.692-.339.301-.748.562-1.05.944-.33.358-.656.734-.909 1.162C14.219 8.33 14.02 8.778 13.81 9.221c-.19.443-.343.896-.468 1.336-.237.882-.343 1.72-.384 2.437-.034.718-.014 1.315.028 1.747.015.204.043.402.063.539.017.109.025.168.025.168l.026-.006C13.535 17.474 15.338 19 17.5 19c2.485 0 4.5-2.015 4.5-4.5S19.985 10 17.5 10z"/>
+                </svg>
+                <blockquote class="text-2xl text-gray-700 font-light italic leading-relaxed mb-4">
+                    Let your speech always be gracious, seasoned with salt, so that you may know how you ought to answer each person
+                </blockquote>
+                <p class="text-emerald-600 font-semibold text-lg">— Colossians 4:6</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <style>
-        @keyframes bounce-x {
+<x-static.footer />
 
-            0%,
-            100% {
-                transform: translateX(0);
-            }
+<style>
+    @keyframes blob {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        25% { transform: translate(20px, -50px) scale(1.1); }
+        50% { transform: translate(-20px, 20px) scale(0.9); }
+        75% { transform: translate(50px, 50px) scale(1.05); }
+    }
+    .animate-blob {
+        animation: blob 10s ease-in-out infinite;
+    }
+    .animation-delay-2000 { animation-delay: 2s; }
 
-            50% {
-                transform: translateX(5px);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes floatNote {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0.8;
-            }
-
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        .animate-bounce-x {
-            animation: bounce-x 1s ease-in-out infinite;
-        }
-
-        .animate-fade-in {
-            animation: fadeIn 1.5s ease-out;
-        }
-    </style>
-
-    <script>
-        // Music Notes Animation (reduced frequency)
-        const canvas = document.getElementById('musicNotesCanvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        const notes = [];
-        const noteSymbols = ['♪', '♫'];
-
-        function createNote() {
-            if (notes.length < 10) {
-                const note = {
-                    x: Math.random() * canvas.width,
-                    y: canvas.height,
-                    speed: 1 + Math.random() * 2,
-                    symbol: noteSymbols[Math.floor(Math.random() * noteSymbols.length)],
-                    size: 20 + Math.random() * 15,
-                    rotation: 0,
-                };
-                notes.push(note);
-            }
-        }
-
-        function animateNotes() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            notes.forEach((note, index) => {
-                note.y -= note.speed;
-                note.rotation += 0.02;
-                ctx.save();
-                ctx.translate(note.x, note.y);
-                ctx.rotate(note.rotation);
-                ctx.font = `${note.size}px Arial`;
-                ctx.fillStyle = 'rgba(16, 185, 129, 0.5)';
-                ctx.fillText(note.symbol, 0, 0);
-                ctx.restore();
-                if (note.y < -50) notes.splice(index, 1);
-            });
-            if (Math.random() < 0.05) createNote();
-            requestAnimationFrame(animateNotes);
-        }
-
-        animateNotes();
-    </script>
-    <x-static.footer />
+    @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-up {
+        animation: fade-in-up 0.8s ease-out forwards;
+        opacity: 0;
+    }
+    .animation-delay-200 { animation-delay: 0.2s; }
+    .animation-delay-400 { animation-delay: 0.4s; }
+</style>
 @endsection

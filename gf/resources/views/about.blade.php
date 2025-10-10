@@ -1,525 +1,469 @@
 @extends('layouts.app')
+
 @section('content')
-    <section class="bg-white text-emerald-950 pt-20 pb-28 relative overflow-hidden">
-        <!-- Animated Background Waves -->
-        <div class="absolute top-0 left-0 w-full h-96 bg-emerald-950 -z-10 overflow-hidden">
-            <div class="absolute bottom-0 w-full h-20 bg-gradient-to-t from-emerald-900 to-transparent"></div>
-            <div class="music-waves absolute bottom-0 w-full h-12 opacity-30">
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-            </div>
+<!-- Cinematic Hero Section -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-emerald-950 via-emerald-900 to-black">
+    <!-- Dynamic Background -->
+    <div class="absolute inset-0">
+        <img src="{{ asset('images/gf-2.jpg') }}" alt="About Us" class="w-full h-full object-cover opacity-15" />
+        <div class="absolute inset-0 bg-gradient-to-b from-emerald-950/95 via-emerald-900/90 to-black/95"></div>
         </div>
 
-        <!-- Floating Musical Notes -->
-        <div class="musical-notes absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
-            <div class="note">♪</div>
-            <div class="note">♫</div>
-            <div class="note">♬</div>
-            <div class="note">♩</div>
+    <!-- Animated Mesh Gradient -->
+    <div class="absolute inset-0 opacity-30">
+        <div class="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-amber-500/20 to-emerald-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 rounded-full blur-3xl animate-pulse animation-delay-1000"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-purple-500/20 to-amber-500/20 rounded-full blur-3xl animate-pulse animation-delay-2000"></div>
         </div>
 
-        <!-- Page Heading with Parallax Effect -->
-        <div class="parallax-header max-w-4xl mx-auto px-4 text-center mb-16">
-            <h2 class="text-4xl sm:text-6xl font-extrabold text-black mb-4 transform transition duration-1000">About God's
-                Family Choir</h2>
-            <p class="text-xl text-emerald-500 font-light tracking-wider">Rooted in worship, united in harmony.</p>
-            <div class="mt-8">
-                <button
-                    class="play-history-audio bg-white text-emerald-800 px-6 py-3 rounded-full font-medium hover:bg-emerald-100 transition flex items-center mx-auto gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    Hear Our Story
-                </button>
-            </div>
+    <!-- Floating Musical Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        @for($i = 1; $i <= 12; $i++)
+            <div class="absolute musical-note-float" style="
+                top: {{ rand(10, 80) }}%;
+                left: {{ rand(5, 90) }}%;
+                animation-delay: {{ $i * 0.4 }}s;
+                font-size: {{ rand(25, 50) }}px;
+                opacity: {{ rand(8, 18) / 100 }};
+            ">{{ ['♪', '♫', '♬', '♩', '🎵', '🎶'][rand(0, 5)] }}</div>
+        @endfor
         </div>
 
-        <!-- Interactive Timeline -->
-        <div class="max-w-6xl mx-auto px-4 mb-28">
-            <h3 class="text-3xl font-bold text-emerald-800 mb-12 text-center">Our Sacred Timeline</h3>
+    <!-- Content -->
+    <div class="relative z-10 max-w-7xl mx-auto px-6 py-24 text-center">
+        <div class="inline-block mb-8 animate-fade-in-up">
+            <span class="px-8 py-4 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 backdrop-blur-xl border border-amber-400/30 rounded-full text-amber-300 text-sm font-bold tracking-wider">
+                ✨ OUR STORY ✨
+            </span>
+        </div>
+        <h1 class="text-6xl md:text-8xl font-black text-white mb-10 leading-tight animate-fade-in-up animation-delay-200">
+            About <span class="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-200 bg-clip-text text-transparent animate-gradient-x">God's Family</span>
+        </h1>
+        <p class="text-2xl md:text-3xl text-emerald-100 max-w-5xl mx-auto leading-relaxed animate-fade-in-up animation-delay-400 font-light">
+            We are a community of believers united in worship, creating <span class="text-amber-300 font-semibold">breathtaking music</span> that glorifies God and touches hearts around the world.
+        </p>
 
-            <div class="timeline relative">
-                <!-- Timeline Line -->
-                <div class="timeline-line absolute left-1/2 h-full w-1 bg-emerald-200 transform -translate-x-1/2"></div>
-
-                <!-- Timeline Items -->
-                <div class="timeline-container space-y-16">
-                    <!-- 1998 - Founding -->
-                    <div class="timeline-item group">
-                        <div class="timeline-content transform transition-all duration-500">
-                            <div
-                                class="timeline-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-emerald-500 hover:shadow-xl transition">
-                                <div class="timeline-year text-emerald-600 font-bold text-lg mb-2">1998</div>
-                                <h4 class="text-xl font-bold text-gray-800 mb-3">The Birth of Harmony</h4>
-                                <p class="text-gray-700">A small group of students at ASA UR Nyarugenge SDA church united by
-                                    their love for sacred music. With just 12 voices, they held their first rehearsal in a
-                                    modest classroom.</p>
-                                <div class="mt-4">
-                                    <img src="{{ asset('images/founding-members.jpg') }}" alt="Original members"
-                                        class="rounded-lg w-full h-48 object-cover opacity-90 hover:opacity-100 transition">
+        <!-- Live Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 animate-fade-in-up animation-delay-600">
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-amber-400 mb-2 counter" data-target="60">0</div>
+                <div class="text-emerald-200 font-semibold">Active Members</div>
+                                </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-amber-400 mb-2 counter" data-target="25">0</div>
+                <div class="text-emerald-200 font-semibold">Years of Worship</div>
+                            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-amber-400 mb-2 counter" data-target="500">0</div>
+                <div class="text-emerald-200 font-semibold">Performances</div>
+                        </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-black text-amber-400 mb-2 counter" data-target="10">0</div>
+                <div class="text-emerald-200 font-semibold">Million+ Listeners</div>
                                 </div>
                             </div>
                         </div>
-                        <div
-                            class="timeline-dot absolute left-1/2 transform -translate-x-1/2 bg-emerald-500 rounded-full w-5 h-5 border-4 border-white shadow-lg group-hover:scale-125 transition">
-                        </div>
+</section>
+
+<!-- Interactive Timeline with Parallax -->
+<section class="py-32 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-5">
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25% 25%, #10b981 2px, transparent 0), radial-gradient(circle at 75% 75%, #f59e0b 2px, transparent 0); background-size: 60px 60px;"></div>
                     </div>
 
-                    <!-- 2003 - First Major Concert -->
-                    <div class="timeline-item group">
-                        <div class="timeline-content transform transition-all duration-500">
-                            <div
-                                class="timeline-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-emerald-500 hover:shadow-xl transition">
-                                <div class="timeline-year text-emerald-600 font-bold text-lg mb-2">2003</div>
-                                <h4 class="text-xl font-bold text-gray-800 mb-3">Breaking New Ground</h4>
-                                <p>Our first major concert at Kigali Conference Center marked our transition from church
-                                    choir to community worship leaders. The event was completely sold out with over 500
-                                    attendees.</p>
-                                <div class="mt-4 grid grid-cols-2 gap-2">
-                                    <img src="{{ asset('images/concert-2003-1.jpg') }}" alt="2003 Concert"
-                                        class="rounded-lg h-32 object-cover">
-                                    <img src="{{ asset('images/concert-2003-2.jpg') }}" alt="2003 Concert"
-                                        class="rounded-lg h-32 object-cover">
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="timeline-dot absolute left-1/2 transform -translate-x-1/2 bg-emerald-500 rounded-full w-5 h-5 border-4 border-white shadow-lg group-hover:scale-125 transition">
-                        </div>
-                    </div>
-
-                    <!-- 2010 - International Recognition -->
-                    <div class="timeline-item group">
-                        <div class="timeline-content transform transition-all duration-500">
-                            <div
-                                class="timeline-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-emerald-500 hover:shadow-xl transition">
-                                <div class="timeline-year text-emerald-600 font-bold text-lg mb-2">2010</div>
-                                <h4 class="text-xl font-bold text-gray-800 mb-3">Crossing Borders</h4>
-                                <p>Our first international tour took us to 5 countries across East Africa. We were honored
-                                    to perform at the All Africa Music Festival, sharing our unique blend of traditional
-                                    Rwandan melodies with sacred harmonies.</p>
-                                <div class="mt-4">
-                                    <div class="relative h-48 rounded-lg overflow-hidden">
-                                        <img src="{{ asset('images/africa-tour.jpg') }}" alt="Africa Tour"
-                                            class="w-full h-full object-cover">
-                                        <div
-                                            class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
-                                            <span class="text-white font-medium">Performing in Nairobi, Kenya</span>
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+        <div class="text-center mb-24">
+            <div class="inline-block mb-6">
+                <span class="px-6 py-3 bg-gradient-to-r from-emerald-500/10 to-amber-500/10 backdrop-blur-xl border border-emerald-400/20 rounded-full text-emerald-600 text-sm font-bold">
+                    🎯 OUR JOURNEY
+                </span>
                                         </div>
+            <h2 class="text-5xl md:text-6xl font-black text-gray-900 mb-8 bg-gradient-to-r from-gray-900 via-emerald-800 to-gray-900 bg-clip-text text-transparent">Our Journey</h2>
+            <p class="text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">From humble beginnings to <span class="text-emerald-600 font-semibold">international recognition</span></p>
                                     </div>
+
+        <div class="relative">
+            <!-- Animated Timeline Line -->
+            <div class="absolute left-1/2 transform -translate-x-1/2 w-2 h-full bg-gradient-to-b from-emerald-500 via-amber-500 to-emerald-600 rounded-full shadow-lg">
+                <div class="absolute inset-0 bg-gradient-to-b from-emerald-400 via-amber-400 to-emerald-500 rounded-full animate-pulse"></div>
                                 </div>
+
+            @foreach([
+                ['year' => '1998', 'title' => 'The Genesis', 'description' => 'Started with just 12 passionate members in a small church basement, united by faith and love for music', 'image' => '1.jpg', 'icon' => '🌟'],
+                ['year' => '2005', 'title' => 'First Album', 'description' => 'Released our debut worship album "Songs of Faith" - a milestone that changed everything', 'image' => '2.jpg', 'icon' => '🎵'],
+                ['year' => '2010', 'title' => 'Global Reach', 'description' => 'Began international tours, sharing our music and message across continents', 'image' => '3.jpg', 'icon' => '🌍'],
+                ['year' => '2015', 'title' => 'Digital Revolution', 'description' => 'Launched our online presence, reaching millions through streaming platforms', 'image' => '4.jpg', 'icon' => '💻'],
+                ['year' => '2023', 'title' => 'Present Glory', 'description' => 'Over 60 active members and millions of listeners worldwide, still growing strong', 'image' => '5.jpg', 'icon' => '✨'],
+            ] as $milestone)
+                <div class="relative mb-20 timeline-item group">
+                    <div class="flex items-center {{ $loop->iteration % 2 == 0 ? 'flex-row-reverse' : '' }}">
+                        <!-- Content Card -->
+                        <div class="w-5/12 {{ $loop->iteration % 2 == 0 ? 'text-right' : '' }}">
+                            <div class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl p-10 hover:shadow-3xl transition-all duration-700 transform hover:-translate-y-3 group-hover:scale-105 border border-gray-100/50">
+                                <div class="flex items-center {{ $loop->iteration % 2 == 0 ? 'justify-end' : '' }} mb-4">
+                                    <span class="text-3xl mr-3">{{ $milestone['icon'] }}</span>
+                                    <div class="text-5xl font-black bg-gradient-to-r from-emerald-600 to-amber-600 bg-clip-text text-transparent">{{ $milestone['year'] }}</div>
                             </div>
-                        </div>
-                        <div
-                            class="timeline-dot absolute left-1/2 transform -translate-x-1/2 bg-emerald-500 rounded-full w-5 h-5 border-4 border-white shadow-lg group-hover:scale-125 transition">
+                                <h3 class="text-3xl font-bold text-gray-900 mb-6">{{ $milestone['title'] }}</h3>
+                                <p class="text-gray-600 leading-relaxed text-lg">{{ $milestone['description'] }}</p>
+
+                                <!-- Decorative Element -->
+                                <div class="mt-6 {{ $loop->iteration % 2 == 0 ? 'ml-auto' : 'mr-auto' }} w-20 h-1 bg-gradient-to-r from-emerald-500 to-amber-500 rounded-full"></div>
                         </div>
                     </div>
 
-                    <!-- 2018 - 20th Anniversary -->
-                    <div class="timeline-item group">
-                        <div class="timeline-content transform transition-all duration-500">
-                            <div
-                                class="timeline-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-emerald-500 hover:shadow-xl transition">
-                                <div class="timeline-year text-emerald-600 font-bold text-lg mb-2">2018</div>
-                                <h4 class="text-xl font-bold text-gray-800 mb-3">Two Decades of Divine Harmony</h4>
-                                <p>Our 20th anniversary celebration featured a 100-voice choir performing with a full
-                                    orchestra at the Kigali Convention Center. We released our first live album and
-                                    documentary film chronicling our journey.</p>
-                                <div class="mt-4">
-                                    <button
-                                        class="watch-video flex items-center gap-2 text-emerald-600 hover:text-emerald-800">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                            fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                        Watch Anniversary Highlights
-                                    </button>
+                        <!-- Center Image -->
+                        <div class="w-2/12 flex justify-center">
+                            <div class="relative group">
+                                <div class="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-500 via-amber-500 to-emerald-600 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-all duration-500">
+                                    <div class="w-20 h-20 rounded-full overflow-hidden border-4 border-white">
+                                        <img src="{{ asset('images/' . $milestone['image']) }}" alt="{{ $milestone['title'] }}"
+                                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                 </div>
                             </div>
-                        </div>
-                        <div
-                            class="timeline-dot absolute left-1/2 transform -translate-x-1/2 bg-emerald-500 rounded-full w-5 h-5 border-4 border-white shadow-lg group-hover:scale-125 transition">
+                                <!-- Glow Effect -->
+                                <div class="absolute -inset-4 rounded-full bg-gradient-to-br from-emerald-400/30 to-amber-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"></div>
+                                <!-- Ring Animation -->
+                                <div class="absolute -inset-2 rounded-full border-2 border-emerald-400/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-spin" style="animation-duration: 3s;"></div>
                         </div>
                     </div>
 
-                    <!-- Present Day -->
-                    <div class="timeline-item group">
-                        <div class="timeline-content transform transition-all duration-500">
-                            <div
-                                class="timeline-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-emerald-500 hover:shadow-xl transition">
-                                <div class="timeline-year text-emerald-600 font-bold text-lg mb-2">Present</div>
-                                <h4 class="text-xl font-bold text-gray-800 mb-3">A Living Legacy</h4>
-                                <p>Today, God's Family Choir stands as one of Rwanda's most beloved worship ministries with
-                                    over 60 active members across three generations. Our music school has trained hundreds,
-                                    and our digital ministry reaches millions worldwide.</p>
-                                <div class="mt-4 grid grid-cols-3 gap-2">
-                                    <div class="stat-box bg-emerald-50 p-3 rounded-lg text-center">
-                                        <div class="text-2xl font-bold text-emerald-700">25+</div>
-                                        <div class="text-xs text-gray-600">Years Singing</div>
-                                    </div>
-                                    <div class="stat-box bg-emerald-50 p-3 rounded-lg text-center">
-                                        <div class="text-2xl font-bold text-emerald-700">500+</div>
-                                        <div class="text-xs text-gray-600">Performances</div>
-                                    </div>
-                                    <div class="stat-box bg-emerald-50 p-3 rounded-lg text-center">
-                                        <div class="text-2xl font-bold text-emerald-700">10M+</div>
-                                        <div class="text-xs text-gray-600">Views Online</div>
+                        <!-- Spacer -->
+                        <div class="w-5/12"></div>
                                     </div>
                                 </div>
+            @endforeach
                             </div>
                         </div>
-                        <div
-                            class="timeline-dot absolute left-1/2 transform -translate-x-1/2 bg-emerald-500 rounded-full w-5 h-5 border-4 border-white shadow-lg group-hover:scale-125 transition">
+</section>
+
+<!-- Core Values with 3D Effects -->
+<section class="py-32 bg-gradient-to-br from-emerald-50 via-white to-amber-50 relative overflow-hidden">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-20 left-20 w-64 h-64 bg-emerald-500 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-20 w-64 h-64 bg-amber-500 rounded-full blur-3xl"></div>
                         </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+        <div class="text-center mb-24">
+            <div class="inline-block mb-6">
+                <span class="px-6 py-3 bg-gradient-to-r from-amber-500/10 to-emerald-500/10 backdrop-blur-xl border border-amber-400/20 rounded-full text-amber-600 text-sm font-bold">
+                    💎 OUR VALUES
+                </span>
                     </div>
-                </div>
-            </div>
+            <h2 class="text-5xl md:text-6xl font-black text-gray-900 mb-8 bg-gradient-to-r from-gray-900 via-amber-700 to-gray-900 bg-clip-text text-transparent">Our Core Values</h2>
+            <p class="text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">The <span class="text-amber-600 font-semibold">principles</span> that guide everything we do</p>
         </div>
 
-        <!-- Core Values Carousel -->
-        <div class="max-w-6xl mx-auto px-4 mb-28">
-            <div class="text-center mb-12">
-                <h3 class="text-3xl font-bold text-emerald-800 mb-2">The Heart of Our Harmony</h3>
-                <p class="text-gray-600">What guides our voices and our mission</p>
+        <div class="grid md:grid-cols-3 gap-8">
+            @foreach([
+                ['icon' => '🙏', 'title' => 'Faith', 'description' => 'Our foundation is built on unwavering faith in God and His word, guiding every note we sing', 'color' => 'from-blue-500 to-blue-600', 'bg' => 'from-blue-50 to-blue-100'],
+                ['icon' => '🎵', 'title' => 'Excellence', 'description' => 'We strive for musical excellence in every performance, recording, and moment of worship', 'color' => 'from-emerald-500 to-emerald-600', 'bg' => 'from-emerald-50 to-emerald-100'],
+                ['icon' => '❤️', 'title' => 'Love', 'description' => 'Love for God, each other, and the communities we serve drives our ministry forward', 'color' => 'from-red-500 to-red-600', 'bg' => 'from-red-50 to-red-100'],
+                ['icon' => '🤝', 'title' => 'Unity', 'description' => 'We believe in the power of coming together as one voice, one heart, one family', 'color' => 'from-purple-500 to-purple-600', 'bg' => 'from-purple-50 to-purple-100'],
+                ['icon' => '🌟', 'title' => 'Inspiration', 'description' => 'Our music aims to inspire and uplift hearts everywhere, bringing hope and joy', 'color' => 'from-amber-500 to-amber-600', 'bg' => 'from-amber-50 to-amber-100'],
+                ['icon' => '🌍', 'title' => 'Service', 'description' => 'Serving God and our community through worship, outreach, and compassionate action', 'color' => 'from-teal-500 to-teal-600', 'bg' => 'from-teal-50 to-teal-100'],
+            ] as $value)
+                <div class="group relative">
+                    <div class="bg-white/90 backdrop-blur-xl rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 transform hover:-translate-y-4 group-hover:scale-105 border border-gray-100/50 relative overflow-hidden">
+                        <!-- Background Gradient -->
+                        <div class="absolute inset-0 bg-gradient-to-br {{ $value['bg'] }} opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
+
+                        <div class="relative z-10">
+                            <div class="text-8xl mb-8 group-hover:scale-110 transition-transform duration-500 group-hover:rotate-12">{{ $value['icon'] }}</div>
+                            <h3 class="text-3xl font-bold text-gray-900 mb-6 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:{{ $value['color'] }} group-hover:bg-clip-text transition-all duration-500">{{ $value['title'] }}</h3>
+                            <p class="text-gray-600 leading-relaxed text-lg">{{ $value['description'] }}</p>
+
+                            <!-- Decorative Line -->
+                            <div class="mt-8 w-16 h-1 bg-gradient-to-r {{ $value['color'] }} rounded-full group-hover:w-24 transition-all duration-500"></div>
             </div>
 
-            <div class="values-carousel relative">
-                <div class="carousel-track flex gap-6 overflow-x-auto py-4 px-2 scrollbar-hide">
-                    @foreach ([['title' => 'Sacred Sound', 'desc' => 'We believe music is a divine gift meant to glorify God and uplift souls', 'icon' => '🎵', 'color' => 'bg-emerald-100'], ['title' => 'Generational Bridge', 'desc' => 'Mentoring young talent while honoring our founders\' legacy', 'icon' => '🌉', 'color' => 'bg-amber-100'], ['title' => 'Cultural Heritage', 'desc' => 'Celebrating Rwandan musical traditions in sacred context', 'icon' => '🇷🇼', 'color' => 'bg-blue-100'], ['title' => 'Spiritual Discipline', 'desc' => 'Approaching rehearsals as worship sessions', 'icon' => '🙏', 'color' => 'bg-purple-100'], ['title' => 'Creative Excellence', 'desc' => 'Pursuing musical mastery as an offering to God', 'icon' => '✨', 'color' => 'bg-red-100'], ['title' => 'Kingdom Community', 'desc' => 'A family beyond music, supporting each other in life', 'icon' => '❤️', 'color' => 'bg-pink-100']] as $value)
-                        <div class="carousel-slide flex-shrink-0 w-72">
-                            <div
-                                class="value-card h-full {{ $value['color'] }} p-6 rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-2">
-                                <div class="text-5xl mb-4 text-center">{{ $value['icon'] }}</div>
-                                <h4 class="text-xl font-bold text-gray-900 mb-2 text-center">{{ $value['title'] }}</h4>
-                                <p class="text-gray-700 text-center">{{ $value['desc'] }}</p>
+                        <!-- Floating Elements -->
+                        <div class="absolute top-4 right-4 w-2 h-2 bg-gradient-to-r {{ $value['color'] }} rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-ping"></div>
                             </div>
                         </div>
                     @endforeach
                 </div>
-                <button
-                    class="carousel-prev absolute left-0 top-1/2 -translate-y-1/2 -ml-6 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-                <button
-                    class="carousel-next absolute right-0 top-1/2 -translate-y-1/2 -mr-6 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
+    </div>
+</section>
+
+<!-- Photo Gallery with Masonry Layout -->
+<section class="py-32 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-5">
+        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,<svg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><g fill=\"%23059669\" fill-opacity=\"0.1\"><circle cx=\"30\" cy=\"30\" r=\"2\"/></g></svg>');"></div>
+    </div>
+
+    <div class="relative z-10 max-w-8xl mx-auto px-6">
+        <div class="text-center mb-24">
+            <div class="inline-block mb-6">
+                <span class="px-6 py-3 bg-gradient-to-r from-emerald-500/10 to-amber-500/10 backdrop-blur-xl border border-emerald-400/20 rounded-full text-emerald-600 text-sm font-bold">
+                    📸 MOMENTS OF GLORY
+                </span>
             </div>
+            <h2 class="text-5xl md:text-6xl font-black text-gray-900 mb-8 bg-gradient-to-r from-gray-900 via-emerald-800 to-gray-900 bg-clip-text text-transparent">Moments of Glory</h2>
+            <p class="text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">Capturing our <span class="text-emerald-600 font-semibold">beautiful journey</span> through the years</p>
         </div>
 
-        <!-- Interactive Gallery -->
-        <div class="max-w-6xl mx-auto px-4 mb-20">
-            <div class="text-center mb-12">
-                <h3 class="text-3xl font-bold text-emerald-800 mb-2">Echoes of Praise</h3>
-                <p class="text-gray-600">Explore our journey through the years</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            @foreach(['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '1.jpg', '2.jpg', '3.jpg'] as $index => $image)
+                <div class="group relative overflow-hidden rounded-3xl bg-gray-200 hover:shadow-3xl transition-all duration-700 transform hover:-translate-y-4 {{ $index % 3 === 0 ? 'aspect-square' : 'aspect-[4/5]' }}">
+                    <img src="{{ asset('images/' . $image) }}" alt="Choir Moment"
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+
+                    <!-- Overlay Gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                    <!-- Content -->
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-6 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-semibold bg-emerald-500/20 backdrop-blur-xl px-3 py-1 rounded-full">Performance</span>
+                            <span class="text-xs opacity-75">2023</span>
+                        </div>
+                        <h4 class="text-lg font-bold mb-2">Beautiful Moment</h4>
+                        <p class="text-sm opacity-90">Capturing the spirit of worship</p>
             </div>
 
-            <div class="interactive-gallery grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                @foreach ([['image' => 'gf-1.jpg', 'year' => '2005', 'caption' => 'Easter Celebration at St. Famille'], ['image' => 'gf-2.jpg', 'year' => '2012', 'caption' => 'Recording Our First Album'], ['image' => 'gf-3.jpg', 'year' => '2015', 'caption' => 'Community Outreach in Rubavu'], ['image' => 'gf-4.jpg', 'year' => '2017', 'caption' => 'National Prayer Breakfast'], ['image' => 'gf-5.jpg', 'year' => '2019', 'caption' => 'Youth Choir Workshop'], ['image' => 'gf-6.jpg', 'year' => '2021', 'caption' => 'Virtual Concert During Pandemic'], ['image' => 'gf-7.jpg', 'year' => '2022', 'caption' => '25th Anniversary Gala'], ['image' => 'gf-8.jpg', 'year' => '2023', 'caption' => 'New Members Initiation']] as $photo)
-                    <div
-                        class="gallery-item relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer group">
-                        <img src="{{ asset('images/' . $photo['image']) }}" alt="{{ $photo['caption'] }}"
-                            class="w-full h-64 object-cover transform group-hover:scale-105 transition duration-500">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end p-4">
-                            <div>
-                                <div class="text-sm text-emerald-300 font-medium">{{ $photo['year'] }}</div>
-                                <div class="text-white font-medium">{{ $photo['caption'] }}</div>
+                    <!-- Play Button (for some images) -->
+                    @if($index % 2 === 0)
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            <div class="w-16 h-16 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center">
+                                <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
                             </div>
                         </div>
+                    @endif
                     </div>
                 @endforeach
             </div>
+    </div>
+</section>
 
-            <div class="mt-8 text-center">
-                <button
-                    class="view-more-btn bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-full font-medium transition flex items-center gap-2 mx-auto">
-                    Explore Full Archive
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                            clip-rule="evenodd" />
+<!-- Final CTA with Advanced Effects -->
+<section class="py-32 bg-gradient-to-br from-emerald-900 via-emerald-800 to-black relative overflow-hidden">
+    <!-- Animated Background -->
+    <div class="absolute inset-0">
+        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-emerald-900/50 via-transparent to-amber-900/30"></div>
+        </div>
+
+    <!-- Floating Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        @for($i = 1; $i <= 15; $i++)
+            <div class="absolute floating-element" style="
+                top: {{ rand(10, 80) }}%;
+                left: {{ rand(5, 90) }}%;
+                animation-delay: {{ $i * 0.2 }}s;
+                font-size: {{ rand(20, 45) }}px;
+                opacity: {{ rand(5, 15) / 100 }};
+            ">{{ ['✨', '⭐', '💫', '🌟', '🎵', '🎶', '🙏'][rand(0, 6)] }}</div>
+        @endfor
+            </div>
+
+    <!-- Mesh Gradient Orbs -->
+    <div class="absolute inset-0 opacity-20">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-amber-500/30 to-emerald-500/30 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-emerald-500/30 to-blue-500/30 rounded-full blur-3xl animate-pulse animation-delay-1000"></div>
+        </div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
+        <div class="inline-block mb-8">
+            <span class="px-8 py-4 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 backdrop-blur-xl border border-amber-400/30 rounded-full text-amber-300 text-sm font-bold tracking-wider">
+                🎯 JOIN OUR FAMILY
+            </span>
+        </div>
+        <h2 class="text-5xl md:text-7xl font-black text-white mb-12 leading-tight">
+            Join Our <span class="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-200 bg-clip-text text-transparent animate-gradient-x">Family</span>
+        </h2>
+        <p class="text-2xl md:text-3xl text-emerald-100 mb-16 leading-relaxed max-w-5xl mx-auto font-light">
+            Be part of something <span class="text-amber-300 font-semibold">greater</span>. Experience the joy of worshiping together and creating beautiful music that touches hearts.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-8 justify-center mb-20">
+            <a href="{{ route('choir.register.form') }}"
+               class="group relative px-12 py-6 bg-gradient-to-r from-amber-500 to-amber-600 text-emerald-950 font-bold rounded-2xl hover:shadow-2xl hover:shadow-amber-500/50 transition-all duration-500 transform hover:-translate-y-2 overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <span class="relative flex items-center justify-center gap-3 text-lg">
+                    Become a Member
+                    <svg class="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                     </svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- Testimonials -->
-        <div class="max-w-4xl mx-auto px-4 mb-20">
-            <div class="text-center mb-12">
-                <h3 class="text-3xl font-bold text-emerald-800 mb-2">Voices About Our Voice</h3>
-                <p class="text-gray-600">What people say about our ministry</p>
-            </div>
-
-            <div class="testimonial-slider relative bg-emerald-50 rounded-xl p-8 shadow-inner">
-                <div class="testimonial-slides">
-                    @foreach ([['quote' => 'God\'s Family Choir doesn\'t just sing—they usher you into the presence of God. Their harmonies carry the anointing of decades of prayer and worship.', 'author' => 'Pastor Théoneste N.', 'role' => 'ASA UR Nyarugenge'], ['quote' => 'I grew up listening to this choir, and now my children are blessed by their music. They\'re a national treasure that keeps getting better with time.', 'author' => 'Marie Claire U.', 'role' => 'Longtime Listener'], ['quote' => 'Joining this choir changed my life. It\'s not just about music—it\'s spiritual formation through disciplined worship and genuine community.', 'author' => 'Eric M.', 'role' => 'Choir Member Since 2015']] as $testimonial)
-                        <div class="testimonial-slide text-center px-4">
-                            <div class="text-emerald-600 text-5xl mb-4">“</div>
-                            <p class="text-lg text-gray-700 mb-6">{{ $testimonial['quote'] }}</p>
-                            <div class="font-bold text-emerald-800">{{ $testimonial['author'] }}</div>
-                            <div class="text-sm text-gray-500">{{ $testimonial['role'] }}</div>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="testimonial-dots flex justify-center mt-6 space-x-2">
-                    <button class="dot w-3 h-3 rounded-full bg-emerald-200 hover:bg-emerald-400 transition"></button>
-                    <button class="dot w-3 h-3 rounded-full bg-emerald-200 hover:bg-emerald-400 transition"></button>
-                    <button class="dot w-3 h-3 rounded-full bg-emerald-200 hover:bg-emerald-400 transition"></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Call to Action -->
-        <div
-            class="max-w-4xl mx-auto px-4 text-center bg-emerald-800 rounded-2xl p-12 shadow-2xl relative overflow-hidden">
-            <div class="absolute -top-20 -right-20 w-40 h-40 bg-emerald-600 rounded-full opacity-20"></div>
-            <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-700 rounded-full opacity-20"></div>
-
-            <h3 class="text-3xl font-bold text-white mb-4">Become Part of Our Story</h3>
-            <p class="text-emerald-100 mb-8 max-w-2xl mx-auto">Whether you want to join us, invite us to minister, or
-                support our mission, we'd love to connect.</p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <button
-                    class="bg-white text-emerald-800 hover:bg-emerald-100 px-6 py-3 rounded-full font-medium transition">
-                    Join the Choir
-                </button>
-                <button
-                    class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-emerald-800 px-6 py-3 rounded-full font-medium transition">
-                    Invite Us
-                </button>
-                <button
-                    class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-full font-medium transition flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                        <path fill-rule="evenodd"
-                            d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                            clip-rule="evenodd" />
+                </span>
+            </a>
+            <a href="/events"
+               class="group relative px-12 py-6 border-2 border-emerald-400 text-emerald-300 font-bold rounded-2xl hover:bg-emerald-400 hover:text-emerald-900 transition-all duration-500 transform hover:-translate-y-2 backdrop-blur-xl">
+                <span class="relative flex items-center justify-center gap-3 text-lg">
+                    View Our Events
+                    <svg class="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
-                    Watch Our Story
-                </button>
-            </div>
+                </span>
+            </a>
         </div>
 
-        <!-- Closing Verse -->
-        <div class="mt-24 text-center max-w-3xl mx-auto px-4 relative">
-            <div
-                class="verse-container bg-white p-8 rounded-xl shadow-lg border-t-4 border-emerald-500 transform hover:scale-105 transition duration-500 cursor-pointer">
-                <div class="text-emerald-600 text-5xl mb-4">“</div>
-                <blockquote class="italic text-2xl text-gray-700 font-light">Sing to the Lord a new song, his praise in the
-                    assembly of the faithful.</blockquote>
-                <div class="text-emerald-900 font-semibold mt-4">— Psalm 149:1</div>
-                <div class="mt-6">
-                    <button
-                        class="play-psalm bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded-full p-3 transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 001.414 1.414m2.828-9.9a9 9 0 011.414 1.414" />
-                        </svg>
-                    </button>
+        <!-- Scripture Quote with Enhanced Design -->
+        <div class="relative p-12 bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl max-w-4xl mx-auto">
+            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-full flex items-center justify-center">
+                <span class="text-2xl">📖</span>
+            </div>
+            <p class="text-xl md:text-2xl text-emerald-100 italic leading-relaxed mb-6">
+                "Sing to the Lord a new song; sing to the Lord, all the earth. Sing to the Lord, praise his name; proclaim his salvation day after day."
+            </p>
+            <div class="flex items-center justify-center gap-4">
+                <div class="w-8 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
+                <p class="text-emerald-300 font-semibold text-lg">— Psalm 96:1-2</p>
+                <div class="w-8 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
                 </div>
             </div>
         </div>
     </section>
+
     <x-static.footer />
-@endsection
 
 <style>
-    /* Music Waves Animation */
-    .music-waves .wave {
+    @keyframes float-musical-note {
+        0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.18; }
+        90% { opacity: 0.18; }
+        100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+    }
+    .musical-note-float {
         position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"><path d="M0,60 C150,120 350,0 500,60 C650,120 850,0 1000,60 C1150,120 1200,60 1200,60 L1200,120 L0,120 Z" fill="%234fd1c5"></path></svg>');
-        background-size: cover;
-        background-repeat: no-repeat;
-        animation: wave 12s linear infinite;
+        color: white;
+        animation: float-musical-note 30s linear infinite;
     }
 
-    .music-waves .wave:nth-child(2) {
-        animation: wave 15s linear infinite reverse;
-        opacity: 0.5;
+    @keyframes floating-element {
+        0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.15; }
+        90% { opacity: 0.15; }
+        100% { transform: translateY(-100vh) rotate(180deg); opacity: 0; }
     }
-
-    .music-waves .wave:nth-child(3) {
-        animation: wave 18s linear infinite;
-        opacity: 0.2;
-    }
-
-    @keyframes wave {
-        0% {
-            background-position-x: 0;
-        }
-
-        100% {
-            background-position-x: 1200px;
-        }
-    }
-
-    /* Musical Notes Animation */
-    .musical-notes .note {
+    .floating-element {
         position: absolute;
-        font-size: 1.5rem;
-        opacity: 0;
-        animation: floatNote 8s linear infinite;
+        color: white;
+        animation: floating-element 35s linear infinite;
     }
 
-    .musical-notes .note:nth-child(1) {
-        top: 10%;
-        left: 5%;
-        animation-delay: 0s;
+    @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(50px); }
+        to { opacity: 1; transform: translateY(0); }
     }
-
-    .musical-notes .note:nth-child(2) {
-        top: 30%;
-        left: 80%;
-        animation-delay: 2s;
-    }
-
-    .musical-notes .note:nth-child(3) {
-        top: 70%;
-        left: 15%;
-        animation-delay: 4s;
-    }
-
-    .musical-notes .note:nth-child(4) {
-        top: 85%;
-        left: 65%;
-        animation-delay: 6s;
-    }
-
-    @keyframes floatNote {
-        0% {
-            transform: translateY(0) rotate(0deg);
+    .animate-fade-in-up {
+        animation: fade-in-up 1s ease-out forwards;
             opacity: 0;
         }
+    .animation-delay-200 { animation-delay: 0.2s; }
+    .animation-delay-400 { animation-delay: 0.4s; }
+    .animation-delay-600 { animation-delay: 0.6s; }
+    .animation-delay-1000 { animation-delay: 1s; }
+    .animation-delay-2000 { animation-delay: 2s; }
 
-        10% {
-            opacity: 0.4;
-        }
-
-        90% {
-            opacity: 0.4;
-        }
-
-        100% {
-            transform: translateY(-100vh) rotate(360deg);
-            opacity: 0;
-        }
+    @keyframes gradient-x {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
     }
-
-    /* Timeline Styling */
-    .timeline-container {
-        position: relative;
-        padding-top: 40px;
-        padding-bottom: 40px;
+    .animate-gradient-x {
+        background-size: 200% 200%;
+        animation: gradient-x 3s ease infinite;
     }
 
     .timeline-item {
-        position: relative;
-        display: flex;
-        justify-content: center;
-    }
-
-    .timeline-content {
-        width: 45%;
-    }
-
-    .timeline-item:nth-child(odd) .timeline-content {
-        margin-right: auto;
-        text-align: right;
-    }
-
-    .timeline-item:nth-child(even) .timeline-content {
-        margin-left: auto;
-    }
-
-    @media (max-width: 768px) {
-
-        .timeline-item:nth-child(odd) .timeline-content,
-        .timeline-item:nth-child(even) .timeline-content {
-            width: 90%;
-            margin-left: 10%;
-            text-align: left;
-        }
-    }
-
-    /* Gallery Hover Effect */
-    .gallery-item::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.3);
         opacity: 0;
-        transition: opacity 0.3s ease;
+        transform: translateY(80px);
+        animation: fade-in-up 1s ease-out forwards;
     }
+    .timeline-item:nth-child(1) { animation-delay: 0.3s; }
+    .timeline-item:nth-child(2) { animation-delay: 0.6s; }
+    .timeline-item:nth-child(3) { animation-delay: 0.9s; }
+    .timeline-item:nth-child(4) { animation-delay: 0.12s; }
+    .timeline-item:nth-child(5) { animation-delay: 1.5s; }
 
-    .gallery-item:hover::after {
-        opacity: 1;
-    }
-
-    /* Carousel Scroll Snap */
-    .carousel-track {
-        scroll-snap-type: x mandatory;
-    }
-
-    .carousel-slide {
-        scroll-snap-align: start;
+    /* Counter Animation */
+    .counter {
+        font-variant-numeric: tabular-nums;
     }
 </style>
 
 <script>
-    // This would be implemented with your preferred JS framework
-    document.addEventListener('DOMContentLoaded', function() {
-        // Timeline animation
-        const timelineItems = document.querySelectorAll('.timeline-item');
+    // Counter Animation
+    function animateCounters() {
+        const counters = document.querySelectorAll('.counter');
+
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            const duration = 2000; // 2 seconds
+            const increment = target / (duration / 16); // 60fps
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                counter.textContent = Math.floor(current);
+
+                // Add suffix for million
+                if (target >= 10 && counter.textContent === '10') {
+                    counter.textContent = '10M+';
+                }
+            }, 16);
+        });
+    }
+
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.querySelector('.timeline-content').style.opacity = 1;
-                    entry.target.querySelector('.timeline-content').style.transform =
-                        'translateX(0)';
+                if (entry.target.classList.contains('timeline-item')) {
+                    entry.target.style.animationPlayState = 'running';
                 }
-            });
-        }, {
-            threshold: 0.1
-        });
-
-        timelineItems.forEach((item, index) => {
-            item.querySelector('.timeline-content').style.transitionDelay = `${index * 0.1}s`;
-            if (index % 2 === 0) {
-                item.querySelector('.timeline-content').style.transform = 'translateX(-50px)';
-            } else {
-                item.querySelector('.timeline-content').style.transform = 'translateX(50px)';
             }
-            item.querySelector('.timeline-content').style.opacity = 0;
+        });
+    }, observerOptions);
+
+    // Observe timeline items
+    document.addEventListener('DOMContentLoaded', () => {
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        timelineItems.forEach(item => {
             observer.observe(item);
         });
 
-        // Play history audio
-        document.querySelector('.play-history-audio').addEventListener('click', function() {
-            // Implementation for playing an audio timeline
-            alert('Playing choir history audio timeline...');
-        });
+        // Animate counters when hero section is visible
+        const heroSection = document.querySelector('section');
+        if (heroSection) {
+            const heroObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        heroObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
 
-        // Play Psalm audio
-        document.querySelector('.play-psalm').addEventListener('click', function() {
-            // Implementation for playing Psalm 149
-            alert('Playing Psalm 149...');
+            heroObserver.observe(heroSection);
+        }
+    });
+
+    // Parallax scrolling effect
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parallaxElements = document.querySelectorAll('.musical-note-float, .floating-element');
+
+        parallaxElements.forEach((element, index) => {
+            const speed = 0.5 + (index % 3) * 0.1;
+            element.style.transform = `translateY(${scrolled * speed}px)`;
         });
     });
 </script>
+
+@endsection

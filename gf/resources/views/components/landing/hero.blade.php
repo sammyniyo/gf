@@ -1,595 +1,338 @@
-<section class="bg-emerald-950 relative py-20 lg:py-28 overflow-hidden">
-    <!-- Background image with overlay -->
-    <div class="absolute inset-0">
-        <img src={{ asset('images/gf-2.jpg') }} alt="Choir background"
-            class="w-full h-full object-cover object-center opacity-30" />
-        <div class="absolute inset-0 bg-emerald-950/60 mix-blend-multiply"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-emerald-950 via-emerald-950/80 to-transparent"></div>
-    </div>
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-emerald-950 via-emerald-900 to-black">
 
-    <!-- Grid background with overlay -->
-    <div class="absolute inset-0 bg-[url('/images/grid-bg.svg')] bg-cover opacity-20 mix-blend-soft-light"></div>
-
-    <!-- Decorative elements (symbolic elements for music/spirituality) -->
-    <div class="absolute top-20 -left-10 w-40 h-40 bg-amber-400 rounded-full blur-3xl opacity-15"></div>
-    <div class="absolute bottom-20 -right-10 w-40 h-40 bg-teal-400 rounded-full blur-3xl opacity-15"></div>
-
-    <!-- Subtle musical notes floating animation -->
-    <div class="absolute top-32 right-10 w-6 h-8 text-white/10 animate-float-slow">♩</div>
-    <div class="absolute top-64 left-20 w-8 h-10 text-white/10 animate-float-medium">♪</div>
-    <div class="absolute bottom-40 right-32 w-10 h-12 text-white/10 animate-float-fast">♫</div>
-
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Badge -->
-        <div class="flex justify-center mb-6">
-            <div
-                class="inline-flex items-center gap-2 bg-emerald-900/70 backdrop-blur-sm text-amber-300 py-2 px-4 rounded-full border border-emerald-800/60">
-                <span class="inline-block w-2 h-2 bg-amber-400 rounded-full animate-pulse"></span>
-                <span class="text-sm font-medium">Praising The Lord Since</span>
-                <span class="bg-emerald-800/70 py-0.5 px-2 rounded-full text-xs font-semibold ml-1">1998</span>
-            </div>
+    <!-- Animated Background Layers -->
+    <div class="absolute inset-0 z-0">
+        <!-- Main Background Image with Parallax -->
+        <div class="absolute inset-0 parallax-bg">
+            <img src="{{ asset('images/gf-2.jpg') }}" alt="God's Family Choir"
+                class="w-full h-full object-cover opacity-20 scale-110" />
         </div>
 
-        <!-- Main content -->
-        <div class="text-center">
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight mb-6">
-                God's Family Choir<br class="hidden sm:inline">
-                <span class="relative">
-                    <span class="bg-gradient-to-r from-amber-300 to-teal-300 bg-clip-text text-transparent">Voices
-                        United in Faith</span>
-                    <svg class="absolute -bottom-1 left-0 w-full h-3 text-amber-400/20" viewBox="0 0 100 15"
-                        preserveAspectRatio="none">
-                        <path d="M0,5 Q40,15 80,5 L100,5" fill="none" stroke="currentColor" stroke-width="6"
-                            stroke-linecap="round"></path>
-                    </svg>
-                </span>
-            </h1>
+        <!-- Gradient Overlays -->
+        <div class="absolute inset-0 bg-gradient-to-b from-emerald-950/90 via-emerald-900/80 to-emerald-950/95"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-emerald-950/50 via-transparent to-amber-950/30"></div>
 
-            <p class="text-lg text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed">
-                <b>God's Family Choir</b> is a Seventh-day Adventist community of believers united by a shared passion
-                for worship through sacred music based in <b>ASA UR Nyarugenge SDA</b>. Founded on faith, fellowship,
-                and the love of Christ, we
-                are more than just singers — we are a family dedicated to glorifying God and touching hearts through
-                spirit-filled harmonies and heartfelt
-                praise.
-            </p>
+        <!-- Animated Mesh Gradient -->
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute top-0 left-0 w-96 h-96 bg-amber-500/30 rounded-full blur-3xl animate-blob"></div>
+            <div class="absolute top-0 right-0 w-96 h-96 bg-emerald-500/30 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
+            <div class="absolute bottom-0 left-1/2 w-96 h-96 bg-teal-500/30 rounded-full blur-3xl animate-blob animation-delay-4000"></div>
+        </div>
+    </div>
 
-            <!-- Call to action -->
-            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
-                <a href="#"
-                    class="inline-flex items-center justify-center bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-emerald-950 font-semibold px-6 py-3.5 rounded-xl shadow-lg shadow-amber-500/25 transition transform hover:-translate-y-0.5">
-                    <span>Latest Performance</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </a>
-                <a href="https://www.youtube.com/watch?v=DR1QiuFpx9I&pp=ygUPbXd1YmFoZSB1d2l0ZWth"
-                    class="inline-flex items-center justify-center border border-white/30 hover:bg-white/10 backdrop-blur-sm text-white font-semibold px-6 py-3.5 rounded-xl transition"
-                    target="_blank" rel="noopener noreferrer">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    <span>Watch Us Sing</span>
-                </a>
-            </div>
+    <!-- Floating Musical Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none z-10">
+        @for($i = 1; $i <= 8; $i++)
+            <div class="absolute musical-note" style="
+                top: {{ rand(10, 80) }}%;
+                left: {{ rand(5, 90) }}%;
+                animation-delay: {{ $i * 0.5 }}s;
+                font-size: {{ rand(20, 60) }}px;
+                opacity: {{ rand(5, 15) / 100 }};
+            ">{{ ['♪', '♫', '♬', '♩'][rand(0, 3)] }}</div>
+        @endfor
+    </div>
 
-            <!-- Feature highlights - changed to choir values -->
-            <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-16">
-                <div
-                    class="flex items-center gap-2 text-sm text-gray-300 bg-emerald-900/30 px-4 py-2 rounded-full backdrop-blur-sm">
-                    <svg class="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    <span>Worship Through Music</span>
-                </div>
-                <div
-                    class="flex items-center gap-2 text-sm text-gray-300 bg-emerald-900/30 px-4 py-2 rounded-full backdrop-blur-sm">
-                    <svg class="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    <span>Spiritual Fellowship</span>
-                </div>
-                <div
-                    class="flex items-center gap-2 text-sm text-gray-300 bg-emerald-900/30 px-4 py-2 rounded-full backdrop-blur-sm">
-                    <svg class="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    <span>Community Service</span>
-                </div>
-            </div>
+    <!-- Main Content Container -->
+    <div class="relative z-20 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-20">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
 
-            <!-- Enhanced mini gallery with click interactions -->
-            <div class="relative mt-16 flex justify-center">
-                <!-- Gallery container with overflow shadow effects -->
-                <div class="relative w-full max-w-4xl overflow-hidden">
-                    <!-- Left gradient overlay -->
-                    <div
-                        class="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-emerald-950 to-transparent z-10">
+            <!-- Left Column: Content -->
+            <div class="text-left space-y-8">
+
+                <!-- Animated Badge -->
+                <div class="inline-flex items-center gap-3 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 backdrop-blur-xl border border-amber-400/30 rounded-full px-6 py-3 shadow-2xl animate-fade-in-up">
+                    <div class="relative">
+                        <div class="w-3 h-3 bg-amber-400 rounded-full animate-pulse"></div>
+                        <div class="absolute inset-0 w-3 h-3 bg-amber-400 rounded-full animate-ping"></div>
                     </div>
+                    <span class="text-amber-300 font-semibold text-sm tracking-wide">CELEBRATING 25+ YEARS OF WORSHIP</span>
+                    <span class="px-3 py-1 bg-amber-500/30 rounded-full text-amber-200 text-xs font-bold">Since 1998</span>
+                </div>
 
-                    <!-- Right gradient overlay -->
-                    <div
-                        class="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-emerald-950 to-transparent z-10">
-                    </div>
-
-                    <!-- Gallery slider with duplicated images for seamless looping -->
-                    <div class="flex space-x-4 py-2 px-4 gallery-scroll" id="galleryScroll">
-                        <!-- First set of images -->
-                        <div class="relative group w-32 h-32 flex-shrink-0 overflow-hidden rounded-xl shadow-lg gallery-item"
-                            onclick="expandImage(this)">
-                            <img src={{ asset('images/1.jpg') }}
-                                class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                                alt="Choir performance">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                                <span class="text-xs text-white font-medium">Sunday Worship</span>
-                            </div>
-                        </div>
-
-                        <div class="relative group w-32 h-32 flex-shrink-0 overflow-hidden rounded-xl shadow-lg gallery-item"
-                            onclick="expandImage(this)">
-                            <img src={{ asset('images/2.jpg') }}
-                                class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                                alt="Choir rehearsal">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                                <span class="text-xs text-white font-medium">Choir Practice</span>
-                            </div>
-                        </div>
-
-                        <div class="relative group w-32 h-32 flex-shrink-0 overflow-hidden rounded-xl shadow-lg gallery-item"
-                            onclick="expandImage(this)">
-                            <img src={{ asset('images/3.jpg') }}
-                                class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                                alt="Music director">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                                <span class="text-xs text-white font-medium">Praise Leaders</span>
-                            </div>
-                        </div>
-
-                        <div class="relative group w-32 h-32 flex-shrink-0 overflow-hidden rounded-xl shadow-lg gallery-item"
-                            onclick="expandImage(this)">
-                            <img src={{ asset('images/4.jpg') }}
-                                class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                                alt="Community outreach">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                                <span class="text-xs text-white font-medium">Community Service</span>
-                            </div>
-                        </div>
-
-                        <div class="relative group w-32 h-32 flex-shrink-0 overflow-hidden rounded-xl shadow-lg gallery-item"
-                            onclick="expandImage(this)">
-                            <img src={{ asset('images/5.jpg') }}
-                                class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                                alt="Youth choir">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                                <span class="text-xs text-white font-medium">GF Junior</span>
-                            </div>
-                        </div>
-
-                        <div class="relative group w-32 h-32 flex-shrink-0 overflow-hidden rounded-xl shadow-lg gallery-item"
-                            onclick="expandImage(this)">
-                            <img src={{ asset('images/gf-2.jpg') }}
-                                class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                                alt="Full choir">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                                <span class="text-xs text-white font-medium">Full Ensemble</span>
-                            </div>
-                        </div>
-
-                        <!-- Duplicated images for seamless looping -->
-                        <div class="relative group w-32 h-32 flex-shrink-0 overflow-hidden rounded-xl shadow-lg gallery-item"
-                            onclick="expandImage(this)">
-                            <img src={{ asset('images/1.jpg') }}
-                                class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                                alt="Choir performance">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                                <span class="text-xs text-white font-medium">Sunday Worship</span>
-                            </div>
-                        </div>
-
-                        <div class="relative group w-32 h-32 flex-shrink-0 overflow-hidden rounded-xl shadow-lg gallery-item"
-                            onclick="expandImage(this)">
-                            <img src={{ asset('images/2.jpg') }}
-                                class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                                alt="Choir rehearsal">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                                <span class="text-xs text-white font-medium">Choir Practice</span>
-                            </div>
-                        </div>
-
-                        <div class="relative group w-32 h-32 flex-shrink-0 overflow-hidden rounded-xl shadow-lg gallery-item"
-                            onclick="expandImage(this)">
-                            <img src={{ asset('images/3.jpg') }}
-                                class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                                alt="Music director">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                                <span class="text-xs text-white font-medium">Praise Leaders</span>
-                            </div>
-                        </div>
-
-                        <div class="relative group w-32 h-32 flex-shrink-0 overflow-hidden rounded-xl shadow-lg gallery-item"
-                            onclick="expandImage(this)">
-                            <img src={{ asset('images/4.jpg') }}
-                                class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                                alt="Community outreach">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                                <span class="text-xs text-white font-medium">Community Service</span>
-                            </div>
-                        </div>
-
-                        <div class="relative group w-32 h-32 flex-shrink-0 overflow-hidden rounded-xl shadow-lg gallery-item"
-                            onclick="expandImage(this)">
-                            <img src={{ asset('images/5.jpg') }}
-                                class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                                alt="Youth choir">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                                <span class="text-xs text-white font-medium">GF Junior</span>
-                            </div>
-                        </div>
-
-                        <div class="relative group w-32 h-32 flex-shrink-0 overflow-hidden rounded-xl shadow-lg gallery-item"
-                            onclick="expandImage(this)">
-                            <img src={{ asset('images/gf-2.jpg') }}
-                                class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
-                                alt="Full choir">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                                <span class="text-xs text-white font-medium">Full Ensemble</span>
-                            </div>
-                        </div>
+                <!-- Main Headline with Gradient Animation -->
+                <div class="space-y-4 animate-fade-in-up animation-delay-200">
+                    <h1 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-none">
+                        <span class="block text-white mb-2 tracking-tight">God's Family</span>
+                        <span class="block bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-200 bg-clip-text text-transparent animate-gradient-x">
+                            Choir
+                        </span>
+                    </h1>
+                    <div class="flex items-center gap-4">
+                        <div class="h-1 w-20 bg-gradient-to-r from-amber-400 to-transparent rounded-full"></div>
+                        <p class="text-xl sm:text-2xl text-emerald-100 font-light tracking-wide">
+                            Voices United in <span class="text-amber-400 font-semibold">Faith</span>
+                        </p>
                     </div>
                 </div>
-            </div>
 
-            <!-- Overlay for expanded image -->
-            <div id="imageOverlay" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center"
-                onclick="closeExpandedImage()">
-                <div class="relative max-w-4xl max-h-[80vh] w-full h-full flex items-center justify-center p-4">
-                    <button onclick="closeExpandedImage()"
-                        class="absolute top-4 right-4 text-white bg-black/40 hover:bg-black/60 rounded-full p-2 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12" />
+                <!-- Description -->
+                <p class="text-lg sm:text-xl text-gray-300 leading-relaxed max-w-2xl animate-fade-in-up animation-delay-400">
+                    A vibrant <span class="text-emerald-300 font-semibold">Seventh-day Adventist</span> community rooted in ASA UR Nyarugenge—where devoted hearts glorify God through <span class="text-amber-300 font-semibold">spirit-filled harmonies</span> and transformative worship.
+                </p>
+
+                <!-- Stats Bar -->
+                <div class="grid grid-cols-3 gap-6 py-6 animate-fade-in-up animation-delay-600">
+                    <div class="text-center lg:text-left">
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-4xl font-black text-amber-400 counter" data-target="60">0</span>
+                            <span class="text-2xl text-amber-400">+</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-1">Active Members</p>
+                    </div>
+                    <div class="text-center lg:text-left">
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-4xl font-black text-emerald-400 counter" data-target="500">0</span>
+                            <span class="text-2xl text-emerald-400">+</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-1">Performances</p>
+                    </div>
+                    <div class="text-center lg:text-left">
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-4xl font-black text-teal-400 counter" data-target="10">0</span>
+                            <span class="text-2xl text-teal-400">M+</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-1">Online Reach</p>
+                    </div>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 pt-4 animate-fade-in-up animation-delay-800">
+                    <a href="{{ route('choir.register.form') }}" class="group relative inline-flex items-center justify-center gap-3 px-8 py-5 bg-gradient-to-r from-amber-500 to-amber-600 text-emerald-950 font-bold rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/50 hover:-translate-y-1 hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-r from-amber-400 to-yellow-400 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                        <svg class="w-6 h-6 relative z-10 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
                         </svg>
-                    </button>
-                    <img id="expandedImage"
-                        class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl opacity-0 transition-opacity duration-500 ease-in-out scale-95 transform"
-                        src="" alt="Expanded image">
-                    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm font-medium opacity-0 transition-opacity duration-500"
-                        id="imageCaption"></div>
+                        <span class="relative z-10">Join the Choir</span>
+                    </a>
+
+                    <a href="https://www.youtube.com/watch?v=DR1QiuFpx9I&pp=ygUPbXd1YmFoZSB1d2l0ZWth" target="_blank" class="group inline-flex items-center justify-center gap-3 px-8 py-5 bg-white/10 backdrop-blur-xl border-2 border-white/30 text-white font-bold rounded-2xl hover:bg-white/20 hover:border-white/50 transition-all duration-300 hover:-translate-y-1">
+                        <svg class="w-6 h-6 group-hover:scale-125 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                        <span>Watch Performance</span>
+                    </a>
+                </div>
+
+                <!-- Feature Pills -->
+                <div class="flex flex-wrap gap-3 pt-4 animate-fade-in-up animation-delay-1000">
+                    @foreach([
+                        ['icon' => '🎵', 'text' => 'Worship Excellence'],
+                        ['icon' => '🙏', 'text' => 'Spiritual Growth'],
+                        ['icon' => '❤️', 'text' => 'Community Impact']
+                    ] as $feature)
+                        <div class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-900/40 backdrop-blur-sm border border-emerald-700/50 rounded-full hover:bg-emerald-800/60 hover:border-emerald-600/70 transition-all duration-300 group cursor-pointer">
+                            <span class="text-xl group-hover:scale-125 transition-transform">{{ $feature['icon'] }}</span>
+                            <span class="text-sm text-gray-300 font-medium">{{ $feature['text'] }}</span>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
-            <!-- Navigation arrows for the expanded view -->
-            <button id="prevButton"
-                class="fixed top-1/2 left-4 transform -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white rounded-full p-3 hidden z-50 transition-all hover:scale-110"
-                onclick="navigateGallery(-1)">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-            <button id="nextButton"
-                class="fixed top-1/2 right-4 transform -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white rounded-full p-3 hidden z-50 transition-all hover:scale-110"
-                onclick="navigateGallery(1)">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
+            <!-- Right Column: Visual Content -->
+            <div class="relative lg:block animate-fade-in-left">
+                <!-- Main Image Card -->
+                <div class="relative group">
+                    <!-- Glowing Border Effect -->
+                    <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 via-emerald-500 to-teal-500 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition duration-1000 animate-pulse"></div>
 
-            <!-- Custom styles for the enhanced gallery -->
-            <style>
-                @keyframes infinite-scroll {
-                    0% {
-                        transform: translateX(0);
-                    }
+                    <!-- Image Container -->
+                    <div class="relative bg-emerald-900/50 backdrop-blur-xl border border-emerald-700/50 rounded-3xl overflow-hidden shadow-2xl">
+                        <img src="{{ asset('images/gf-2.jpg') }}" alt="God's Family Choir Performance"
+                            class="w-full h-[500px] object-cover transform group-hover:scale-110 transition duration-700" />
 
-                    100% {
-                        transform: translateX(calc(-32px * 6 - 1rem * 6));
-                        /* Width of 6 images + spacing */
-                    }
-                }
+                        <!-- Overlay Content -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-8">
+                            <div>
+                                <p class="text-white text-2xl font-bold mb-2">Latest Performance</p>
+                                <p class="text-gray-300">Easter Celebration 2024</p>
+                            </div>
+                        </div>
 
-                .gallery-scroll {
-                    animation: infinite-scroll 30s linear infinite;
-                    width: auto;
-                    /* Adjusted from fixed width */
-                }
+                        <!-- Play Button Overlay -->
+                        <a href="https://www.youtube.com/watch?v=DR1QiuFpx9I&pp=ygUPbXd1YmFoZSB1d2l0ZWth" target="_blank" class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div class="w-20 h-20 bg-amber-500 rounded-full flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform">
+                                <svg class="w-10 h-10 text-emerald-950 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                        </a>
+                    </div>
 
-                .gallery-scroll:hover {
-                    animation-play-state: paused;
-                }
+                    <!-- Floating Gallery Cards -->
+                    <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-emerald-800/80 backdrop-blur-xl border border-emerald-600/50 rounded-2xl overflow-hidden shadow-xl transform hover:scale-110 transition-transform cursor-pointer">
+                        <img src="{{ asset('images/1.jpg') }}" alt="Gallery 1" class="w-full h-full object-cover" />
+                    </div>
 
-                .gallery-item {
-                    cursor: pointer;
-                    transition: transform 0.3s ease, box-shadow 0.3s ease;
-                }
+                    <div class="absolute -top-6 -right-6 w-32 h-32 bg-emerald-800/80 backdrop-blur-xl border border-emerald-600/50 rounded-2xl overflow-hidden shadow-xl transform hover:scale-110 transition-transform cursor-pointer">
+                        <img src="{{ asset('images/3.jpg') }}" alt="Gallery 2" class="w-full h-full object-cover" />
+                    </div>
+                </div>
 
-                .gallery-item:hover {
-                    transform: translateY(-5px);
-                    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-                }
+                <!-- Floating Stats Card -->
+                <div class="absolute -bottom-12 right-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl p-6 shadow-2xl transform hover:scale-105 transition-transform cursor-pointer hidden lg:block">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-white text-2xl font-black">8+</p>
+                            <p class="text-emerald-950 text-sm font-semibold">Albums Released</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                @keyframes fadeIn {
-                    from {
-                        opacity: 0;
-                        transform: scale(0.9);
-                    }
-
-                    to {
-                        opacity: 1;
-                        transform: scale(1);
-                    }
-                }
-
-                @keyframes pulse {
-                    0% {
-                        box-shadow: 0 0 0 0 rgba(236, 201, 75, 0.4);
-                    }
-
-                    70% {
-                        box-shadow: 0 0 0 10px rgba(236, 201, 75, 0);
-                    }
-
-                    100% {
-                        box-shadow: 0 0 0 0 rgba(236, 201, 75, 0);
-                    }
-                }
-
-                .pulse-animation {
-                    animation: pulse 2s infinite;
-                }
-
-                /* Make expanded image fade in when opened */
-                .expanded-image-visible {
-                    opacity: 1 !important;
-                    transform: scale(1) !important;
-                    transition: opacity 0.5s ease, transform 0.5s ease !important;
-                }
-
-                /* Caption animation */
-                .caption-visible {
-                    opacity: 1 !important;
-                    transform: translateX(-50%) translateY(0) !important;
-                    transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s !important;
-                }
-            </style>
-
-            <!-- JavaScript for the enhanced gallery functionality -->
-            <script>
-                // Global variables
-                let currentImageIndex = 0;
-                const galleryItems = document.querySelectorAll('.gallery-item');
-                const overlay = document.getElementById('imageOverlay');
-                const expandedImage = document.getElementById('expandedImage');
-                const imageCaption = document.getElementById('imageCaption');
-                const prevButton = document.getElementById('prevButton');
-                const nextButton = document.getElementById('nextButton');
-
-                // Function to reset the gallery animation when it completes
-                function resetGalleryScroll() {
-                    const galleryScroll = document.getElementById('galleryScroll');
-                    galleryScroll.addEventListener('animationiteration', () => {
-                        // No need to reset manually as the CSS animation handles the loop
-                    });
-                }
-
-                // Initialize when page loads
-                document.addEventListener('DOMContentLoaded', function() {
-                    resetGalleryScroll();
-                });
-
-                // Function to expand image when clicked
-                function expandImage(element) {
-                    // Store the index of the clicked image
-                    currentImageIndex = Array.from(galleryItems).indexOf(element) % 6; // Modulo 6 to handle duplicated items
-
-                    // Get the image source and caption
-                    const imgSrc = element.querySelector('img').src;
-                    const caption = element.querySelector('.text-xs').textContent;
-
-                    // Set the expanded image source and caption
-                    expandedImage.src = imgSrc;
-                    imageCaption.textContent = caption;
-
-                    // Show the overlay
-                    overlay.classList.remove('hidden');
-
-                    // Trigger the animations after a short delay
-                    setTimeout(() => {
-                        expandedImage.classList.add('expanded-image-visible');
-                        imageCaption.classList.add('caption-visible');
-                        prevButton.classList.remove('hidden');
-                        nextButton.classList.remove('hidden');
-                    }, 50);
-
-                    // Prevent event propagation
-                    event.stopPropagation();
-                }
-
-                // Function to close the expanded image
-                function closeExpandedImage() {
-                    // Hide animations first
-                    expandedImage.classList.remove('expanded-image-visible');
-                    imageCaption.classList.remove('caption-visible');
-                    prevButton.classList.add('hidden');
-                    nextButton.classList.add('hidden');
-
-                    // Hide the overlay after the animation completes
-                    setTimeout(() => {
-                        overlay.classList.add('hidden');
-                    }, 500);
-                }
-
-                // Function to navigate between gallery images
-                function navigateGallery(direction) {
-                    // Calculate new index (cycle through 0-5 for the 6 unique images)
-                    currentImageIndex = (currentImageIndex + direction + 6) % 6;
-
-                    // Hide the current image
-                    expandedImage.classList.remove('expanded-image-visible');
-                    imageCaption.classList.remove('caption-visible');
-
-                    // After a short delay, update and show the new image
-                    setTimeout(() => {
-                        // Get the new image source and caption
-                        const newImageElement = galleryItems[currentImageIndex];
-                        const imgSrc = newImageElement.querySelector('img').src;
-                        const caption = newImageElement.querySelector('.text-xs').textContent;
-
-                        // Update the expanded image
-                        expandedImage.src = imgSrc;
-                        imageCaption.textContent = caption;
-
-                        // Show the new image with animation
-                        expandedImage.classList.add('expanded-image-visible');
-                        imageCaption.classList.add('caption-visible');
-                    }, 300);
-
-                    // Prevent event propagation
-                    event.stopPropagation();
-                }
-
-                // Add keyboard navigation
-                document.addEventListener('keydown', function(e) {
-                    if (overlay.classList.contains('hidden')) return;
-
-                    if (e.key === 'ArrowLeft') {
-                        navigateGallery(-1);
-                    } else if (e.key === 'ArrowRight') {
-                        navigateGallery(1);
-                    } else if (e.key === 'Escape') {
-                        closeExpandedImage();
-                    }
-                });
-            </script>
-
-            <!-- Scripture verse -->
-            <div
-                class="mt-16 max-w-2xl mx-auto bg-emerald-900/30 backdrop-blur-sm p-6 rounded-xl border border-emerald-800/30">
-                <blockquote class="italic text-gray-300">
-                    "Oh come, let us sing to the Lord; let us make a joyful noise to the rock of our salvation!"
-                </blockquote>
-                <p class="text-amber-300 text-sm mt-2">— Psalm 95:1</p>
+        <!-- Scripture Quote -->
+        <div class="mt-24 text-center animate-fade-in-up animation-delay-1200">
+            <div class="inline-block relative">
+                <div class="absolute -inset-4 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 blur-xl rounded-full"></div>
+                <div class="relative bg-emerald-900/40 backdrop-blur-xl border border-emerald-700/50 rounded-2xl px-8 py-6 max-w-3xl">
+                    <svg class="w-8 h-8 text-amber-400/50 mb-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.5 10c-.223 0-.437.034-.65.065.069-.232.14-.468.254-.68.114-.308.292-.575.469-.844.148-.291.409-.488.601-.737.201-.242.475-.403.692-.604.213-.21.492-.315.714-.463.232-.133.434-.28.65-.35.208-.086.39-.16.539-.222.302-.125.474-.197.474-.197L9.758 4.03c0 0-.218.052-.597.144C8.97 4.222 8.737 4.278 8.472 4.345c-.271.05-.56.187-.882.312C7.272 4.799 6.904 4.895 6.562 5.123c-.344.218-.741.4-1.091.692C5.132 6.116 4.723 6.377 4.421 6.76c-.33.358-.656.734-.909 1.162C3.219 8.33 3.02 8.778 2.81 9.221c-.19.443-.343.896-.468 1.336-.237.882-.343 1.72-.384 2.437-.034.718-.014 1.315.028 1.747.015.204.043.402.063.539.017.109.025.168.025.168l.026-.006C2.535 17.474 4.338 19 6.5 19c2.485 0 4.5-2.015 4.5-4.5S8.985 10 6.5 10zM17.5 10c-.223 0-.437.034-.65.065.069-.232.14-.468.254-.68.114-.308.292-.575.469-.844.148-.291.409-.488.601-.737.201-.242.475-.403.692-.604.213-.21.492-.315.714-.463.232-.133.434-.28.65-.35.208-.086.39-.16.539-.222.302-.125.474-.197.474-.197L20.758 4.03c0 0-.218.052-.597.144-.191.048-.424.104-.689.171-.271.05-.56.187-.882.312-.317.143-.686.238-1.028.467-.344.218-.741.4-1.091.692-.339.301-.748.562-1.05.944-.33.358-.656.734-.909 1.162C14.219 8.33 14.02 8.778 13.81 9.221c-.19.443-.343.896-.468 1.336-.237.882-.343 1.72-.384 2.437-.034.718-.014 1.315.028 1.747.015.204.043.402.063.539.017.109.025.168.025.168l.026-.006C13.535 17.474 15.338 19 17.5 19c2.485 0 4.5-2.015 4.5-4.5S19.985 10 17.5 10z"/>
+                    </svg>
+                    <blockquote class="text-xl sm:text-2xl text-white font-light italic leading-relaxed">
+                        Oh come, let us sing to the Lord; let us make a joyful noise to the rock of our salvation!
+                    </blockquote>
+                    <p class="text-amber-400 font-semibold mt-4 text-lg">— Psalm 95:1</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Grid overlay pattern -->
-    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-emerald-950 pointer-events-none">
-    </div>
-
-    <!-- Animated grid lines -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
-        <div class="absolute inset-0 w-full h-full grid grid-cols-6 gap-px">
-            <div class="border-r border-white/20"></div>
-            <div class="border-r border-white/20"></div>
-            <div class="border-r border-white/20"></div>
-            <div class="border-r border-white/20"></div>
-            <div class="border-r border-white/20"></div>
-        </div>
-        <div class="absolute inset-0 w-full h-full grid grid-rows-6 gap-px">
-            <div class="border-b border-white/20"></div>
-            <div class="border-b border-white/20"></div>
-            <div class="border-b border-white/20"></div>
-            <div class="border-b border-white/20"></div>
-            <div class="border-b border-white/20"></div>
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+        <div class="flex flex-col items-center gap-2 cursor-pointer group" onclick="document.querySelector('#features').scrollIntoView({behavior: 'smooth'})">
+            <p class="text-emerald-300 text-sm font-medium group-hover:text-amber-400 transition-colors">Scroll to Explore</p>
+            <svg class="w-6 h-6 text-emerald-300 group-hover:text-amber-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
         </div>
     </div>
-
-    <!-- Add custom animation to your CSS -->
-    <style>
-        @keyframes slow-scroll {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        .animate-slow-scroll {
-            animation: slow-scroll 30s linear infinite;
-            width: 200%;
-        }
-
-        @keyframes float-slow {
-
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-15px) rotate(5deg);
-            }
-        }
-
-        @keyframes float-medium {
-
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-25px) rotate(-8deg);
-            }
-        }
-
-        @keyframes float-fast {
-
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-20px) rotate(10deg);
-            }
-        }
-
-        .animate-float-slow {
-            animation: float-slow 10s ease-in-out infinite;
-            font-size: 3rem;
-            opacity: 0.15;
-        }
-
-        .animate-float-medium {
-            animation: float-medium 7s ease-in-out infinite;
-            font-size: 4rem;
-            opacity: 0.1;
-        }
-
-        .animate-float-fast {
-            animation: float-fast 8s ease-in-out infinite;
-            font-size: 3.5rem;
-            opacity: 0.08;
-        }
-    </style>
 </section>
+
+<style>
+    @keyframes gradient-x {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    .animate-gradient-x {
+        background-size: 200% 200%;
+        animation: gradient-x 3s ease infinite;
+    }
+
+    @keyframes blob {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        25% { transform: translate(20px, -50px) scale(1.1); }
+        50% { transform: translate(-20px, 20px) scale(0.9); }
+        75% { transform: translate(50px, 50px) scale(1.05); }
+    }
+    .animate-blob {
+        animation: blob 10s ease-in-out infinite;
+    }
+    .animation-delay-2000 { animation-delay: 2s; }
+    .animation-delay-4000 { animation-delay: 4s; }
+
+    @keyframes float-musical {
+        0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.15; }
+        90% { opacity: 0.15; }
+        100% { transform: translateY(-100vh) translateX(50px) rotate(360deg); opacity: 0; }
+    }
+    .musical-note {
+        position: absolute;
+        color: white;
+        animation: float-musical 15s linear infinite;
+        pointer-events: none;
+    }
+
+    @keyframes fade-in-up {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .animate-fade-in-up {
+        animation: fade-in-up 0.8s ease-out forwards;
+        opacity: 0;
+    }
+    .animation-delay-200 { animation-delay: 0.2s; }
+    .animation-delay-400 { animation-delay: 0.4s; }
+    .animation-delay-600 { animation-delay: 0.6s; }
+    .animation-delay-800 { animation-delay: 0.8s; }
+    .animation-delay-1000 { animation-delay: 1s; }
+    .animation-delay-1200 { animation-delay: 1.2s; }
+
+    @keyframes fade-in-left {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    .animate-fade-in-left {
+        animation: fade-in-left 1s ease-out 0.4s forwards;
+        opacity: 0;
+    }
+
+    /* Parallax effect */
+    .parallax-bg {
+        transition: transform 0.1s ease-out;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Counter Animation
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const duration = 2000;
+        const increment = target / (duration / 16);
+        let current = 0;
+
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                counter.textContent = target;
+                clearInterval(timer);
+            } else {
+                counter.textContent = Math.floor(current);
+            }
+        }, 16);
+    });
+
+    // Parallax scroll effect
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parallax = document.querySelector('.parallax-bg');
+        if (parallax && scrolled < window.innerHeight) {
+            parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+        }
+    });
+
+    // Mouse move parallax for floating cards
+    document.addEventListener('mousemove', (e) => {
+        const cards = document.querySelectorAll('.relative.group > .absolute');
+        const mouseX = e.clientX / window.innerWidth;
+        const mouseY = e.clientY / window.innerHeight;
+
+        cards.forEach((card, index) => {
+            const speed = (index + 1) * 5;
+            const x = (mouseX - 0.5) * speed;
+            const y = (mouseY - 0.5) * speed;
+            card.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    });
+});
+</script>

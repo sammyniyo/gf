@@ -38,9 +38,9 @@
             <p><strong>Location:</strong> {{ $e->location }}</p>
         @endif
         <p><strong>Name:</strong> {{ $registration->name }}</p>
-        <p><strong>Ticket Code:</strong> {{ $registration->ticket_code }}</p>
+        <p><strong>Ticket Code:</strong> {{ $registration->registration_code }}</p>
         @if ($e->isConcert())
-            <p><strong>Support:</strong> {{ number_format($registration->amount_offered) }} RWF</p>
+            <p><strong>Support:</strong> {{ number_format($registration->total_amount) }} RWF</p>
         @endif
         <div class="qr">
             @if (!empty($qrBase64))

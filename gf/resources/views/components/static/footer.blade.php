@@ -15,9 +15,9 @@
 
             <!-- About Section -->
             <div class="lg:col-span-4">
-                <div class="flex items-center mb-6">
+                <!-- <div class="flex items-center mb-6">
                     <img src="{{ asset('images/logo.png') }}" alt="God's Family Choir" class="h-16 w-auto">
-                </div>
+                </div> -->
                 <h3 class="text-2xl font-bold mb-4 bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text text-transparent">
                     God's Family Choir
                 </h3>

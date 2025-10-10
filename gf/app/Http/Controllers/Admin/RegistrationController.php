@@ -8,10 +8,59 @@ use Illuminate\Http\Request;
 
 class RegistrationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $registrations = EventRegistration::with('event')->latest()->paginate(20);
-        return view('admin.registrations.index', compact('registrations'));
+        $query = EventRegistration::with('event');
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('registration_code', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%")
+                  ->orWhereHas('event', function ($eventQuery) use ($search) {
+                      $eventQuery->where('title', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        // Filter by event
+        if ($request->filled('event_id')) {
+            $query->where('event_id', $request->get('event_id'));
+        }
+
+        // Filter by date range
+        if ($request->filled('date_from')) {
+            $query->whereDate('created_at', '>=', $request->get('date_from'));
+        }
+        if ($request->filled('date_to')) {
+            $query->whereDate('created_at', '<=', $request->get('date_to'));
+        }
+
+        // Filter by status (if you have status field)
+        if ($request->filled('status')) {
+            $query->where('status', $request->get('status'));
+        }
+
+        // Sort options
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+
+        $allowedSorts = ['created_at', 'name', 'email', 'total_amount'];
+        if (in_array($sortBy, $allowedSorts)) {
+            $query->orderBy($sortBy, $sortOrder);
+        } else {
+            $query->latest();
+        }
+
+        $registrations = $query->paginate(5)->withQueryString();
+
+        // Get events for filter dropdown
+        $events = \App\Models\Event::select('id', 'title')->orderBy('title')->get();
+
+        return view('admin.registrations.index', compact('registrations', 'events'));
     }
 
     public function show(EventRegistration $registration)

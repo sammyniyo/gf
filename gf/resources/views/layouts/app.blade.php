@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Gods Family Choir Since 1997- ASA UR Nyarugenge SDA') }}</title>
+    <title>@yield('title', 'God\'s Family Choir - ASA UR Nyarugenge SDA')</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

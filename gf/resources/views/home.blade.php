@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Home | God\'s Family Choir')
+
 @section('content')
     <x-landing.hero />
     <x-landing.logo-carousel />

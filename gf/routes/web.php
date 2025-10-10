@@ -75,8 +75,9 @@ Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 Route::get('/events/{event}.ics', [EventController::class, 'ics'])->name('events.ics');
 
+Route::get('/events/{event}/register', [EventRegistrationController::class, 'create'])->name('events.register');
 Route::post('/events/{event}/register', [EventRegistrationController::class, 'store'])
-    ->name('events.register');
+    ->name('events.register.store');
 
 Route::get('/tickets/verify/{code}', [TicketController::class, 'verify'])->name('tickets.verify');
 Route::get('/tickets/pdf/{code}', [TicketController::class, 'pdf'])->name('tickets.pdf');
@@ -85,6 +86,18 @@ Route::get('/tickets/pdf/{code}', [TicketController::class, 'pdf'])->name('ticke
 Route::get('/register/thank-you', function () {
     return view('registration-thankyou');
 })->name('choir.register.thankyou');
+
+// Test email route (remove in production)
+// Route::get('/test-email', function () {
+//     try {
+//         \Illuminate\Support\Facades\Mail::raw('Test email from God\'s Family Choir', function($message) {
+//             $message->to('test@example.com')->subject('Test Email');
+//         });
+//         return response('Email sent successfully! Check storage/logs/laravel.log for the email content.');
+//     } catch (\Exception $e) {
+//         return response('Email failed: ' . $e->getMessage(), 500);
+//     }
+// });
 
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
@@ -100,6 +113,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Dashboard
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
+    // Notifications
+    Route::get('notifications', [App\Http\Controllers\Admin\NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('notifications/{notification}/read', [App\Http\Controllers\Admin\NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::post('notifications/read-all', [App\Http\Controllers\Admin\NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
+    Route::delete('notifications/{notification}', [App\Http\Controllers\Admin\NotificationController::class, 'destroy'])->name('notifications.destroy');
+
     // Events Management
     Route::resource('events', App\Http\Controllers\Admin\EventController::class);
     Route::get('events/{event}/registrations', [App\Http\Controllers\Admin\EventController::class, 'registrations'])->name('events.registrations');
@@ -111,10 +130,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('registrations/export/csv', [App\Http\Controllers\Admin\RegistrationController::class, 'export'])->name('registrations.export');
 
     // Members Management
-    Route::get('members', [App\Http\Controllers\Admin\MemberController::class, 'index'])->name('members.index');
-    Route::get('members/{member}', [App\Http\Controllers\Admin\MemberController::class, 'show'])->name('members.show');
-    Route::delete('members/{member}', [App\Http\Controllers\Admin\MemberController::class, 'destroy'])->name('members.destroy');
     Route::get('members/export/csv', [App\Http\Controllers\Admin\MemberController::class, 'export'])->name('members.export');
+    Route::resource('members', App\Http\Controllers\Admin\MemberController::class);
 
     // Contacts Management
     Route::get('contacts', [App\Http\Controllers\Admin\ContactController::class, 'index'])->name('contacts.index');
@@ -130,6 +147,22 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Admin Users Management
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+
+    // Committees Management
+    Route::resource('committees', App\Http\Controllers\Admin\CommitteeController::class);
+
+    // Stories Management
+    Route::resource('stories', App\Http\Controllers\Admin\StoryController::class);
+
+    // Contributions Management
+    Route::resource('contributions', App\Http\Controllers\Admin\ContributionController::class);
+    Route::get('contributions/export', [App\Http\Controllers\Admin\ContributionController::class, 'export'])->name('contributions.export');
+    Route::post('contributions/toggle', [App\Http\Controllers\Admin\ContributionController::class, 'togglePayment'])->name('contributions.toggle');
+    Route::post('contributions/target', [App\Http\Controllers\Admin\ContributionController::class, 'setTarget'])->name('contributions.target');
+
+    // Meetings Management
+    Route::resource('meetings', App\Http\Controllers\Admin\MeetingController::class);
+    Route::post('meetings/{meeting}/send-invitations', [App\Http\Controllers\Admin\MeetingController::class, 'sendInvitations'])->name('meetings.send-invitations');
 });
 
 require __DIR__.'/auth.php';

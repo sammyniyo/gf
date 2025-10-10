@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', $story->title . ' | God\'s Family Choir')
+
 @section('content')
 <!-- Hero Section -->
 <section class="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-emerald-950 via-emerald-900 to-black">

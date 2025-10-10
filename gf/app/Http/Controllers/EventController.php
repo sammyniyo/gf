@@ -67,6 +67,15 @@ class EventController extends Controller
         ]);
     }
 
+    public function show(Event $event): View
+    {
+        abort_if(!$event->is_public, 404);
+
+        $event->loadCount('registrations');
+
+        return view('events.show', compact('event'));
+    }
+
     // Per-event ICS download (Add to Calendar)
     public function ics(Event $event): Response
     {

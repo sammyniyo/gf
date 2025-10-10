@@ -23,21 +23,22 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'date' => 'required|date',
-            'time' => 'required',
-            'location' => 'required|string|max:255',
-            'image' => 'nullable|image|max:2048',
-            'max_attendees' => 'nullable|integer|min:1',
+            'title' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'start_at' => 'required|date',
+            'end_at' => 'nullable|date|after_or_equal:start_at',
+            'location' => 'nullable|string|max:255',
+            'cover_image' => 'nullable|image|max:2048',
+            'capacity' => 'nullable|integer|min:1',
             'is_public' => 'boolean',
         ]);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('events', 'public');
+        if ($request->hasFile('cover_image')) {
+            $validated['cover_image'] = $request->file('cover_image')->store('events', 'public');
         }
 
-        $validated['is_public'] = $request->has('is_public');
+        $validated['is_public'] = $request->boolean('is_public', true);
 
         Event::create($validated);
 
@@ -52,25 +53,26 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'date' => 'required|date',
-            'time' => 'required',
-            'location' => 'required|string|max:255',
-            'image' => 'nullable|image|max:2048',
-            'max_attendees' => 'nullable|integer|min:1',
+            'title' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'start_at' => 'required|date',
+            'end_at' => 'nullable|date|after_or_equal:start_at',
+            'location' => 'nullable|string|max:255',
+            'cover_image' => 'nullable|image|max:2048',
+            'capacity' => 'nullable|integer|min:1',
             'is_public' => 'boolean',
         ]);
 
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('cover_image')) {
             // Delete old image if exists
-            if ($event->image) {
-                Storage::disk('public')->delete($event->image);
+            if ($event->cover_image) {
+                Storage::disk('public')->delete($event->cover_image);
             }
-            $validated['image'] = $request->file('image')->store('events', 'public');
+            $validated['cover_image'] = $request->file('cover_image')->store('events', 'public');
         }
 
-        $validated['is_public'] = $request->has('is_public');
+        $validated['is_public'] = $request->boolean('is_public', true);
 
         $event->update($validated);
 
@@ -79,8 +81,8 @@ class EventController extends Controller
 
     public function destroy(Event $event)
     {
-        if ($event->image) {
-            Storage::disk('public')->delete($event->image);
+        if ($event->cover_image) {
+            Storage::disk('public')->delete($event->cover_image);
         }
 
         $event->delete();

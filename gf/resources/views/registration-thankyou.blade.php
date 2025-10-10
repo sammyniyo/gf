@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Thank You | God\'s Family Choir')
+
 @section('content')
     <section class="relative bg-emerald-950 py-20 lg:py-28 overflow-hidden">
         {{-- Background + overlays (same vibe as hero) --}}

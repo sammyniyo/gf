@@ -11,6 +11,7 @@ class Member extends Model
 
     protected $fillable = [
         // Personal Information
+        'name',  // Legacy field for compatibility
         'first_name',
         'last_name',
         'email',

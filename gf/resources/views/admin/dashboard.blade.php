@@ -2,334 +2,505 @@
 
 @section('page-title', 'Dashboard')
 
+@php
+    $upcomingRatio = $total_events > 0 ? round(($upcoming_events / $total_events) * 100) : 0;
+    $recentRegistrationCount = $recent_registrations->count();
+    $recentMemberCount = $recent_members->count();
+    $registrationPulse = $recent_registrations->sum('tickets');
+    $recentContactsCollection = $recent_contacts ?? collect();
+    $recentMessagesCount = $recentContactsCollection->count();
+    $trendLabels = $registrationTrend['labels'] ?? [];
+    $trendTotals = $registrationTrend['totals'] ?? [];
+
+    $timelineItems = collect();
+
+    foreach ($recent_registrations as $registration) {
+        $timelineItems->push([
+            'type' => 'registration',
+            'title' => 'New event registration',
+            'name' => $registration->name,
+            'meta' => $registration->event->name ?? 'Event archived',
+            'tickets' => $registration->tickets,
+            'time' => $registration->created_at,
+        ]);
+    }
+
+    foreach ($recent_members as $member) {
+        $timelineItems->push([
+            'type' => 'member',
+            'title' => 'New choir member',
+            'name' => trim($member->first_name . ' ' . $member->last_name),
+            'meta' => $member->voice_part ? "{$member->voice_part} section" : 'Awaiting voice assignment',
+            'time' => $member->created_at,
+        ]);
+    }
+
+    $timelineItems = $timelineItems->sortByDesc('time')->take(6);
+@endphp
+
 @section('content')
-<div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-    <!-- Header Bar (neutral) -->
-    <div class="mb-6">
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="text-xl font-semibold text-gray-900">Welcome back, {{ Auth::user()->name }}!</h1>
-                <p class="mt-1 text-sm text-gray-500">Here's what's happening with your choir today.</p>
-            </div>
-            <div class="hidden md:flex items-center gap-3">
-                <span class="px-3 py-1.5 text-sm text-gray-700 bg-white border border-gray-200 rounded-md">{{ now()->format('M d, Y') }}</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Stats Grid with Gradients -->
-    <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
-        <!-- Total Events Card -->
-        <div class="bg-white rounded-lg border border-gray-200">
-            <div class="p-5">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="p-2 rounded-md bg-gray-100 text-gray-700">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <span class="px-2 py-0.5 text-xs font-medium text-gray-700 bg-gray-100 rounded">Total</span>
-                </div>
-                <div>
-                    <p class="text-xs font-medium text-gray-500">Total Events</p>
-                    <p class="mt-1 text-2xl font-semibold text-gray-900">{{ $total_events }}</p>
-                    <div class="flex items-center mt-3">
-                        <svg class="w-4 h-4 mr-1 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd" />
-                        </svg>
-                        <a href="{{ route('admin.events.index') }}" class="text-sm font-medium text-gray-700 hover:text-gray-900">View all</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Upcoming Events Card -->
-        <div class="bg-white rounded-lg border border-gray-200">
-            <div class="p-5">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="p-2 rounded-md bg-gray-100 text-gray-700">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <span class="px-2 py-0.5 text-xs font-medium text-gray-700 bg-gray-100 rounded">Upcoming</span>
-                </div>
-                <div>
-                    <p class="text-xs font-medium text-gray-500">Upcoming Events</p>
-                    <p class="mt-1 text-2xl font-semibold text-gray-900">{{ $upcoming_events }}</p>
-                    <div class="flex items-center mt-3">
-                        <svg class="w-4 h-4 mr-1 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
-                        </svg>
-                        <a href="{{ route('admin.events.index') }}" class="text-sm font-medium text-gray-700 hover:text-gray-900">Manage</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Total Registrations Card -->
-        <div class="bg-white rounded-lg border border-gray-200">
-            <div class="p-5">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="p-2 rounded-md bg-gray-100 text-gray-700">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-                        </svg>
-                    </div>
-                    <span class="px-2 py-0.5 text-xs font-medium text-gray-700 bg-gray-100 rounded">Active</span>
-                </div>
-                <div>
-                    <p class="text-xs font-medium text-gray-500">Total Registrations</p>
-                    <p class="mt-1 text-2xl font-semibold text-gray-900">{{ $total_registrations }}</p>
-                    <div class="flex items-center mt-3">
-                        <svg class="w-4 h-4 mr-1 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd" />
-                        </svg>
-                        <a href="{{ route('admin.registrations.index') }}" class="text-sm font-medium text-gray-700 hover:text-gray-900">View all</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Total Members Card -->
-        <div class="bg-white rounded-lg border border-gray-200">
-            <div class="p-5">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="p-2 rounded-md bg-gray-100 text-gray-700">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                    </div>
-                    <span class="px-2 py-0.5 text-xs font-medium text-gray-700 bg-gray-100 rounded">Members</span>
-                </div>
-                <div>
-                    <p class="text-xs font-medium text-gray-500">Choir Members</p>
-                    <p class="mt-1 text-2xl font-semibold text-gray-900">{{ $total_members }}</p>
-                    <div class="flex items-center mt-3">
-                        <svg class="w-4 h-4 mr-1 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                        </svg>
-                        <a href="{{ route('admin.members.index') }}" class="text-sm font-medium text-gray-700 hover:text-gray-900">View all</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Charts & Activity Section -->
-    <div class="grid grid-cols-1 gap-6 mb-8 lg:grid-cols-3">
-        <!-- Recent Activity Timeline -->
-        <div class="lg:col-span-2">
-            <div class="overflow-hidden bg-white shadow-lg rounded-2xl">
-                <div class="px-6 py-5 border-b border-gray-200 bg-gradient-to-r from-purple-50 to-blue-50">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="p-2 rounded-lg gradient-bg">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                </svg>
-                            </div>
-                            <h2 class="text-xl font-bold text-gray-900">Recent Activity</h2>
-                        </div>
-                        <span class="px-3 py-1 text-xs font-semibold text-purple-700 bg-purple-100 rounded-full">Live</span>
-                    </div>
-                </div>
-                <div class="p-6">
-                    @if($recent_registrations->count() > 0 || $recent_members->count() > 0)
-                        <div class="space-y-6">
-                            @foreach($recent_registrations->take(3) as $registration)
-                                <div class="flex items-start space-x-4 group">
-                                    <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 rounded-full gradient-bg">
-                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-                                        </svg>
-                                    </div>
-                                    <div class="flex-1 min-w-0">
-                                        <div class="flex items-center justify-between">
-                                            <p class="text-sm font-semibold text-gray-900">New Event Registration</p>
-                                            <span class="text-xs text-gray-500">{{ $registration->created_at->diffForHumans() }}</span>
-                                        </div>
-                                        <p class="mt-1 text-sm text-gray-600">
-                                            <span class="font-medium text-purple-600">{{ $registration->name }}</span> registered for
-                                            <span class="font-medium">{{ $registration->event->name ?? 'N/A' }}</span>
-                                        </p>
-                                        <div class="flex items-center mt-2 space-x-2">
-                                            <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
-                                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                                </svg>
-                                                {{ $registration->tickets }} {{ Str::plural('ticket', $registration->tickets) }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-
-                            @foreach($recent_members->take(2) as $member)
-                                <div class="flex items-start space-x-4 group">
-                                    <div class="flex-shrink-0">
-                                        @if($member->photo)
-                                            <img src="{{ Storage::url($member->photo) }}" alt="{{ $member->first_name }}" class="w-12 h-12 border-2 border-purple-200 rounded-full">
-                                        @else
-                                            <div class="flex items-center justify-center w-12 h-12 text-lg font-bold text-white rounded-full gradient-bg-2">
-                                                {{ substr($member->first_name, 0, 1) }}{{ substr($member->last_name, 0, 1) }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="flex-1 min-w-0">
-                                        <div class="flex items-center justify-between">
-                                            <p class="text-sm font-semibold text-gray-900">New Choir Member</p>
-                                            <span class="text-xs text-gray-500">{{ $member->created_at->diffForHumans() }}</span>
-                                        </div>
-                                        <p class="mt-1 text-sm text-gray-600">
-                                            <span class="font-medium text-pink-600">{{ $member->first_name }} {{ $member->last_name }}</span> joined the choir
-                                        </p>
-                                        <div class="flex items-center mt-2 space-x-2">
-                                            @if($member->voice_part)
-                                                <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold text-blue-800 bg-blue-100 rounded-full">
-                                                    🎵 {{ $member->voice_part }}
-                                                </span>
-                                            @endif
-                                            <span class="text-xs text-gray-500">{{ $member->email }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div class="mt-6 text-center">
-                            <a href="{{ route('admin.registrations.index') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-purple-600 transition-all duration-200 bg-purple-100 rounded-lg hover:bg-purple-200">
-                                View All Activity
-                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </a>
-                        </div>
-                    @else
-                        <div class="py-12 text-center">
-                            <svg class="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                            </svg>
-                            <p class="mt-4 text-sm text-gray-500">No recent activity</p>
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-
-        <!-- Quick Stats Sidebar -->
-        <div class="space-y-6">
-            <!-- Quick Actions Card -->
-            <div class="overflow-hidden bg-white shadow-lg rounded-2xl">
-                <div class="px-6 py-5 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-purple-50">
-                    <div class="flex items-center space-x-3">
-                        <div class="p-2 rounded-lg gradient-bg-3">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900">Quick Actions</h3>
-                    </div>
-                </div>
-                <div class="p-6 space-y-3">
-                    <a href="{{ route('admin.events.create') }}" class="flex items-center justify-between w-full px-4 py-3 text-sm font-medium text-white transition-all duration-200 transform rounded-xl gradient-bg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                        <span class="flex items-center">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                            </svg>
-                            Create Event
-                        </span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </a>
-
-                    <a href="{{ route('admin.registrations.export') }}" class="flex items-center justify-between w-full px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-200 bg-gray-100 rounded-xl hover:bg-gray-200">
-                        <span class="flex items-center">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                            </svg>
-                            Export Data
-                        </span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </a>
-
-                    <a href="{{ route('admin.contacts.index') }}" class="flex items-center justify-between w-full px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-200 bg-gray-100 rounded-xl hover:bg-gray-200">
-                        <span class="flex items-center">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<div class="space-y-6">
+    <!-- Important Notifications -->
+    @if($unread_contacts_count > 0 || $upcoming_events > 0)
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            @if($unread_contacts_count > 0)
+                <a href="{{ route('admin.contacts.index') }}" class="glass-card p-5 border-l-4 border-rose-500 hover:shadow-lg transition-all group">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-rose-100 group-hover:bg-rose-200 transition-colors">
+                            <svg class="w-6 h-6 text-rose-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
-                            Messages
-                        </span>
-                        @if($total_contacts > 0)
-                            <span class="px-2 py-0.5 text-xs font-semibold text-white bg-red-500 rounded-full">{{ $total_contacts }}</span>
-                        @else
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-semibold text-slate-900">Unread Messages</p>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-3xl font-bold text-rose-600">{{ $unread_contacts_count }}</span>
+                                <span class="text-xs text-slate-500">new</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Click to view messages</p>
+    </div>
+                </div>
+                </a>
+            @endif
+
+            @if($upcoming_events > 0)
+                <a href="{{ route('admin.events.index') }}" class="glass-card p-5 border-l-4 border-indigo-500 hover:shadow-lg transition-all group">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-100 group-hover:bg-indigo-200 transition-colors">
+                            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-semibold text-slate-900">Upcoming Events</p>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-3xl font-bold text-indigo-600">{{ $upcoming_events }}</span>
+                                <span class="text-xs text-slate-500">scheduled</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Events to manage</p>
+                        </div>
+                    </div>
+                </a>
+            @endif
+
+            @if($total_members > 0)
+                <a href="{{ route('admin.members.index') }}" class="glass-card p-5 border-l-4 border-emerald-500 hover:shadow-lg transition-all group">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 group-hover:bg-emerald-200 transition-colors">
+                            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
-                        @endif
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-semibold text-slate-900">Active Members</p>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-3xl font-bold text-emerald-600">{{ $total_members }}</span>
+                                <span class="text-xs text-slate-500">total</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Choir community</p>
+                        </div>
+                    </div>
+                </a>
+            @endif
+            </div>
+    @endif
+
+    <div class="grid gap-6 lg:grid-cols-12">
+        <section class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-500 via-purple-500 to-sky-500 text-white shadow-xl lg:col-span-8">
+            <div class="absolute inset-0 opacity-30">
+                <div class="absolute -top-32 -right-36 h-64 w-64 rounded-full bg-white/20 blur-3xl"></div>
+                <div class="absolute bottom-0 right-0 h-48 w-48 rounded-full bg-white/10 blur-2xl"></div>
+            </div>
+            <div class="relative z-10 flex flex-col gap-8 p-8 sm:p-10">
+                <div class="flex flex-col gap-3">
+                    <span class="inline-flex w-fit items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest">Today's pulse</span>
+                    <h1 class="text-3xl font-semibold leading-tight sm:text-4xl">
+                        Welcome back, {{ Auth::user()->name }} 👋
+                    </h1>
+                    <p class="max-w-xl text-sm text-white/80">
+                        Your choir's performance at a glance. Keep nurturing breathtaking moments while we surface the signals that matter.
+                    </p>
+        </div>
+
+                <div class="grid gap-5 sm:grid-cols-3">
+                    <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg shadow-indigo-900/20">
+                        <p class="text-xs font-semibold uppercase tracking-wide text-white/80">New Registrations</p>
+                        <p class="mt-2 text-3xl font-semibold">{{ $recentRegistrationCount }}</p>
+                        <p class="mt-1 text-xs text-white/70">{{ $registrationPulse }} tickets secured</p>
+                    </div>
+                    <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg shadow-indigo-900/20">
+                        <p class="text-xs font-semibold uppercase tracking-wide text-white/80">Fresh Members</p>
+                        <p class="mt-2 text-3xl font-semibold">{{ $recentMemberCount }}</p>
+                        <p class="mt-1 text-xs text-white/70">Welcomed in the latest batch</p>
+                    </div>
+                    <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg shadow-indigo-900/20">
+                        <p class="text-xs font-semibold uppercase tracking-wide text-white/80">Inbox Momentum</p>
+                        <p class="mt-2 text-3xl font-semibold">{{ $recentMessagesCount }}</p>
+                        <p class="mt-1 text-xs text-white/70">New conversations opened</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3">
+                    <a href="{{ route('admin.events.create') }}" class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-indigo-600 transition hover:bg-indigo-50">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Schedule event
+                    </a>
+                    <a href="{{ route('admin.registrations.index') }}" class="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/20">
+                        Review registrations
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
                     </a>
                 </div>
             </div>
+        </section>
 
-            <!-- System Status Card -->
-            <div class="overflow-hidden bg-white shadow-lg rounded-2xl">
-                <div class="px-6 py-5 border-b border-gray-200 bg-gradient-to-r from-green-50 to-blue-50">
-                    <div class="flex items-center space-x-3">
-                        <div class="p-2 rounded-lg gradient-bg-4">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900">System Status</h3>
+        <section class="lg:col-span-4">
+            <div class="glass-card h-full p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                        <p class="text-sm font-semibold text-slate-600">Upcoming focus</p>
+                        <p class="text-xs text-slate-400">Quick highlights for the next few days</p>
                     </div>
+                    <span class="inline-flex items-center rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-600">{{ $upcoming_events }} upcoming</span>
                 </div>
-                <div class="p-6 space-y-4">
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-600">Database</span>
-                        <span class="flex items-center text-sm font-semibold text-green-600">
-                            <span class="w-2 h-2 mr-2 bg-green-500 rounded-full animate-pulse"></span>
-                            Online
-                        </span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-600">Mail Service</span>
-                        <span class="flex items-center text-sm font-semibold text-green-600">
-                            <span class="w-2 h-2 mr-2 bg-green-500 rounded-full animate-pulse"></span>
-                            Active
-                        </span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-600">Storage</span>
-                        <span class="flex items-center text-sm font-semibold text-green-600">
-                            <span class="w-2 h-2 mr-2 bg-green-500 rounded-full animate-pulse"></span>
-                            Healthy
-                        </span>
-                    </div>
-                    <div class="pt-4 mt-4 border-t border-gray-200">
-                        <div class="flex items-center justify-between text-xs text-gray-500">
-                            <span>Last Check</span>
-                            <span>{{ now()->format('H:i:s') }}</span>
+
+                <div class="mt-6 space-y-5">
+                    @forelse(($upcoming_events_list ?? collect())->take(4) as $event)
+                        <div class="flex items-start gap-4 rounded-2xl border border-slate-200/60 bg-white/70 p-4 shadow-sm">
+                            <div class="flex h-12 w-12 flex-col items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
+                                <span class="text-xs font-semibold uppercase">{{ optional($event->date)->format('M') }}</span>
+                                <span class="text-lg font-semibold">{{ optional($event->date)->format('d') }}</span>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold text-slate-800">{{ $event->name }}</p>
+                                <p class="text-xs text-slate-500">{{ $event->location ?? 'Location TBA' }}</p>
+                                <div class="mt-2 flex flex-wrap items-center gap-2">
+                                    <span class="inline-flex items-center gap-1 rounded-full bg-indigo-100 px-2 py-0.5 text-[11px] font-semibold text-indigo-600">
+                                        <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6a9 9 0 110 12 9 9 0 010-12z" />
+                    </svg>
+                                        {{ $event->start_at ? $event->start_at->format('H:i') : ($event->time ?: 'All day') }}
+                                    </span>
+                                    <a href="{{ route('admin.events.edit', $event) }}" class="text-xs font-semibold text-slate-500 underline-offset-2 hover:text-slate-700 hover:underline">Edit</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @empty
+                        <div class="rounded-2xl border border-dashed border-slate-300/80 bg-white/60 p-6 text-center text-sm text-slate-500">
+                            No upcoming events on the calendar just yet. Create your next moment in seconds.
+                        </div>
+                    @endforelse
                 </div>
             </div>
+        </section>
+    </div>
+
+    <section class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+        <article class="relative overflow-hidden rounded-2xl border border-indigo-100 bg-white/85 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+            <div class="flex items-center justify-between">
+                <span class="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600">Events</span>
+                <svg class="h-7 w-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+            </div>
+            <p class="mt-6 text-3xl font-semibold text-slate-900">{{ $total_events }}</p>
+            <p class="mt-2 text-sm text-slate-500">{{ $upcomingRatio }}% of events are future-facing</p>
+            <a href="{{ route('admin.events.index') }}" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-indigo-600">
+                Manage timeline
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </a>
+        </article>
+
+        <article class="relative overflow-hidden rounded-2xl border border-emerald-100 bg-white/85 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+            <div class="flex items-center justify-between">
+                <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-600">Registrations</span>
+                <svg class="h-7 w-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                </svg>
+        </div>
+            <p class="mt-6 text-3xl font-semibold text-slate-900">{{ $total_registrations }}</p>
+            <p class="mt-2 text-sm text-slate-500">Across {{ $total_events }} curated events</p>
+            <a href="{{ route('admin.registrations.index') }}" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-emerald-600">
+                View attendee list
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </a>
+        </article>
+
+        <article class="relative overflow-hidden rounded-2xl border border-blue-100 bg-white/85 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+            <div class="flex items-center justify-between">
+                <span class="inline-flex items-center gap-2 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-600">Members</span>
+                <svg class="h-7 w-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </div>
+            <p class="mt-6 text-3xl font-semibold text-slate-900">{{ $total_members }}</p>
+            <p class="mt-2 text-sm text-slate-500">Voices united in the choir</p>
+            <a href="{{ route('admin.members.index') }}" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-blue-600">
+                Nurture community
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </a>
+        </article>
+
+        <article class="relative overflow-hidden rounded-2xl border border-rose-100 bg-white/85 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+            <div class="flex items-center justify-between">
+                <span class="inline-flex items-center gap-2 rounded-full bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-600">Messages</span>
+                <svg class="h-7 w-7 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+            </div>
+            <p class="mt-6 text-3xl font-semibold text-slate-900">{{ $total_contacts }}</p>
+            <p class="mt-2 text-sm text-slate-500">Community touchpoints captured</p>
+            <a href="{{ route('admin.contacts.index') }}" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-rose-600">
+                Open inbox
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </a>
+        </article>
+    </section>
+
+    <div class="grid gap-6 xl:grid-cols-12">
+        <section class="xl:col-span-8">
+            <div class="glass-card p-6">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                        <p class="text-sm font-semibold text-slate-600">Registration velocity</p>
+                        <p class="text-xs text-slate-400">Performance over the last few weeks</p>
+            </div>
+                    <div class="flex items-center gap-2 rounded-full border border-slate-200 bg-white/60 px-2 py-1 text-xs font-semibold text-slate-500">
+                        <button type="button" class="rounded-full bg-indigo-600 px-3 py-1 text-white shadow-sm">Last 30 days</button>
+                        <span class="px-3 py-1">Quarter</span>
+                        <span class="px-3 py-1">Year</span>
         </div>
     </div>
+
+                <div class="mt-6">
+                    <canvas id="registrationsTrendChart" height="220"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="xl:col-span-4">
+            <div class="glass-card h-full p-6">
+                <div class="flex items-center justify-between">
+                                <div>
+                        <p class="text-sm font-semibold text-slate-600">Live activity</p>
+                        <p class="text-xs text-slate-400">Newest engagements across the choir</p>
+                    </div>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-500">
+                        <svg class="h-3 w-3 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                            <circle cx="10" cy="10" r="3"></circle>
+                        </svg>
+                        Updating live
+                    </span>
+                </div>
+
+                <div class="mt-6 space-y-5">
+                    @forelse($timelineItems as $item)
+                        <div class="flex items-start gap-4 rounded-2xl border border-slate-200/70 bg-white/70 p-4 shadow-sm">
+                            <div class="flex h-10 w-10 items-center justify-center rounded-xl {{ $item['type'] === 'registration' ? 'bg-emerald-50 text-emerald-600' : 'bg-blue-50 text-blue-600' }}">
+                                @if($item['type'] === 'registration')
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                                    </svg>
+                                @else
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                @endif
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between gap-4">
+                                    <p class="text-sm font-semibold text-slate-800">{{ $item['title'] }}</p>
+                                    <span class="text-xs text-slate-400">{{ $item['time']->diffForHumans() }}</span>
+                                </div>
+                                <p class="mt-1 text-sm text-slate-600">
+                                    <span class="font-semibold text-slate-900">{{ $item['name'] }}</span>
+                                    @if($item['type'] === 'registration')
+                                        registered for <span class="font-semibold text-slate-900">{{ $item['meta'] }}</span>
+                                        @if($item['tickets'])
+                                            <span class="ml-1 inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-semibold text-emerald-600">
+                                                🎟 {{ $item['tickets'] }}
+                                </span>
+                                        @endif
+                                    @else
+                                        joined the choir &bull; <span class="font-semibold text-blue-600">{{ $item['meta'] }}</span>
+                                    @endif
+                                </p>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="rounded-2xl border border-dashed border-slate-300/80 bg-white/60 p-6 text-center text-sm text-slate-500">
+                            Activity will appear here as new registrations and members arrive.
+                    </div>
+                    @endforelse
+                    </div>
+            </div>
+        </section>
+        </div>
+
+    <section class="glass-card p-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+                <p class="text-sm font-semibold text-slate-600">Event roadmap</p>
+                <p class="text-xs text-slate-400">Polished overview of upcoming productions</p>
+            </div>
+            <div class="flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-2 py-1 text-xs font-semibold text-slate-500">
+                <span class="rounded-full bg-slate-900 px-3 py-1 text-white">Outline</span>
+                <span class="px-3 py-1">Past performances</span>
+                <span class="px-3 py-1">Focus docs</span>
+            </div>
+                                        </div>
+
+        <div class="mt-6 overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-100 text-left">
+                <thead>
+                    <tr>
+                        <th class="py-3 pr-6 text-xs font-semibold uppercase tracking-wider text-slate-400">Event</th>
+                        <th class="py-3 pr-6 text-xs font-semibold uppercase tracking-wider text-slate-400">Status</th>
+                        <th class="py-3 pr-6 text-xs font-semibold uppercase tracking-wider text-slate-400">Date</th>
+                        <th class="py-3 pr-6 text-xs font-semibold uppercase tracking-wider text-slate-400">Limit</th>
+                        <th class="py-3 text-xs font-semibold uppercase tracking-wider text-slate-400">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @forelse(($upcoming_events_list ?? collect())->take(8) as $event)
+                        <tr class="transition hover:bg-slate-50/60">
+                            <td class="py-4 pr-6">
+                                <div class="flex items-center gap-3">
+                                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-50 text-sm font-semibold text-indigo-600">
+                                        {{ Str::upper(Str::substr($event->name, 0, 2)) }}
+                                    </span>
+                                    <div>
+                                        <p class="text-sm font-semibold text-slate-800">{{ $event->name }}</p>
+                                        <p class="text-xs text-slate-500">{{ $event->location ?? 'Location TBA' }}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-4 pr-6">
+                                <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-600">
+                                    <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+                                    In progress
+                                    </span>
+                            </td>
+                            <td class="py-4 pr-6 text-sm text-slate-600">
+                                {{ optional($event->date)->format('M d, Y') ?? 'TBD' }}
+                            </td>
+                            <td class="py-4 pr-6 text-sm text-slate-600">
+                                {{ $event->max_attendees ? number_format($event->max_attendees) : 'Open' }}
+                            </td>
+                            <td class="py-4 text-sm">
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('admin.events.edit', $event) }}" class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-800">Edit</a>
+                                    <a href="{{ route('admin.events.registrations', $event) }}" class="rounded-full bg-indigo-600 px-3 py-1 text-xs font-semibold text-white shadow-sm transition hover:bg-indigo-500">View</a>
+                            </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="py-6 text-center text-sm text-slate-500">
+                                No future events yet. Let's craft a new headline performance.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </section>
 </div>
 @endsection
 
 @push('scripts')
 <script>
-    // Add animation on load
-    document.addEventListener('DOMContentLoaded', function() {
-        const cards = document.querySelectorAll('.stat-card');
-        cards.forEach((card, index) => {
-            setTimeout(() => {
-                card.style.opacity = '1';
-            }, index * 100);
+    (function () {
+        const ctx = document.getElementById('registrationsTrendChart');
+
+        if (!ctx) {
+            return;
+        }
+
+        const trendLabels = @json($trendLabels);
+        const trendTotals = @json($trendTotals);
+
+        const fallbackLabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+        const fallbackTotals = [0, 0, 0, 0];
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: trendLabels.length ? trendLabels : fallbackLabels,
+                datasets: [
+                    {
+                        label: 'Registrations',
+                        data: trendTotals.length ? trendTotals : fallbackTotals,
+                        fill: true,
+                        tension: 0.4,
+                        backgroundColor: 'rgba(99, 102, 241, 0.15)',
+                        borderColor: 'rgba(79, 70, 229, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#6366f1',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleColor: '#f8fafc',
+                        bodyColor: '#e2e8f0',
+                        borderColor: 'rgba(148, 163, 184, 0.3)',
+                        borderWidth: 1,
+                        padding: 12,
+                        cornerRadius: 12
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#94a3b8',
+                            font: {
+                                size: 11,
+                                weight: 600
+                            }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(148, 163, 184, 0.15)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: '#94a3b8',
+                            font: {
+                                size: 11,
+                                weight: 600
+                            },
+                            precision: 0
+                        }
+                    }
+                }
+            }
         });
-    });
+    })();
 </script>
 @endpush

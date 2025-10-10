@@ -113,9 +113,28 @@ return [
      */
     protected function prepareForValidation(): void
     {
-        // Convert newsletter checkbox to boolean
+        // Convert checkboxes to proper values
         $this->merge([
-            'newsletter' => $this->has('newsletter'),
+            'newsletter' => $this->has('newsletter') ? true : false,
+            'terms_agreed' => $this->has('terms_agreed') ? '1' : '0',
         ]);
+    }
+
+    /**
+     * Handle a failed validation attempt.
+     */
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        if ($this->expectsJson() || $this->ajax() || $this->wantsJson()) {
+            throw new \Illuminate\Http\Exceptions\HttpResponseException(
+                response()->json([
+                    'success' => false,
+                    'message' => 'Please check the form and correct the errors.',
+                    'errors' => $validator->errors()
+                ], 422)
+            );
+        }
+
+        parent::failedValidation($validator);
     }
 }

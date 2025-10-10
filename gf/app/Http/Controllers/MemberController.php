@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MemberRegistrationMail;
+use App\Services\NotificationService;
 
 class MemberController extends Controller
 {
@@ -28,6 +29,14 @@ class MemberController extends Controller
         try {
             $data = $request->validated();
 
+            // Remove terms_agreed from data as it's not a database field
+            unset($data['terms_agreed']);
+
+            // Populate 'name' field from first_name and last_name (for legacy database compatibility)
+            if (isset($data['first_name']) && isset($data['last_name'])) {
+                $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
+            }
+
             // Handle profile photo upload
             if ($request->hasFile('profile_photo')) {
                 $photo = $request->file('profile_photo');
@@ -36,8 +45,15 @@ class MemberController extends Controller
                 $data['profile_photo'] = $photoName;
             }
 
+            // Set initial status
+            $data['status'] = 'pending';
+            $data['joined_at'] = now();
+
             // Create member
             $member = Member::create($data);
+
+            // Create notification for admins
+            NotificationService::newMemberRegistration($member);
 
             // Send confirmation email
             try {
@@ -54,10 +70,12 @@ class MemberController extends Controller
 
         } catch (\Exception $e) {
             \Log::error('Member registration error: ' . $e->getMessage());
+            \Log::error('Error trace: ' . $e->getTraceAsString());
 
             return response()->json([
                 'success' => false,
                 'message' => 'An error occurred while processing your registration. Please try again.',
+                'error_details' => config('app.debug') ? $e->getMessage() : null,
                 'errors' => ['general' => ['Registration failed. Please try again.']]
             ], 500);
         }

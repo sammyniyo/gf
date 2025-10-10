@@ -9,25 +9,22 @@ use Illuminate\Support\Carbon;
 class Event extends Model
 {
     protected $fillable = [
-        'name',
+        'title',
         'type',
         'description',
         'start_at',
         'end_at',
-        'date',
-        'time',
         'location',
-        'max_attendees',
+        'capacity',
         'is_public',
-        'image'
+        'cover_image'
     ];
 
     protected $casts = [
         'is_public' => 'boolean',
         'start_at'  => 'datetime',
         'end_at'    => 'datetime',
-        'date'      => 'date',
-        'max_attendees' => 'integer',
+        'capacity' => 'integer',
     ];
 
     public function registrations(): HasMany
@@ -42,7 +39,7 @@ class Event extends Model
 
     public function isFull(): bool
     {
-        return $this->max_attendees !== null && $this->registrations()->count() >= $this->max_attendees;
+        return $this->capacity !== null && $this->registrations()->count() >= $this->capacity;
     }
 
     public function isPast(): bool

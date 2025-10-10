@@ -1,40 +1,25 @@
 @extends('layouts.app')
 
-@section('title', 'Join God\'s Family Choir')
+@section('title', 'Join Choir | God\'s Family Choir')
 
 @section('content')
-<!-- Stunning Background -->
-<div class="absolute inset-0 bg-gradient-to-br from-emerald-50 via-green-50 to-blue-50">
-    <!-- Animated Background Elements -->
-    <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
-        <!-- Floating Orbs -->
-        <div class="absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-emerald-400/20 to-green-400/20 rounded-full blur-xl animate-float"></div>
-        <div class="absolute top-40 right-20 w-24 h-24 bg-gradient-to-r from-blue-400/20 to-indigo-400/20 rounded-full blur-lg animate-drift"></div>
-        <div class="absolute bottom-32 left-1/4 w-40 h-40 bg-gradient-to-r from-amber-400/15 to-orange-400/15 rounded-full blur-2xl animate-float" style="animation-delay: 2s;"></div>
-        <div class="absolute bottom-20 right-1/3 w-28 h-28 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-xl animate-drift" style="animation-delay: 1s;"></div>
+<div class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-slate-100 relative overflow-hidden">
+    <!-- Background Elements -->
+    <div class="absolute -top-32 right-16 h-72 w-72 rounded-full bg-indigo-200/40 blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 h-80 w-80 -translate-x-1/3 translate-y-1/3 rounded-full bg-sky-200/40 blur-3xl pointer-events-none"></div>
+    <div class="absolute inset-0 bg-grid-slate opacity-30 pointer-events-none"></div>
 
-        <!-- Geometric Patterns -->
-        <div class="absolute top-1/4 left-1/3 w-2 h-2 bg-emerald-500/30 rounded-full animate-ping"></div>
-        <div class="absolute top-1/2 right-1/4 w-1 h-1 bg-blue-500/40 rounded-full animate-ping" style="animation-delay: 1s;"></div>
-        <div class="absolute bottom-1/3 left-1/5 w-1.5 h-1.5 bg-amber-500/35 rounded-full animate-ping" style="animation-delay: 2s;"></div>
-
-        <!-- Subtle Grid Pattern -->
-        <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 1px 1px, rgba(34, 197, 94, 0.3) 1px, transparent 0); background-size: 40px 40px;"></div>
-    </div>
-</div>
-
-<!-- Scrollable Content -->
-<div class="relative z-10 min-h-screen">
-    <div class="py-12 px-4 sm:px-6 lg:px-8">
+    <!-- Content -->
+    <div class="relative z-10 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
         <!-- Header -->
         <div class="text-center mb-12">
             <div class="inline-block mb-6">
-                <div class="w-20 h-20 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <div class="w-20 h-20 bg-gradient-to-r from-indigo-500 to-sky-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                     <i class="fas fa-music text-white text-2xl"></i>
                 </div>
     </div>
-            <h1 class="text-5xl font-bold bg-gradient-to-r from-gray-900 via-emerald-700 to-green-600 bg-clip-text text-transparent mb-4">
+            <h1 class="text-5xl font-bold bg-gradient-to-r from-slate-900 via-indigo-700 to-sky-500 bg-clip-text text-transparent mb-4">
                 Join God's Family Choir
             </h1>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
@@ -44,7 +29,7 @@
             <!-- Trust Indicators -->
             <div class="flex flex-wrap justify-center items-center gap-6 mt-8 text-sm text-gray-500">
                 <div class="flex items-center gap-2">
-                    <i class="fas fa-shield-alt text-emerald-500"></i>
+                    <i class="fas fa-shield-alt text-indigo-500"></i>
                     <span>Secure Registration</span>
                 </div>
                 <div class="flex items-center gap-2">
@@ -60,37 +45,37 @@
 
         <!-- Progress Steps -->
         <div class="mb-12">
-            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/30">
+            <div class="rounded-3xl border border-slate-200/70 bg-white/90 px-5 py-6 shadow-lg backdrop-blur">
                 <div class="flex items-center justify-center space-x-4 sm:space-x-8">
                     <div class="flex items-center">
-                        <div id="step-1" class="w-14 h-14 rounded-full bg-gradient-to-r from-emerald-500 to-green-600 text-white flex items-center justify-center font-semibold transition-all duration-300 shadow-lg">
+                        <div id="step-1" class="w-14 h-14 rounded-full bg-gradient-to-r from-indigo-500 to-sky-500 text-white flex items-center justify-center font-semibold transition-all duration-300 shadow-lg">
                             <i class="fas fa-user text-lg"></i>
                         </div>
-                        <span class="ml-3 text-sm font-medium text-emerald-600 hidden sm:block">Personal Info</span>
+                        <span class="ml-3 text-sm font-medium text-indigo-600 hidden sm:block">Personal Info</span>
                     </div>
-                    <div class="w-12 sm:w-16 h-1 bg-gray-200 rounded-full">
-                        <div id="progress-1" class="h-1 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    <div class="w-12 sm:w-16 h-1 rounded-full bg-slate-200">
+                        <div id="progress-1" class="h-1 bg-gradient-to-r from-indigo-500 to-sky-500 rounded-full transition-all duration-500" style="width: 0%"></div>
                     </div>
                     <div class="flex items-center">
-                        <div id="step-2" class="w-14 h-14 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-semibold transition-all duration-300 shadow-lg">
+                        <div id="step-2" class="w-14 h-14 rounded-full border border-slate-200 bg-slate-100 text-slate-500 flex items-center justify-center font-semibold shadow-sm transition">
                             <i class="fas fa-briefcase text-lg"></i>
                         </div>
                         <span class="ml-3 text-sm font-medium text-gray-500 hidden sm:block">Professional</span>
                     </div>
-                    <div class="w-12 sm:w-16 h-1 bg-gray-200 rounded-full">
-                        <div id="progress-2" class="h-1 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    <div class="w-12 sm:w-16 h-1 rounded-full bg-slate-200">
+                        <div id="progress-2" class="h-1 bg-gradient-to-r from-indigo-500 to-sky-500 rounded-full transition-all duration-500" style="width: 0%"></div>
                     </div>
                     <div class="flex items-center">
-                        <div id="step-3" class="w-14 h-14 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-semibold transition-all duration-300 shadow-lg">
+                        <div id="step-3" class="w-14 h-14 rounded-full border border-slate-200 bg-slate-100 text-slate-500 flex items-center justify-center font-semibold shadow-sm transition">
                             <i class="fas fa-music text-lg"></i>
                         </div>
                         <span class="ml-3 text-sm font-medium text-gray-500 hidden sm:block">Choir Details</span>
                     </div>
-                    <div class="w-12 sm:w-16 h-1 bg-gray-200 rounded-full">
-                        <div id="progress-3" class="h-1 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    <div class="w-12 sm:w-16 h-1 rounded-full bg-slate-200">
+                        <div id="progress-3" class="h-1 bg-gradient-to-r from-indigo-500 to-sky-500 rounded-full transition-all duration-500" style="width: 0%"></div>
                             </div>
                     <div class="flex items-center">
-                        <div id="step-4" class="w-14 h-14 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-semibold transition-all duration-300 shadow-lg">
+                        <div id="step-4" class="w-14 h-14 rounded-full border border-slate-200 bg-slate-100 text-slate-500 flex items-center justify-center font-semibold shadow-sm transition">
                             <i class="fas fa-star text-lg"></i>
                         </div>
                         <span class="ml-3 text-sm font-medium text-gray-500 hidden sm:block">Final Touch</span>
@@ -100,9 +85,9 @@
         </div>
 
         <!-- Form Container -->
-        <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-white/20 relative">
+        <div class="rounded-3xl border border-slate-200/70 bg-white/95 shadow-2xl overflow-hidden relative backdrop-blur">
             <!-- Subtle inner glow -->
-            <div class="absolute inset-0 bg-gradient-to-br from-emerald-50/30 to-blue-50/30 rounded-3xl pointer-events-none"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-indigo-50/40 to-sky-50/30 rounded-3xl pointer-events-none"></div>
             <form id="member-registration-form" method="POST" action="{{ route('members.store') }}" enctype="multipart/form-data" class="p-8 relative z-10">
                 @csrf
 
@@ -113,7 +98,7 @@
                         <div class="space-y-2">
                             <label for="first_name" class="block text-sm font-medium text-gray-700">First Name *</label>
                             <input type="text" id="first_name" name="first_name" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('first_name') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('first_name') border-red-500 @enderror"
                                 value="{{ old('first_name') }}"
                                 placeholder="Enter your first name">
                             @error('first_name')
@@ -124,7 +109,7 @@
                         <div class="space-y-2">
                             <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name *</label>
                             <input type="text" id="last_name" name="last_name" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('last_name') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('last_name') border-red-500 @enderror"
                                 value="{{ old('last_name') }}"
                                 placeholder="Enter your last name">
                             @error('last_name')
@@ -135,7 +120,7 @@
                         <div class="space-y-2">
                             <label for="email" class="block text-sm font-medium text-gray-700">Email Address *</label>
                             <input type="email" id="email" name="email" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('email') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('email') border-red-500 @enderror"
                                 value="{{ old('email') }}"
                                 placeholder="Enter your email address">
                             @error('email')
@@ -146,7 +131,7 @@
                         <div class="space-y-2">
                             <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number *</label>
                             <input type="tel" id="phone" name="phone" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('phone') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('phone') border-red-500 @enderror"
                                 value="{{ old('phone') }}"
                                 placeholder="Enter your phone number">
                             @error('phone')
@@ -157,17 +142,22 @@
                         <div class="space-y-2">
                             <label for="date_of_birth" class="block text-sm font-medium text-gray-700">Date of Birth *</label>
                             <input type="date" id="date_of_birth" name="date_of_birth" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('date_of_birth') border-red-500 @enderror"
-                                value="{{ old('date_of_birth') }}">
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('date_of_birth') border-red-500 @enderror"
+                                value="{{ old('date_of_birth') }}"
+                                onchange="calculateAge(this.value)">
                             @error('date_of_birth')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
+                            <div id="age-display" class="hidden mt-2 p-3 rounded-lg bg-gradient-to-r text-white text-sm font-semibold flex items-center gap-2">
+                                <span id="age-emoji" class="text-2xl"></span>
+                                <span id="age-text"></span>
+                            </div>
                         </div>
 
                         <div class="space-y-2">
                             <label for="gender" class="block text-sm font-medium text-gray-700">Gender *</label>
                             <select id="gender" name="gender" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('gender') border-red-500 @enderror">
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('gender') border-red-500 @enderror">
                                 <option value="">Select your gender</option>
                                 <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
                                 <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
@@ -182,7 +172,7 @@
                     <div class="mt-6">
                         <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Address *</label>
                         <textarea id="address" name="address" rows="3" required
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('address') border-red-500 @enderror"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('address') border-red-500 @enderror"
                             placeholder="Enter your full address">{{ old('address') }}</textarea>
                         @error('address')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -197,7 +187,7 @@
                         <div class="space-y-2">
                             <label for="occupation" class="block text-sm font-medium text-gray-700">Occupation *</label>
                             <input type="text" id="occupation" name="occupation" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('occupation') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('occupation') border-red-500 @enderror"
                                 value="{{ old('occupation') }}"
                                 placeholder="Enter your occupation">
                             @error('occupation')
@@ -208,7 +198,7 @@
                         <div class="space-y-2">
                             <label for="workplace" class="block text-sm font-medium text-gray-700">Workplace</label>
                             <input type="text" id="workplace" name="workplace"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('workplace') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('workplace') border-red-500 @enderror"
                                 value="{{ old('workplace') }}"
                                 placeholder="Enter your workplace">
                             @error('workplace')
@@ -219,7 +209,7 @@
                         <div class="space-y-2">
                             <label for="education_level" class="block text-sm font-medium text-gray-700">Education Level *</label>
                             <select id="education_level" name="education_level" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('education_level') border-red-500 @enderror">
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('education_level') border-red-500 @enderror">
                                 <option value="">Select education level</option>
                                 <option value="primary" {{ old('education_level') == 'primary' ? 'selected' : '' }}>Primary School</option>
                                 <option value="secondary" {{ old('education_level') == 'secondary' ? 'selected' : '' }}>Secondary School</option>
@@ -237,7 +227,7 @@
                         <div class="space-y-2">
                             <label for="skills" class="block text-sm font-medium text-gray-700">Special Skills</label>
                             <input type="text" id="skills" name="skills"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('skills') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('skills') border-red-500 @enderror"
                                 value="{{ old('skills') }}"
                                 placeholder="e.g., Public speaking, Event management">
                             @error('skills')
@@ -254,7 +244,7 @@
                         <div class="space-y-2">
                             <label for="voice_type" class="block text-sm font-medium text-gray-700">Voice Type *</label>
                             <select id="voice_type" name="voice_type" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('voice_type') border-red-500 @enderror">
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('voice_type') border-red-500 @enderror">
                                 <option value="">Select your voice type</option>
                                 <option value="soprano" {{ old('voice_type') == 'soprano' ? 'selected' : '' }}>Soprano</option>
                                 <option value="alto" {{ old('voice_type') == 'alto' ? 'selected' : '' }}>Alto</option>
@@ -270,7 +260,7 @@
                         <div class="space-y-2">
                             <label for="musical_experience" class="block text-sm font-medium text-gray-700">Musical Experience *</label>
                             <select id="musical_experience" name="musical_experience" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('musical_experience') border-red-500 @enderror">
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('musical_experience') border-red-500 @enderror">
                                 <option value="">Select your experience level</option>
                                 <option value="beginner" {{ old('musical_experience') == 'beginner' ? 'selected' : '' }}>Beginner</option>
                                 <option value="intermediate" {{ old('musical_experience') == 'intermediate' ? 'selected' : '' }}>Intermediate</option>
@@ -285,7 +275,7 @@
                         <div class="space-y-2">
                             <label for="instruments" class="block text-sm font-medium text-gray-700">Instruments Played</label>
                             <input type="text" id="instruments" name="instruments"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('instruments') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('instruments') border-red-500 @enderror"
                                 value="{{ old('instruments') }}"
                                 placeholder="e.g., Piano, Guitar, Violin">
                             @error('instruments')
@@ -296,7 +286,7 @@
                         <div class="space-y-2">
                             <label for="choir_experience" class="block text-sm font-medium text-gray-700">Previous Choir Experience</label>
                             <select id="choir_experience" name="choir_experience"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('choir_experience') border-red-500 @enderror">
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('choir_experience') border-red-500 @enderror">
                                 <option value="">Select experience</option>
                                 <option value="none" {{ old('choir_experience') == 'none' ? 'selected' : '' }}>No experience</option>
                                 <option value="school" {{ old('choir_experience') == 'school' ? 'selected' : '' }}>School choir</option>
@@ -313,7 +303,7 @@
                     <div class="mt-6">
                         <label for="why_join" class="block text-sm font-medium text-gray-700 mb-2">Why do you want to join God's Family Choir? *</label>
                         <textarea id="why_join" name="why_join" rows="4" required
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('why_join') border-red-500 @enderror"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('why_join') border-red-500 @enderror"
                             placeholder="Tell us what draws you to our choir and how you hope to contribute...">{{ old('why_join') }}</textarea>
                         @error('why_join')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -328,7 +318,7 @@
                         <div class="space-y-2">
                             <label for="emergency_contact_name" class="block text-sm font-medium text-gray-700">Emergency Contact Name *</label>
                             <input type="text" id="emergency_contact_name" name="emergency_contact_name" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('emergency_contact_name') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('emergency_contact_name') border-red-500 @enderror"
                                 value="{{ old('emergency_contact_name') }}"
                                 placeholder="Enter emergency contact name">
                             @error('emergency_contact_name')
@@ -339,7 +329,7 @@
                         <div class="space-y-2">
                             <label for="emergency_contact_phone" class="block text-sm font-medium text-gray-700">Emergency Contact Phone *</label>
                             <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('emergency_contact_phone') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('emergency_contact_phone') border-red-500 @enderror"
                                 value="{{ old('emergency_contact_phone') }}"
                                 placeholder="Enter emergency contact phone">
                             @error('emergency_contact_phone')
@@ -350,7 +340,7 @@
                         <div class="space-y-2">
                             <label for="availability" class="block text-sm font-medium text-gray-700">Availability *</label>
                             <select id="availability" name="availability" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('availability') border-red-500 @enderror">
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('availability') border-red-500 @enderror">
                                 <option value="">Select your availability</option>
                                 <option value="weekends" {{ old('availability') == 'weekends' ? 'selected' : '' }}>Weekends only</option>
                                 <option value="evenings" {{ old('availability') == 'evenings' ? 'selected' : '' }}>Evenings</option>
@@ -365,7 +355,7 @@
                         <div class="space-y-2">
                             <label for="profile_photo" class="block text-sm font-medium text-gray-700">Profile Photo</label>
                             <input type="file" id="profile_photo" name="profile_photo" accept="image/*"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 @error('profile_photo') border-red-500 @enderror">
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('profile_photo') border-red-500 @enderror">
                             <p class="text-sm text-gray-500 mt-1">Optional: Upload a profile photo (max 2MB)</p>
                             @error('profile_photo')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -376,10 +366,10 @@
                     <div class="mt-6">
                         <div class="flex items-start">
                             <input type="checkbox" id="terms_agreed" name="terms_agreed" required
-                                class="mt-1 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded @error('terms_agreed') border-red-500 @enderror">
+                                class="mt-1 h-4 w-4 text-indigo-600 focus:ring-indigo-200 border-gray-300 rounded @error('terms_agreed') border-red-500 @enderror">
                             <label for="terms_agreed" class="ml-3 text-sm text-gray-700">
-                                I agree to the <a href="#" class="text-green-600 hover:text-green-500 underline">Terms and Conditions</a>
-                                and <a href="#" class="text-green-600 hover:text-green-500 underline">Privacy Policy</a> of God's Family Choir *
+                                I agree to the <a href="#" class="text-indigo-600 hover:text-indigo-500 underline">Terms and Conditions</a>
+                                and <a href="#" class="text-indigo-600 hover:text-indigo-500 underline">Privacy Policy</a> of God's Family Choir *
                             </label>
                         </div>
                         @error('terms_agreed')
@@ -390,7 +380,7 @@
                     <div class="mt-6">
                         <div class="flex items-start">
                             <input type="checkbox" id="newsletter" name="newsletter"
-                                class="mt-1 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                                class="mt-1 h-4 w-4 text-indigo-600 focus:ring-indigo-200 border-gray-300 rounded">
                             <label for="newsletter" class="ml-3 text-sm text-gray-700">
                                 I would like to receive newsletters and updates about choir events and activities
                             </label>
@@ -399,33 +389,38 @@
                 </div>
 
                 <!-- Navigation Buttons -->
-                <div class="flex justify-between items-center mt-8 pt-6 border-t border-gray-200">
-                    <button type="button" id="prev-btn" class="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-all duration-200 hidden">
-                        <i class="fas fa-arrow-left mr-2"></i>Previous
+                <div class="flex flex-col gap-4 border-t border-slate-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
+                    <button type="button" id="prev-btn" class="hidden inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 px-6 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-slate-300 hover:text-slate-800">
+                        <i class="fas fa-arrow-left"></i>
+                        Previous
                     </button>
 
-                    <div class="flex space-x-4">
-                        <button type="button" id="next-btn" class="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-200 flex items-center">
-                            Next<i class="fas fa-arrow-right ml-2"></i>
-                    </button>
+                    <div class="flex justify-end gap-3">
+                        <button type="button" id="next-btn" class="inline-flex items-center justify-center gap-2 rounded-full bg-indigo-600 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-500">
+                            Next step
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
 
-                        <button type="submit" id="submit-btn" class="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-200 flex items-center hidden">
-                            <i class="fas fa-paper-plane mr-2"></i>Submit Application
-                    </button>
+                        <button type="submit" id="submit-btn" class="hidden inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-500">
+                            <i class="fas fa-paper-plane"></i>
+                            Submit application
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-
-    <!-- Footer -->
-    <x-static.footer />
     </div>
+</div>
+
+<!-- Footer -->
+<div class="relative z-10">
+    <x-static.footer />
 </div>
 
 <!-- Success Modal -->
 <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 backdrop-blur-sm">
-    <div class="bg-white rounded-3xl p-8 max-w-lg mx-4 transform transition-all duration-500 scale-95 shadow-2xl border border-gray-100">
+    <div class="bg-white/95 rounded-3xl border border-slate-200/70 p-8 max-w-lg mx-4 transform transition-all duration-500 scale-95 shadow-2xl backdrop-blur" data-modal-panel>
         <div class="text-center">
             <div class="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
                 <i class="fas fa-check text-white text-3xl"></i>
@@ -446,7 +441,7 @@
 
 <!-- Error Modal -->
 <div id="error-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 backdrop-blur-sm">
-    <div class="bg-white rounded-3xl p-8 max-w-lg mx-4 transform transition-all duration-500 scale-95 shadow-2xl border border-gray-100">
+    <div class="bg-white/95 rounded-3xl border border-slate-200/70 p-8 max-w-lg mx-4 transform transition-all duration-500 scale-95 shadow-2xl backdrop-blur" data-modal-panel>
         <div class="text-center">
             <div class="w-20 h-20 bg-gradient-to-r from-red-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
                 <i class="fas fa-exclamation-triangle text-white text-3xl"></i>
@@ -467,7 +462,7 @@
 
 <!-- Validation Error Modal -->
 <div id="validation-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 backdrop-blur-sm">
-    <div class="bg-white rounded-3xl p-8 max-w-lg mx-4 transform transition-all duration-500 scale-95 shadow-2xl border border-gray-100">
+    <div class="bg-white/95 rounded-3xl border border-slate-200/70 p-8 max-w-lg mx-4 transform transition-all duration-500 scale-95 shadow-2xl backdrop-blur" data-modal-panel>
         <div class="text-center">
             <div class="w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
                 <i class="fas fa-exclamation-circle text-white text-3xl"></i>
@@ -483,7 +478,7 @@
 
 <!-- Loading Modal -->
 <div id="loading-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 backdrop-blur-sm">
-    <div class="bg-white rounded-3xl p-8 max-w-md mx-4 transform transition-all duration-500 scale-95 shadow-2xl border border-gray-100">
+    <div class="bg-white/95 rounded-3xl border border-slate-200/70 p-8 max-w-md mx-4 transform transition-all duration-500 scale-95 shadow-2xl backdrop-blur" data-modal-panel>
         <div class="text-center">
             <div class="w-20 h-20 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-spin">
                 <i class="fas fa-spinner text-white text-3xl"></i>
@@ -497,6 +492,71 @@
 <script>
     let currentStep = 1;
     const totalSteps = 4;
+
+// Age calculation with sarcastic humor
+function calculateAge(birthDate) {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+        age--;
+    }
+
+    const ageDisplay = document.getElementById('age-display');
+    const ageEmoji = document.getElementById('age-emoji');
+    const ageText = document.getElementById('age-text');
+
+    let emoji, message, bgClass;
+
+    if (age < 10) {
+        emoji = '👶';
+        message = `Wait... you're only ${age}? Are you sure you can reach the microphone? 😂`;
+        bgClass = 'from-pink-400 to-purple-400';
+    } else if (age < 15) {
+        emoji = '🧒';
+        message = `${age} years old! Still need permission from mom and dad? 😄`;
+        bgClass = 'from-blue-400 to-cyan-400';
+    } else if (age < 20) {
+        emoji = '🎓';
+        message = `Sweet ${age}! Perfect age for hitting those high notes! 🎵`;
+        bgClass = 'from-indigo-400 to-purple-400';
+    } else if (age < 30) {
+        emoji = '🎤';
+        message = `${age} years young! Prime time for vocal excellence! ⭐`;
+        bgClass = 'from-emerald-400 to-teal-400';
+    } else if (age < 40) {
+        emoji = '🎼';
+        message = `${age}? Ah, the mature wine of the choir! 🍷`;
+        bgClass = 'from-amber-400 to-orange-400';
+    } else if (age < 50) {
+        emoji = '🎺';
+        message = `${age}! They say the voice gets better with age... like cheese! 🧀`;
+        bgClass = 'from-yellow-400 to-amber-400';
+    } else if (age < 60) {
+        emoji = '🎻';
+        message = `${age} years of wisdom! You probably remember when choirs sang in Latin 😄`;
+        bgClass = 'from-orange-400 to-red-400';
+    } else if (age < 70) {
+        emoji = '👴';
+        message = `${age}?! Living legend! Do you need a chair during rehearsals? 🪑`;
+        bgClass = 'from-red-400 to-rose-400';
+    } else if (age < 80) {
+        emoji = '🦉';
+        message = `${age} years young! You've seen more choirs than Moses saw plagues! 😂`;
+        bgClass = 'from-purple-400 to-pink-400';
+    } else {
+        emoji = '🏆';
+        message = `${age}?! Methuselah, is that you? We're honored! 👑`;
+        bgClass = 'from-yellow-400 to-yellow-500';
+    }
+
+    ageEmoji.textContent = emoji;
+    ageText.textContent = message;
+    ageDisplay.className = `mt-2 p-3 rounded-lg bg-gradient-to-r ${bgClass} text-white text-sm font-semibold flex items-center gap-2 animate-slideIn`;
+    ageDisplay.classList.remove('hidden');
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     updateStepDisplay();
@@ -540,11 +600,22 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('member-registration-form').addEventListener('submit', function(e) {
         e.preventDefault();
 
+        // Validate final step before submission
+        if (!validateCurrentStep()) {
+            return;
+        }
+
         // Show loading modal
         showLoadingModal();
 
         // Submit form via AJAX
         const formData = new FormData(this);
+
+        // Debug: Log form data
+        console.log('Submitting form data:');
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
 
         fetch(this.action, {
             method: 'POST',
@@ -554,7 +625,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    throw { status: response.status, data: data };
+                });
+            }
+            return response.json();
+        })
         .then(data => {
             hideLoadingModal();
 
@@ -563,17 +641,45 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 // Handle validation errors
                 if (data.errors) {
+                    console.error('Validation errors:', data.errors);
                     displayErrors(data.errors);
-                    showValidationModal('Please correct the highlighted errors before submitting.');
+
+                    // Build error message
+                    const errorMessages = Object.values(data.errors).flat();
+                    const message = data.message || 'Please correct the following errors:\n\n• ' + errorMessages.join('\n• ');
+                    showValidationModal(message);
                 } else {
-                    showErrorModal('An error occurred while processing your application. Please try again.');
+                    showErrorModal(data.message || 'An error occurred while processing your application. Please try again.');
                 }
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Form submission error:', error);
             hideLoadingModal();
-            showErrorModal('An error occurred while processing your application. Please try again.');
+
+            if (error.data && error.data.errors) {
+                displayErrors(error.data.errors);
+                const errorMessages = Object.values(error.data.errors).flat();
+                let message = 'Please correct the following errors:\n\n• ' + errorMessages.join('\n• ');
+
+                // Add debug info if available
+                if (error.data.error_details) {
+                    console.error('Server error details:', error.data.error_details);
+                    message += '\n\nDebug info: ' + error.data.error_details;
+                }
+
+                showValidationModal(message);
+            } else {
+                let errorMsg = error.data?.message || 'An error occurred while processing your application. Please try again.';
+
+                // Add debug info if available
+                if (error.data?.error_details) {
+                    console.error('Server error details:', error.data.error_details);
+                    errorMsg += '\n\nDebug info: ' + error.data.error_details;
+                }
+
+                showErrorModal(errorMsg);
+            }
         });
     });
 });
@@ -592,26 +698,44 @@ function prevStep() {
         currentStep--;
         updateStepDisplay();
     }
-    }
+}
 
-    function validateCurrentStep() {
+function validateCurrentStep() {
     const currentStepElement = document.getElementById(`form-step-${currentStep}`);
     const requiredFields = currentStepElement.querySelectorAll('[required]');
-        let isValid = true;
+    let isValid = true;
     let missingFields = [];
 
-        requiredFields.forEach(field => {
-            if (!field.value.trim()) {
-                field.classList.add('border-red-500');
-            field.classList.add('animate-pulse');
-                isValid = false;
+    requiredFields.forEach(field => {
+        let value;
+        if (field.type === 'checkbox') {
+            value = field.checked;
+        } else if (field.type === 'radio') {
+            // For radio buttons, check if any radio in the group is checked
+            const groupName = field.getAttribute('name');
+            const checkedRadio = currentStepElement.querySelector(`input[name="${groupName}"]:checked`);
+            value = checkedRadio !== null;
+        } else if (field.tagName === 'SELECT') {
+            value = field.value && field.value !== '';
+        } else {
+            value = field.value.trim() !== '';
+        }
 
-            // Get field label for better error message
-            const label = field.previousElementSibling?.textContent || field.getAttribute('placeholder') || 'field';
-            missingFields.push(label.replace('*', '').trim());
+        if (!value) {
+            field.classList.add('ring-1', 'ring-rose-400');
+            isValid = false;
+
+            // Get better label
+            let label;
+            const labelElement = currentStepElement.querySelector(`label[for="${field.id}"]`);
+            if (labelElement) {
+                label = labelElement.textContent.replace('*', '').trim();
             } else {
-                field.classList.remove('border-red-500');
-            field.classList.remove('animate-pulse');
+                label = field.getAttribute('placeholder') || field.getAttribute('name') || 'field';
+            }
+            missingFields.push(label);
+        } else {
+            field.classList.remove('ring-1', 'ring-rose-400');
         }
     });
 
@@ -622,21 +746,20 @@ function prevStep() {
         showValidationModal(message);
     }
 
-        return isValid;
-    }
+    return isValid;
+}
 
 function updateStepDisplay() {
-    // Update step indicators
     for (let i = 1; i <= totalSteps; i++) {
         const stepElement = document.getElementById(`step-${i}`);
         const stepContent = document.getElementById(`form-step-${i}`);
 
         if (i <= currentStep) {
-            stepElement.classList.remove('bg-gray-200', 'text-gray-500');
-            stepElement.classList.add('bg-green-600', 'text-white');
+            stepElement.classList.remove('border', 'border-slate-200', 'bg-slate-100', 'text-slate-500');
+            stepElement.classList.add('border', 'border-indigo-500', 'bg-indigo-600', 'text-white');
         } else {
-            stepElement.classList.remove('bg-green-600', 'text-white');
-            stepElement.classList.add('bg-gray-200', 'text-gray-500');
+            stepElement.classList.add('border', 'border-slate-200', 'bg-slate-100', 'text-slate-500');
+            stepElement.classList.remove('border-indigo-500', 'bg-indigo-600', 'text-white');
         }
 
         if (i === currentStep) {
@@ -648,30 +771,18 @@ function updateStepDisplay() {
         }
     }
 
-    // Update progress bars
-    for (let i = 1; i < currentStep; i++) {
+    for (let i = 1; i <= totalSteps - 1; i++) {
         const progressElement = document.getElementById(`progress-${i}`);
-        progressElement.style.width = '100%';
+        progressElement.style.width = i < currentStep ? '100%' : '0%';
     }
 
-    // Update navigation buttons
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const submitBtn = document.getElementById('submit-btn');
 
-    if (currentStep === 1) {
-        prevBtn.classList.add('hidden');
-    } else {
-        prevBtn.classList.remove('hidden');
-    }
-
-    if (currentStep === totalSteps) {
-        nextBtn.classList.add('hidden');
-        submitBtn.classList.remove('hidden');
-    } else {
-        nextBtn.classList.remove('hidden');
-        submitBtn.classList.add('hidden');
-    }
+    prevBtn.classList.toggle('hidden', currentStep === 1);
+    nextBtn.classList.toggle('hidden', currentStep === totalSteps);
+    submitBtn.classList.toggle('hidden', currentStep !== totalSteps);
 }
 
 // Modal control functions
@@ -682,7 +793,7 @@ function showSuccessModal() {
 
     // Animate modal appearance
     setTimeout(() => {
-        const modalContent = modal.querySelector('.bg-white');
+        const modalContent = modal.querySelector('[data-modal-panel]');
         modalContent.classList.remove('scale-95');
         modalContent.classList.add('scale-100');
     }, 10);
@@ -690,7 +801,7 @@ function showSuccessModal() {
 
 function closeSuccessModal() {
     const modal = document.getElementById('success-modal');
-    const modalContent = modal.querySelector('.bg-white');
+    const modalContent = modal.querySelector('[data-modal-panel]');
 
     modalContent.classList.remove('scale-100');
     modalContent.classList.add('scale-95');
@@ -718,7 +829,7 @@ function showErrorModal(message) {
     modal.classList.add('flex');
 
     setTimeout(() => {
-        const modalContent = modal.querySelector('.bg-white');
+        const modalContent = modal.querySelector('[data-modal-panel]');
         modalContent.classList.remove('scale-95');
         modalContent.classList.add('scale-100');
     }, 10);
@@ -726,7 +837,7 @@ function showErrorModal(message) {
 
 function closeErrorModal() {
     const modal = document.getElementById('error-modal');
-    const modalContent = modal.querySelector('.bg-white');
+    const modalContent = modal.querySelector('[data-modal-panel]');
 
     modalContent.classList.remove('scale-100');
     modalContent.classList.add('scale-95');
@@ -749,7 +860,7 @@ function showValidationModal(message) {
     modal.classList.add('flex');
 
     setTimeout(() => {
-        const modalContent = modal.querySelector('.bg-white');
+        const modalContent = modal.querySelector('[data-modal-panel]');
         modalContent.classList.remove('scale-95');
         modalContent.classList.add('scale-100');
     }, 10);
@@ -757,7 +868,7 @@ function showValidationModal(message) {
 
 function closeValidationModal() {
     const modal = document.getElementById('validation-modal');
-    const modalContent = modal.querySelector('.bg-white');
+    const modalContent = modal.querySelector('[data-modal-panel]');
 
     modalContent.classList.remove('scale-100');
     modalContent.classList.add('scale-95');
@@ -767,7 +878,7 @@ function closeValidationModal() {
         modal.classList.remove('flex');
 
         // Focus on first invalid field
-        const invalidField = document.querySelector('.border-red-500');
+        const invalidField = document.querySelector('.ring-rose-400');
         if (invalidField) {
             invalidField.focus();
             invalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -781,7 +892,7 @@ function showLoadingModal() {
     modal.classList.add('flex');
 
     setTimeout(() => {
-        const modalContent = modal.querySelector('.bg-white');
+        const modalContent = modal.querySelector('[data-modal-panel]');
         modalContent.classList.remove('scale-95');
         modalContent.classList.add('scale-100');
     }, 10);
@@ -789,7 +900,7 @@ function showLoadingModal() {
 
 function hideLoadingModal() {
     const modal = document.getElementById('loading-modal');
-    const modalContent = modal.querySelector('.bg-white');
+    const modalContent = modal.querySelector('[data-modal-panel]');
 
     modalContent.classList.remove('scale-100');
     modalContent.classList.add('scale-95');
@@ -801,32 +912,32 @@ function hideLoadingModal() {
 }
 
 function displayErrors(errors) {
-    // Clear previous errors
-    document.querySelectorAll('.border-red-500').forEach(field => {
-        field.classList.remove('border-red-500', 'animate-pulse', 'field-error');
+    document.querySelectorAll('.field-error').forEach(field => {
+        field.classList.remove('ring-1', 'ring-rose-400', 'field-error');
     });
 
-    // Display new errors with animations
     Object.keys(errors).forEach(field => {
         const fieldElement = document.querySelector(`[name="${field}"]`);
-        if (fieldElement) {
-            fieldElement.classList.add('border-red-500', 'animate-pulse', 'field-error');
+        if (!fieldElement) {
+            return;
+        }
 
-            // Add error message below field if it doesn't exist
-            const errorContainer = fieldElement.parentNode;
-            const existingError = errorContainer.querySelector('.field-error-message');
+        fieldElement.classList.add('ring-1', 'ring-rose-400', 'field-error');
 
-            if (!existingError) {
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'field-error-message text-red-500 text-sm mt-1 animate-fadeIn';
-                errorDiv.textContent = errors[field][0]; // Show first error message
-                errorContainer.appendChild(errorDiv);
-            }
+        const errorContainer = fieldElement.parentNode;
+        const existingError = errorContainer.querySelector('.field-error-message');
 
-            // Scroll to first error field
-            if (Object.keys(errors)[0] === field) {
-                fieldElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
+        if (existingError) {
+            existingError.textContent = errors[field][0];
+        } else {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'field-error-message text-rose-500 text-sm mt-1 animate-fadeIn';
+            errorDiv.textContent = errors[field][0];
+            errorContainer.appendChild(errorDiv);
+        }
+
+        if (Object.keys(errors)[0] === field) {
+            fieldElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     });
 }
@@ -842,6 +953,11 @@ function displayErrors(errors) {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.bg-grid-slate {
+    background-image: radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.08) 1px, transparent 0);
+    background-size: 36px 36px;
 }
 
 @keyframes slideInFromBottom {
@@ -1079,27 +1195,25 @@ button:hover {
     }
 }
 
-/* Ensure page is scrollable and has light background */
+/* Ensure page is scrollable */
 html, body {
     overflow-x: hidden;
     overflow-y: auto;
-    background-color: #f0fdf4; /* Light green background fallback */
 }
 
-/* Fix any potential scroll issues */
-.relative.z-10 {
-    position: relative;
-    z-index: 10;
+/* Pointer events for background elements */
+.pointer-events-none {
+    pointer-events: none;
 }
 
-/* Ensure background is visible */
-.absolute.inset-0 {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
+/* Ensure footer is clickable */
+footer, footer * {
+    pointer-events: auto !important;
+}
+
+/* Ensure modals are on top */
+.fixed.z-50 {
+    z-index: 9999 !important;
 }
 </style>
 @endsection

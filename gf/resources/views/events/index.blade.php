@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@php
+    use Illuminate\Support\Facades\Storage;
+@endphp
+
+@section('title', 'Events | God\'s Family Choir')
+
 @section('content')
 <!-- Hero Section -->
 <section class="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-emerald-950 via-emerald-900 to-black">
@@ -228,7 +234,7 @@ function toggleAdvanced() {
                         <!-- Event Image -->
                         <div class="relative h-56 overflow-hidden">
                             @if($event->cover_image)
-                                <img src="{{ asset($event->cover_image) }}" alt="{{ $event->title }}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                                <img src="{{ Storage::url($event->cover_image) }}" alt="{{ $event->title }}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
                             @else
                                 <div class="w-full h-full bg-gradient-to-br from-emerald-500 to-emerald-700"></div>
                             @endif

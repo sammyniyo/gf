@@ -3,47 +3,29 @@
 @section('page-title', 'Members Management')
 
 @section('content')
-<div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-    <!-- Header Section -->
-    <div class="mb-8 overflow-hidden rounded-2xl gradient-bg-2">
-        <div class="px-8 py-8">
-            <div class="flex flex-col justify-between lg:flex-row lg:items-center">
-                <div>
-                    <h1 class="text-3xl font-bold text-white">Choir Members</h1>
-                    <p class="mt-2 text-lg text-pink-100">Manage your choir member registrations</p>
-                </div>
-                <div class="flex flex-wrap gap-4 mt-4 lg:mt-0">
-                    <div class="flex items-center px-4 py-2 space-x-2 bg-white rounded-lg shadow-lg bg-opacity-20 backdrop-filter backdrop-blur-lg">
-                        <span class="text-sm font-medium text-white">Total:</span>
-                        <span class="text-2xl font-bold text-white">{{ $members->total() }}</span>
-                    </div>
-                    <div class="flex items-center px-4 py-2 space-x-2 bg-white rounded-lg shadow-lg bg-opacity-20 backdrop-filter backdrop-blur-lg">
-                        <span class="text-sm font-medium text-white">Active:</span>
-                        <span class="text-2xl font-bold text-white">{{ $members->where('status', 'active')->count() }}</span>
-                    </div>
-                    <div class="flex items-center px-4 py-2 space-x-2 bg-white rounded-lg shadow-lg bg-opacity-20 backdrop-filter backdrop-blur-lg">
-                        <span class="text-sm font-medium text-white">Pending:</span>
-                        <span class="text-2xl font-bold text-white">{{ $members->where('status', 'pending')->count() }}</span>
-                    </div>
-                </div>
-            </div>
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-xl font-semibold text-slate-900">Choir Members</h1>
+            <p class="mt-1 text-sm text-slate-500">Manage your choir member registrations</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1.5 text-xs font-semibold text-slate-600">
+                Total: <span class="text-slate-900">{{ $members->total() }}</span>
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50/70 px-3 py-1.5 text-xs font-semibold text-emerald-700">
+                Active: <span class="text-emerald-900">{{ $members->where('status', 'active')->count() }}</span>
+            </span>
         </div>
     </div>
 
     <!-- Filters -->
-    <div class="p-6 mb-8 bg-white shadow-lg rounded-2xl">
-        <div class="flex items-center mb-4 space-x-3">
-            <div class="p-2 rounded-lg gradient-bg-2">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                </svg>
-            </div>
-            <h3 class="text-lg font-bold text-gray-900">Filters & Search</h3>
-        </div>
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
+    <div class="glass-card p-5">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-                <label for="status-filter" class="block mb-2 text-sm font-medium text-gray-700">Status</label>
-                <select id="status-filter" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all">
+                <label for="status-filter" class="block mb-2 text-xs font-semibold text-slate-600 uppercase tracking-wide">Status</label>
+                <select id="status-filter" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400">
                     <option value="">All Status</option>
                     <option value="pending">Pending</option>
                     <option value="active">Active</option>
@@ -52,8 +34,8 @@
             </div>
 
             <div>
-                <label for="voice-type-filter" class="block mb-2 text-sm font-medium text-gray-700">Voice Type</label>
-                <select id="voice-type-filter" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all">
+                <label for="voice-type-filter" class="block mb-2 text-xs font-semibold text-slate-600 uppercase tracking-wide">Voice Type</label>
+                <select id="voice-type-filter" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400">
                     <option value="">All Voice Types</option>
                     <option value="soprano">Soprano</option>
                     <option value="alto">Alto</option>
@@ -64,8 +46,8 @@
             </div>
 
             <div>
-                <label for="experience-filter" class="block mb-2 text-sm font-medium text-gray-700">Experience</label>
-                <select id="experience-filter" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all">
+                <label for="experience-filter" class="block mb-2 text-xs font-semibold text-slate-600 uppercase tracking-wide">Experience</label>
+                <select id="experience-filter" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400">
                     <option value="">All Levels</option>
                     <option value="beginner">Beginner</option>
                     <option value="intermediate">Intermediate</option>
@@ -75,11 +57,11 @@
             </div>
 
             <div>
-                <label for="search-input" class="block mb-2 text-sm font-medium text-gray-700">Search</label>
+                <label for="search-input" class="block mb-2 text-xs font-semibold text-slate-600 uppercase tracking-wide">Search</label>
                 <div class="relative">
                     <input type="text" id="search-input" placeholder="Search members..."
-                        class="w-full px-4 py-2.5 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all">
-                    <svg class="absolute w-5 h-5 text-gray-400 left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="w-full px-3 py-2 pl-9 text-sm border border-slate-200 rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400">
+                    <svg class="absolute w-4 h-4 text-slate-400 left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </div>
@@ -88,49 +70,42 @@
     </div>
 
     <!-- Members Grid -->
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3" id="members-grid">
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3" id="members-grid">
         @forelse($members as $member)
-            <div class="member-card overflow-hidden transition-all duration-300 transform bg-white shadow-lg rounded-2xl hover:scale-105 border border-gray-100"
+            <div class="member-card glass-card overflow-hidden transition-all hover:shadow-lg"
                 data-status="{{ strtolower($member->status) }}"
                 data-voice-type="{{ strtolower($member->voice_type ?? '') }}"
                 data-experience="{{ strtolower($member->musical_experience ?? '') }}"
                 data-search="{{ strtolower($member->first_name . ' ' . $member->last_name . ' ' . ($member->occupation ?? '')) }}">
 
                 <!-- Member Header -->
-                <div class="relative h-32 gradient-bg-2">
-                    <div class="absolute inset-0 bg-black opacity-10"></div>
-                    <div class="absolute bottom-0 left-0 right-0 px-6 pb-4 transform translate-y-1/2">
+                <div class="relative h-24 bg-gradient-to-br from-indigo-100 to-slate-100">
+                    <div class="absolute bottom-0 left-0 right-0 px-5 pb-4 transform translate-y-1/2">
                         <div class="flex items-end justify-between">
                             <div class="relative">
                                 @if($member->profile_photo ?? false)
-                                    <img class="object-cover w-20 h-20 border-4 border-white rounded-full shadow-xl" src="{{ $member->profile_photo_url }}" alt="{{ $member->first_name }}">
+                                    <img class="object-cover w-16 h-16 border-4 border-white rounded-xl shadow-lg" src="{{ $member->profile_photo_url }}" alt="{{ $member->first_name }}">
                                 @else
-                                    <div class="flex items-center justify-center w-20 h-20 text-2xl font-bold text-white border-4 border-white rounded-full shadow-xl gradient-bg-2">
+                                    <div class="flex items-center justify-center w-16 h-16 text-lg font-bold text-indigo-600 bg-white border-4 border-white rounded-xl shadow-lg">
                                         {{ substr($member->first_name, 0, 1) }}{{ substr($member->last_name, 0, 1) }}
                                     </div>
                                 @endif
 
                                 <!-- Status Indicator -->
-                                <div class="absolute bottom-0 right-0 w-5 h-5 border-2 border-white rounded-full
-                                    {{ $member->status === 'active' ? 'bg-green-500' : '' }}
+                                <div class="absolute -bottom-1 -right-1 w-4 h-4 border-2 border-white rounded-full
+                                    {{ $member->status === 'active' ? 'bg-emerald-500' : '' }}
                                     {{ $member->status === 'pending' ? 'bg-yellow-500' : '' }}
-                                    {{ $member->status === 'inactive' ? 'bg-red-500' : '' }}">
+                                    {{ $member->status === 'inactive' ? 'bg-slate-400' : '' }}">
                                 </div>
                             </div>
 
                             <!-- Quick Actions -->
-                            <div class="flex gap-2">
+                            <div class="flex gap-1.5">
                                 <a href="{{ route('admin.members.show', $member) }}"
-                                    class="p-2 text-white transition-all duration-200 transform bg-white rounded-lg shadow-lg bg-opacity-20 backdrop-filter backdrop-blur-lg hover:scale-110">
+                                    class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/80 text-slate-600 transition hover:bg-white hover:text-indigo-600">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
-                                </a>
-                                <a href="{{ route('admin.members.edit', $member) }}"
-                                    class="p-2 text-white transition-all duration-200 transform bg-white rounded-lg shadow-lg bg-opacity-20 backdrop-filter backdrop-blur-lg hover:scale-110">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                     </svg>
                                 </a>
                             </div>
@@ -139,71 +114,67 @@
                 </div>
 
                 <!-- Member Details -->
-                <div class="px-6 pt-12 pb-6">
+                <div class="px-5 pt-10 pb-5">
                     <div class="mb-4">
-                        <h3 class="text-xl font-bold text-gray-900">{{ $member->first_name }} {{ $member->last_name }}</h3>
+                        <h3 class="text-base font-semibold text-slate-900">{{ $member->first_name }} {{ $member->last_name }}</h3>
                         @if($member->occupation ?? false)
-                            <p class="text-sm text-gray-600">{{ $member->occupation }}</p>
+                            <p class="text-xs text-slate-500">{{ $member->occupation }}</p>
                         @endif
                     </div>
 
-                    <div class="space-y-3">
+                    <div class="space-y-2.5">
                         <!-- Email -->
-                        <div class="flex items-center space-x-3">
-                            <div class="p-2 bg-purple-100 rounded-lg">
-                                <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex items-center gap-2.5">
+                            <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-100">
+                                <svg class="w-3.5 h-3.5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
                             </div>
-                            <span class="text-sm text-gray-600 truncate">{{ $member->email }}</span>
+                            <span class="text-xs text-slate-600 truncate">{{ $member->email }}</span>
                         </div>
 
                         <!-- Phone -->
                         @if($member->phone ?? false)
-                            <div class="flex items-center space-x-3">
-                                <div class="p-2 bg-blue-100 rounded-lg">
-                                    <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="flex items-center gap-2.5">
+                                <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-sky-100">
+                                    <svg class="w-3.5 h-3.5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                     </svg>
                                 </div>
-                                <span class="text-sm text-gray-600">{{ $member->phone }}</span>
+                                <span class="text-xs text-slate-600">{{ $member->phone }}</span>
                             </div>
                         @endif
 
                         <!-- Tags -->
-                        <div class="flex flex-wrap gap-2 pt-3 border-t border-gray-200">
+                        <div class="flex flex-wrap gap-1.5 pt-3 border-t border-slate-200">
                             @if($member->voice_type ?? false)
-                                <span class="inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full
-                                    {{ $member->voice_type === 'soprano' ? 'bg-pink-100 text-pink-800' : '' }}
-                                    {{ $member->voice_type === 'alto' ? 'bg-purple-100 text-purple-800' : '' }}
-                                    {{ $member->voice_type === 'tenor' ? 'bg-blue-100 text-blue-800' : '' }}
-                                    {{ $member->voice_type === 'bass' ? 'bg-indigo-100 text-indigo-800' : '' }}
-                                    {{ $member->voice_type === 'unsure' ? 'bg-gray-100 text-gray-800' : '' }}">
-                                    🎵 {{ ucfirst($member->voice_type) }}
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold rounded-full
+                                    {{ $member->voice_type === 'soprano' ? 'bg-pink-100 text-pink-700' : '' }}
+                                    {{ $member->voice_type === 'alto' ? 'bg-purple-100 text-purple-700' : '' }}
+                                    {{ $member->voice_type === 'tenor' ? 'bg-blue-100 text-blue-700' : '' }}
+                                    {{ $member->voice_type === 'bass' ? 'bg-indigo-100 text-indigo-700' : '' }}
+                                    {{ $member->voice_type === 'unsure' ? 'bg-slate-100 text-slate-700' : '' }}">
+                                    {{ ucfirst($member->voice_type) }}
                                 </span>
                             @endif
 
                             @if($member->musical_experience ?? false)
-                                <span class="inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full
-                                    {{ $member->musical_experience === 'beginner' ? 'bg-green-100 text-green-800' : '' }}
-                                    {{ $member->musical_experience === 'intermediate' ? 'bg-yellow-100 text-yellow-800' : '' }}
-                                    {{ $member->musical_experience === 'advanced' ? 'bg-orange-100 text-orange-800' : '' }}
-                                    {{ $member->musical_experience === 'professional' ? 'bg-red-100 text-red-800' : '' }}">
-                                    ⭐ {{ ucfirst($member->musical_experience) }}
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold rounded-full bg-slate-100 text-slate-700">
+                                    {{ ucfirst($member->musical_experience) }}
                                 </span>
                             @endif
 
-                            <span class="inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full
-                                {{ $member->status === 'active' ? 'bg-green-100 text-green-800' : '' }}
-                                {{ $member->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}
-                                {{ $member->status === 'inactive' ? 'bg-red-100 text-red-800' : '' }}">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold rounded-full
+                                {{ $member->status === 'active' ? 'bg-emerald-100 text-emerald-700' : '' }}
+                                {{ $member->status === 'pending' ? 'bg-yellow-100 text-yellow-700' : '' }}
+                                {{ $member->status === 'inactive' ? 'bg-slate-100 text-slate-700' : '' }}">
                                 {{ ucfirst($member->status) }}
                             </span>
                         </div>
 
                         <!-- Joined Date -->
-                        <div class="flex items-center justify-between pt-3 text-xs text-gray-500 border-t border-gray-200">
-                            <span>Joined {{ $member->created_at->diffForHumans() }}</span>
+                        <div class="flex items-center justify-between pt-3 text-xs text-slate-500 border-t border-slate-200">
+                            <span>{{ $member->created_at->diffForHumans() }}</span>
                             <span>{{ $member->created_at->format('M j, Y') }}</span>
                         </div>
                     </div>
@@ -211,7 +182,7 @@
                     <!-- Action Buttons -->
                     <div class="flex gap-2 mt-4">
                         <a href="{{ route('admin.members.show', $member) }}"
-                            class="flex-1 px-4 py-2 text-sm font-medium text-center text-white transition-all duration-200 rounded-lg gradient-bg-2 hover:scale-105">
+                            class="flex-1 px-3 py-2 text-xs font-semibold text-center text-white bg-indigo-600 rounded-lg transition hover:bg-indigo-500">
                             View Details
                         </a>
                         <form method="POST" action="{{ route('admin.members.destroy', $member) }}"
@@ -219,7 +190,7 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit"
-                                class="px-4 py-2 text-sm font-medium text-white transition-all duration-200 bg-red-500 rounded-lg hover:bg-red-600 hover:scale-105">
+                                class="px-3 py-2 text-xs font-semibold text-rose-600 bg-rose-100 rounded-lg transition hover:bg-rose-200">
                                 Delete
                             </button>
                         </form>
@@ -228,15 +199,15 @@
             </div>
         @empty
             <div class="col-span-full">
-                <div class="py-24 text-center bg-white shadow-lg rounded-2xl">
+                <div class="glass-card py-12 text-center">
                     <div class="flex flex-col items-center">
-                        <div class="p-6 rounded-full gradient-bg-2">
-                            <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100">
+                            <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
                         </div>
-                        <h3 class="mt-6 text-2xl font-bold text-gray-900">No Members Found</h3>
-                        <p class="mt-2 text-gray-600">Members will appear here once they register</p>
+                        <h3 class="mt-4 text-sm font-semibold text-slate-900">No members found</h3>
+                        <p class="mt-1 text-sm text-slate-500">Members will appear here once they register</p>
                     </div>
                 </div>
             </div>
@@ -245,10 +216,8 @@
 
     <!-- Pagination -->
     @if($members->hasPages())
-        <div class="mt-8">
-            <div class="p-6 bg-white shadow-lg rounded-2xl">
-                {{ $members->links() }}
-            </div>
+        <div class="glass-card px-6 py-4">
+            {{ $members->links() }}
         </div>
     @endif
 </div>
@@ -268,8 +237,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const experience = experienceFilter.value.toLowerCase();
         const searchTerm = searchInput.value.toLowerCase();
 
-        let visibleCount = 0;
-
         memberCards.forEach(card => {
             const cardStatus = card.dataset.status;
             const cardVoiceType = card.dataset.voiceType;
@@ -283,17 +250,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (statusMatch && voiceTypeMatch && experienceMatch && searchMatch) {
                 card.style.display = '';
-                visibleCount++;
             } else {
                 card.style.display = 'none';
             }
         });
-
-        // Show "no results" message if needed
-        const noResultsMessage = document.getElementById('no-results-message');
-        if (noResultsMessage) {
-            noResultsMessage.style.display = visibleCount === 0 ? '' : 'none';
-        }
     }
 
     statusFilter.addEventListener('change', filterMembers);

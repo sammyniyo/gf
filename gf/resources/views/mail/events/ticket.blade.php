@@ -11,12 +11,21 @@
     @endif
 
     @if ($registration->event->isConcert())
-        **Your support amount:** {{ number_format($registration->amount_offered) }} RWF
+        **Your support amount:** {{ number_format($registration->total_amount) }} RWF
     @endif
 
     Scan this QR code at the entrance:
 
-    <img src="{{ $qrBase64 }}" alt="QR Code" style="max-width:180px; display:block; margin:16px 0;">
+    @if($qrBase64)
+        <img src="{{ $qrBase64 }}" alt="QR Code" style="max-width:180px; display:block; margin:16px 0;">
+    @else
+        <div style="width:180px; height:180px; border:2px dashed #ccc; display:flex; align-items:center; justify-content:center; margin:16px 0; background:#f9f9f9;">
+            <div style="text-align:center; color:#666; font-size:12px;">
+                QR Code<br>Unavailable<br><br>
+                <a href="{{ $verifyUrl }}" style="color:#007bff; text-decoration:none;">View Ticket Instead</a>
+            </div>
+        </div>
+    @endif
 
     @component('mail::button', ['url' => $verifyUrl])
         View / Verify Ticket

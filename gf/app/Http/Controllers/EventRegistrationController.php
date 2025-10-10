@@ -9,9 +9,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
+use App\Services\NotificationService;
 
 class EventRegistrationController extends Controller
 {
+    public function create(Event $event)
+    {
+        abort_if(!$event->is_public, 404);
+        abort_if($event->isPast(), 422, 'This event has already started.');
+        abort_if($event->isFull(), 422, 'This event is at full capacity.');
+
+        $presets = config('events.donation_presets', []);
+
+        return view('events.register', compact('event', 'presets'));
+    }
+
     public function store(Request $request, Event $event)
     {
         abort_if(!$event->is_public, 404);
@@ -21,7 +33,14 @@ class EventRegistrationController extends Controller
         $presets = config('events.donation_presets', []);
         $rules = [
             'name'  => ['required','string','max:255'],
-            'email' => ['required','email','max:255'],
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('event_registrations')->where(function ($query) use ($event) {
+                    return $query->where('event_id', $event->id);
+                })
+            ],
             'phone' => ['nullable','regex:/^[0-9]{10,15}$/'],
         ];
 
@@ -35,18 +54,26 @@ class EventRegistrationController extends Controller
             $rules['amount_offered'] = ['nullable','integer','min:0'];
         }
 
-        $data = $request->validate($rules);
+        $data = $request->validate($rules, [
+            'email.unique' => 'This email is already registered for this event.',
+        ]);
         $amount = (int) ($data['amount_offered'] ?? 0);
 
         $registration = EventRegistration::create([
-            'event_id'       => $event->id,
-            'name'           => $data['name'],
-            'email'          => $data['email'],
-            'phone'          => $data['phone'] ?? null,
-            'amount_offered' => $amount,
-            'ticket_code'    => Str::ulid()->toBase32(), // short, unique
-            'status'         => 'REGISTERED',
+            'event_id'         => $event->id,
+            'name'             => $data['name'],
+            'email'            => $data['email'],
+            'phone'            => $data['phone'] ?? null,
+            'total_amount'     => $amount,
+            'registration_code' => Str::ulid()->toBase32(), // short, unique
+            'status'           => 'REGISTERED',
         ]);
+
+        // Load event relationship for notification
+        $registration->load('event');
+
+        // Create notification for admins
+        NotificationService::newEventRegistration($registration);
 
         // Email ticket (with PDF + calendar)
         Mail::to($registration->email)->send(new EventTicketMail($registration));

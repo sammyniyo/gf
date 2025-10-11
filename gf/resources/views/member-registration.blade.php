@@ -98,7 +98,7 @@
                         <div class="space-y-2">
                             <label for="first_name" class="block text-sm font-medium text-gray-700">First Name *</label>
                             <input type="text" id="first_name" name="first_name" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('first_name') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('first_name') border-red-500 @else border-gray-300 @enderror"
                                 value="{{ old('first_name') }}"
                                 placeholder="Enter your first name">
                             @error('first_name')
@@ -109,7 +109,7 @@
                         <div class="space-y-2">
                             <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name *</label>
                             <input type="text" id="last_name" name="last_name" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('last_name') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('last_name') border-red-500 @else border-gray-300 @enderror"
                                 value="{{ old('last_name') }}"
                                 placeholder="Enter your last name">
                             @error('last_name')
@@ -120,7 +120,7 @@
                         <div class="space-y-2">
                             <label for="email" class="block text-sm font-medium text-gray-700">Email Address *</label>
                             <input type="email" id="email" name="email" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('email') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('email') border-red-500 @else border-gray-300 @enderror"
                                 value="{{ old('email') }}"
                                 placeholder="Enter your email address">
                             @error('email')
@@ -131,7 +131,7 @@
                         <div class="space-y-2">
                             <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number *</label>
                             <input type="tel" id="phone" name="phone" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('phone') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('phone') border-red-500 @else border-gray-300 @enderror"
                                 value="{{ old('phone') }}"
                                 placeholder="Enter your phone number">
                             @error('phone')
@@ -142,13 +142,13 @@
                         <div class="space-y-2">
                             <label for="date_of_birth" class="block text-sm font-medium text-gray-700">Date of Birth *</label>
                             <input type="date" id="date_of_birth" name="date_of_birth" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('date_of_birth') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('date_of_birth') border-red-500 @else border-gray-300 @enderror"
                                 value="{{ old('date_of_birth') }}"
                                 onchange="calculateAge(this.value)">
                             @error('date_of_birth')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
-                            <div id="age-display" class="hidden mt-2 p-3 rounded-lg bg-gradient-to-r text-white text-sm font-semibold flex items-center gap-2">
+                            <div id="age-display" class="mt-2 p-3 rounded-lg bg-gradient-to-r text-white text-sm font-semibold items-center gap-2" style="display: none;">
                                 <span id="age-emoji" class="text-2xl"></span>
                                 <span id="age-text"></span>
                             </div>
@@ -157,7 +157,7 @@
                         <div class="space-y-2">
                             <label for="gender" class="block text-sm font-medium text-gray-700">Gender *</label>
                             <select id="gender" name="gender" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('gender') border-red-500 @enderror">
+                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('gender') border-red-500 @else border-gray-300 @enderror">
                                 <option value="">Select your gender</option>
                                 <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
                                 <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
@@ -172,7 +172,7 @@
                     <div class="mt-6">
                         <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Address *</label>
                         <textarea id="address" name="address" rows="3" required
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('address') border-red-500 @enderror"
+                            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('address') border-red-500 @else border-gray-300 @enderror"
                             placeholder="Enter your full address">{{ old('address') }}</textarea>
                         @error('address')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -187,7 +187,7 @@
                         <div class="space-y-2">
                             <label for="occupation" class="block text-sm font-medium text-gray-700">Occupation *</label>
                             <input type="text" id="occupation" name="occupation" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('occupation') border-red-500 @enderror"
+                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('occupation') border-red-500 @else border-gray-300 @enderror"
                                 value="{{ old('occupation') }}"
                                 placeholder="Enter your occupation">
                             @error('occupation')
@@ -390,7 +390,7 @@
 
                 <!-- Navigation Buttons -->
                 <div class="flex flex-col gap-4 border-t border-slate-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
-                    <button type="button" id="prev-btn" class="hidden inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 px-6 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-slate-300 hover:text-slate-800">
+                    <button type="button" id="prev-btn" class="items-center justify-center gap-2 rounded-full border border-slate-200 px-6 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-slate-300 hover:text-slate-800" style="display: none;">
                         <i class="fas fa-arrow-left"></i>
                         Previous
                     </button>
@@ -401,7 +401,7 @@
                             <i class="fas fa-arrow-right"></i>
                         </button>
 
-                        <button type="submit" id="submit-btn" class="hidden inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-500">
+                        <button type="submit" id="submit-btn" class="items-center justify-center gap-2 rounded-full bg-emerald-600 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-500" style="display: none;">
                             <i class="fas fa-paper-plane"></i>
                             Submit application
                         </button>

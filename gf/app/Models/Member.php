@@ -42,6 +42,9 @@ class Member extends Model
         'profile_photo',
         'newsletter',
         'status',
+        'member_type',
+        'monthly_target',
+        'yearly_target',
         'notes',
         'joined_at',
     ];
@@ -50,6 +53,8 @@ class Member extends Model
         'date_of_birth' => 'date',
         'joined_at' => 'date',
         'newsletter' => 'boolean',
+        'monthly_target' => 'decimal:2',
+        'yearly_target' => 'decimal:2',
     ];
 
     protected $attributes = [
@@ -91,5 +96,89 @@ class Member extends Model
     public function scopePending($query)
     {
         return $query->where('status', 'pending');
+    }
+
+    /**
+     * Get the member's contributions.
+     */
+    public function contributions()
+    {
+        return $this->hasMany(Contribution::class);
+    }
+
+    /**
+     * Get total contributions amount.
+     */
+    public function getTotalContributionsAttribute(): float
+    {
+        return $this->contributions()->sum('amount');
+    }
+
+    /**
+     * Get paid contributions amount.
+     */
+    public function getPaidContributionsAttribute(): float
+    {
+        return $this->contributions()->paid()->sum('amount');
+    }
+
+    /**
+     * Get pending contributions amount.
+     */
+    public function getPendingContributionsAttribute(): float
+    {
+        return $this->contributions()->where('has_paid', false)->sum('amount');
+    }
+
+    /**
+     * Get monthly contribution progress percentage.
+     */
+    public function getMonthlyProgressAttribute(): float
+    {
+        if ($this->monthly_target <= 0) {
+            return 0;
+        }
+
+        $currentMonth = now()->format('Y-m');
+        $monthlyPaid = $this->contributions()
+            ->where('month', $currentMonth)
+            ->where('has_paid', true)
+            ->sum('amount');
+
+        return round(($monthlyPaid / $this->monthly_target) * 100, 2);
+    }
+
+    /**
+     * Get yearly contribution progress percentage.
+     */
+    public function getYearlyProgressAttribute(): float
+    {
+        if ($this->yearly_target <= 0) {
+            return 0;
+        }
+
+        $currentYear = now()->year;
+        $yearlyPaid = $this->contributions()
+            ->whereYear('created_at', $currentYear)
+            ->where('has_paid', true)
+            ->sum('amount');
+
+        return round(($yearlyPaid / $this->yearly_target) * 100, 2);
+    }
+
+    /**
+     * Check if member has met monthly target.
+     */
+    public function hasMetMonthlyTarget(): bool
+    {
+        return $this->monthly_progress >= 100;
+    }
+
+    /**
+     * Check if member has met yearly target.
+     */
+    public function hasMetYearlyTarget(): bool
+    {
+        return $this->yearly_progress >= 100;
     }
 }

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\EventRegistration;
-// use Barryvdh\DomPDF\Facade\Pdf; // Temporarily disabled - package not installed
+use App\Services\QrCodeService;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
@@ -16,13 +17,26 @@ class TicketController extends Controller
 
     public function pdf(string $code): Response
     {
-        // Temporarily disabled PDF generation - package not installed
-        // $reg = EventRegistration::with('event')->where('registration_code', $code)->firstOrFail();
-        // $pdf = Pdf::loadView('tickets.pdf', ['registration' => $reg]);
-        // $filename = 'Ticket-'.$reg->registration_code.'.pdf';
-        // return $pdf->stream($filename);
+        $reg = EventRegistration::with('event')->where('registration_code', $code)->firstOrFail();
 
-        // Return a simple text response for now
-        return response('PDF generation temporarily disabled - DomPDF package not installed', 503);
+        // Generate QR code for the PDF
+        $qrBase64 = QrCodeService::generateTicketQr($reg->registration_code);
+
+        // Check if DomPDF is available
+        if (class_exists('\Barryvdh\DomPDF\Facade\Pdf')) {
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('tickets.pdf', [
+                'registration' => $reg,
+                'qrBase64' => $qrBase64
+            ]);
+
+            $filename = 'Ticket-'.$reg->registration_code.'.pdf';
+            return $pdf->stream($filename);
+        }
+
+        // Fallback: Return HTML version with print instructions
+        return response()->view('tickets.print', [
+            'registration' => $reg,
+            'qrBase64' => $qrBase64
+        ])->header('Content-Type', 'text/html');
     }
 }

@@ -4,10 +4,10 @@ namespace App\Mail;
 
 use App\Models\EventRegistration;
 use App\Services\QrCodeService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-// use Barryvdh\DomPDF\Facade\Pdf; // Temporarily disabled - package not installed
 use Illuminate\Support\Str;
 
 class EventTicketMail extends Mailable
@@ -26,14 +26,15 @@ class EventTicketMail extends Mailable
         // Generate QR code using our service
         $qrBase64 = QrCodeService::generateTicketQr($this->registration->registration_code);
 
-        // Temporarily disabled PDF generation - package not installed
-        // Attach PDF ticket
-        // $pdf = Pdf::loadView('tickets.pdf', [
-        //     'registration' => $this->registration,
-        //     'qrBase64'     => $qrBase64,
-        // ]);
-        // $filename = 'Ticket-'.$this->registration->registration_code.'.pdf';
-        // $this->attachData($pdf->output(), $filename, ['mime' => 'application/pdf']);
+        // Attach PDF ticket if DomPDF is available
+        if (class_exists('\Barryvdh\DomPDF\Facade\Pdf')) {
+            $pdf = Pdf::loadView('tickets.pdf', [
+                'registration' => $this->registration,
+                'qrBase64'     => $qrBase64,
+            ]);
+            $filename = 'Ticket-'.$this->registration->registration_code.'.pdf';
+            $this->attachData($pdf->output(), $filename, ['mime' => 'application/pdf']);
+        }
 
         // Attach calendar invite (ICS)
         $ics = $this->buildIcs($event->title, $event->start_at, $event->end_at, $event->location, $verifyUrl);

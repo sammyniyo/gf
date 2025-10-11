@@ -199,6 +199,83 @@
         </section>
     </div>
 
+    <!-- Website Analytics -->
+    <section class="glass-card p-6">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h2 class="text-lg font-semibold text-slate-900">Website Analytics</h2>
+                <p class="text-sm text-slate-500">Track visitor engagement and popular content</p>
+            </div>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
+            <div class="rounded-xl border border-slate-200 bg-white/70 p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-slate-600">Total Views</span>
+                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </div>
+                <p class="text-2xl font-bold text-slate-900">{{ number_format($total_page_views) }}</p>
+                <p class="text-xs text-slate-500 mt-1">All time page views</p>
+            </div>
+
+            <div class="rounded-xl border border-slate-200 bg-white/70 p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-slate-600">Unique Visitors</span>
+                    <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </div>
+                <p class="text-2xl font-bold text-slate-900">{{ number_format($unique_visitors) }}</p>
+                <p class="text-xs text-slate-500 mt-1">Distinct visitors</p>
+            </div>
+
+            <div class="rounded-xl border border-slate-200 bg-white/70 p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-slate-600">Today's Views</span>
+                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <p class="text-2xl font-bold text-slate-900">{{ number_format($today_views) }}</p>
+                <p class="text-xs text-slate-500 mt-1">Views today</p>
+            </div>
+
+            <div class="rounded-xl border border-slate-200 bg-white/70 p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-slate-600">This Month</span>
+                    <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                </div>
+                <p class="text-2xl font-bold text-slate-900">{{ number_format($month_views) }}</p>
+                <p class="text-xs text-slate-500 mt-1">Views this month</p>
+            </div>
+        </div>
+
+        <!-- Popular Pages -->
+        @if($popular_pages->count() > 0)
+            <div class="rounded-xl border border-slate-200 bg-white/70 p-4">
+                <h3 class="text-sm font-semibold text-slate-900 mb-3">Popular Pages</h3>
+                <div class="space-y-2">
+                    @foreach($popular_pages as $page)
+                        <div class="flex items-center justify-between py-2 border-b border-slate-100 last:border-0">
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-slate-900">{{ $page->page_title ?: 'Untitled' }}</p>
+                                <p class="text-xs text-slate-500 truncate">{{ $page->url }}</p>
+                            </div>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-semibold ml-3">
+                                {{ number_format($page->views_count) }} views
+                            </span>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+    </section>
+
     <section class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
         <article class="relative overflow-hidden rounded-2xl border border-indigo-100 bg-white/85 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
             <div class="flex items-center justify-between">
@@ -219,15 +296,15 @@
 
         <article class="relative overflow-hidden rounded-2xl border border-emerald-100 bg-white/85 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
             <div class="flex items-center justify-between">
-                <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-600">Registrations</span>
+                <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-600">Contributions</span>
                 <svg class="h-7 w-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                 </svg>
         </div>
-            <p class="mt-6 text-3xl font-semibold text-slate-900">{{ $total_registrations }}</p>
-            <p class="mt-2 text-sm text-slate-500">Across {{ $total_events }} curated events</p>
-            <a href="{{ route('admin.registrations.index') }}" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-emerald-600">
-                View attendee list
+            <p class="mt-6 text-3xl font-semibold text-slate-900">{{ number_format($total_contribution_amount, 0) }} RWF</p>
+            <p class="mt-2 text-sm text-slate-500">{{ number_format($paid_contribution_amount, 0) }} RWF collected</p>
+            <a href="{{ route('admin.contributions.index') }}" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-emerald-600">
+                View contributions
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
@@ -251,23 +328,130 @@
             </a>
         </article>
 
-        <article class="relative overflow-hidden rounded-2xl border border-rose-100 bg-white/85 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+        <article class="relative overflow-hidden rounded-2xl border border-purple-100 bg-white/85 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
             <div class="flex items-center justify-between">
-                <span class="inline-flex items-center gap-2 rounded-full bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-600">Messages</span>
-                <svg class="h-7 w-7 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                <span class="inline-flex items-center gap-2 rounded-full bg-purple-50 px-2.5 py-1 text-xs font-semibold text-purple-600">Songs</span>
+                <svg class="h-7 w-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                 </svg>
             </div>
-            <p class="mt-6 text-3xl font-semibold text-slate-900">{{ $total_contacts }}</p>
-            <p class="mt-2 text-sm text-slate-500">Community touchpoints captured</p>
-            <a href="{{ route('admin.contacts.index') }}" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-rose-600">
-                Open inbox
+            <p class="mt-6 text-3xl font-semibold text-slate-900">{{ $total_songs }}</p>
+            <p class="mt-2 text-sm text-slate-500">Songs in our repertoire</p>
+            <a href="{{ route('admin.songs.index') }}" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-purple-600">
+                Browse songs
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
             </a>
         </article>
     </section>
+
+    <!-- Contribution Targets Progress -->
+    @if($targets_progress->count() > 0)
+        <section class="glass-card p-6">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-lg font-semibold text-slate-900">Contribution Targets Progress</h2>
+                    <p class="text-sm text-slate-500">Track progress towards our financial goals</p>
+                </div>
+                <a href="{{ route('admin.contributions.targets') }}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+                    Manage Targets →
+                </a>
+            </div>
+
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                @foreach($targets_progress as $target)
+                    <div class="rounded-xl border border-slate-200 bg-white/70 p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-semibold text-slate-900">{{ $target['name'] }}</h3>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold
+                                {{ $target['type'] === 'student' ? 'bg-blue-100 text-blue-700' : '' }}
+                                {{ $target['type'] === 'alumni' ? 'bg-purple-100 text-purple-700' : '' }}
+                                {{ $target['type'] === 'general' ? 'bg-slate-100 text-slate-700' : '' }}">
+                                {{ ucfirst($target['type']) }}
+                            </span>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="flex items-center justify-between text-sm mb-1">
+                                <span class="text-slate-600">Progress</span>
+                                <span class="font-semibold text-slate-900">{{ $target['progress_percentage'] }}%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-2">
+                                <div class="h-2 rounded-full transition-all duration-300
+                                    {{ $target['is_completed'] ? 'bg-emerald-500' : 'bg-indigo-500' }}"
+                                     style="width: {{ min($target['progress_percentage'], 100) }}%"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-slate-600">{{ number_format($target['current_amount']) }} / {{ number_format($target['target_amount']) }} RWF</span>
+                            @if($target['is_completed'])
+                                <span class="text-emerald-600 font-semibold">✓ Completed</span>
+                            @else
+                                <span class="text-slate-500">{{ number_format($target['remaining_amount']) }} RWF remaining</span>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </section>
+    @endif
+
+    <!-- Featured Songs -->
+    @if($featured_songs->count() > 0)
+        <section class="glass-card p-6">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-lg font-semibold text-slate-900">Featured Songs</h2>
+                    <p class="text-sm text-slate-500">Our most popular and featured musical pieces</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="{{ route('admin.songs.create') }}" class="inline-flex items-center gap-2 rounded-xl bg-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-purple-600/20 transition hover:bg-purple-500">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Add Song
+                    </a>
+                    <a href="{{ route('admin.songs.index') }}" class="text-sm font-semibold text-purple-600 hover:text-purple-500">
+                        View All →
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                @foreach($featured_songs as $song)
+                    <div class="group relative overflow-hidden rounded-xl border border-slate-200 bg-white/70 p-4 transition hover:shadow-lg">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold
+                                {{ $song->type === 'vocal' ? 'bg-purple-100 text-purple-700' : 'bg-indigo-100 text-indigo-700' }}">
+                                {{ ucfirst($song->type) }}
+                            </span>
+                            @if($song->audio_file)
+                                <button onclick="playSong('{{ $song->audio_url }}', '{{ $song->title }}')"
+                                        class="flex h-8 w-8 items-center justify-center rounded-full bg-purple-100 text-purple-600 transition hover:bg-purple-200">
+                                    <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                                    </svg>
+                                </button>
+                            @endif
+                        </div>
+
+                        <h3 class="font-semibold text-slate-900 mb-1">{{ $song->title }}</h3>
+
+                        @if($song->composer)
+                            <p class="text-sm text-slate-600 mb-2">by {{ $song->composer }}</p>
+                        @endif
+
+                        <div class="flex items-center justify-between text-xs text-slate-500">
+                            <span>{{ $song->formatted_duration }}</span>
+                            <span>{{ $song->plays_count }} plays</span>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </section>
+    @endif
 
     <div class="grid gap-6 xl:grid-cols-12">
         <section class="xl:col-span-8">
@@ -422,6 +606,59 @@
 
 @push('scripts')
 <script>
+    // Audio player functionality
+    let currentAudio = null;
+    let currentPlayingButton = null;
+
+    function playSong(audioUrl, title) {
+        // Stop current audio if playing
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+            if (currentPlayingButton) {
+                currentPlayingButton.innerHTML = `
+                    <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                    </svg>
+                `;
+            }
+        }
+
+        // Create new audio
+        currentAudio = new Audio(audioUrl);
+        currentPlayingButton = event.target.closest('button');
+
+        // Update button to show pause icon
+        currentPlayingButton.innerHTML = `
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M5 4a1 1 0 00-1 1v10a1 1 0 102 0V5a1 1 0 00-1-1zm8 0a1 1 0 00-1 1v10a1 1 0 102 0V5a1 1 0 00-1-1z"/>
+            </svg>
+        `;
+
+        currentAudio.play();
+
+        currentAudio.onended = function() {
+            currentPlayingButton.innerHTML = `
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                </svg>
+            `;
+            currentAudio = null;
+            currentPlayingButton = null;
+        };
+
+        currentAudio.onpause = function() {
+            currentPlayingButton.innerHTML = `
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                </svg>
+            `;
+            currentAudio = null;
+            currentPlayingButton = null;
+        };
+    }
+
+    // Chart functionality
     (function () {
         const ctx = document.getElementById('registrationsTrendChart');
 

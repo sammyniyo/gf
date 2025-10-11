@@ -19,6 +19,70 @@ class MemberController extends Controller
     }
 
     /**
+     * Show the form for creating a new member.
+     */
+    public function create()
+    {
+        return view('admin.members.create');
+    }
+
+    /**
+     * Store a newly created member.
+     */
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            // Personal Information
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:members,email',
+            'phone' => 'required|string|max:20',
+            'date_of_birth' => 'required|date|before:today',
+            'gender' => 'required|in:male,female,other',
+            'address' => 'required|string|max:500',
+            // Professional Information
+            'occupation' => 'required|string|max:255',
+            'workplace' => 'nullable|string|max:255',
+            'education_level' => 'required|in:primary,secondary,diploma,bachelor,master,phd,other',
+            'skills' => 'nullable|string|max:500',
+            // Choir Details
+            'voice_type' => 'required|in:soprano,alto,tenor,bass,unsure',
+            'musical_experience' => 'required|in:beginner,intermediate,advanced,professional',
+            'instruments' => 'nullable|string|max:255',
+            'choir_experience' => 'nullable|in:none,school,church,community,professional',
+            'why_join' => 'required|string|max:1000',
+            // Additional Information
+            'emergency_contact_name' => 'required|string|max:255',
+            'emergency_contact_phone' => 'required|string|max:20',
+            'availability' => 'required|in:weekends,evenings,flexible,limited',
+            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'newsletter' => 'nullable|boolean',
+        ]);
+
+        // Populate 'name' field from first_name and last_name (for legacy database compatibility)
+        $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
+
+        // Handle profile photo upload
+        if ($request->hasFile('profile_photo')) {
+            $photo = $request->file('profile_photo');
+            $photoName = time() . '_' . $photo->getClientOriginalName();
+            $photo->storeAs('public/member-photos', $photoName);
+            $data['profile_photo'] = $photoName;
+        }
+
+        // Set initial values
+        $data['status'] = 'active'; // Admin-created members are active by default
+        $data['joined_at'] = now();
+        $data['newsletter'] = $request->has('newsletter');
+
+        // Create member
+        $member = Member::create($data);
+
+        return redirect()->route('admin.members.show', $member)
+            ->with('success', 'Member added successfully!');
+    }
+
+    /**
      * Display the specified member.
      */
     public function show(Member $member)
@@ -44,13 +108,26 @@ class MemberController extends Controller
             'notes' => 'nullable|string|max:1000',
         ]);
 
+        $oldStatus = $member->status;
+        $newStatus = $request->status;
+
         $member->update([
-            'status' => $request->status,
+            'status' => $newStatus,
             'notes' => $request->notes,
         ]);
 
+        // Send welcome email when member status changes from pending to active
+        if ($oldStatus !== 'active' && $newStatus === 'active') {
+            try {
+                \Mail::to($member->email)->send(new \App\Mail\MemberWelcomeMail($member));
+            } catch (\Exception $e) {
+                \Log::error('Failed to send welcome email to member: ' . $e->getMessage());
+                // Don't fail the update if email fails
+            }
+        }
+
         return redirect()->route('admin.members.show', $member)
-            ->with('success', 'Member updated successfully!');
+            ->with('success', 'Member updated successfully!' . ($newStatus === 'active' && $oldStatus !== 'active' ? ' Welcome email sent.' : ''));
     }
 
     /**

@@ -7,6 +7,10 @@ use App\Models\Event;
 use App\Models\EventRegistration;
 use App\Models\Member;
 use App\Models\Contact;
+use App\Models\Contribution;
+use App\Models\ContributionTarget;
+use App\Models\Song;
+use App\Models\PageView;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -18,13 +22,47 @@ class DashboardController extends Controller
 
         $totalEvents = Event::count();
 
-        $upcomingEventsQuery = Event::whereDate('date', '>=', $now->toDateString());
+        $upcomingEventsQuery = Event::whereDate('start_at', '>=', $now->toDateString());
         $upcomingEventsCount = (clone $upcomingEventsQuery)->count();
-        $upcomingEventsList = (clone $upcomingEventsQuery)->orderBy('date')->take(8)->get();
+        $upcomingEventsList = (clone $upcomingEventsQuery)->orderBy('start_at')->take(8)->get();
 
         $totalRegistrations = EventRegistration::count();
         $totalMembers = Member::count();
         $totalContacts = Contact::count();
+        $totalContributions = Contribution::count();
+        $totalSongs = Song::count();
+
+        // Contribution analytics
+        $totalContributionAmount = Contribution::sum('amount');
+        $paidContributionAmount = Contribution::paid()->sum('amount');
+        $pendingContributionAmount = Contribution::where('has_paid', false)->sum('amount');
+
+        // Active contribution targets
+        $activeTargets = ContributionTarget::active()->get();
+        $targetsProgress = $activeTargets->map(function($target) {
+            return [
+                'name' => $target->name,
+                'type' => $target->type,
+                'target_amount' => $target->target_amount,
+                'current_amount' => $target->current_amount,
+                'progress_percentage' => $target->progress_percentage,
+                'remaining_amount' => $target->remaining_amount,
+                'is_completed' => $target->is_completed,
+            ];
+        });
+
+        // Featured songs
+        $featuredSongs = Song::published()->featured()->take(4)->get();
+        $recentSongs = Song::published()->latest()->take(3)->get();
+
+        // Page view analytics
+        $totalPageViews = PageView::getTotalViews();
+        $uniqueVisitors = PageView::getUniqueVisitors();
+        $todayViews = PageView::getTodayViews();
+        $weekViews = PageView::getWeekViews();
+        $monthViews = PageView::getMonthViews();
+        $popularPages = PageView::getPopularPages(5);
+        $pageViewTrend = PageView::getDailyViews(30);
 
         $recentRegistrations = EventRegistration::with('event')->latest()->take(6)->get();
         $recentMembers = Member::latest()->take(6)->get();
@@ -56,6 +94,14 @@ class DashboardController extends Controller
             'total_registrations' => $totalRegistrations,
             'total_members' => $totalMembers,
             'total_contacts' => $totalContacts,
+            'total_contributions' => $totalContributions,
+            'total_songs' => $totalSongs,
+            'total_contribution_amount' => $totalContributionAmount,
+            'paid_contribution_amount' => $paidContributionAmount,
+            'pending_contribution_amount' => $pendingContributionAmount,
+            'targets_progress' => $targetsProgress,
+            'featured_songs' => $featuredSongs,
+            'recent_songs' => $recentSongs,
             'recent_registrations' => $recentRegistrations,
             'recent_members' => $recentMembers,
             'recent_contacts' => $recentContacts,
@@ -66,6 +112,14 @@ class DashboardController extends Controller
             ],
             'upcoming_events_count' => $upcomingEventsCount,
             'unread_contacts_count' => $unreadContactsCount,
+            // Page view analytics
+            'total_page_views' => $totalPageViews,
+            'unique_visitors' => $uniqueVisitors,
+            'today_views' => $todayViews,
+            'week_views' => $weekViews,
+            'month_views' => $monthViews,
+            'popular_pages' => $popularPages,
+            'page_view_trend' => $pageViewTrend,
         ]);
     }
 }

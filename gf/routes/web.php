@@ -82,6 +82,16 @@ Route::post('/events/{event}/register', [EventRegistrationController::class, 'st
 Route::get('/tickets/verify/{code}', [TicketController::class, 'verify'])->name('tickets.verify');
 Route::get('/tickets/pdf/{code}', [TicketController::class, 'pdf'])->name('tickets.pdf');
 
+// Test QR code route
+Route::get('/test-qr', function () {
+    $registration = \App\Models\EventRegistration::first();
+    if ($registration) {
+        $qrCode = \App\Services\QrCodeService::generateTicketQr($registration->registration_code);
+        return view('test-qr', ['qrCode' => $qrCode, 'registration' => $registration]);
+    }
+    return 'No registration found';
+});
+
 
 Route::get('/register/thank-you', function () {
     return view('registration-thankyou');
@@ -155,10 +165,18 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('stories', App\Http\Controllers\Admin\StoryController::class);
 
     // Contributions Management
-    Route::resource('contributions', App\Http\Controllers\Admin\ContributionController::class);
     Route::get('contributions/export', [App\Http\Controllers\Admin\ContributionController::class, 'export'])->name('contributions.export');
     Route::post('contributions/toggle', [App\Http\Controllers\Admin\ContributionController::class, 'togglePayment'])->name('contributions.toggle');
     Route::post('contributions/target', [App\Http\Controllers\Admin\ContributionController::class, 'setTarget'])->name('contributions.target');
+    Route::get('contributions/targets', [App\Http\Controllers\Admin\ContributionTargetController::class, 'index'])->name('contributions.targets');
+    Route::resource('contributions', App\Http\Controllers\Admin\ContributionController::class);
+
+    // Contribution Targets
+    Route::resource('contribution-targets', App\Http\Controllers\Admin\ContributionTargetController::class);
+
+    // Songs
+    Route::resource('songs', App\Http\Controllers\Admin\SongController::class);
+    Route::post('songs/{song}/toggle-featured', [App\Http\Controllers\Admin\SongController::class, 'toggleFeatured'])->name('songs.toggle-featured');
 
     // Meetings Management
     Route::resource('meetings', App\Http\Controllers\Admin\MeetingController::class);

@@ -17,11 +17,13 @@ class Event extends Model
         'location',
         'capacity',
         'is_public',
-        'cover_image'
+        'cover_image',
+        'accept_support'
     ];
 
     protected $casts = [
         'is_public' => 'boolean',
+        'accept_support' => 'boolean',
         'start_at'  => 'datetime',
         'end_at'    => 'datetime',
         'capacity' => 'integer',
@@ -35,6 +37,16 @@ class Event extends Model
     public function isConcert(): bool
     {
         return strtoupper($this->type ?? '') === 'CONCERT';
+    }
+
+    public function supportsGiving(): bool
+    {
+        // Concerts default to support true unless explicitly disabled
+        if ($this->isConcert()) {
+            return $this->accept_support !== false;
+        }
+        // Other types respect the flag (default false)
+        return (bool) $this->accept_support;
     }
 
     public function isFull(): bool

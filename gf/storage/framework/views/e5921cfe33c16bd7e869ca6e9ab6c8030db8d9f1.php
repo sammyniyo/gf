@@ -141,6 +141,16 @@ endif;
 unset($__errorArgs, $__bag); ?>
                 </div>
 
+                <!-- Accept Support -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center">
+                        <input type="checkbox" name="accept_support" id="accept_support" value="1" <?php echo e(old('accept_support', $event->accept_support) ? 'checked' : ''); ?>
+
+                            class="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-400">
+                        <label for="accept_support" class="ml-2 text-sm text-gray-700">Allow "Support Us" for this event</label>
+                    </div>
+                </div>
+
                 <!-- Is Public -->
                 <div class="md:col-span-2">
                     <div class="flex items-center">

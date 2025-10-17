@@ -30,8 +30,16 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+
+    'spotify' => [
+        'client_id' => env('SPOTIFY_CLIENT_ID'),
+        'client_secret' => env('SPOTIFY_CLIENT_SECRET'),
+    ],
+
     'whatsapp' => [
-        'invite' => env('WHATSAPP_INVITE', null),
+        'main_group_link' => env('WHATSAPP_MAIN_GROUP', 'https://chat.whatsapp.com/MAIN_GROUP'),
+        'choir_group_link' => env('WHATSAPP_CHOIR_GROUP', 'https://chat.whatsapp.com/CHOIR_GROUP'),
+        'active_choristers_link' => env('WHATSAPP_ACTIVE_CHORISTERS', 'https://chat.whatsapp.com/ACTIVE_CHORISTERS'),
     ],
 
 ];

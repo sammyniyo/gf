@@ -18,6 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'member_id', // Link to members table
         'name',
         'email',
         'password',
@@ -43,6 +44,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'is_admin' => 'boolean',
     ];
+
+    /**
+     * Get the member associated with this user
+     */
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
+    }
 
     /**
      * Check if user is an admin

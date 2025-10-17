@@ -28,28 +28,89 @@
                 <h3 class="text-lg font-semibold text-slate-900">Contribution Details</h3>
 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div>
+                    <div x-data="memberSearch()">
                         <label for="member_id" class="block text-sm font-medium text-slate-700 mb-2">Member *</label>
-                        <select name="member_id" id="member_id" required
-                                class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-1 focus:ring-emerald-400 focus:border-emerald-400 <?php $__errorArgs = ['member_id'];
+
+                        <!-- Search Input -->
+                        <div class="relative">
+                            <input type="text"
+                                   x-model="searchTerm"
+                                   @input="filterMembers()"
+                                   @focus="showDropdown = true"
+                                   @blur="setTimeout(() => showDropdown = false, 200)"
+                                   placeholder="Search members..."
+                                   class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-1 focus:ring-emerald-400 focus:border-emerald-400 <?php $__errorArgs = ['member_id'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-300 <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> border-red-300 <?php else: ?> border-slate-200 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>">
-                            <option value="">Select Member</option>
-                            <?php $__currentLoopData = $members; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $member): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($member->id); ?>" <?php echo e(old('member_id', $contribution->member_id) == $member->id ? 'selected' : ''); ?>>
-                                    <?php echo e($member->first_name); ?> <?php echo e($member->last_name); ?>
 
-                                    <?php if($member->monthly_target > 0): ?>
-                                        (Target: <?php echo e(number_format($member->monthly_target, 0)); ?> RWF/month)
-                                    <?php endif; ?>
-                                </option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
+                            <!-- Search Icon -->
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+
+                            <!-- Dropdown -->
+                            <div x-show="showDropdown"
+                                 x-transition:enter="transition ease-out duration-100"
+                                 x-transition:enter-start="transform opacity-0 scale-95"
+                                 x-transition:enter-end="transform opacity-100 scale-100"
+                                 x-transition:leave="transition ease-in duration-75"
+                                 x-transition:leave-start="transform opacity-100 scale-100"
+                                 x-transition:leave-end="transform opacity-0 scale-95"
+                                 class="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-60 overflow-auto"
+                                 style="display: none;">
+
+                                <!-- No Results -->
+                                <div x-show="filteredMembers.length === 0"
+                                     class="px-3 py-2 text-sm text-slate-500">
+                                    No members found
+                                </div>
+
+                                <!-- Member Options -->
+                                <template x-for="member in filteredMembers" :key="member.id">
+                                    <div @click="selectMember(member)"
+                                         class="px-3 py-2 text-sm cursor-pointer hover:bg-slate-50 border-b border-slate-100 last:border-b-0">
+                                        <div class="font-medium text-slate-900" x-text="member.name"></div>
+                                        <div class="text-slate-500 text-xs" x-text="member.email"></div>
+                                        <div x-show="member.monthly_target > 0"
+                                             class="text-emerald-600 text-xs mt-1"
+                                             x-text="'Target: ' + formatCurrency(member.monthly_target) + ' RWF/month'">
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Selected Member Display -->
+                        <div x-show="selectedMember" class="mt-2 p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-medium text-emerald-900" x-text="selectedMember?.name"></div>
+                                    <div class="text-emerald-700 text-sm" x-text="selectedMember?.email"></div>
+                                    <div x-show="selectedMember?.monthly_target > 0"
+                                         class="text-emerald-600 text-xs mt-1"
+                                         x-text="'Target: ' + formatCurrency(selectedMember?.monthly_target) + ' RWF/month'">
+                                    </div>
+                                </div>
+                                <button type="button"
+                                        @click="clearSelection()"
+                                        class="text-emerald-600 hover:text-emerald-800">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hidden Input for Form Submission -->
+                        <input type="hidden" name="member_id" :value="selectedMember?.id || ''" required>
+
                         <?php $__errorArgs = ['member_id'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -105,6 +166,7 @@ $message = $__bag->first($__errorArgs[0]); ?> border-red-300 <?php unset($messag
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>">
+                        <p class="mt-1 text-xs text-slate-500">Each member can only have one contribution per month</p>
                         <?php $__errorArgs = ['month'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -281,6 +343,72 @@ unset($__errorArgs, $__bag); ?>
         </form>
     </div>
 </div>
+
+<script>
+function memberSearch() {
+    return {
+        searchTerm: '',
+        showDropdown: false,
+        selectedMember: null,
+        allMembers: <?php echo json_encode($membersForJs, 15, 512) ?>,
+        filteredMembers: [],
+
+        init() {
+            // Initialize with all members
+            this.filteredMembers = [...this.allMembers];
+
+            // Set selected member if editing existing contribution
+            <?php if(isset($contribution) && $contribution->member): ?>
+                const currentMember = {
+                    id: <?php echo e($contribution->member->id); ?>,
+                    name: '<?php echo e($contribution->member->first_name); ?> <?php echo e($contribution->member->last_name); ?>',
+                    email: '<?php echo e($contribution->member->email); ?>',
+                    monthly_target: <?php echo e($contribution->member->monthly_target ?? 0); ?>
+
+                };
+                this.selectedMember = currentMember;
+                this.searchTerm = currentMember.name;
+            <?php elseif(old('member_id')): ?>
+                const oldMemberId = <?php echo e(old('member_id')); ?>;
+                const oldMember = this.allMembers.find(m => m.id === oldMemberId);
+                if (oldMember) {
+                    this.selectedMember = oldMember;
+                    this.searchTerm = oldMember.name;
+                }
+            <?php endif; ?>
+        },
+
+        filterMembers() {
+            if (!this.searchTerm.trim()) {
+                this.filteredMembers = [...this.allMembers];
+                return;
+            }
+
+            const term = this.searchTerm.toLowerCase();
+            this.filteredMembers = this.allMembers.filter(member =>
+                member.name.toLowerCase().includes(term) ||
+                member.email.toLowerCase().includes(term)
+            );
+        },
+
+        selectMember(member) {
+            this.selectedMember = member;
+            this.searchTerm = member.name;
+            this.showDropdown = false;
+        },
+
+        clearSelection() {
+            this.selectedMember = null;
+            this.searchTerm = '';
+            this.filteredMembers = [...this.allMembers];
+        },
+
+        formatCurrency(amount) {
+            return new Intl.NumberFormat('en-RW').format(amount);
+        }
+    }
+}
+</script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('admin.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\samsh\Documents\gf\gf\resources\views/admin/contributions/edit.blade.php ENDPATH**/ ?>

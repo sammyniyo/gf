@@ -19,9 +19,9 @@
             @foreach ([
                 [
                     'name' => 'Pastor Emmanuel K.',
-                    'role' => 'Church Leader',
+                    'role' => 'SDA Church Leader',
                     'image' => '1.jpg',
-                    'quote' => 'God\'s Family Choir doesn\'t just perform—they usher people into the presence of God. Their ministry has blessed our congregation beyond measure. Every song carries deep spiritual weight.',
+                    'quote' => 'God\'s Family Choir doesn\'t just perform—they usher people into the presence of God. Their ministry has blessed our Seventh-day Adventist congregation beyond measure. Every song carries deep spiritual weight and biblical truth.',
                     'rating' => 5
                 ],
                 [
@@ -35,7 +35,7 @@
                     'name' => 'David M.',
                     'role' => 'Concert Attendee',
                     'image' => '3.jpg',
-                    'quote' => 'I attended their Easter concert and was moved to tears. The harmonies were heavenly, and you could feel the genuine worship in every note. This is anointed music ministry at its finest.',
+                    'quote' => 'I attended their Resurrection Sunday concert and was moved to tears. The harmonies were heavenly, and you could feel the genuine worship in every note. Their biblical message through music is powerful and uplifting.',
                     'rating' => 5
                 ],
                 [

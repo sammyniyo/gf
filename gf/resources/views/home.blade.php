@@ -1,15 +1,42 @@
 @extends('layouts.app')
 
-@section('title', 'Home | God\'s Family Choir')
-
+@section('title', 'Welcome to God\'s Family Choir | ASA UR Nyarugenge SDA')
+@section('description', 'God\'s Family Choir is a choir that sings for God. It is a choir that sings for the people. It is a choir that sings for the community. It is a choir that sings for the world.')
+@section('keywords', 'God\'s Family Choir, ASA UR Nyarugenge SDA, Choir, Music, Worship, Jesus, Gospel, Christian, Church')
+@section('author', 'God\'s Family Choir')
+@section('og:title', 'Welcome to God\'s Family Choir | ASA UR Nyarugenge SDA')
+@section('og:description', 'God\'s Family Choir is a choir that sings for God. It is a choir that sings for the people. It is a choir that sings for the community. It is a choir that sings for the world.')
+@section('og:image', asset('images/hero.jpg'))
+@section('og:url', url('/'))
+@section('og:type', 'website')
+@section('og:locale', 'en_US')
 @section('content')
-    <x-landing.hero />
-    <x-landing.logo-carousel />
-    <x-landing.features />
-    <x-landing.spotify-albums />
-    <x-landing.stats-strip />
-    <x-landing.unlock-power />
-    <x-landing.testimonials />
-    <x-landing.final-cta />
+    <!-- Include Transition Styles & Scripts -->
+    <x-landing.section-transitions />
+
+    <!-- Hero Section -->
+    <div class="fade-in-section"><x-landing.hero /></div>
+
+    <!-- Audio Player Section -->
+    <div class="fade-in-section"><x-landing.audio-player /></div>
+
+    <!-- Interactive Photo Gallery -->
+    <div class="fade-in-section"><x-landing.interactive-gallery /></div>
+
+    <!-- Upcoming Events -->
+    <div class="fade-in-section"><x-landing.upcoming-events-dynamic :nextEvent="$nextEvent ?? null" /></div>
+
+    <!-- Spotify Albums -->
+    <div class="fade-in-section"><x-landing.spotify-dynamic :spotifyTracks="$spotifyTracks ?? null" /></div>
+
+    <!-- Unlock Power Section -->
+
+    <!-- Testimonials -->
+    <div class="fade-in-section"><x-landing.testimonials-redesigned /></div>
+
+    <!-- Final CTA -->
+    <div class="fade-in-section"><x-landing.final-cta /></div>
+
+    <!-- Footer -->
     <x-static.footer />
 @endsection

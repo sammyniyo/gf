@@ -42,14 +42,12 @@ class EventRegistrationController extends Controller
                 })
             ],
             'phone' => ['nullable','regex:/^[0-9]{10,15}$/'],
+            'member_id' => ['nullable','exists:members,id'],
         ];
 
+        // Allow custom amounts for concerts
         if ($event->isConcert()) {
-            $rules['amount_offered'] = [
-                'required',
-                'integer',
-                Rule::in($presets), // exact preset; change to min if you want custom
-            ];
+            $rules['amount_offered'] = ['required','integer','min:0'];
         } else {
             $rules['amount_offered'] = ['nullable','integer','min:0'];
         }
@@ -59,13 +57,25 @@ class EventRegistrationController extends Controller
         ]);
         $amount = (int) ($data['amount_offered'] ?? 0);
 
+        // Check if this is a custom amount (not in presets)
+        $customAmount = $event->isConcert() && !in_array($amount, $presets) && $amount > 0;
+
+        // Calculate member visits count if member_id is provided
+        $memberVisitsCount = 0;
+        if (!empty($data['member_id'])) {
+            $memberVisitsCount = EventRegistration::where('member_id', $data['member_id'])->count() + 1;
+        }
+
         $registration = EventRegistration::create([
             'event_id'         => $event->id,
+            'member_id'        => $data['member_id'] ?? null,
             'name'             => $data['name'],
             'email'            => $data['email'],
             'phone'            => $data['phone'] ?? null,
-            'total_amount'     => $amount,
-            'registration_code' => Str::ulid()->toBase32(), // short, unique
+            'amount_offered'   => $amount,
+            'custom_amount'    => $customAmount,
+            'member_visits_count' => $memberVisitsCount,
+            'ticket_code'      => Str::ulid()->toBase32(), // short, unique
             'status'           => 'REGISTERED',
         ]);
 

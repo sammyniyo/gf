@@ -25,8 +25,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3">Sunday Worship</h3>
-                <p class="text-gray-600 leading-relaxed">Leading congregational worship every Sunday with powerful hymns and contemporary praise songs that elevate spirits</p>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Sabbath Worship</h3>
+                <p class="text-gray-600 leading-relaxed">Leading congregational worship every Sabbath (Saturday) with powerful hymns and contemporary praise songs that honor God</p>
             </div>
 
             <!-- Feature 2: Events & Concerts -->

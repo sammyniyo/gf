@@ -308,11 +308,11 @@ unset($__errorArgs, $__bag); ?>
                         <div class="space-y-2">
                             <label for="workplace" class="block text-sm font-medium text-gray-700">Workplace</label>
                             <input type="text" id="workplace" name="workplace"
-                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['workplace'];
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['workplace'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php else: ?> border-gray-300 <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
@@ -333,11 +333,11 @@ unset($__errorArgs, $__bag); ?>
                         <div class="space-y-2">
                             <label for="education_level" class="block text-sm font-medium text-gray-700">Education Level *</label>
                             <select id="education_level" name="education_level" required
-                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['education_level'];
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['education_level'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php else: ?> border-gray-300 <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>">
@@ -365,11 +365,11 @@ unset($__errorArgs, $__bag); ?>
                         <div class="space-y-2">
                             <label for="skills" class="block text-sm font-medium text-gray-700">Special Skills</label>
                             <input type="text" id="skills" name="skills"
-                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['skills'];
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['skills'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php else: ?> border-gray-300 <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
@@ -396,11 +396,11 @@ unset($__errorArgs, $__bag); ?>
                         <div class="space-y-2">
                             <label for="voice_type" class="block text-sm font-medium text-gray-700">Voice Type *</label>
                             <select id="voice_type" name="voice_type" required
-                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['voice_type'];
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['voice_type'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php else: ?> border-gray-300 <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>">
@@ -426,11 +426,11 @@ unset($__errorArgs, $__bag); ?>
                         <div class="space-y-2">
                             <label for="musical_experience" class="block text-sm font-medium text-gray-700">Musical Experience *</label>
                             <select id="musical_experience" name="musical_experience" required
-                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['musical_experience'];
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['musical_experience'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php else: ?> border-gray-300 <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>">
@@ -455,11 +455,11 @@ unset($__errorArgs, $__bag); ?>
                         <div class="space-y-2">
                             <label for="instruments" class="block text-sm font-medium text-gray-700">Instruments Played</label>
                             <input type="text" id="instruments" name="instruments"
-                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['instruments'];
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['instruments'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php else: ?> border-gray-300 <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
@@ -480,11 +480,11 @@ unset($__errorArgs, $__bag); ?>
                         <div class="space-y-2">
                             <label for="choir_experience" class="block text-sm font-medium text-gray-700">Previous Choir Experience</label>
                             <select id="choir_experience" name="choir_experience"
-                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['choir_experience'];
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['choir_experience'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php else: ?> border-gray-300 <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>">
@@ -511,11 +511,11 @@ unset($__errorArgs, $__bag); ?>
                     <div class="mt-6">
                         <label for="why_join" class="block text-sm font-medium text-gray-700 mb-2">Why do you want to join God's Family Choir? *</label>
                         <textarea id="why_join" name="why_join" rows="4" required
-                            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['why_join'];
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['why_join'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php else: ?> border-gray-300 <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
@@ -540,11 +540,11 @@ unset($__errorArgs, $__bag); ?>
                         <div class="space-y-2">
                             <label for="emergency_contact_name" class="block text-sm font-medium text-gray-700">Emergency Contact Name *</label>
                             <input type="text" id="emergency_contact_name" name="emergency_contact_name" required
-                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['emergency_contact_name'];
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['emergency_contact_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php else: ?> border-gray-300 <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
@@ -565,11 +565,11 @@ unset($__errorArgs, $__bag); ?>
                         <div class="space-y-2">
                             <label for="emergency_contact_phone" class="block text-sm font-medium text-gray-700">Emergency Contact Phone *</label>
                             <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" required
-                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['emergency_contact_phone'];
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['emergency_contact_phone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php else: ?> border-gray-300 <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
@@ -590,11 +590,11 @@ unset($__errorArgs, $__bag); ?>
                         <div class="space-y-2">
                             <label for="availability" class="block text-sm font-medium text-gray-700">Availability *</label>
                             <select id="availability" name="availability" required
-                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['availability'];
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['availability'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php else: ?> border-gray-300 <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>">
@@ -619,11 +619,11 @@ unset($__errorArgs, $__bag); ?>
                         <div class="space-y-2">
                             <label for="profile_photo" class="block text-sm font-medium text-gray-700">Profile Photo</label>
                             <input type="file" id="profile_photo" name="profile_photo" accept="image/*"
-                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['profile_photo'];
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 <?php $__errorArgs = ['profile_photo'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php else: ?> border-gray-300 <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>">
@@ -648,7 +648,7 @@ unset($__errorArgs, $__bag); ?>
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php else: ?> border-gray-300 <?php unset($message);
+$message = $__bag->first($__errorArgs[0]); ?> border-red-500 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>">
@@ -693,7 +693,7 @@ unset($__errorArgs, $__bag); ?>
                             <i class="fas fa-arrow-right"></i>
                         </button>
 
-                        <button type="submit" id="submit-btn" class="hidden inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-500">
+                        <button type="submit" id="submit-btn" class="items-center justify-center gap-2 rounded-full bg-emerald-600 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-500" style="display: none;">
                             <i class="fas fa-paper-plane"></i>
                             Submit application
                         </button>
@@ -1522,6 +1522,92 @@ footer, footer * {
     z-index: 9999 !important;
 }
 </style>
+
+<script>
+// Age-based humor messages
+function calculateAge(dateOfBirth) {
+    if (!dateOfBirth) return;
+
+    const birthDate = new Date(dateOfBirth);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+
+    // Show/create age message container
+    let messageContainer = document.getElementById('age-message');
+    if (!messageContainer) {
+        messageContainer = document.createElement('div');
+        messageContainer.id = 'age-message';
+        messageContainer.className = 'mt-3 p-4 rounded-xl transition-all duration-500 transform';
+        document.getElementById('date_of_birth').parentElement.appendChild(messageContainer);
+    }
+
+    // Get humor message based on age
+    let message = '';
+    let bgColor = '';
+    let icon = '';
+
+    if (age < 13) {
+        message = "Wow! Starting early! 🎵 Your voice is going to mature beautifully with us!";
+        bgColor = 'bg-gradient-to-r from-pink-100 to-purple-100 border-2 border-pink-300';
+        icon = '👶';
+    } else if (age >= 13 && age < 18) {
+        message = "Teen spirit! 🎸 Perfect age to discover the power of your voice!";
+        bgColor = 'bg-gradient-to-r from-blue-100 to-cyan-100 border-2 border-blue-300';
+        icon = '🎓';
+    } else if (age >= 18 && age < 25) {
+        message = "Young and vibrant! 🌟 Your energy will light up our choir!";
+        bgColor = 'bg-gradient-to-r from-emerald-100 to-teal-100 border-2 border-emerald-300';
+        icon = '✨';
+    } else if (age >= 25 && age < 35) {
+        message = "In your prime! 🎯 The perfect balance of experience and enthusiasm!";
+        bgColor = 'bg-gradient-to-r from-amber-100 to-yellow-100 border-2 border-amber-300';
+        icon = '🎭';
+    } else if (age >= 35 && age < 50) {
+        message = "Seasoned talent! 🎵 Your wisdom and voice will enrich our harmony!";
+        bgColor = 'bg-gradient-to-r from-indigo-100 to-blue-100 border-2 border-indigo-300';
+        icon = '🎼';
+    } else if (age >= 50 && age < 65) {
+        message = "Vintage vocals! 🍷 Like fine wine, your voice gets better with age!";
+        bgColor = 'bg-gradient-to-r from-rose-100 to-red-100 border-2 border-rose-300';
+        icon = '🍷';
+    } else if (age >= 65) {
+        message = "Living legend! 👑 Your experience is priceless! We're honored!";
+        bgColor = 'bg-gradient-to-r from-violet-100 to-purple-100 border-2 border-violet-300';
+        icon = '👑';
+    }
+
+    // Display the message with animation
+    messageContainer.innerHTML = `
+        <div class="flex items-start gap-3">
+            <div class="text-3xl">${icon}</div>
+            <div class="flex-1">
+                <p class="text-sm font-bold text-gray-800 mb-1">Age: ${age} years</p>
+                <p class="text-sm text-gray-700">${message}</p>
+            </div>
+        </div>
+    `;
+    messageContainer.className = `mt-3 p-4 rounded-xl transition-all duration-500 transform ${bgColor} animate-bounce`;
+
+    // Remove bounce animation after 1 second
+    setTimeout(() => {
+        messageContainer.classList.remove('animate-bounce');
+    }, 1000);
+}
+
+// Call calculateAge if date is already filled (for old() values)
+document.addEventListener('DOMContentLoaded', function() {
+    const dateField = document.getElementById('date_of_birth');
+    if (dateField && dateField.value) {
+        calculateAge(dateField.value);
+    }
+});
+</script>
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\samsh\Documents\gf\gf\resources\views/member-registration.blade.php ENDPATH**/ ?>

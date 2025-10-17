@@ -9,6 +9,13 @@
             <p class="mt-1 text-sm text-slate-500">Track member contributions with advanced filtering and analytics</p>
         </div>
         <div class="flex items-center gap-3">
+            <a href="<?php echo e(route('admin.contributions.index', ['view' => 'calendar'])); ?>"
+               class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Calendar View
+            </a>
             <a href="<?php echo e(route('admin.contributions.create')); ?>"
                class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -28,44 +35,44 @@
 
     <!-- Summary Cards -->
     <div class="grid gap-5 md:grid-cols-3">
-        <div class="glass-card p-6">
+        <div class="p-6 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-2xl shadow-xl border-2 border-indigo-200 hover:scale-105 transition-transform">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-semibold text-slate-600">Total Amount</p>
-                    <p class="text-2xl font-bold text-slate-900"><?php echo e(number_format($totalAmount, 0)); ?> RWF</p>
+                    <p class="text-sm font-bold text-indigo-600 uppercase tracking-wide">Total Amount</p>
+                    <p class="text-3xl font-black text-indigo-900 mt-2"><?php echo e(number_format($totalAmount, 0)); ?> RWF</p>
                 </div>
-                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-100">
-                    <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                     </svg>
                 </div>
             </div>
         </div>
 
-    <div class="glass-card p-6">
+        <div class="p-6 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 rounded-2xl shadow-xl border-2 border-emerald-200 hover:scale-105 transition-transform">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-semibold text-slate-600">Paid Amount</p>
-                    <p class="text-2xl font-bold text-emerald-600"><?php echo e(number_format($paidAmount, 0)); ?> RWF</p>
+                    <p class="text-sm font-bold text-emerald-600 uppercase tracking-wide">Paid Amount</p>
+                    <p class="text-3xl font-black text-emerald-900 mt-2"><?php echo e(number_format($paidAmount, 0)); ?> RWF</p>
                 </div>
-                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100">
-                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                     </svg>
-                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="glass-card p-6">
+        <div class="p-6 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 rounded-2xl shadow-xl border-2 border-amber-200 hover:scale-105 transition-transform">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-semibold text-slate-600">Pending Amount</p>
-                    <p class="text-2xl font-bold text-amber-600"><?php echo e(number_format($pendingAmount, 0)); ?> RWF</p>
+                    <p class="text-sm font-bold text-amber-600 uppercase tracking-wide">Pending Amount</p>
+                    <p class="text-3xl font-black text-amber-900 mt-2"><?php echo e(number_format($pendingAmount, 0)); ?> RWF</p>
                 </div>
-                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100">
-                    <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+                    </svg>
                 </div>
             </div>
         </div>

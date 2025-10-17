@@ -4,7 +4,7 @@ namespace App\Mail;
 
 use App\Models\EventRegistration;
 use App\Services\QrCodeService;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -23,12 +23,15 @@ class EventTicketMail extends Mailable
         // QR payload (verification URL)
         $verifyUrl = route('tickets.verify', $this->registration->registration_code);
 
-        // Generate QR code using our service
+        // Generate QR code as base64 for PDF (PDFs support base64)
         $qrBase64 = QrCodeService::generateTicketQr($this->registration->registration_code);
+
+        // Generate QR code as direct URL for email (email clients prefer direct URLs)
+        $qrUrl = QrCodeService::generateUrl($verifyUrl, 300);
 
         // Attach PDF ticket if DomPDF is available
         if (class_exists('\Barryvdh\DomPDF\Facade\Pdf')) {
-            $pdf = Pdf::loadView('tickets.pdf', [
+            $pdf = PDF::loadView('tickets.pdf', [
                 'registration' => $this->registration,
                 'qrBase64'     => $qrBase64,
             ]);
@@ -44,6 +47,7 @@ class EventTicketMail extends Mailable
             ->markdown('mail.events.ticket', [
                 'registration' => $this->registration,
                 'qrBase64'     => $qrBase64,
+                'qrUrl'        => $qrUrl, // Direct URL for email display
                 'verifyUrl'    => $verifyUrl,
             ]);
     }

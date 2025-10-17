@@ -197,8 +197,8 @@
                 <h3>📱 Your Entry QR Code</h3>
                 <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Scan this at the entrance for quick check-in</p>
 
-                @if($qrBase64)
-                    <img src="{{ $qrBase64 }}" alt="Entry QR Code">
+                @if(isset($qrUrl))
+                    <img src="{{ $qrUrl }}" alt="Entry QR Code">
                 @else
                     <div class="qr-fallback">
                         <p>⚠️ QR Code could not be generated</p>

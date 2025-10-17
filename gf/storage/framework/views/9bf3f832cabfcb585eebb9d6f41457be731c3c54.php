@@ -42,60 +42,60 @@
     <?php if($unread_contacts_count > 0 || $upcoming_events > 0): ?>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <?php if($unread_contacts_count > 0): ?>
-                <a href="<?php echo e(route('admin.contacts.index')); ?>" class="glass-card p-5 border-l-4 border-rose-500 hover:shadow-lg transition-all group">
+                <a href="<?php echo e(route('admin.contacts.index')); ?>" class="p-6 bg-gradient-to-br from-rose-50 via-red-50 to-pink-50 rounded-2xl shadow-xl border-2 border-rose-200 hover:scale-105 hover:shadow-2xl transition-all group">
                     <div class="flex items-center gap-4">
-                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-rose-100 group-hover:bg-rose-200 transition-colors">
-                            <svg class="w-6 h-6 text-rose-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-rose-500 to-red-600 shadow-lg">
+                            <svg class="w-8 h-8 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <p class="text-sm font-semibold text-slate-900">Unread Messages</p>
+                            <p class="text-sm font-bold text-rose-600 uppercase tracking-wide">Unread Messages</p>
                             <div class="flex items-baseline gap-2">
-                                <span class="text-3xl font-bold text-rose-600"><?php echo e($unread_contacts_count); ?></span>
-                                <span class="text-xs text-slate-500">new</span>
+                                <span class="text-4xl font-black text-rose-900"><?php echo e($unread_contacts_count); ?></span>
+                                <span class="text-xs text-rose-600 font-semibold">new</span>
                             </div>
-                            <p class="text-xs text-slate-500 mt-1">Click to view messages</p>
-    </div>
-                </div>
+                            <p class="text-xs text-rose-600 mt-1 font-medium">Click to view messages</p>
+                        </div>
+                    </div>
                 </a>
             <?php endif; ?>
 
             <?php if($upcoming_events > 0): ?>
-                <a href="<?php echo e(route('admin.events.index')); ?>" class="glass-card p-5 border-l-4 border-indigo-500 hover:shadow-lg transition-all group">
+                <a href="<?php echo e(route('admin.events.index')); ?>" class="p-6 bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 rounded-2xl shadow-xl border-2 border-indigo-200 hover:scale-105 hover:shadow-2xl transition-all group">
                     <div class="flex items-center gap-4">
-                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-100 group-hover:bg-indigo-200 transition-colors">
-                            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                </div>
+                        <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
                         <div class="flex-1">
-                            <p class="text-sm font-semibold text-slate-900">Upcoming Events</p>
+                            <p class="text-sm font-bold text-indigo-600 uppercase tracking-wide">Upcoming Events</p>
                             <div class="flex items-baseline gap-2">
-                                <span class="text-3xl font-bold text-indigo-600"><?php echo e($upcoming_events); ?></span>
-                                <span class="text-xs text-slate-500">scheduled</span>
+                                <span class="text-4xl font-black text-indigo-900"><?php echo e($upcoming_events); ?></span>
+                                <span class="text-xs text-indigo-600 font-semibold">scheduled</span>
                             </div>
-                            <p class="text-xs text-slate-500 mt-1">Events to manage</p>
+                            <p class="text-xs text-indigo-600 mt-1 font-medium">Events to manage</p>
                         </div>
                     </div>
                 </a>
             <?php endif; ?>
 
             <?php if($total_members > 0): ?>
-                <a href="<?php echo e(route('admin.members.index')); ?>" class="glass-card p-5 border-l-4 border-emerald-500 hover:shadow-lg transition-all group">
+                <a href="<?php echo e(route('admin.members.index')); ?>" class="p-6 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 rounded-2xl shadow-xl border-2 border-emerald-200 hover:scale-105 hover:shadow-2xl transition-all group">
                     <div class="flex items-center gap-4">
-                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 group-hover:bg-emerald-200 transition-colors">
-                            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 shadow-lg">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <p class="text-sm font-semibold text-slate-900">Active Members</p>
+                            <p class="text-sm font-bold text-emerald-600 uppercase tracking-wide">Active Members</p>
                             <div class="flex items-baseline gap-2">
-                                <span class="text-3xl font-bold text-emerald-600"><?php echo e($total_members); ?></span>
-                                <span class="text-xs text-slate-500">total</span>
+                                <span class="text-4xl font-black text-emerald-900"><?php echo e($total_members); ?></span>
+                                <span class="text-xs text-emerald-600 font-semibold">total</span>
                             </div>
-                            <p class="text-xs text-slate-500 mt-1">Choir community</p>
+                            <p class="text-xs text-emerald-600 mt-1 font-medium">Choir community</p>
                         </div>
                     </div>
                 </a>
@@ -118,7 +118,7 @@
                     <p class="max-w-xl text-sm text-white/80">
                         Your choir's performance at a glance. Keep nurturing breathtaking moments while we surface the signals that matter.
                     </p>
-        </div>
+                </div>
 
                 <div class="grid gap-5 sm:grid-cols-3">
                     <div class="rounded-2xl border border-white/20 bg-white/10 p-4 shadow-lg shadow-indigo-900/20">
@@ -149,7 +149,7 @@
                         Review registrations
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
+                        </svg>
                     </a>
                 </div>
             </div>
@@ -157,8 +157,8 @@
 
         <section class="lg:col-span-4">
             <div class="glass-card h-full p-6">
-            <div class="flex items-center justify-between">
-                <div>
+                <div class="flex items-center justify-between">
+                    <div>
                         <p class="text-sm font-semibold text-slate-600">Upcoming focus</p>
                         <p class="text-xs text-slate-400">Quick highlights for the next few days</p>
                     </div>
@@ -180,11 +180,11 @@
                                         <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3" />
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6a9 9 0 110 12 9 9 0 010-12z" />
-                    </svg>
+                                        </svg>
                                         <?php echo e($event->start_at ? $event->start_at->format('H:i') : ($event->time ?: 'All day')); ?>
 
                                     </span>
-                                    <a href="<?php echo e(route('admin.events.edit', $event)); ?>" class="text-xs font-semibold text-slate-500 underline-offset-2 hover:text-slate-700 hover:underline">Edit</a>
+                                    <a href="<?php echo e(route('admin.events.edit', $event)); ?>" class="text-xs font-semibold text-slate-500 underline-offset-2 hover:text-slate-700 dark:text-slate-300 hover:underline">Edit</a>
                                 </div>
                             </div>
                         </div>
@@ -299,7 +299,7 @@
                 <svg class="h-7 w-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                 </svg>
-        </div>
+            </div>
             <p class="mt-6 text-3xl font-semibold text-slate-900"><?php echo e(number_format($total_contribution_amount, 0)); ?> RWF</p>
             <p class="mt-2 text-sm text-slate-500"><?php echo e(number_format($paid_contribution_amount, 0)); ?> RWF collected</p>
             <a href="<?php echo e(route('admin.contributions.index')); ?>" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-emerald-600">
@@ -314,9 +314,9 @@
             <div class="flex items-center justify-between">
                 <span class="inline-flex items-center gap-2 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-600">Members</span>
                 <svg class="h-7 w-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                </div>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </div>
             <p class="mt-6 text-3xl font-semibold text-slate-900"><?php echo e($total_members); ?></p>
             <p class="mt-2 text-sm text-slate-500">Voices united in the choir</p>
             <a href="<?php echo e(route('admin.members.index')); ?>" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-blue-600">
@@ -353,7 +353,7 @@
                     <h2 class="text-lg font-semibold text-slate-900">Contribution Targets Progress</h2>
                     <p class="text-sm text-slate-500">Track progress towards our financial goals</p>
                 </div>
-                <a href="<?php echo e(route('admin.contributions.targets')); ?>" class="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+                <a href="<?php echo e(route('admin.contributions.targets')); ?>" class="text-sm font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-300">
                     Manage Targets →
                 </a>
             </div>
@@ -409,13 +409,13 @@
                     <p class="text-sm text-slate-500">Our most popular and featured musical pieces</p>
                 </div>
                 <div class="flex items-center gap-3">
-                    <a href="<?php echo e(route('admin.songs.create')); ?>" class="inline-flex items-center gap-2 rounded-xl bg-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-purple-600/20 transition hover:bg-purple-500">
+                    <a href="<?php echo e(route('admin.songs.create')); ?>" class="inline-flex items-center gap-2 rounded-xl bg-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-purple-600/20 transition hover:bg-purple-500 dark:bg-purple-400">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
                         Add Song
                     </a>
-                    <a href="<?php echo e(route('admin.songs.index')); ?>" class="text-sm font-semibold text-purple-600 hover:text-purple-500">
+                    <a href="<?php echo e(route('admin.songs.index')); ?>" class="text-sm font-semibold text-purple-600 hover:text-purple-500 dark:text-purple-300">
                         View All →
                     </a>
                 </div>
@@ -432,7 +432,7 @@
                             </span>
                             <?php if($song->audio_file): ?>
                                 <button onclick="playSong('<?php echo e($song->audio_url); ?>', '<?php echo e($song->title); ?>')"
-                                        class="flex h-8 w-8 items-center justify-center rounded-full bg-purple-100 text-purple-600 transition hover:bg-purple-200">
+                                        class="flex h-8 w-8 items-center justify-center rounded-full bg-purple-100 text-purple-600 transition hover:bg-purple-200 dark:bg-purple-900/50">
                                     <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
                                     </svg>
@@ -463,13 +463,13 @@
                     <div>
                         <p class="text-sm font-semibold text-slate-600">Registration velocity</p>
                         <p class="text-xs text-slate-400">Performance over the last few weeks</p>
-            </div>
+                    </div>
                     <div class="flex items-center gap-2 rounded-full border border-slate-200 bg-white/60 px-2 py-1 text-xs font-semibold text-slate-500">
                         <button type="button" class="rounded-full bg-indigo-600 px-3 py-1 text-white shadow-sm">Last 30 days</button>
                         <span class="px-3 py-1">Quarter</span>
                         <span class="px-3 py-1">Year</span>
-        </div>
-    </div>
+                    </div>
+                </div>
 
                 <div class="mt-6">
                     <canvas id="registrationsTrendChart" height="220"></canvas>
@@ -480,7 +480,7 @@
         <section class="xl:col-span-4">
             <div class="glass-card h-full p-6">
                 <div class="flex items-center justify-between">
-                                <div>
+                    <div>
                         <p class="text-sm font-semibold text-slate-600">Live activity</p>
                         <p class="text-xs text-slate-400">Newest engagements across the choir</p>
                     </div>
@@ -519,7 +519,7 @@
                                             <span class="ml-1 inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-semibold text-emerald-600">
                                                 🎟 <?php echo e($item['tickets']); ?>
 
-                                </span>
+                                            </span>
                                         <?php endif; ?>
                                     <?php else: ?>
                                         joined the choir &bull; <span class="font-semibold text-blue-600"><?php echo e($item['meta']); ?></span>
@@ -530,12 +530,12 @@
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <div class="rounded-2xl border border-dashed border-slate-300/80 bg-white/60 p-6 text-center text-sm text-slate-500">
                             Activity will appear here as new registrations and members arrive.
-                    </div>
+                        </div>
                     <?php endif; ?>
-                    </div>
+                </div>
             </div>
         </section>
-        </div>
+    </div>
 
     <section class="glass-card p-6">
         <div class="flex flex-wrap items-center justify-between gap-4">
@@ -548,7 +548,7 @@
                 <span class="px-3 py-1">Past performances</span>
                 <span class="px-3 py-1">Focus docs</span>
             </div>
-                                        </div>
+        </div>
 
         <div class="mt-6 overflow-x-auto">
             <table class="min-w-full divide-y divide-slate-100 text-left">
@@ -563,7 +563,7 @@
                 </thead>
                 <tbody class="divide-y divide-slate-100">
                     <?php $__empty_1 = true; $__currentLoopData = ($upcoming_events_list ?? collect())->take(8); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $event): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                        <tr class="transition hover:bg-slate-50/60">
+                        <tr class="transition hover:bg-slate-50/60 dark:bg-slate-700/30">
                             <td class="py-4 pr-6">
                                 <div class="flex items-center gap-3">
                                     <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-50 text-sm font-semibold text-indigo-600">
@@ -580,7 +580,7 @@
                                 <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-600">
                                     <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
                                     In progress
-                                    </span>
+                                </span>
                             </td>
                             <td class="py-4 pr-6 text-sm text-slate-600">
                                 <?php echo e(optional($event->date)->format('M d, Y') ?? 'TBD'); ?>
@@ -592,9 +592,9 @@
                             </td>
                             <td class="py-4 text-sm">
                                 <div class="flex items-center gap-2">
-                                    <a href="<?php echo e(route('admin.events.edit', $event)); ?>" class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-800">Edit</a>
-                                    <a href="<?php echo e(route('admin.events.registrations', $event)); ?>" class="rounded-full bg-indigo-600 px-3 py-1 text-xs font-semibold text-white shadow-sm transition hover:bg-indigo-500">View</a>
-                            </div>
+                                    <a href="<?php echo e(route('admin.events.edit', $event)); ?>" class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-600 transition hover:border-slate-300 dark:border-slate-500 hover:text-slate-800 dark:text-slate-200">Edit</a>
+                                    <a href="<?php echo e(route('admin.events.registrations', $event)); ?>" class="rounded-full bg-indigo-600 px-3 py-1 text-xs font-semibold text-white shadow-sm transition hover:bg-indigo-500 dark:bg-indigo-400">View</a>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>

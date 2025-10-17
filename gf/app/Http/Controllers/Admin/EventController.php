@@ -32,6 +32,7 @@ class EventController extends Controller
             'cover_image' => 'nullable|image|max:2048',
             'capacity' => 'nullable|integer|min:1',
             'is_public' => 'boolean',
+            'accept_support' => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('cover_image')) {
@@ -39,6 +40,7 @@ class EventController extends Controller
         }
 
         $validated['is_public'] = $request->boolean('is_public', true);
+        $validated['accept_support'] = $request->boolean('accept_support', null);
 
         Event::create($validated);
 
@@ -62,6 +64,7 @@ class EventController extends Controller
             'cover_image' => 'nullable|image|max:2048',
             'capacity' => 'nullable|integer|min:1',
             'is_public' => 'boolean',
+            'accept_support' => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('cover_image')) {
@@ -73,6 +76,7 @@ class EventController extends Controller
         }
 
         $validated['is_public'] = $request->boolean('is_public', true);
+        $validated['accept_support'] = $request->boolean('accept_support', $event->accept_support);
 
         $event->update($validated);
 

@@ -7,12 +7,17 @@ use App\Models\Contribution;
 use App\Models\ContributionTarget;
 use App\Models\Member;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class ContributionController extends Controller
 {
     public function index(Request $request)
     {
+        // Check if calendar view is requested
+        if ($request->get('view') === 'calendar') {
+            return $this->calendarView($request);
+        }
+
         $query = Contribution::with(['member', 'target']);
 
         // Search functionality
@@ -87,6 +92,72 @@ class ContributionController extends Controller
             'paidAmount',
             'pendingAmount'
         ));
+    }
+
+    /**
+     * Show calendar view of contributions
+     */
+    public function calendarView(Request $request)
+    {
+        $year = $request->get('year', now()->year);
+        $members = Member::where('status', 'active')
+            ->where('member_type', 'member')
+            ->orderBy('first_name')
+            ->get();
+
+        // Get all contributions for the year (month format is YYYY-MM)
+        $contributions = Contribution::where('month', 'LIKE', $year . '-%')
+            ->where('has_paid', true)
+            ->get()
+            ->groupBy('member_id');
+
+        // Build calendar data
+        $calendarData = [];
+        foreach ($members as $member) {
+            $memberData = [
+                'id' => $member->id,
+                'name' => $member->full_name,
+                'category' => $member->contribution_category,
+                'target' => $member->monthly_target_amount,
+                'award_emoji' => $member->payment_award_emoji,
+                'has_award' => $member->has_payment_award,
+                'months' => []
+            ];
+
+            // Check each month
+            for ($month = 1; $month <= 12; $month++) {
+                $paid = false;
+                $amount = 0;
+
+                if (isset($contributions[$member->id])) {
+                    // Month format in DB is YYYY-MM
+                    $monthString = $year . '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+                    $monthContribution = $contributions[$member->id]->first(function ($c) use ($monthString) {
+                        return $c->month == $monthString;
+                    });
+
+                    if ($monthContribution) {
+                        $paid = true;
+                        $amount = $monthContribution->amount;
+                    }
+                }
+
+                $memberData['months'][$month] = [
+                    'paid' => $paid,
+                    'amount' => $amount
+                ];
+            }
+
+            // Calculate completion percentage
+            $paidMonths = collect($memberData['months'])->filter(function ($m) {
+                return $m['paid'];
+            })->count();
+            $memberData['completion'] = round(($paidMonths / 12) * 100);
+
+            $calendarData[] = $memberData;
+        }
+
+        return view('admin.contributions.calendar', compact('calendarData', 'year'));
     }
 
     public function create()
@@ -261,7 +332,7 @@ class ContributionController extends Controller
             ->get()
             ->keyBy('member_id');
 
-        $pdf = Pdf::loadView('admin.contributions.pdf', compact('members', 'contributions', 'month'));
+        $pdf = PDF::loadView('admin.contributions.pdf', compact('members', 'contributions', 'month'));
         return $pdf->download('contributions-' . $month . '.pdf');
     }
 

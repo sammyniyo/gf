@@ -5,12 +5,24 @@
     <!-- Header -->
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <h1 class="text-xl font-semibold text-slate-900">Choir Members</h1>
-            <p class="mt-1 text-sm text-slate-500">Manage your choir member registrations</p>
+            <h1 class="text-xl font-semibold text-slate-900">Members & Friends</h1>
+            <p class="mt-1 text-sm text-slate-500">Manage choir members and friends registrations</p>
         </div>
-        <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center gap-3">
             <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1.5 text-xs font-semibold text-slate-600">
                 Total: <span class="text-slate-900"><?php echo e($members->total()); ?></span>
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50/70 px-3 py-1.5 text-xs font-semibold text-indigo-700">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                Members: <span class="text-indigo-900"><?php echo e($members->where('member_type', 'member')->count()); ?></span>
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50/70 px-3 py-1.5 text-xs font-semibold text-amber-700">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                Friends: <span class="text-amber-900"><?php echo e($members->where('member_type', 'friendship')->count()); ?></span>
             </span>
             <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50/70 px-3 py-1.5 text-xs font-semibold text-emerald-700">
                 Active: <span class="text-emerald-900"><?php echo e($members->where('status', 'active')->count()); ?></span>
@@ -27,7 +39,16 @@
 
     <!-- Filters -->
     <div class="glass-card p-5">
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            <div>
+                <label for="member-type-filter" class="block mb-2 text-xs font-semibold text-slate-600 uppercase tracking-wide">Type</label>
+                <select id="member-type-filter" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400">
+                    <option value="">All Types</option>
+                    <option value="member">Members</option>
+                    <option value="friendship">Friends</option>
+                </select>
+            </div>
+
             <div>
                 <label for="status-filter" class="block mb-2 text-xs font-semibold text-slate-600 uppercase tracking-wide">Status</label>
                 <select id="status-filter" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400">
@@ -78,6 +99,7 @@
     <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3" id="members-grid">
         <?php $__empty_1 = true; $__currentLoopData = $members; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $member): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <div class="member-card glass-card overflow-hidden transition-all hover:shadow-lg"
+                data-member-type="<?php echo e(strtolower($member->member_type ?? 'member')); ?>"
                 data-status="<?php echo e(strtolower($member->status)); ?>"
                 data-voice-type="<?php echo e(strtolower($member->voice_type ?? '')); ?>"
                 data-experience="<?php echo e(strtolower($member->musical_experience ?? '')); ?>"
@@ -89,7 +111,17 @@
                         <div class="flex items-end justify-between">
                             <div class="relative">
                                 <?php if($member->profile_photo ?? false): ?>
-                                    <img class="object-cover w-16 h-16 border-4 border-white rounded-xl shadow-lg" src="<?php echo e($member->profile_photo_url); ?>" alt="<?php echo e($member->first_name); ?>">
+                                    <div class="relative group cursor-pointer" onclick="openImageModal('<?php echo e($member->profile_photo_url); ?>', '<?php echo e($member->first_name); ?> <?php echo e($member->last_name); ?>')">
+                                        <img class="object-cover w-16 h-16 border-4 border-white rounded-xl shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-2xl"
+                                             src="<?php echo e($member->profile_photo_url); ?>"
+                                             alt="<?php echo e($member->first_name); ?>">
+                                        <!-- Zoom Icon -->
+                                        <div class="absolute inset-0 flex items-center justify-center bg-black/40 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                            </svg>
+                                        </div>
+                                    </div>
                                 <?php else: ?>
                                     <div class="flex items-center justify-center w-16 h-16 text-lg font-bold text-indigo-600 bg-white border-4 border-white rounded-xl shadow-lg">
                                         <?php echo e(substr($member->first_name, 0, 1)); ?><?php echo e(substr($member->last_name, 0, 1)); ?>
@@ -155,6 +187,20 @@
 
                         <!-- Tags -->
                         <div class="flex flex-wrap gap-1.5 pt-3 border-t border-slate-200">
+                            <!-- Member Type Badge -->
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold rounded-full
+                                <?php echo e(($member->member_type ?? 'member') === 'member' ? 'bg-indigo-100 text-indigo-700' : 'bg-amber-100 text-amber-700'); ?>">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <?php if(($member->member_type ?? 'member') === 'member'): ?>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    <?php else: ?>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                    <?php endif; ?>
+                                </svg>
+                                <?php echo e(($member->member_type ?? 'member') === 'member' ? 'Member' : 'Friend'); ?>
+
+                            </span>
+
                             <?php if($member->voice_type ?? false): ?>
                                 <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold rounded-full
                                     <?php echo e($member->voice_type === 'soprano' ? 'bg-pink-100 text-pink-700' : ''); ?>
@@ -202,6 +248,36 @@
                             class="flex-1 px-3 py-2 text-xs font-semibold text-center text-white bg-indigo-600 rounded-lg transition hover:bg-indigo-500">
                             View Details
                         </a>
+
+                        <?php if($member->member_id): ?>
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" @click.away="open = false"
+                                class="px-3 py-2 text-xs font-semibold text-purple-600 bg-purple-100 rounded-lg transition hover:bg-purple-200">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                            </button>
+                            <div x-show="open"
+                                x-transition:enter="transition ease-out duration-100"
+                                x-transition:enter-start="opacity-0 scale-95"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-75"
+                                x-transition:leave-start="opacity-100 scale-100"
+                                x-transition:leave-end="opacity-0 scale-95"
+                                class="absolute right-0 bottom-full mb-2 w-40 bg-white rounded-lg shadow-lg border border-slate-200 py-1 z-10"
+                                style="display: none;">
+                                <a href="<?php echo e(route('member.id-card.download', $member)); ?>"
+                                    class="block px-3 py-2 text-xs text-slate-700 hover:bg-purple-50 transition">
+                                    <i class="fas fa-id-card mr-2"></i>ID Card
+                                </a>
+                                <a href="<?php echo e(route('member.confirmation.download', $member)); ?>"
+                                    class="block px-3 py-2 text-xs text-slate-700 hover:bg-purple-50 transition">
+                                    <i class="fas fa-file-alt mr-2"></i>Confirmation
+                                </a>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+
                         <form method="POST" action="<?php echo e(route('admin.members.destroy', $member)); ?>"
                             class="inline" onsubmit="return confirm('Are you sure you want to delete this member?')">
                             <?php echo csrf_field(); ?>
@@ -240,9 +316,63 @@
     <?php endif; ?>
 </div>
 
+<!-- Image Lightbox Modal -->
+<div id="imageModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
+    <div class="relative max-w-5xl w-full">
+        <!-- Close Button -->
+        <button onclick="closeImageModal()" class="absolute top-4 right-4 z-10 flex items-center justify-center w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full transition-all duration-300">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <!-- Image Container -->
+        <div class="relative bg-white rounded-2xl overflow-hidden shadow-2xl">
+            <img id="modalImage" src="" alt="" class="w-full h-auto max-h-[85vh] object-contain">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                <p id="modalImageName" class="text-white text-xl font-semibold"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php $__env->startPush('scripts'); ?>
 <script>
+function openImageModal(imageUrl, imageName) {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalImageName = document.getElementById('modalImageName');
+
+    modalImage.src = imageUrl;
+    modalImageName.textContent = imageName;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+}
+
+// Close modal when clicking outside the image
+document.getElementById('imageModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeImageModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeImageModal();
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
+    const memberTypeFilter = document.getElementById('member-type-filter');
     const statusFilter = document.getElementById('status-filter');
     const voiceTypeFilter = document.getElementById('voice-type-filter');
     const experienceFilter = document.getElementById('experience-filter');
@@ -250,23 +380,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const memberCards = document.querySelectorAll('.member-card');
 
     function filterMembers() {
+        const memberType = memberTypeFilter.value.toLowerCase();
         const status = statusFilter.value.toLowerCase();
         const voiceType = voiceTypeFilter.value.toLowerCase();
         const experience = experienceFilter.value.toLowerCase();
         const searchTerm = searchInput.value.toLowerCase();
 
         memberCards.forEach(card => {
+            const cardMemberType = card.dataset.memberType;
             const cardStatus = card.dataset.status;
             const cardVoiceType = card.dataset.voiceType;
             const cardExperience = card.dataset.experience;
             const cardSearch = card.dataset.search;
 
+            const memberTypeMatch = !memberType || cardMemberType.includes(memberType);
             const statusMatch = !status || cardStatus.includes(status);
             const voiceTypeMatch = !voiceType || cardVoiceType.includes(voiceType);
             const experienceMatch = !experience || cardExperience.includes(experience);
             const searchMatch = !searchTerm || cardSearch.includes(searchTerm);
 
-            if (statusMatch && voiceTypeMatch && experienceMatch && searchMatch) {
+            if (memberTypeMatch && statusMatch && voiceTypeMatch && experienceMatch && searchMatch) {
                 card.style.display = '';
             } else {
                 card.style.display = 'none';
@@ -274,6 +407,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    memberTypeFilter.addEventListener('change', filterMembers);
     statusFilter.addEventListener('change', filterMembers);
     voiceTypeFilter.addEventListener('change', filterMembers);
     experienceFilter.addEventListener('change', filterMembers);

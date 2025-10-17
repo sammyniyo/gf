@@ -8,19 +8,52 @@ use Illuminate\Http\Request;
 class StoryController extends Controller
 {
     /**
-     * Display the main story page.
+     * Display a listing of published stories.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $stories = Story::where('is_published', true)
-            ->orderBy('created_at', 'desc')
-            ->paginate(9);
+        $query = Story::with('author')->published();
 
-        // Get all published stories for category grouping
-        $allStories = Story::where('is_published', true)->get();
-        $groupedStories = $allStories->groupBy('category');
+        // Filter by category
+        if ($request->has('category') && $request->category != 'all') {
+            $query->category($request->category);
+        }
 
-        return view('story.index', compact('stories', 'groupedStories'));
+        // Search
+        if ($request->has('search') && !empty($request->search)) {
+            $query->search($request->search);
+        }
+
+        // Filter by tag
+        if ($request->has('tag') && !empty($request->tag)) {
+            $query->where('tags', 'like', '%"' . $request->tag . '"%');
+        }
+
+        // Sort
+        $sort = $request->get('sort', 'latest');
+        switch ($sort) {
+            case 'popular':
+                $query->orderBy('views_count', 'desc');
+                break;
+            case 'liked':
+                $query->orderBy('likes_count', 'desc');
+                break;
+            default:
+                $query->latest('published_at');
+        }
+
+        $stories = $query->paginate(9);
+
+        // Get featured stories
+        $featuredStories = Story::published()->featured()->limit(3)->get();
+
+        // Get popular tags
+        $popularTags = $this->getPopularTags();
+
+        // Get categories
+        $categories = $this->getCategories();
+
+        return view('stories.index', compact('stories', 'featuredStories', 'popularTags', 'categories'));
     }
 
     /**
@@ -28,13 +61,67 @@ class StoryController extends Controller
      */
     public function show(Story $story)
     {
-        // Get related stories
-        $relatedStories = Story::where('is_published', true)
-            ->where('id', '!=', $story->id)
-            ->where('category', $story->category)
-            ->limit(3)
-            ->get();
+        // Only show published stories to non-admin users
+        if ($story->status !== 'published' && !auth()->check()) {
+            abort(404);
+        }
 
-        return view('story.show', compact('story', 'relatedStories'));
+        // Increment views
+        $story->incrementViews();
+
+        // Get related stories
+        $relatedStories = $story->getRelatedStories(3);
+
+        return view('stories.show', compact('story', 'relatedStories'));
+    }
+
+    /**
+     * Like a story.
+     */
+    public function like(Story $story)
+    {
+        $story->incrementLikes();
+
+        return response()->json([
+            'success' => true,
+            'likes' => $story->likes_count
+        ]);
+    }
+
+    /**
+     * Get popular tags.
+     */
+    private function getPopularTags()
+    {
+        $stories = Story::published()->whereNotNull('tags')->get();
+        $tagCounts = [];
+
+        foreach ($stories as $story) {
+            if (is_array($story->tags)) {
+                foreach ($story->tags as $tag) {
+                    $tagCounts[$tag] = ($tagCounts[$tag] ?? 0) + 1;
+                }
+            }
+        }
+
+        arsort($tagCounts);
+        return array_slice($tagCounts, 0, 10, true);
+    }
+
+    /**
+     * Get categories.
+     */
+    private function getCategories()
+    {
+        return [
+            'testimony' => 'Testimony',
+            'ministry' => 'Ministry Updates',
+            'events' => 'Events & Concerts',
+            'devotional' => 'Devotional',
+            'behind-scenes' => 'Behind the Scenes',
+            'community' => 'Community Outreach',
+            'training' => 'Training & Development',
+            'general' => 'General',
+        ];
     }
 }

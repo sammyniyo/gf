@@ -15,6 +15,7 @@ class Committee extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'member_id', // Link to members table
         'name',
         'position',
         'department',
@@ -54,6 +55,14 @@ class Committee extends Model
             'GF Diaspora',
             'Advisors',
         ];
+    }
+
+    /**
+     * Get the member associated with this committee position
+     */
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
     }
 
     /**

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\RegistrationController;
 
 //Events
 
@@ -44,6 +45,53 @@ Route::get('/privacy', function () {
     return view('privacy');
 })->name('privacy');
 
+Route::get('/privacy-policy', function () {
+    return view('privacy-policy');
+})->name('privacy-policy');
+
+Route::get('/terms-of-use', function () {
+    return view('terms-of-use');
+})->name('terms-of-use');
+
+Route::get('/story', function () {
+    return view('story-enhanced');
+})->name('story');
+
+// Admin Story Images Management
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/story-images', [App\Http\Controllers\StoryImageController::class, 'index'])->name('story-images.index');
+    Route::post('/story-images', [App\Http\Controllers\StoryImageController::class, 'store'])->name('story-images.store');
+    Route::delete('/story-images/{filename}', [App\Http\Controllers\StoryImageController::class, 'destroy'])->name('story-images.destroy');
+
+    // Admin Stories Management
+    Route::resource('stories', App\Http\Controllers\Admin\StoryController::class);
+    Route::patch('/stories/{story}/toggle-featured', [App\Http\Controllers\Admin\StoryController::class, 'toggleFeatured'])->name('stories.toggle-featured');
+
+    // Admin Devotions Management
+    Route::resource('devotions', App\Http\Controllers\Admin\DevotionController::class);
+
+    // Admin Events (ensure resource exists)
+    Route::resource('events', App\Http\Controllers\Admin\EventController::class);
+    Route::get('events/{event}/registrations', [App\Http\Controllers\Admin\EventController::class, 'registrations'])->name('events.registrations');
+
+    // Generic Image Upload (for editors/forms)
+    Route::post('upload-image', [App\Http\Controllers\Admin\UploadController::class, 'image'])->name('upload.image');
+
+    // Admin Resources Management (Utility Folder)
+    Route::resource('resources', App\Http\Controllers\Admin\ResourceController::class);
+    Route::post('resources/{resource}/toggle-active', [App\Http\Controllers\Admin\ResourceController::class, 'toggleActive'])->name('resources.toggle-active');
+});
+
+// Public Stories
+Route::get('/stories', [App\Http\Controllers\StoryController::class, 'index'])->name('stories.index');
+Route::get('/stories/{story}', [App\Http\Controllers\StoryController::class, 'show'])->name('story.show');
+Route::post('/stories/{story}/like', [App\Http\Controllers\StoryController::class, 'like'])->name('story.like');
+
+// Public Resources (Utility Folder)
+Route::get('/utility-folder', [App\Http\Controllers\ResourceController::class, 'index'])->name('resources.index');
+Route::get('/resources/{resource}/download', [App\Http\Controllers\ResourceController::class, 'download'])->name('resources.download');
+Route::get('/resources/{resource}/preview', [App\Http\Controllers\ResourceController::class, 'preview'])->name('resources.preview');
+
 Route::get('/about', function () {
     return view('about');
 })->name('about');
@@ -68,6 +116,41 @@ Route::get('/register/member', [MemberController::class, 'create'])
 
 Route::post('/register/member', [MemberController::class, 'store'])
     ->name('members.store');
+
+// New Registration Routes
+Route::get('/join/member', [RegistrationController::class, 'showMemberForm'])->name('registration.member');
+Route::post('/join/member', [RegistrationController::class, 'storeMember'])->name('registration.member.store');
+
+Route::get('/join/friendship', [RegistrationController::class, 'showFriendshipForm'])->name('registration.friendship');
+Route::post('/join/friendship', [RegistrationController::class, 'storeFriendship'])->name('registration.friendship.store');
+
+Route::get('/registration/success', [RegistrationController::class, 'success'])->name('registration.success');
+
+// Language switcher
+Route::get('/lang/{locale}', function ($locale) {
+    $available = ['en', 'rw'];
+    if (in_array($locale, $available)) {
+        session(['app_locale' => $locale]);
+    }
+    return back();
+})->name('lang.switch');
+
+// PDF Downloads
+Route::get('/member/{member}/id-card/download', function(\App\Models\Member $member) {
+    return \App\Services\PdfService::downloadMemberIdCard($member);
+})->name('member.id-card.download');
+
+Route::get('/member/{member}/id-card/view', function(\App\Models\Member $member) {
+    return \App\Services\PdfService::streamMemberIdCard($member);
+})->name('member.id-card.view');
+
+Route::get('/member/{member}/confirmation/download', function(\App\Models\Member $member) {
+    return \App\Services\PdfService::downloadRegistrationConfirmation($member);
+})->name('member.confirmation.download');
+
+Route::get('/member/{member}/confirmation/view', function(\App\Models\Member $member) {
+    return \App\Services\PdfService::streamRegistrationConfirmation($member);
+})->name('member.confirmation.view');
 
 //events
 
@@ -181,6 +264,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Meetings Management
     Route::resource('meetings', App\Http\Controllers\Admin\MeetingController::class);
     Route::post('meetings/{meeting}/send-invitations', [App\Http\Controllers\Admin\MeetingController::class, 'sendInvitations'])->name('meetings.send-invitations');
+});
+
+Route::fallback(function () {
+    return response()->view('errors.missing', [], 404);
 });
 
 require __DIR__.'/auth.php';

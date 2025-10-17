@@ -18,6 +18,40 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/css/hero.css', 'resources/js/app.js', 'resources/js/hero.js'])
 
+    <!-- Custom Scrollbar Styles -->
+    <style>
+        /* Webkit browsers (Chrome, Safari, Edge) */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #3b82f6, #1d4ed8);
+            border-radius: 6px;
+            border: 2px solid #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #2563eb, #1e40af);
+        }
+
+        /* Firefox */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #3b82f6 #f1f5f9;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+
 </head>
 
 <body class="font-sans antialiased">
@@ -37,8 +71,12 @@
         <main>
             @yield('content')
         </main>
+
+        <!-- Floating Action Buttons -->
+        <x-landing.floating-action-button />
     </div>
 </body>
 <script src="//unpkg.com/alpinejs" defer></script>
+@stack('scripts')
 
 </html>

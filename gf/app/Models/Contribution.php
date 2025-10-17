@@ -20,6 +20,7 @@ class Contribution extends Model
         'payment_type',
         'notes',
         'is_recurring',
+        'months_covered', // For bulk payments
     ];
 
     protected $casts = [

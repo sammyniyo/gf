@@ -140,18 +140,14 @@
                         </div>
 
                         <div class="space-y-2">
-                            <label for="date_of_birth" class="block text-sm font-medium text-gray-700">Date of Birth *</label>
-                            <input type="date" id="date_of_birth" name="date_of_birth" required
-                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('date_of_birth') border-red-500 @else border-gray-300 @enderror"
-                                value="{{ old('date_of_birth') }}"
+                            <label for="birthdate" class="block text-sm font-medium text-gray-700">Date of Birth *</label>
+                            <input type="date" id="birthdate" name="birthdate" required
+                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200 @error('birthdate') border-red-500 @else border-gray-300 @enderror"
+                                value="{{ old('birthdate') }}"
                                 onchange="calculateAge(this.value)">
-                            @error('date_of_birth')
+                            @error('birthdate')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
-                            <div id="age-display" class="mt-2 p-3 rounded-lg bg-gradient-to-r text-white text-sm font-semibold items-center gap-2" style="display: none;">
-                                <span id="age-emoji" class="text-2xl"></span>
-                                <span id="age-text"></span>
-                            </div>
                         </div>
 
                         <div class="space-y-2">
@@ -1216,4 +1212,131 @@ footer, footer * {
     z-index: 9999 !important;
 }
 </style>
+
+<script>
+// Age-based humor messages
+function calculateAge(dateOfBirth) {
+    console.log('calculateAge called with:', dateOfBirth);
+
+    if (!dateOfBirth) {
+        console.log('No birthdate provided');
+        return;
+    }
+
+    const birthDate = new Date(dateOfBirth);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+
+    console.log('Calculated age:', age);
+
+    // Show/create age message container
+    let messageContainer = document.getElementById('age-message');
+    const birthdateField = document.getElementById('birthdate');
+
+    console.log('Birthdate field found:', !!birthdateField);
+
+    if (!messageContainer) {
+        messageContainer = document.createElement('div');
+        messageContainer.id = 'age-message';
+        messageContainer.className = 'mt-3 p-4 rounded-xl transition-all duration-500 transform';
+
+        if (birthdateField && birthdateField.parentElement) {
+            birthdateField.parentElement.appendChild(messageContainer);
+            console.log('Message container created and appended');
+        } else {
+            console.error('Could not find birthdate field or parent element');
+            return;
+        }
+    }
+
+    // Get humor message based on age
+    let message = '';
+    let bgColor = '';
+    let icon = '';
+
+    if (age < 13) {
+        message = "Wow! Starting early! 🎵 Your voice is going to mature beautifully with us!";
+        bgColor = 'bg-gradient-to-r from-pink-100 to-purple-100 border-2 border-pink-300';
+        icon = '👶';
+    } else if (age >= 13 && age < 18) {
+        message = "Teen spirit! 🎸 Perfect age to discover the power of your voice!";
+        bgColor = 'bg-gradient-to-r from-blue-100 to-cyan-100 border-2 border-blue-300';
+        icon = '🎓';
+    } else if (age >= 18 && age < 25) {
+        message = "Young and vibrant! 🌟 Your energy will light up our choir!";
+        bgColor = 'bg-gradient-to-r from-emerald-100 to-teal-100 border-2 border-emerald-300';
+        icon = '✨';
+    } else if (age >= 25 && age < 35) {
+        message = "In your prime! 🎯 The perfect balance of experience and enthusiasm!";
+        bgColor = 'bg-gradient-to-r from-amber-100 to-yellow-100 border-2 border-amber-300';
+        icon = '🎭';
+    } else if (age >= 35 && age < 50) {
+        message = "Seasoned talent! 🎵 Your wisdom and voice will enrich our harmony!";
+        bgColor = 'bg-gradient-to-r from-indigo-100 to-blue-100 border-2 border-indigo-300';
+        icon = '🎼';
+    } else if (age >= 50 && age < 65) {
+        message = "Vintage vocals! 🍷 Like fine wine, your voice gets better with age!";
+        bgColor = 'bg-gradient-to-r from-rose-100 to-red-100 border-2 border-rose-300';
+        icon = '🍷';
+    } else if (age >= 65) {
+        message = "Living legend! 👑 Your experience is priceless! We're honored!";
+        bgColor = 'bg-gradient-to-r from-violet-100 to-purple-100 border-2 border-violet-300';
+        icon = '👑';
+    }
+
+    // Display the message with animation
+    messageContainer.innerHTML = `
+        <div class="flex items-start gap-3">
+            <div class="text-3xl">${icon}</div>
+            <div class="flex-1">
+                <p class="text-sm font-bold text-gray-800 mb-1">Age: ${age} years</p>
+                <p class="text-sm text-gray-700">${message}</p>
+            </div>
+        </div>
+    `;
+    messageContainer.className = `mt-3 p-4 rounded-xl transition-all duration-500 transform ${bgColor} animate-bounce`;
+
+    // Remove bounce animation after 1 second
+    setTimeout(() => {
+        messageContainer.classList.remove('animate-bounce');
+    }, 1000);
+}
+
+// Call calculateAge if date is already filled (for old() values)
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded - Setting up age calculator');
+    const dateField = document.getElementById('birthdate');
+    console.log('Date field found:', !!dateField);
+
+    if (dateField) {
+        console.log('Date field value:', dateField.value);
+        if (dateField.value) {
+            calculateAge(dateField.value);
+        }
+
+        // Also add event listener as backup
+        dateField.addEventListener('change', function() {
+            console.log('Date changed to:', this.value);
+            calculateAge(this.value);
+        });
+
+        dateField.addEventListener('input', function() {
+            console.log('Date input:', this.value);
+            if (this.value && this.value.length === 10) { // Full date format YYYY-MM-DD
+                calculateAge(this.value);
+            }
+        });
+    } else {
+        console.error('Birthdate field not found!');
+    }
+});
+
+console.log('Age calculator script loaded successfully');
+</script>
+
 @endsection

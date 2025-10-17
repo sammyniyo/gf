@@ -38,11 +38,11 @@ class MemberController extends Controller
             }
 
             // Handle profile photo upload
-            if ($request->hasFile('profile_photo')) {
-                $photo = $request->file('profile_photo');
+            if ($request->hasFile('photo_path')) {
+                $photo = $request->file('photo_path');
                 $photoName = time() . '_' . $photo->getClientOriginalName();
                 $photoPath = $photo->storeAs('public/member-photos', $photoName);
-                $data['profile_photo'] = $photoName;
+                $data['photo_path'] = 'member-photos/' . $photoName;
             }
 
             // Set initial status
@@ -105,16 +105,16 @@ class MemberController extends Controller
         $data = $request->validated();
 
         // Handle profile photo update
-        if ($request->hasFile('profile_photo')) {
+        if ($request->hasFile('photo_path')) {
             // Delete old photo if exists
-            if ($member->profile_photo) {
-                Storage::delete('public/member-photos/' . $member->profile_photo);
+            if ($member->photo_path) {
+                Storage::delete('public/' . $member->photo_path);
             }
 
-            $photo = $request->file('profile_photo');
+            $photo = $request->file('photo_path');
             $photoName = time() . '_' . $photo->getClientOriginalName();
             $photo->storeAs('public/member-photos', $photoName);
-            $data['profile_photo'] = $photoName;
+            $data['photo_path'] = 'member-photos/' . $photoName;
         }
 
         $member->update($data);
@@ -129,8 +129,8 @@ class MemberController extends Controller
     public function destroy(Member $member)
     {
         // Delete profile photo if exists
-        if ($member->profile_photo) {
-            Storage::delete('public/member-photos/' . $member->profile_photo);
+        if ($member->photo_path) {
+            Storage::delete('public/' . $member->photo_path);
         }
 
         $member->delete();
@@ -146,5 +146,34 @@ class MemberController extends Controller
     {
         $members = Member::latest()->paginate(15);
         return view('admin.members.index', compact('members'));
+    }
+
+    /**
+     * Lookup member by member code (for event registration).
+     */
+    public function lookupByCode($code)
+    {
+        $member = Member::where('member_id', strtoupper($code))
+            ->where('status', 'active')
+            ->first();
+
+        if (!$member) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Member code not found or inactive'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'member' => [
+                'id' => $member->id,
+                'member_id' => $member->member_id,
+                'first_name' => $member->first_name,
+                'last_name' => $member->last_name,
+                'email' => $member->email,
+                'phone' => $member->phone,
+            ]
+        ]);
     }
 }

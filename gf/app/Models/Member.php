@@ -10,24 +10,32 @@ class Member extends Model
     use HasFactory;
 
     protected $fillable = [
+        // Unique Identifiers
+        'member_id',
+        'member_type', // 'member' or 'friendship'
+
         // Personal Information
         'name',  // Legacy field for compatibility
         'first_name',
         'last_name',
         'email',
         'phone',
-        'date_of_birth',
+        'birthdate',
+        'date_of_birth', // Alias for birthdate
         'gender',
         'address',
 
         // Professional Information
         'occupation',
         'workplace',
+        'church',
         'education_level',
         'skills',
 
-        // Choir Details
-        'voice_type',
+        // Choir Details (Members only)
+        'voice',
+        'voice_type', // Alias for voice
+        'talent',
         'musical_experience',
         'instruments',
         'choir_experience',
@@ -36,30 +44,48 @@ class Member extends Model
         // Emergency Contact
         'emergency_contact_name',
         'emergency_contact_phone',
+        'emergency_contact_relationship',
+
+        // Status & Roles
+        'status',
+        'roles',
+        'joined_at',
 
         // Additional Information
+        'hobbies',
+        'photo_path',
+        'profile_photo', // Alias for photo_path
         'availability',
-        'profile_photo',
+        'message',
         'newsletter',
-        'status',
-        'member_type',
+
+        // Contribution Targets
         'monthly_target',
         'yearly_target',
+        'contribution_category',
+        'has_payment_award',
+        'payment_award_emoji',
+        'paid_until_date',
+
+        // Admin Notes
         'notes',
-        'joined_at',
     ];
 
     protected $casts = [
+        'birthdate' => 'date',
         'date_of_birth' => 'date',
         'joined_at' => 'date',
         'newsletter' => 'boolean',
         'monthly_target' => 'decimal:2',
         'yearly_target' => 'decimal:2',
+        'has_payment_award' => 'boolean',
+        'paid_until_date' => 'date',
     ];
 
     protected $attributes = [
         'status' => 'pending',
         'newsletter' => false,
+        'member_type' => 'member',
     ];
 
     /**
@@ -96,6 +122,38 @@ class Member extends Model
     public function scopePending($query)
     {
         return $query->where('status', 'pending');
+    }
+
+    /**
+     * Scope a query to only include full members (choristers).
+     */
+    public function scopeMembers($query)
+    {
+        return $query->where('member_type', 'member');
+    }
+
+    /**
+     * Scope a query to only include friendship members.
+     */
+    public function scopeFriendship($query)
+    {
+        return $query->where('member_type', 'friendship');
+    }
+
+    /**
+     * Check if this is a full member (chorister).
+     */
+    public function isMember(): bool
+    {
+        return $this->member_type === 'member';
+    }
+
+    /**
+     * Check if this is a friendship member.
+     */
+    public function isFriendship(): bool
+    {
+        return $this->member_type === 'friendship';
     }
 
     /**
@@ -180,5 +238,85 @@ class Member extends Model
     public function hasMetYearlyTarget(): bool
     {
         return $this->yearly_progress >= 100;
+    }
+
+    /**
+     * Get the monthly contribution target based on category.
+     */
+    public function getMonthlyTargetAmountAttribute(): int
+    {
+        return match($this->contribution_category) {
+            'student' => 500,
+            'alumni' => 1000,
+            'exempt' => 0,
+            default => 500,
+        };
+    }
+
+    /**
+     * Check if member is paid ahead and update award status.
+     */
+    public function updatePaymentAwardStatus(): void
+    {
+        $today = now();
+
+        if ($this->paid_until_date && $this->paid_until_date->isFuture()) {
+            $monthsAhead = $today->diffInMonths($this->paid_until_date);
+
+            // Award different emojis based on how far ahead they've paid
+            if ($monthsAhead >= 12) {
+                $this->payment_award_emoji = '🥇'; // 1+ year ahead
+            } elseif ($monthsAhead >= 6) {
+                $this->payment_award_emoji = '🏆'; // 6+ months ahead
+            } elseif ($monthsAhead >= 3) {
+                $this->payment_award_emoji = '🌟'; // 3+ months ahead
+            } else {
+                $this->payment_award_emoji = '✨'; // 1-2 months ahead
+            }
+
+            $this->has_payment_award = true;
+        } else {
+            $this->has_payment_award = false;
+            $this->payment_award_emoji = null;
+        }
+
+        $this->saveQuietly(); // Save without triggering events
+    }
+
+    /**
+     * Get contribution status for the current month.
+     */
+    public function getCurrentMonthContributionStatus(): string
+    {
+        $today = now();
+
+        // Check if paid until date covers current month
+        if ($this->paid_until_date && $this->paid_until_date >= $today) {
+            return 'paid';
+        }
+
+        // Check if there's a payment for current month
+        $hasPaidThisMonth = $this->contributions()
+            ->where('month', $today->month)
+            ->whereYear('created_at', $today->year)
+            ->where('has_paid', true)
+            ->exists();
+
+        return $hasPaidThisMonth ? 'paid' : 'pending';
+    }
+
+    /**
+     * Get all months covered by bulk payment.
+     */
+    public function getMonthsCoveredByPayment(Contribution $contribution): array
+    {
+        $months = [];
+        $startDate = $contribution->payment_date;
+
+        for ($i = 0; $i < $contribution->months_covered; $i++) {
+            $months[] = $startDate->copy()->addMonths($i);
+        }
+
+        return $months;
     }
 }

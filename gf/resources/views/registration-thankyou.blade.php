@@ -1,4 +1,4 @@
-@extends('layouts.app')
+w@extends('layouts.app')
 
 @section('title', 'Thank You | God\'s Family Choir')
 

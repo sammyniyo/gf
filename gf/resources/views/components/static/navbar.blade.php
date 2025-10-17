@@ -32,7 +32,7 @@
                 </a>
                 <a href="{{ route('story') }}" class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('story*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
                     <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                     </svg>
                     Stories
                 </a>
@@ -54,6 +54,13 @@
                     </svg>
                     Committee
                 </a>
+                <a href="{{ route('resources.index') }}" class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('utility-folder*') || request()->is('resources*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
+                    <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
+                        <path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
+                    </svg>
+                    Resources
+                </a>
                 <a href="/contact" class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('contact*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
                     <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -62,15 +69,52 @@
                 </a>
             </nav>
 
-            <!-- CTA Button - Simplified -->
-            <div class="hidden md:flex items-center space-x-3">
-                <a href="{{ route('choir.register.form') }}"
+            <!-- CTA Buttons - Join Options -->
+            <div class="hidden md:flex items-center space-x-2" x-data="{ joinMenuOpen: false }">
+                <div class="relative">
+                    <button @click="joinMenuOpen = !joinMenuOpen" @click.away="joinMenuOpen = false"
                     class="px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-amber-500 to-amber-600 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
                     </svg>
-                    Join Choir
-                </a>
+                        Join Us
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div x-show="joinMenuOpen"
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 scale-95"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         x-transition:leave="transition ease-in duration-150"
+                         x-transition:leave-start="opacity-100 scale-100"
+                         x-transition:leave-end="opacity-0 scale-95"
+                         class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
+                         x-cloak>
+                        <a href="{{ route('registration.member') }}"
+                           class="flex items-start px-4 py-3 hover:bg-emerald-50 transition-colors group">
+                            <svg class="w-5 h-5 text-emerald-600 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                            </svg>
+                            <div>
+                                <div class="font-semibold text-gray-900 group-hover:text-emerald-600">Join the Choir</div>
+                                <div class="text-xs text-gray-500">Become an active chorister</div>
+                            </div>
+                        </a>
+                        <a href="{{ route('registration.friendship') }}"
+                           class="flex items-start px-4 py-3 hover:bg-amber-50 transition-colors group">
+                            <svg class="w-5 h-5 text-amber-600 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                            <div>
+                                <div class="font-semibold text-gray-900 group-hover:text-amber-600">Become a Friend</div>
+                                <div class="text-xs text-gray-500">Support our ministry</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <!-- Mobile Menu Button -->
@@ -121,7 +165,7 @@
             <a href="{{ route('story') }}" @click="mobileMenuOpen = false"
                 class="flex items-center px-3 py-3 rounded-md text-base font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('story*') ? 'bg-emerald-700 text-amber-100' : '' }}">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
                 Stories
             </a>
@@ -146,6 +190,14 @@
                 </svg>
                 Committee
             </a>
+            <a href="{{ route('resources.index') }}" @click="mobileMenuOpen = false"
+                class="flex items-center px-3 py-3 rounded-md text-base font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('utility-folder*') || request()->is('resources*') ? 'bg-emerald-700 text-amber-100' : '' }}">
+                <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
+                    <path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
+                </svg>
+                Resources
+            </a>
             <a href="/contact" @click="mobileMenuOpen = false"
                 class="flex items-center px-3 py-3 rounded-md text-base font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('contact*') ? 'bg-emerald-700 text-amber-100' : '' }}">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -154,13 +206,27 @@
                 Contact
             </a>
         </div>
-        <div class="px-2 pt-2 pb-4 border-t border-emerald-700">
-            <a href="{{ route('choir.register.form') }}" @click="mobileMenuOpen = false"
-                class="flex items-center justify-center w-full px-4 py-3 text-center rounded-md text-white font-semibold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+        <div class="px-2 pt-2 pb-4 border-t border-emerald-700 space-y-2">
+            <div class="text-xs font-semibold text-emerald-200 px-3 py-1">Join God's Family</div>
+            <a href="{{ route('registration.member') }}" @click="mobileMenuOpen = false"
+                class="flex items-center px-4 py-3 rounded-md text-white font-semibold bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 transition-all duration-200 shadow-lg">
+                <svg class="h-5 w-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                 </svg>
-                Join Our Choir
+                <div>
+                    <div class="text-sm">Join the Choir</div>
+                    <div class="text-xs opacity-90">Become a chorister</div>
+                </div>
+            </a>
+            <a href="{{ route('registration.friendship') }}" @click="mobileMenuOpen = false"
+                class="flex items-center px-4 py-3 rounded-md text-white font-semibold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-lg">
+                <svg class="h-5 w-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                <div>
+                    <div class="text-sm">Become a Friend</div>
+                    <div class="text-xs opacity-90">Support our ministry</div>
+                </div>
             </a>
         </div>
     </div>

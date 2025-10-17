@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Member Lookup (for event registration)
+Route::get('/members/lookup/{code}', [App\Http\Controllers\MemberController::class, 'lookupByCode']);

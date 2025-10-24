@@ -102,10 +102,32 @@ class Member extends Model
     public function getProfilePhotoUrlAttribute(): ?string
     {
         if ($this->profile_photo) {
-            return asset('storage/member-photos/' . $this->profile_photo);
+            $photoName = basename($this->profile_photo);
+            return asset('storage/member-photos/' . $photoName);
         }
 
         return null;
+    }
+
+    public function setProfilePhotoAttribute($value): void
+    {
+        $this->attributes['profile_photo'] = $value ? basename($value) : null;
+    }
+
+    public function setPhotoPathAttribute($value): void
+    {
+        $this->setProfilePhotoAttribute($value);
+    }
+
+    public function getPhotoPathAttribute()
+    {
+        if (!isset($this->attributes['profile_photo'])) {
+            return null;
+        }
+
+        $photoName = basename($this->attributes['profile_photo']);
+
+        return 'member-photos/' . $photoName;
     }
 
     /**

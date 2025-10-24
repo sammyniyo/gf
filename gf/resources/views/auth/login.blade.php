@@ -1,301 +1,425 @@
-@extends('layouts.app')
+@extends('layouts.auth')
+
+@section('title', 'Admin Login')
+
+@push('styles')
+    <style>
+        /* Reset and base styles */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #1f2937;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes slide-in {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-pulse-glow {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        .animate-slide-in {
+            animation: slide-in 0.8s ease-out forwards;
+        }
+
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+
+        /* Floating background elements */
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+
+        .shape-1 {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            top: 20%;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            top: 60%;
+            right: 15%;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        .shape-3 {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            bottom: 30%;
+            left: 20%;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        /* Glass effect */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Input focus effects */
+        .input-focus {
+            transition: all 0.3s ease;
+        }
+
+        .input-focus:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Button hover effects */
+        .button-hover {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Ensure text is always visible */
+        .text-visible {
+            color: #1f2937 !important;
+        }
+
+        .text-white-visible {
+            color: #ffffff !important;
+        }
+
+        .text-slate-visible {
+            color: #64748b !important;
+        }
+
+        .text-indigo-visible {
+            color: #4f46e5 !important;
+        }
+
+        /* Form styling */
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Input styling */
+        .form-input {
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .form-input:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        /* Button styling */
+        .btn-primary {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: #ffffff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #4338ca, #6d28d9);
+        }
+    </style>
+@endpush
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 p-4">
-    <div class="w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
+    <!-- Floating Background Shapes -->
+    <div class="floating-shapes">
+        <div class="floating-shape shape-1 animate-float"></div>
+        <div class="floating-shape shape-2 animate-float"></div>
+        <div class="floating-shape shape-3 animate-float"></div>
+    </div>
 
-        <!-- Left Side - Animated Characters -->
-        <div class="w-full md:w-1/2 bg-gradient-to-br from-slate-50 to-slate-100 p-8 md:p-12 flex items-center justify-center relative overflow-hidden">
-            <div id="characters-container" class="relative w-full max-w-md aspect-square flex items-center justify-center">
-
-                <!-- Purple Rectangle Character -->
-                <div id="char-purple" class="absolute transition-all duration-500 ease-out" style="left: 25%; top: 15%; transform-origin: center;">
-                    <div class="relative">
-                        <div class="w-32 h-44 bg-gradient-to-br from-purple-600 to-purple-700 rounded-2xl shadow-lg"></div>
-                        <!-- Eyes -->
-                        <div class="absolute top-12 left-0 right-0 flex justify-center gap-6">
-                            <div class="char-eye w-3 h-3 bg-slate-900 rounded-full"></div>
-                            <div class="char-eye w-3 h-3 bg-slate-900 rounded-full"></div>
-                        </div>
-                        <!-- Mouth -->
-                        <div class="char-mouth absolute top-20 left-0 right-0 flex justify-center">
-                            <div class="w-8 h-1 bg-slate-900 rounded-full"></div>
-                        </div>
+    <div class="relative min-h-screen flex items-center justify-center px-4 py-12">
+        <div class="w-full max-w-6xl mx-auto flex flex-col lg:flex-row lg:items-stretch lg:gap-10">
+            <!-- Left Panel - Welcome Section -->
+            <div class="hidden lg:flex w-full max-w-xl flex-col justify-between overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-700 via-slate-900 to-slate-950 p-10 text-white shadow-2xl animate-slide-in">
+                <div class="space-y-8">
+                    <div class="inline-flex items-center gap-3 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white ring-1 ring-white/25 backdrop-blur animate-bounce">
+                        <span class="inline-flex h-2.5 w-2.5 animate-pulse rounded-full bg-emerald-300"></span>
+                        <span class="text-white-visible">God's Family Choir Admin Suite</span>
                     </div>
+                    <div class="space-y-4">
+                        <h1 class="text-4xl font-semibold leading-tight tracking-tight text-white-visible">
+                            Welcome back, Maestro.
+                        </h1>
+                        <p class="text-base text-white-visible opacity-90">
+                            Manage rehearsals, events, resources, and member updates from a unified, elegant control center. Your next great service starts here.
+                        </p>
+                    </div>
+                    <dl class="grid grid-cols-1 gap-4 text-sm">
+                        <div class="rounded-2xl bg-white/10 p-4 ring-1 ring-white/10 backdrop-blur">
+                            <dt class="font-semibold uppercase tracking-wider text-indigo-200 text-white-visible">
+                                Today
+                            </dt>
+                            <dd class="mt-2 flex items-center gap-2 text-lg font-medium text-white-visible">
+                                <svg class="h-5 w-5 text-emerald-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 19a7 7 0 1 0-7-7" />
+                                </svg>
+                                Keep rehearsals running on time and the music flowing.
+                            </dd>
+                        </div>
+                        <div class="rounded-2xl bg-white/10 p-4 ring-1 ring-white/10 backdrop-blur">
+                            <dt class="font-semibold uppercase tracking-wider text-indigo-200 text-white-visible">
+                                Pro Tip
+                            </dt>
+                            <dd class="mt-2 flex items-center gap-2 text-lg font-medium text-white-visible">
+                                <svg class="h-5 w-5 text-sky-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3a9 9 0 1 0 9 9" />
+                                </svg>
+                                Use quick actions from the dashboard to publish updates faster.
+                            </dd>
+                        </div>
+                    </dl>
                 </div>
-
-                <!-- Black Rectangle Character -->
-                <div id="char-black" class="absolute transition-all duration-500 ease-out" style="left: 48%; top: 28%; transform-origin: center;">
-                    <div class="relative">
-                        <div class="w-24 h-32 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-lg"></div>
-                        <!-- Eyes -->
-                        <div class="absolute top-8 left-0 right-0 flex justify-center gap-4">
-                            <div class="char-eye w-3 h-3 bg-white rounded-full"></div>
-                            <div class="char-eye w-3 h-3 bg-white rounded-full"></div>
-                        </div>
-                        <!-- Mouth -->
-                        <div class="char-mouth absolute top-14 left-0 right-0 flex justify-center">
-                            <div class="w-6 h-1 bg-white rounded-full"></div>
-                        </div>
-                    </div>
+                <div class="flex items-center justify-between text-xs text-white-visible opacity-70">
+                    <span>Secured access · {{ now()->format('M d, Y') }}</span>
+                    <span>@GF</span>
+                </div>
             </div>
 
-                <!-- Orange Circle Character -->
-                <div id="char-orange" class="absolute transition-all duration-500 ease-out" style="left: 8%; top: 52%; transform-origin: center;">
-                    <div class="relative">
-                        <div class="w-36 h-36 bg-gradient-to-br from-orange-400 to-orange-500 rounded-full shadow-lg"></div>
-                        <!-- Eyes -->
-                        <div class="absolute top-12 left-0 right-0 flex justify-center gap-8">
-                            <div class="char-eye w-3 h-3 bg-slate-900 rounded-full"></div>
-                            <div class="char-eye w-3 h-3 bg-slate-900 rounded-full"></div>
+            <!-- Right Panel - Login Form -->
+            <div class="flex w-full flex-1 items-center justify-center">
+                <div class="w-full max-w-lg rounded-3xl form-container p-8 shadow-xl animate-slide-in delay-200">
+                    <div class="mb-8 flex items-center justify-between animate-slide-in delay-300">
+                        <div>
+                            <p class="text-sm font-semibold uppercase tracking-wider text-indigo-visible animate-bounce">Admin Access</p>
+                            <h2 class="mt-2 text-2xl font-semibold text-visible animate-slide-in delay-400">Sign in to continue</h2>
+                            <p class="mt-1 text-sm text-slate-visible animate-slide-in delay-500">Use your choir admin credentials to unlock the dashboard.</p>
                         </div>
-                        <!-- Mouth -->
-                        <div class="char-mouth absolute top-20 left-0 right-0 flex justify-center">
-                            <div class="w-10 h-1 bg-slate-900 rounded-full"></div>
-                                </div>
-                                </div>
-                            </div>
-
-                <!-- Yellow Blob Character -->
-                <div id="char-yellow" class="absolute transition-all duration-500 ease-out" style="left: 55%; top: 55%; transform-origin: center;">
-                    <div class="relative">
-                        <div class="w-32 h-40 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-[40%_60%_70%_30%/60%_30%_70%_40%] shadow-lg"></div>
-                        <!-- Eyes (just a line) -->
-                        <div class="absolute top-16 left-0 right-0 flex justify-center">
-                            <div class="char-mouth w-12 h-1 bg-slate-900 rounded-full"></div>
-                        </div>
+                        <a href="{{ route('home') }}" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-500 transition hover:text-indigo-500" aria-label="Back to website">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </a>
                     </div>
-                </div>
 
-            </div>
-        </div>
-
-        <!-- Right Side - Login Form -->
-        <div class="w-full md:w-1/2 p-8 md:p-12 flex items-center justify-center">
-            <div class="w-full max-w-md">
-
-                <!-- Close Button (top-right) -->
-                <div class="flex justify-end mb-6">
-                    <a href="{{ route('home') }}" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors">
-                        <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </a>
-                </div>
-
-                <!-- Header -->
-                <div class="text-center mb-8">
-                    <h1 class="text-4xl font-bold text-slate-900 mb-2">Welcome back!</h1>
-                    <p class="text-slate-500">Please enter your details</p>
-                </div>
-
-                <!-- Session Status -->
-                @if (session('status'))
-                    <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
-                        <p class="text-sm font-medium text-emerald-800">{{ session('status') }}</p>
+                    @if (session('status'))
+                        <div class="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700">
+                            {{ session('status') }}
                         </div>
                     @endif
 
-                <!-- Login Form -->
-                <form id="login-form" method="POST" action="{{ route('login') }}" class="space-y-6">
+                    @if ($errors->any())
+                        <div class="mb-6 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-600">
+                            We couldn't sign you in. Double-check your email and password, then try again.
+                        </div>
+                    @endif
+
+                    <form id="admin-login-form" method="POST" action="{{ route('login') }}" class="space-y-6">
                         @csrf
 
-                    <!-- Email -->
-                        <div>
-                        <label for="email" class="block text-sm font-medium text-slate-700 mb-2">Email</label>
-                        <input
-                            id="email"
-                                   type="email"
-                                   name="email"
-                                   value="{{ old('email') }}"
-                                   required
-                                   autofocus
-                            class="w-full px-4 py-3 bg-white border-b-2 border-slate-200 focus:border-slate-900 focus:outline-none transition-colors @error('email') border-rose-500 @enderror"
-                            placeholder="anna@gmail.com"
-                        >
-                            @error('email')
-                            <p class="mt-2 text-sm text-rose-600">{{ $message }}</p>
-                            @enderror
+                        <div class="animate-slide-in delay-300">
+                            <label for="email" class="text-sm font-semibold text-visible">Email address</label>
+                            <div class="mt-2">
+                                <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
+                                       class="form-input input-focus block w-full rounded-2xl px-4 py-3 text-base shadow-sm transition focus:outline-none"
+                                       placeholder="admin@choir.org">
+                            </div>
                         </div>
 
-                        <!-- Password -->
-                        <div>
-                        <label for="password" class="block text-sm font-medium text-slate-700 mb-2">Password</label>
-                        <div class="relative">
-                            <input
-                                id="password"
-                                   type="password"
-                                   name="password"
-                                   required
-                                class="w-full px-4 py-3 bg-white border-b-2 border-slate-200 focus:border-slate-900 focus:outline-none transition-colors pr-12 @error('password') border-rose-500 @enderror"
-                                placeholder="••••••••"
-                            >
-                            <button type="button" id="toggle-password" class="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-slate-600">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                </svg>
-                            </button>
-                        </div>
-                        @error('password')
-                            <p class="mt-2 text-sm text-rose-600">{{ $message }}</p>
-                        @enderror
+                        <div class="animate-slide-in delay-400">
+                            <div class="flex items-center justify-between text-sm">
+                                <label for="password" class="font-semibold text-visible">Password</label>
+                                @if (Route::has('password.request'))
+                                    <a class="font-semibold text-indigo-visible hover:text-indigo-600" href="{{ route('password.request') }}">
+                                        Forgot password?
+                                    </a>
+                                @endif
+                            </div>
+                            <div class="mt-2 relative">
+                                <input id="password" type="password" name="password" required autocomplete="current-password"
+                                       class="form-input input-focus peer block w-full rounded-2xl px-4 py-3 pr-12 text-base shadow-sm transition focus:outline-none"
+                                       placeholder="Enter your password">
+                                <button type="button" id="toggle-password"
+                                        class="absolute inset-y-0 right-3 inline-flex items-center justify-center rounded-full p-2 text-gray-400 transition hover:text-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
+                                        aria-label="Toggle password visibility">
+                                    <svg data-state="visible" class="h-5 w-5 transition-opacity duration-150" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z" />
+                                        <circle cx="12" cy="12" r="2.5" />
+                                    </svg>
+                                    <svg data-state="hidden" class="hidden h-5 w-5 transition-opacity duration-150" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-5.5 0-10-7-10-7a21.526 21.526 0 015.186-5.835" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.878 9.878a3 3 0 104.242 4.242M15 15l5 5M3 3l5 5" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
 
-                    <!-- Remember & Forgot -->
-                    <div class="flex items-center justify-between text-sm">
-                        <label class="flex items-center gap-2 text-slate-600">
-                            <input
-                                type="checkbox"
-                                       name="remember"
-                                class="w-4 h-4 rounded border-slate-300 text-slate-900 focus:ring-slate-400"
-                            >
-                            <span>Remember for 30 days</span>
+                        <div class="flex items-center justify-between">
+                            <label for="remember_me" class="inline-flex items-center gap-2 text-sm text-slate-visible">
+                                <input id="remember_me" type="checkbox" name="remember" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                <span>Keep me signed in</span>
                             </label>
-                            @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="text-slate-600 hover:text-slate-900 font-medium">
-                                    Forgot password?
-                                </a>
-                            @endif
+                            <span class="text-xs font-semibold uppercase tracking-wider text-slate-visible">
+                                Secure Login
+                            </span>
                         </div>
 
-                    <!-- Submit Button -->
-                    <button
-                        type="submit"
-                        class="w-full py-3 bg-slate-900 text-white rounded-xl font-semibold hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/20"
-                    >
-                        Log in
-                    </button>
-                </form>
+                        <button type="submit"
+                                class="btn-primary button-hover animate-slide-in delay-500 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold shadow-lg transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                            Sign in to dashboard
+                        </button>
+                    </form>
 
-               
+                    <div class="mt-8 rounded-2xl border border-gray-200 bg-white/80 p-5 text-sm text-slate-visible">
+                        <div class="flex items-start gap-3">
+                            <span class="mt-1 inline-flex h-7 w-7 items-center justify-center rounded-full bg-indigo-100 text-indigo-500">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c1.656 0 3-1.567 3-3.5S13.656 4 12 4s-3 1.567-3 3.5S10.344 11 12 11z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5.5 20.5a6.5 6.5 0 0 1 13 0" />
+                                </svg>
+                            </span>
+                            <div>
+                                <p class="font-semibold text-visible">Need an account?</p>
+                                <p class="mt-1 text-slate-visible">
+                                    Admin credentials are issued by the choir leadership team. Contact your coordinator if you require access.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
-</div>
 @endsection
 
 @push('scripts')
-<script>
-(function() {
-    const hasErrors = {{ $errors->any() ? 'true' : 'false' }};
-    const purple = document.getElementById('char-purple');
-    const black = document.getElementById('char-black');
-    const orange = document.getElementById('char-orange');
-    const yellow = document.getElementById('char-yellow');
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('toggle-password');
+            const passwordInput = document.getElementById('password');
+            const form = document.getElementById('admin-login-form');
+            const submitButton = form.querySelector('button[type="submit"]');
 
-    // Character animation states
-    function setNeutral() {
-        if (!purple || !black || !orange || !yellow) return;
+            // Password toggle functionality
+            if (toggle && passwordInput) {
+                const iconVisible = toggle.querySelector('svg[data-state="visible"]');
+                const iconHidden = toggle.querySelector('svg[data-state="hidden"]');
 
-        // Reset positions and rotations
-        purple.style.transform = 'rotate(0deg) scale(1)';
-        black.style.transform = 'rotate(0deg) scale(1)';
-        orange.style.transform = 'rotate(0deg) scale(1)';
-        yellow.style.transform = 'rotate(0deg) scale(1)';
+                toggle.addEventListener('click', () => {
+                    const isPassword = passwordInput.getAttribute('type') === 'password';
+                    passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
 
-        // Normal eyes
-        document.querySelectorAll('.char-eye').forEach(eye => {
-            eye.style.height = '0.75rem';
-            eye.style.marginTop = '0';
-        });
-
-        // Normal mouths
-        document.querySelectorAll('.char-mouth').forEach(mouth => {
-            mouth.style.transform = 'scaleY(1)';
-        });
-    }
-
-    function setCrying() {
-        if (!purple || !black || !orange || !yellow) return;
-
-        // Sad tilts and movements
-        purple.style.transform = 'rotate(-8deg) scale(0.95)';
-        black.style.transform = 'rotate(5deg) scale(0.95)';
-        orange.style.transform = 'rotate(-5deg) translateY(10px) scale(0.95)';
-        yellow.style.transform = 'rotate(8deg) scale(0.95)';
-
-        // Sad eyes (closed/squinting)
-        document.querySelectorAll('.char-eye').forEach(eye => {
-            eye.style.height = '0.25rem';
-            eye.style.marginTop = '0.25rem';
-        });
-
-        // Sad mouths (curved down)
-        document.querySelectorAll('.char-mouth').forEach(mouth => {
-            mouth.style.transform = 'scaleY(-1)';
-        });
-    }
-
-    function setHappy() {
-        if (!purple || !black || !orange || !yellow) return;
-
-        // Happy bounces
-        purple.style.transform = 'rotate(5deg) scale(1.05) translateY(-8px)';
-        black.style.transform = 'rotate(-3deg) scale(1.05) translateY(-5px)';
-        orange.style.transform = 'rotate(3deg) scale(1.08) translateY(-10px)';
-        yellow.style.transform = 'rotate(-5deg) scale(1.05) translateY(-6px)';
-
-        // Happy eyes (wide)
-        document.querySelectorAll('.char-eye').forEach(eye => {
-            eye.style.height = '0.875rem';
-            eye.style.marginTop = '0';
-        });
-
-        // Happy mouths (wide)
-        document.querySelectorAll('.char-mouth').forEach((mouth, index) => {
-            mouth.style.transform = 'scaleX(1.3) scaleY(1)';
-        });
-    }
-
-    // Initial state
-    if (hasErrors) {
-        setCrying();
-    } else {
-        setNeutral();
-    }
-
-    // Password field - show anticipation
-    const passwordInput = document.getElementById('password');
-    if (passwordInput) {
-        passwordInput.addEventListener('focus', function() {
-            if (!hasErrors) {
-                // Slight anticipation
-                purple.style.transform = 'rotate(2deg) scale(1.02)';
-                orange.style.transform = 'rotate(-2deg) scale(1.02)';
+                    if (iconVisible && iconHidden) {
+                        iconVisible.classList.toggle('hidden', !isPassword);
+                        iconHidden.classList.toggle('hidden', isPassword);
+                    }
+                });
             }
-        });
 
-        passwordInput.addEventListener('blur', function() {
-            if (!hasErrors) setNeutral();
-        });
-    }
+            // Enhanced form interactions
+            const inputs = form.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.classList.add('animate-bounce');
+                });
 
-    // Form submission - celebrate
-    const form = document.getElementById('login-form');
-    if (form) {
-        form.addEventListener('submit', function() {
-            setHappy();
-        });
-    }
+                input.addEventListener('blur', () => {
+                    input.parentElement.classList.remove('animate-bounce');
+                });
+            });
 
-    // Toggle password visibility
-    const togglePassword = document.getElementById('toggle-password');
-    if (togglePassword) {
-        togglePassword.addEventListener('click', function() {
-            const password = document.getElementById('password');
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
-        });
-    }
-})();
-</script>
+            // Form submission animation
+            form.addEventListener('submit', (e) => {
+                submitButton.classList.add('animate-bounce');
+                submitButton.innerHTML = `
+                    <svg class="h-5 w-5 animate-spin" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Signing in...
+                `;
+            });
 
-<style>
-    /* Smooth transitions for all character elements */
-    .char-eye, .char-mouth {
-        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    }
-</style>
+            // Add floating particles effect
+            function createFloatingParticle() {
+                const particle = document.createElement('div');
+                particle.className = 'absolute w-2 h-2 bg-indigo-300 rounded-full opacity-20 animate-float';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                document.querySelector('.floating-shapes').appendChild(particle);
+
+                setTimeout(() => {
+                    particle.remove();
+                }, 5000);
+            }
+
+            // Create particles periodically
+            setInterval(createFloatingParticle, 2000);
+        });
+    </script>
 @endpush

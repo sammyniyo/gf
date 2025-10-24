@@ -1,144 +1,342 @@
-@extends('layouts.app')
+@extends('layouts.auth')
+
+@section('title', 'Reset Password')
+
+@push('styles')
+    <style>
+        /* Reset and base styles */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #1f2937;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes slide-in {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-pulse-glow {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        .animate-slide-in {
+            animation: slide-in 0.8s ease-out forwards;
+        }
+
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+
+        /* Floating background elements */
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+
+        .shape-1 {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            top: 20%;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            top: 60%;
+            right: 15%;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        .shape-3 {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            bottom: 30%;
+            left: 20%;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        /* Glass effect */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Input focus effects */
+        .input-focus {
+            transition: all 0.3s ease;
+        }
+
+        .input-focus:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Button hover effects */
+        .button-hover {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Ensure text is always visible */
+        .text-visible {
+            color: #1f2937 !important;
+        }
+
+        .text-white-visible {
+            color: #ffffff !important;
+        }
+
+        .text-slate-visible {
+            color: #64748b !important;
+        }
+
+        .text-indigo-visible {
+            color: #4f46e5 !important;
+        }
+
+        /* Form styling */
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Input styling */
+        .form-input {
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .form-input:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        /* Button styling */
+        .btn-primary {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: #ffffff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #4338ca, #6d28d9);
+        }
+    </style>
+@endpush
 
 @section('content')
-<div class="min-h-screen flex flex-col bg-gray-50">
-    <!-- Main Content -->
-    <div class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md w-full space-y-8">
-            <!-- Header -->
-            <div class="text-center">
-                <div class="mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-gray-100">
-                    <svg class="h-6 w-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
-                </div>
-                <h2 class="mt-6 text-3xl font-bold text-gray-900">Reset your password</h2>
-                <p class="mt-2 text-sm text-gray-600">
-                    Enter your email address and choose a new password.
-                </p>
-            </div>
+    <!-- Floating Background Shapes -->
+    <div class="floating-shapes">
+        <div class="floating-shape shape-1 animate-float"></div>
+        <div class="floating-shape shape-2 animate-float"></div>
+        <div class="floating-shape shape-3 animate-float"></div>
+    </div>
 
-            <!-- Form Card -->
-            <div class="bg-white rounded-lg border border-gray-200 shadow-sm">
-                <div class="px-6 py-8">
-                    <form method="POST" action="{{ route('password.store') }}" class="space-y-6">
-        @csrf
-
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
-
-        <!-- Email Address -->
-        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                            <input id="email"
-                                   type="email"
-                                   name="email"
-                                   value="{{ old('email', $request->email) }}"
-                                   required
-                                   autofocus
-                                   autocomplete="username"
-                                   class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-gray-400 focus:border-gray-400 @error('email') border-red-300 @enderror"
-                                   placeholder="Enter your email address">
-                            @error('email')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-        </div>
-
-        <!-- Password -->
-                        <div>
-                            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
-                            <input id="password"
-                                   type="password"
-                                   name="password"
-                                   required
-                                   autocomplete="new-password"
-                                   class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-gray-400 focus:border-gray-400 @error('password') border-red-300 @enderror"
-                                   placeholder="Enter your new password">
-                            @error('password')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                            <p class="mt-1 text-xs text-gray-500">Must be at least 8 characters</p>
-        </div>
-
-        <!-- Confirm Password -->
-                        <div>
-                            <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
-                            <input id="password_confirmation"
-                                type="password"
-                                   name="password_confirmation"
-                                   required
-                                   autocomplete="new-password"
-                                   class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
-                                   placeholder="Confirm your new password">
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div>
-                            <button type="submit"
-                                    class="w-full flex justify-center py-2 px-4 text-sm font-medium text-white bg-gray-900 border border-transparent rounded-md hover:bg-gray-800 focus:outline-none focus:ring-1 focus:ring-gray-400 transition-colors">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+    <div class="relative min-h-screen flex items-center justify-center px-4 py-12">
+        <div class="w-full max-w-6xl mx-auto flex flex-col lg:flex-row lg:items-stretch lg:gap-10">
+            <!-- Left Panel - Info Section -->
+            <div class="hidden lg:flex w-full max-w-xl flex-col justify-between overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-700 via-slate-900 to-slate-950 p-10 text-white shadow-2xl animate-slide-in">
+                <div class="space-y-8">
+                    <div class="inline-flex items-center gap-3 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white ring-1 ring-white/25 backdrop-blur animate-bounce">
+                        <span class="inline-flex h-2.5 w-2.5 animate-pulse rounded-full bg-emerald-300"></span>
+                        <span class="text-white-visible">Password Reset</span>
+                    </div>
+                    <div class="space-y-4">
+                        <h1 class="text-4xl font-semibold leading-tight tracking-tight text-white-visible">
+                            Create new password
+                        </h1>
+                        <p class="text-base text-white-visible opacity-90">
+                            You're almost there! Enter your email and create a strong new password to regain access to your admin dashboard.
+                        </p>
+                    </div>
+                    <dl class="grid grid-cols-1 gap-4 text-sm">
+                        <div class="rounded-2xl bg-white/10 p-4 ring-1 ring-white/10 backdrop-blur">
+                            <dt class="font-semibold uppercase tracking-wider text-indigo-200 text-white-visible">
+                                Security First
+                            </dt>
+                            <dd class="mt-2 flex items-center gap-2 text-lg font-medium text-white-visible">
+                                <svg class="h-5 w-5 text-emerald-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                 </svg>
-                                Reset Password
-                            </button>
+                                Choose a strong password with at least 8 characters for maximum security.
+                            </dd>
                         </div>
+                        <div class="rounded-2xl bg-white/10 p-4 ring-1 ring-white/10 backdrop-blur">
+                            <dt class="font-semibold uppercase tracking-wider text-indigo-200 text-white-visible">
+                                Quick Access
+                            </dt>
+                            <dd class="mt-2 flex items-center gap-2 text-lg font-medium text-white-visible">
+                                <svg class="h-5 w-5 text-sky-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Once reset, you'll be automatically signed in to your dashboard.
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+                <div class="flex items-center justify-between text-xs text-white-visible opacity-70">
+                    <span>Secure reset · {{ now()->format('M d, Y') }}</span>
+                    <span>@GF</span>
+                </div>
+            </div>
+
+            <!-- Right Panel - Reset Password Form -->
+            <div class="flex w-full flex-1 items-center justify-center">
+                <div class="w-full max-w-lg rounded-3xl form-container p-8 shadow-xl animate-slide-in delay-200">
+                    <div class="mb-8 flex items-center justify-between animate-slide-in delay-300">
+                        <div>
+                            <p class="text-sm font-semibold uppercase tracking-wider text-indigo-visible animate-bounce">Password Reset</p>
+                            <h2 class="mt-2 text-2xl font-semibold text-visible animate-slide-in delay-400">Create new password</h2>
+                            <p class="mt-1 text-sm text-slate-visible animate-slide-in delay-500">Enter your email and choose a strong new password.</p>
+                        </div>
+                        <a href="{{ route('home') }}" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-500 transition hover:text-indigo-500" aria-label="Back to website">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <form method="POST" action="{{ route('password.store') }}" class="space-y-6">
+                        @csrf
+
+                        <!-- Password Reset Token -->
+                        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+
+                        <!-- Email Address -->
+                        <div class="animate-slide-in delay-300">
+                            <label for="email" class="text-sm font-semibold text-visible">Email address</label>
+                            <div class="mt-2">
+                                <input id="email" type="email" name="email" value="{{ old('email', $request->email) }}" required autofocus autocomplete="username"
+                                       class="form-input input-focus block w-full rounded-2xl px-4 py-3 text-base shadow-sm transition focus:outline-none"
+                                       placeholder="admin@choir.org">
+                                @error('email')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="animate-slide-in delay-400">
+                            <label for="password" class="text-sm font-semibold text-visible">New password</label>
+                            <div class="mt-2">
+                                <input id="password" type="password" name="password" required autocomplete="new-password"
+                                       class="form-input input-focus block w-full rounded-2xl px-4 py-3 text-base shadow-sm transition focus:outline-none"
+                                       placeholder="Enter your new password">
+                                @error('password')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                                <p class="mt-1 text-xs text-slate-visible">Must be at least 8 characters</p>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="animate-slide-in delay-500">
+                            <label for="password_confirmation" class="text-sm font-semibold text-visible">Confirm new password</label>
+                            <div class="mt-2">
+                                <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password"
+                                       class="form-input input-focus block w-full rounded-2xl px-4 py-3 text-base shadow-sm transition focus:outline-none"
+                                       placeholder="Confirm your new password">
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                                class="btn-primary button-hover animate-slide-in delay-500 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold shadow-lg transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                            Reset Password
+                        </button>
                     </form>
-                </div>
-            </div>
 
-            <!-- Back to Login -->
-            <div class="text-center">
-                <p class="text-sm text-gray-600">
-                    Remember your password?
-                    <a href="{{ route('login') }}" class="font-medium text-gray-900 hover:text-gray-700">
-                        Sign in here
-                    </a>
-                </p>
-            </div>
+                    <div class="mt-8 space-y-4">
+                        <!-- Back to Login -->
+                        <div class="text-center">
+                            <p class="text-sm text-slate-visible">
+                                Remember your password?
+                                <a href="{{ route('login') }}" class="font-semibold text-indigo-visible hover:text-indigo-600">
+                                    Sign in here
+                                </a>
+                            </p>
+                        </div>
 
-            <!-- Back to Home -->
-            <div class="text-center">
-                <a href="{{ route('home') }}" class="text-sm text-gray-500 hover:text-gray-700 flex items-center justify-center">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                    </svg>
-                    Back to Home
-                </a>
-            </div>
-        </div>
-        </div>
-
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <div class="md:flex md:items-center md:justify-between">
-                <div class="flex justify-center md:justify-start space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-gray-500">
-                        <span class="sr-only">Facebook</span>
-                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
-                        </svg>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-gray-500">
-                        <span class="sr-only">Instagram</span>
-                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
-                        </svg>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-gray-500">
-                        <span class="sr-only">Twitter</span>
-                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                        </svg>
-                    </a>
-                </div>
-                <div class="mt-4 md:mt-0">
-                    <p class="text-center text-sm text-gray-400">
-                        &copy; {{ date('Y') }} God's Family Choir | ASA UR Nyarugenge SDA. All rights reserved.
-                    </p>
+                        <!-- Back to Home -->
+                        <div class="text-center">
+                            <a href="{{ route('home') }}" class="text-sm text-slate-visible hover:text-indigo-600 flex items-center justify-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                </svg>
+                                Back to Home
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </footer>
-</div>
+    </div>
 @endsection

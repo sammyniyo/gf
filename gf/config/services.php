@@ -37,9 +37,12 @@ return [
     ],
 
     'whatsapp' => [
-        'main_group_link' => env('WHATSAPP_MAIN_GROUP', 'https://chat.whatsapp.com/MAIN_GROUP'),
-        'choir_group_link' => env('WHATSAPP_CHOIR_GROUP', 'https://chat.whatsapp.com/CHOIR_GROUP'),
-        'active_choristers_link' => env('WHATSAPP_ACTIVE_CHORISTERS', 'https://chat.whatsapp.com/ACTIVE_CHORISTERS'),
+        // Main group - for all members, friends, and supporters
+        'main_group_link' => env('WHATSAPP_INVITE', 'https://chat.whatsapp.com/BbBhLCpiOXrEpjB5u1bNwq'),
+
+        // Active members group - for registered choir members who attend rehearsals
+        'choir_group_link' => env('WHATSAPP_CHOIR_GROUP', 'https://chat.whatsapp.com/BbBhLCpiOXrEpjB5u1bNwq'),
+        'active_choristers_link' => env('WHATSAPP_ACTIVE_CHORISTERS', 'https://chat.whatsapp.com/BbBhLCpiOXrEpjB5u1bNwq'),
     ],
 
 ];

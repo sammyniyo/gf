@@ -54,7 +54,7 @@ return [
             'emergency_contact_phone' => 'required|string|max:20',
             'emergency_contact_relationship' => 'nullable|string|max:255',
             'availability' => 'required|in:weekends,evenings,flexible,limited',
-            'photo_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'terms_agreed' => 'required|accepted',
             'newsletter' => 'nullable|boolean',
             'hobbies' => 'nullable|string|max:500',
@@ -87,9 +87,9 @@ return [
             'emergency_contact_name.required' => 'Emergency contact name is required.',
             'emergency_contact_phone.required' => 'Emergency contact phone is required.',
             'availability.required' => 'Please select your availability.',
-            'photo_path.image' => 'Profile photo must be an image file.',
-            'photo_path.mimes' => 'Profile photo must be a JPEG, PNG, JPG, or GIF file.',
-            'photo_path.max' => 'Profile photo must not be larger than 2MB.',
+            'profile_photo.image' => 'Profile photo must be an image file.',
+            'profile_photo.mimes' => 'Profile photo must be a JPEG, PNG, JPG, or GIF file.',
+            'profile_photo.max' => 'Profile photo must not be larger than 2MB.',
             'terms_agreed.required' => 'You must agree to the terms and conditions.',
             'terms_agreed.accepted' => 'You must agree to the terms and conditions.',
         ];
@@ -108,7 +108,7 @@ return [
             'emergency_contact_name' => 'emergency contact name',
             'emergency_contact_phone' => 'emergency contact phone',
             'emergency_contact_relationship' => 'emergency contact relationship',
-            'photo_path' => 'profile photo',
+            'profile_photo' => 'profile photo',
             'terms_agreed' => 'terms and conditions agreement',
             'why_join' => 'reason for joining',
             'education_level' => 'education level',
@@ -128,6 +128,10 @@ return [
             'newsletter' => $this->has('newsletter') ? true : false,
             'terms_agreed' => $this->has('terms_agreed') ? '1' : '0',
         ]);
+
+        if ($this->hasFile('photo_path') && !$this->hasFile('profile_photo')) {
+            $this->files->set('profile_photo', $this->file('photo_path'));
+        }
     }
 
     /**

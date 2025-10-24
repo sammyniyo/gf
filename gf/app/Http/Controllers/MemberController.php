@@ -38,12 +38,18 @@ class MemberController extends Controller
             }
 
             // Handle profile photo upload
-            if ($request->hasFile('photo_path')) {
-                $photo = $request->file('photo_path');
+            $photoField = $request->hasFile('profile_photo')
+                ? 'profile_photo'
+                : ($request->hasFile('photo_path') ? 'photo_path' : null);
+
+            if ($photoField) {
+                $photo = $request->file($photoField);
                 $photoName = time() . '_' . $photo->getClientOriginalName();
-                $photoPath = $photo->storeAs('public/member-photos', $photoName);
-                $data['photo_path'] = 'member-photos/' . $photoName;
+                $photo->storeAs('public/member-photos', $photoName);
+                $data['profile_photo'] = $photoName;
             }
+
+            unset($data['photo_path']);
 
             // Set initial status
             $data['status'] = 'pending';
@@ -105,17 +111,23 @@ class MemberController extends Controller
         $data = $request->validated();
 
         // Handle profile photo update
-        if ($request->hasFile('photo_path')) {
-            // Delete old photo if exists
-            if ($member->photo_path) {
-                Storage::delete('public/' . $member->photo_path);
+        $photoField = $request->hasFile('profile_photo')
+            ? 'profile_photo'
+            : ($request->hasFile('photo_path') ? 'photo_path' : null);
+
+        if ($photoField) {
+            $existingPhoto = $member->profile_photo ?? $member->photo_path;
+            if ($existingPhoto) {
+                Storage::delete('public/member-photos/' . basename($existingPhoto));
             }
 
-            $photo = $request->file('photo_path');
+            $photo = $request->file($photoField);
             $photoName = time() . '_' . $photo->getClientOriginalName();
             $photo->storeAs('public/member-photos', $photoName);
-            $data['photo_path'] = 'member-photos/' . $photoName;
+            $data['profile_photo'] = $photoName;
         }
+
+        unset($data['photo_path']);
 
         $member->update($data);
 
@@ -129,8 +141,9 @@ class MemberController extends Controller
     public function destroy(Member $member)
     {
         // Delete profile photo if exists
-        if ($member->photo_path) {
-            Storage::delete('public/' . $member->photo_path);
+        $existingPhoto = $member->profile_photo ?? $member->photo_path;
+        if ($existingPhoto) {
+            Storage::delete('public/member-photos/' . basename($existingPhoto));
         }
 
         $member->delete();

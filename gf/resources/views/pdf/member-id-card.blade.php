@@ -11,7 +11,7 @@
             margin: 0;
             padding: 10px;
             font-family: 'DejaVu Sans', sans-serif;
-            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: white;
         }
         .card {
@@ -26,7 +26,8 @@
         .logo h1 {
             margin: 0;
             font-size: 16px;
-            color: #fbbf24;
+            color: #ffffff;
+            font-weight: bold;
         }
         .logo p {
             margin: 0;
@@ -34,8 +35,8 @@
             color: #d1fae5;
         }
         .member-id {
-            background: #fbbf24;
-            color: #065f46;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #78350f;
             text-align: center;
             padding: 5px;
             margin: 10px 0;
@@ -48,7 +49,7 @@
             font-size: 10px;
         }
         .info strong {
-            color: #fbbf24;
+            color: #fde68a;
         }
         .footer {
             position: absolute;

@@ -13,34 +13,41 @@
             text-align: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 3px solid #10b981;
+            border-bottom: 4px solid #10b981;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            padding: 30px 20px 20px 20px;
+            border-radius: 8px;
         }
         .header h1 {
             color: #059669;
             margin: 0;
             font-size: 28px;
+            font-weight: bold;
         }
         .header p {
             color: #6b7280;
             margin: 5px 0;
         }
         .member-id-box {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            color: white;
-            padding: 20px;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 3px solid #f59e0b;
+            color: #78350f;
+            padding: 25px;
             text-align: center;
-            border-radius: 8px;
-            margin: 20px 0;
+            border-radius: 12px;
+            margin: 25px 0;
         }
         .member-id-box h2 {
             margin: 0 0 10px 0;
             font-size: 14px;
-            opacity: 0.9;
+            color: #92400e;
+            font-weight: bold;
         }
         .member-id {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            color: #b45309;
         }
         .info-section {
             background: #f3f4f6;
@@ -52,6 +59,7 @@
             color: #059669;
             margin-top: 0;
             font-size: 18px;
+            font-weight: bold;
         }
         .info-row {
             display: flex;
@@ -67,14 +75,16 @@
             width: 60%;
         }
         .next-steps {
-            background: #ecfdf5;
-            border-left: 4px solid #10b981;
-            padding: 15px;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-left: 5px solid #3b82f6;
+            padding: 20px;
             margin: 20px 0;
+            border-radius: 8px;
         }
         .next-steps h3 {
-            color: #059669;
+            color: #1e40af;
             margin-top: 0;
+            font-weight: bold;
         }
         .next-steps ol {
             margin: 10px 0;
@@ -135,20 +145,20 @@
         </div>
     </div>
 
-    @if($member->isMember())
+    @if($member->member_type === 'member')
     <div class="next-steps">
         <h3>📋 Next Steps</h3>
         <ol>
             <li>Check your email for WhatsApp group invite links</li>
-            <li>Join the following groups:
+            <li>Join our two WhatsApp groups:
                 <ul>
-                    <li>God's Family Main Group</li>
-                    <li>God's Family Choir Group</li>
-                    <li>Active Choristers Group</li>
+                    <li>Main Group - for all members and supporters</li>
+                    <li>Active Members Group - for registered choir members</li>
                 </ul>
             </li>
             <li>Wait for confirmation from our team (within 48 hours)</li>
-            <li>Attend rehearsals (schedule shared in WhatsApp groups)</li>
+            <li>Attend rehearsals every Monday and Thursday, 5:30-8:00 PM</li>
+            <li>Location: ASA UR Nyarugenge SDA Church</li>
         </ol>
     </div>
     @else
@@ -156,9 +166,10 @@
         <h3>📋 Next Steps</h3>
         <ol>
             <li>Check your email for WhatsApp group invite link</li>
-            <li>Join God's Family Main Group</li>
+            <li>Join God's Family Main Group to stay connected</li>
             <li>Receive updates about events and programs</li>
             <li>Support our ministry through prayer and contribution</li>
+            <li>Attend our concerts and special events</li>
         </ol>
     </div>
     @endif

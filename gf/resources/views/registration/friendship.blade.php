@@ -19,8 +19,48 @@
         </div>
 
         <!-- Registration Form -->
-        <form action="{{ route('registration.friendship.store') }}" method="POST" class="space-y-8">
+        <form action="{{ route('registration.friendship.store') }}" method="POST" class="space-y-8" id="friendship-form">
             @csrf
+
+            <!-- Session timeout warning -->
+            <div id="session-warning" class="hidden bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-triangle text-yellow-600 mr-3"></i>
+                    <div>
+                        <p class="text-yellow-800 font-medium">Session Warning</p>
+                        <p class="text-yellow-700 text-sm">Your session will expire soon. Please complete the form quickly or refresh the page.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Messages -->
+            @if ($errors->any())
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                    <div class="flex items-start">
+                        <i class="fas fa-exclamation-circle text-red-600 mr-3 mt-1"></i>
+                        <div>
+                            <p class="text-red-800 font-medium mb-2">Please correct the following errors:</p>
+                            <ul class="text-red-700 text-sm space-y-1">
+                                @foreach ($errors->all() as $error)
+                                    <li>• {{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-circle text-red-600 mr-3"></i>
+                        <div>
+                            <p class="text-red-800 font-medium">Error</p>
+                            <p class="text-red-700 text-sm">{{ session('error') }}</p>
+                        </div>
+                    </div>
+                </div>
+            @endif
 
             <!-- Section 1: Personal Information -->
             <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
@@ -261,4 +301,103 @@
 <x-static.footer />
 
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('friendship-form');
+    const sessionWarning = document.getElementById('session-warning');
+    let sessionTimeout = null;
+    let warningShown = false;
+
+    // Session timeout warning (show warning 5 minutes before session expires)
+    // Laravel default session lifetime is 120 minutes, so warn at 115 minutes
+    const sessionLifetime = 120; // minutes
+    const warningTime = 5; // minutes before expiry
+    const warningDelay = (sessionLifetime - warningTime) * 60 * 1000; // convert to milliseconds
+
+    // Show session warning
+    sessionTimeout = setTimeout(function() {
+        if (!warningShown) {
+            sessionWarning.classList.remove('hidden');
+            warningShown = true;
+
+            // Auto-refresh the page after 2 minutes of warning
+            setTimeout(function() {
+                if (confirm('Your session is about to expire. Would you like to refresh the page to continue?')) {
+                    window.location.reload();
+                }
+            }, 2 * 60 * 1000);
+        }
+    }, warningDelay);
+
+    // Form submission handling
+    form.addEventListener('submit', function(e) {
+        // Clear the session timeout warning
+        if (sessionTimeout) {
+            clearTimeout(sessionTimeout);
+        }
+
+        // Show loading state
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalText = submitButton.innerHTML;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+        submitButton.disabled = true;
+
+        // Check if CSRF token exists
+        const csrfToken = form.querySelector('input[name="_token"]');
+        if (!csrfToken || !csrfToken.value) {
+            e.preventDefault();
+            alert('Session expired. Please refresh the page and try again.');
+            window.location.reload();
+            return;
+        }
+    });
+
+    // Auto-save form data to localStorage to prevent data loss
+    const formInputs = form.querySelectorAll('input, textarea, select');
+    formInputs.forEach(function(input) {
+        // Load saved data
+        const savedValue = localStorage.getItem('friendship_' + input.name);
+        if (savedValue && !input.value) {
+            input.value = savedValue;
+        }
+
+        // Save data on change
+        input.addEventListener('input', function() {
+            localStorage.setItem('friendship_' + input.name, input.value);
+        });
+    });
+
+    // Clear saved data on successful submission
+    form.addEventListener('submit', function() {
+        formInputs.forEach(function(input) {
+            localStorage.removeItem('friendship_' + input.name);
+        });
+    });
+
+    // Handle page visibility change (user switches tabs)
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            // Page is hidden, extend session warning
+            if (sessionTimeout) {
+                clearTimeout(sessionTimeout);
+            }
+        } else {
+            // Page is visible again, reset warning timer
+            if (warningShown) {
+                sessionWarning.classList.add('hidden');
+                warningShown = false;
+            }
+            sessionTimeout = setTimeout(function() {
+                if (!warningShown) {
+                    sessionWarning.classList.remove('hidden');
+                    warningShown = true;
+                }
+            }, warningDelay);
+        }
+    });
+});
+</script>
+@endpush
 

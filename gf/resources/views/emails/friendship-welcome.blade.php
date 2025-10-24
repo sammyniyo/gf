@@ -122,8 +122,13 @@
             <p style="text-align: center; color: #6b7280; margin-bottom: 15px;">Stay connected and never miss an update!</p>
 
             <a href="{{ $mainGroupLink }}" class="group-link">
-                📱 Join God's Family Main Group
+                💬 Join WhatsApp Group
             </a>
+
+            <p style="text-align: center; color: #6b7280; font-size: 13px; margin-top: 12px;">Or click this link:</p>
+            <p style="text-align: center; word-break: break-all; font-size: 12px; margin: 8px 0;">
+                <a href="{{ $mainGroupLink }}" style="color: #059669;">{{ $mainGroupLink }}</a>
+            </p>
         </div>
 
         <div class="info-section">
@@ -160,10 +165,11 @@
 
     <div class="footer">
         <p><strong>God's Family Choir</strong></p>
-        <p>ASA UR Nyarugenge | Kigali, Rwanda</p>
-        <p>📧 Email: info@godsfamilychoir.org | 📱 Phone: +250 XXX XXX XXX</p>
+        <p>ASA UR Nyarugenge SDA Church | Kigali, Rwanda</p>
+        <p>📧 Email: asa.godsfamilychoir2017@gmail.com</p>
+        <p>📱 Phone: +250 783 871 782</p>
         <p style="margin-top: 15px; font-size: 12px;">
-            This is an automated message. Please do not reply to this email.
+            This is an automated message. For inquiries, please contact us using the details above.
         </p>
     </div>
 </body>

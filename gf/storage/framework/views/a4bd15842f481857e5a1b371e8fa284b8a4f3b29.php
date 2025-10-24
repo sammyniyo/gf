@@ -107,7 +107,7 @@ unset($__errorArgs, $__bag); ?>
                         <label class="block text-sm font-semibold text-gray-700 mb-2">
                             Date of Birth <span class="text-red-500">*</span>
                         </label>
-                        <input type="date" name="birthdate" value="<?php echo e(old('birthdate')); ?>" required
+                        <input type="date" id="birthdate" name="birthdate" value="<?php echo e(old('birthdate')); ?>" required
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
                         <?php $__errorArgs = ['birthdate'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -119,6 +119,13 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        <!-- Funny Birthday Message -->
+                        <div id="birthday-message" class="hidden mt-3 p-4 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-lg animate-bounce-once">
+                            <p class="text-sm font-medium text-purple-800 flex items-center gap-2">
+                                <span class="text-2xl">🎉</span>
+                                <span id="birthday-text"></span>
+                            </p>
+                        </div>
                     </div>
 
                     <div>
@@ -240,9 +247,9 @@ unset($__errorArgs, $__bag); ?>
                             <option value="primary" <?php echo e(old('education_level') == 'primary' ? 'selected' : ''); ?>>Primary</option>
                             <option value="secondary" <?php echo e(old('education_level') == 'secondary' ? 'selected' : ''); ?>>Secondary</option>
                             <option value="diploma" <?php echo e(old('education_level') == 'diploma' ? 'selected' : ''); ?>>Diploma</option>
-                            <option value="bachelors" <?php echo e(old('education_level') == 'bachelors' ? 'selected' : ''); ?>>Bachelor's Degree</option>
-                            <option value="masters" <?php echo e(old('education_level') == 'masters' ? 'selected' : ''); ?>>Master's Degree</option>
-                            <option value="doctorate" <?php echo e(old('education_level') == 'doctorate' ? 'selected' : ''); ?>>Doctorate</option>
+                            <option value="bachelor" <?php echo e(old('education_level') == 'bachelor' ? 'selected' : ''); ?>>Bachelor's Degree</option>
+                            <option value="master" <?php echo e(old('education_level') == 'master' ? 'selected' : ''); ?>>Master's Degree</option>
+                            <option value="phd" <?php echo e(old('education_level') == 'phd' ? 'selected' : ''); ?>>Doctorate</option>
                             <option value="other" <?php echo e(old('education_level') == 'other' ? 'selected' : ''); ?>>Other</option>
                         </select>
                         <?php $__errorArgs = ['education_level'];
@@ -281,7 +288,7 @@ unset($__errorArgs, $__bag); ?>
                                 <option value="alto" <?php echo e(old('voice') == 'alto' ? 'selected' : ''); ?>>Alto</option>
                                 <option value="tenor" <?php echo e(old('voice') == 'tenor' ? 'selected' : ''); ?>>Tenor</option>
                                 <option value="bass" <?php echo e(old('voice') == 'bass' ? 'selected' : ''); ?>>Bass</option>
-                                <option value="other" <?php echo e(old('voice') == 'other' ? 'selected' : ''); ?>>Not Sure/Other</option>
+                                <option value="unsure" <?php echo e(old('voice') == 'unsure' ? 'selected' : ''); ?>>Not Sure/Other</option>
                             </select>
                             <?php $__errorArgs = ['voice'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -478,10 +485,10 @@ unset($__errorArgs, $__bag); ?>
 
                             <!-- Upload Area -->
                             <div class="flex-1">
-                                <input type="file" name="photo_path" id="photo_path" accept="image/*" onchange="previewPhoto(this)"
+                                <input type="file" name="profile_photo" id="profile_photo" accept="image/*" onchange="previewPhoto(this)"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
                                 <p class="text-sm text-gray-500 mt-1">Maximum file size: 2MB (JPG, PNG, GIF)</p>
-                                <?php $__errorArgs = ['photo_path'];
+                                <?php $__errorArgs = ['profile_photo'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -577,7 +584,144 @@ function previewPhoto(input) {
         previewImage.src = '';
     }
 }
+
+// Funny Birthday Messages
+document.addEventListener('DOMContentLoaded', function() {
+    const birthdateInput = document.getElementById('birthdate');
+    const birthdayMessage = document.getElementById('birthday-message');
+    const birthdayText = document.getElementById('birthday-text');
+
+    // Hilarious age-based messages
+    function getAgeBasedMessage(age) {
+        if (age < 13) {
+            const messages = [
+                "WAIT WHAT?! You're " + age + "?! 😱 Our microphones aren't ready for this level of cuteness! 🎤✨",
+                "OMG! Born in " + (new Date().getFullYear() - age) + "?! You probably don't even know what a cassette tape is! 📼 Welcome, future superstar! 🌟",
+                "STOP THE PRESS! We got a Gen Alpha here! 🚨 Your TikTok-trained voice is exactly what we need! 📱🎵"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        } else if (age >= 13 && age <= 17) {
+            const messages = [
+                "Teenager alert! 🚨 Finally someone who can explain TikTok to the rest of us! 😂 Also, please teach us the latest slang 'no cap fr fr' 🧢",
+                "Born in the 2000s?! You're basically a historical artifact now! 📜 JK, you're the perfect age for those high notes! 🎤",
+                "Teen energy detected! ⚡ Warning: May spontaneously burst into song at random times. Side effects include: being too cool for us 😎🎵"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        } else if (age >= 18 && age <= 25) {
+            const messages = [
+                "You're " + age + "! The golden age of 'I'm an adult but also not really' 😂 Perfect for those emotional worship songs! 🙏✨",
+                "Born in the late 90s/early 2000s? You survived Y2K, Harambe, and 2020. You can survive anything, including our director! 🦍😅",
+                "YAAAS! Gen Z energy! 💅 You probably have better WiFi than vocal range, but we'll work with it! 📶🎤 (JK you'll be amazing!)"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        } else if (age >= 26 && age <= 35) {
+            const messages = [
+                "Ah, the 'I'm not old but my back hurts' age! 😂 Welcome! Your millennial angst will add depth to our hymns! 🎵",
+                "You're " + age + "! Old enough to remember Vine but young enough to pretend you don't! 🤣 RIP Vine 2013-2017 💔",
+                "Prime age! Like fine wine 🍷... or like that leftover pizza that's surprisingly still good! 🍕 Either way, you're PERFECT! ⭐"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        } else if (age >= 36 && age <= 45) {
+            const messages = [
+                "You're in your " + Math.floor(age/10) + "0s! The age where you grunt when you sit down but can still hit those notes! 😂🎵",
+                "40-something wisdom incoming! 🧠 You remember when phones had cords AND can teach us how to sing! What can't you do?! 🎤",
+                "Perfect age! You've lived through enough to have stories, but not too old to need subtitles on everything! 😄📖"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        } else if (age >= 46 && age <= 55) {
+            const messages = [
+                "Aged like fine wine! 🍷 Or cheese? 🧀 Or both! Either way, you're GOURMET baby! Your voice has matured perfectly! 🎵✨",
+                "50s club! The age where you're cool enough to be anyone's parent but still young enough to party! 🎉 (After 8pm though? Bedtime! 😴)",
+                "You're " + age + "! You remember the good old days before smartphones ruined everything! Please share your wisdom... and teach us your ways! 🙏📱"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        } else if (age >= 56 && age <= 65) {
+            const messages = [
+                "LEGEND ALERT! 🚨 You've been around since the Beatles! Wait... or was it The Bee Gees? Either way, ICON status! 🎸✨",
+                "Retirement age but choir life chose YOU! 😂 Age is just a number, and yours is WINNING! 🏆 Your voice = TIMELESS! 🎵",
+                "60s are the new 40s! Facts! 💯 You bring the wisdom, we bring the WiFi password! Fair trade? 📱🙏"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        } else if (age >= 66 && age <= 75) {
+            const messages = [
+                "VINTAGE GOLD! ⭐ You're not old, you're CLASSIC! Like a vinyl record but BETTER because you can actually sing! 💿🎤",
+                "70s?! You've literally seen DECADES of music history! We're basically in the presence of royalty! 👑 *bows down* 🙇",
+                "Plot twist: You're " + age + " and probably still have more energy than us youngsters! 😂 Teach us your secrets! 🔋✨"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        } else if (age >= 76 && age <= 85) {
+            const messages = [
+                "WAIT. You're " + age + "?! 😱 You're literally a walking history book! Can we just follow you around and take notes?! 📖✨",
+                "80s?! That's not age, that's ACHIEVEMENT UNLOCKED! 🏆 Your voice has been blessed by TIME itself! Literally legendary! 👑🎵",
+                "OMG! Born in the " + (new Date().getFullYear() - age) + "s! You've survived EVERYTHING! You're basically indestructible! 💪 Welcome superhero! 🦸"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        } else {
+            const messages = [
+                "STOP EVERYTHING! 🛑 You're " + age + "?! You're not just a member, you're a NATIONAL TREASURE! 💎 We're not worthy! 🙇‍♂️🙇‍♀️",
+                "HISTORY PERSONIFIED! 📜 You've lived through almost a CENTURY! Your voice carries generations of blessings! 🙏 ICON! 👑",
+                "Plot twist of the century: You're " + age + " and probably still outlasting all of us! 😂 You're the BOSS now! 💪✨"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+    }
+
+    if (birthdateInput) {
+        birthdateInput.addEventListener('change', function() {
+            if (this.value) {
+                const birthDate = new Date(this.value);
+                const today = new Date();
+                const age = today.getFullYear() - birthDate.getFullYear();
+                const monthDiff = today.getMonth() - birthDate.getMonth();
+
+                // Adjust age if birthday hasn't occurred this year
+                const actualAge = (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate()))
+                    ? age - 1 : age;
+
+                // Get age-based funny message
+                const ageMessage = getAgeBasedMessage(actualAge);
+
+                // Special messages for birthdays today or soon
+                const month = birthDate.getMonth();
+                const day = birthDate.getDate();
+                const todayMonth = today.getMonth();
+                const todayDay = today.getDate();
+
+                let specialMessage = ageMessage;
+
+                if (month === todayMonth && day === todayDay) {
+                    specialMessage = "🎂 OMG! Today is your birthday! HAPPY BIRTHDAY! We're so blessed to have you join us on your special day! 🎉🎈🎊";
+                } else if (month === todayMonth && Math.abs(day - todayDay) <= 7) {
+                    const daysUntil = day - todayDay;
+                    if (daysUntil > 0) {
+                        specialMessage = `🎉 Your birthday is in ${daysUntil} day${daysUntil > 1 ? 's' : ''}! We'll be ready to celebrate with you! 🎂`;
+                    } else {
+                        specialMessage = `🎂 Your birthday was ${Math.abs(daysUntil)} day${Math.abs(daysUntil) > 1 ? 's' : ''} ago! Belated happy birthday! 🎉`;
+                    }
+                }
+
+                birthdayText.textContent = specialMessage;
+                birthdayMessage.classList.remove('hidden');
+
+                // Add animation
+                birthdayMessage.style.animation = 'none';
+                setTimeout(() => {
+                    birthdayMessage.style.animation = 'bounce 0.5s ease';
+                }, 10);
+            } else {
+                birthdayMessage.classList.add('hidden');
+            }
+        });
+    }
+});
 </script>
+
+<style>
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+</style>
 
 <!-- Footer -->
 <?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
@@ -597,6 +741,5 @@ function previewPhoto(input) {
 <?php endif; ?>
 
 <?php $__env->stopSection(); ?>
-
 
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\samsh\Documents\gf\gf\resources\views/registration/member.blade.php ENDPATH**/ ?>

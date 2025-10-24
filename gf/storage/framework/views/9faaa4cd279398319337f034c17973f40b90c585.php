@@ -1,8 +1,31 @@
 <section class="relative min-h-screen overflow-hidden bg-black">
-    <!-- Full-Screen Background Image -->
+    <!-- Slideshow Background Images with Morph Transitions -->
     <div class="absolute inset-0 z-0">
-        <img src="<?php echo e(asset('images/hero.jpg')); ?>" alt="God's Family Choir"
-             class="w-full h-full object-cover object-center animate-ken-burns" />
+        <!-- Image 1 -->
+        <div class="hero-slide active absolute inset-0">
+            <img src="<?php echo e(asset('images/gf.jpg')); ?>" alt="God's Family Choir - Worship"
+                 class="w-full h-full object-cover object-center" />
+        </div>
+        <!-- Image 2 -->
+        <div class="hero-slide absolute inset-0">
+            <img src="<?php echo e(asset('images/gf-21.jpg')); ?>" alt="God's Family Choir - Community"
+                 class="w-full h-full object-cover object-center" />
+        </div>
+        <!-- Image 3 -->
+        <div class="hero-slide absolute inset-0">
+            <img src="<?php echo e(asset('images/gf-22.jpg')); ?>" alt="God's Family Choir - Excellence"
+                 class="w-full h-full object-cover object-center" />
+        </div>
+        <!-- Image 4 -->
+        <div class="hero-slide absolute inset-0">
+            <img src="<?php echo e(asset('images/gf-23.jpg')); ?>" alt="God's Family Choir - Excellence"
+                 class="w-full h-full object-cover object-center" />
+        </div>
+        <!-- Image 5 -->
+        <div class="hero-slide absolute inset-0">
+            <img src="<?php echo e(asset('images/gf-24.jpg')); ?>" alt="God's Family Choir - Excellence"
+                 class="w-full h-full object-cover object-center" />
+        </div>
 
         <!-- Multi-Layer Overlays for Depth -->
         <div class="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70"></div>
@@ -61,9 +84,9 @@
                         <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
                         <div class="absolute inset-0 w-2 h-2 bg-emerald-300 rounded-full animate-ping"></div>
                     </div>
-                    <span>Serving God and Thy People</span>
+                    <span>Uniting Hearts Through Worship</span>
                     <span class="text-white/60">·</span>
-                    <span class="text-emerald-300">Since 1998</span>
+                    <span class="text-emerald-300">Est. 1998</span>
                 </div>
 
                 <!-- Stunning Typography -->
@@ -71,11 +94,11 @@
                     <h1 class="relative animate-fade-in-up animation-delay-200">
                         <div class="space-y-4">
                             <span class="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-white leading-none tracking-tight drop-shadow-2xl">
-                                Where Voices
+                                Sing to the
                             </span>
                             <span class="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black leading-none tracking-tight">
                                 <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-400 bg-clip-text text-transparent drop-shadow-2xl animate-gradient-text" style="background-size: 200% 200%;">
-                                    Meet Heaven
+                                    Glory of God
                                 </span>
                             </span>
                         </div>
@@ -90,7 +113,7 @@
 
                     <!-- Tagline -->
                     <p class="text-xl sm:text-2xl lg:text-3xl text-white/90 font-light leading-relaxed max-w-3xl mx-auto animate-fade-in-up animation-delay-400 drop-shadow-lg">
-                        God's Family Choir - Transforming hearts through <span class="text-emerald-300 font-semibold">spirit-filled harmonies</span> and worship excellence
+                        Experience divine connection through <span class="text-emerald-300 font-semibold">powerful worship</span>, authentic fellowship, and musical excellence
                     </p>
                 </div>
 
@@ -193,6 +216,15 @@
         </div>
     </div>
 
+    <!-- Slideshow Indicators -->
+    <div class="absolute bottom-32 left-1/2 transform -translate-x-1/2 z-20 flex gap-3">
+        <button class="slide-indicator active w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" data-slide="0"></button>
+        <button class="slide-indicator w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" data-slide="1"></button>
+        <button class="slide-indicator w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" data-slide="2"></button>
+        <button class="slide-indicator w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" data-slide="3"></button>
+        <button class="slide-indicator w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" data-slide="4"></button>
+    </div>
+
     <!-- Elegant Scroll Indicator -->
     <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
         <button onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})" class="flex flex-col items-center gap-3 group">
@@ -205,18 +237,49 @@
 </section>
 
 <style>
-    /* Ken Burns Zoom Effect */
-    @keyframes ken-burns {
+    /* Hero Slideshow with Morph Transitions */
+    .hero-slide {
+        opacity: 0;
+        transition: opacity 2s ease-in-out, transform 20s ease-in-out;
+        transform: scale(1);
+    }
+
+    .hero-slide.active {
+        opacity: 1;
+        animation: morphZoom 8s ease-in-out forwards;
+    }
+
+    .hero-slide img {
+        filter: blur(0px);
+        transition: filter 2s ease-in-out;
+    }
+
+    @keyframes morphZoom {
         0% {
-            transform: scale(1);
+            transform: scale(1) rotate(0deg);
+        }
+        50% {
+            transform: scale(1.15) rotate(0.5deg);
         }
         100% {
-            transform: scale(1.08);
+            transform: scale(1.1) rotate(0deg);
         }
     }
 
-    .animate-ken-burns {
-        animation: ken-burns 20s ease-in-out infinite alternate;
+    /* Slideshow Indicators */
+    .slide-indicator {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .slide-indicator.active {
+        background: linear-gradient(135deg, #10b981, #14b8a6) !important;
+        transform: scale(1.3);
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+    }
+
+    .slide-indicator:hover {
+        transform: scale(1.2);
     }
 
     /* Smooth Floating Animations */
@@ -325,6 +388,54 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Hero Slideshow with Smooth Transitions
+    const slides = document.querySelectorAll('.hero-slide');
+    const indicators = document.querySelectorAll('.slide-indicator');
+    let currentSlide = 0;
+    const slideInterval = 6000; // 6 seconds per slide
+    let autoPlayInterval;
+
+    function showSlide(index) {
+        // Update slides
+        slides.forEach((slide, i) => {
+            if (i === index) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+
+        // Update indicators
+        indicators.forEach((indicator, i) => {
+            if (i === index) {
+                indicator.classList.add('active');
+            } else {
+                indicator.classList.remove('active');
+            }
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    function goToSlide(index) {
+        currentSlide = index;
+        showSlide(currentSlide);
+        // Reset autoplay
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = setInterval(nextSlide, slideInterval);
+    }
+
+    // Indicator click events
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => goToSlide(index));
+    });
+
+    // Start slideshow
+    autoPlayInterval = setInterval(nextSlide, slideInterval);
+
     // Counter Animation
     const counters = document.querySelectorAll('.counter');
     const observerOptions = {
@@ -359,4 +470,5 @@ document.addEventListener('DOMContentLoaded', function() {
     counters.forEach(counter => counterObserver.observe(counter));
 });
 </script>
+
 <?php /**PATH C:\Users\samsh\Documents\gf\gf\resources\views/components/landing/hero.blade.php ENDPATH**/ ?>

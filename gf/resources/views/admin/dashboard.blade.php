@@ -105,6 +105,113 @@
             </div>
     @endif
 
+    <!-- Birthday Widget - Always show if there are any birthdays this month -->
+    <div class="bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 rounded-3xl shadow-xl border-2 border-pink-200 p-8">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 shadow-lg">
+                        <span class="text-3xl">🎂</span>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Birthday Celebrations</h2>
+                        <p class="text-sm text-gray-600">Members to celebrate</p>
+                    </div>
+                </div>
+                <form action="{{ route('admin.birthdays.send') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold rounded-full hover:shadow-lg transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        Send Today's Emails
+                    </button>
+                </form>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Today's Birthdays -->
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-bold text-pink-600 mb-4 flex items-center gap-2">
+                        <span class="text-2xl">🎉</span>
+                        Today's Birthdays ({{ $birthdays_today->count() }})
+                    </h3>
+                    @if($birthdays_today->count() > 0)
+                        <div class="space-y-3">
+                            @foreach($birthdays_today as $member)
+                                @php
+                                    $birthdate = \Carbon\Carbon::parse($member->birthdate);
+                                    $age = $birthdate->age;
+                                @endphp
+                                <div class="flex items-center justify-between p-3 bg-gradient-to-r from-pink-50 to-purple-50 rounded-lg hover:shadow-md transition-all">
+                                    <div class="flex-1">
+                                        <p class="font-semibold text-gray-900">{{ $member->first_name }} {{ $member->last_name }}</p>
+                                        <p class="text-sm text-gray-600">{{ $member->email }}</p>
+                                        <p class="text-xs text-purple-600 mt-1">Turning {{ $age }} years old 🎂</p>
+                                    </div>
+                                    <a href="mailto:{{ $member->email }}" class="inline-flex items-center gap-1 px-3 py-1 bg-pink-500 text-white text-xs font-semibold rounded-full hover:bg-pink-600 transition-all">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        </svg>
+                                        Email
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="text-gray-500 text-center py-8">No birthdays today</p>
+                    @endif
+                </div>
+
+                <!-- This Week's Birthdays -->
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-bold text-indigo-600 mb-4 flex items-center gap-2">
+                        <span class="text-2xl">📅</span>
+                        This Week ({{ $birthdays_this_week->count() }})
+                    </h3>
+                    @if($birthdays_this_week->count() > 0)
+                        <div class="space-y-3 max-h-80 overflow-y-auto">
+                            @foreach($birthdays_this_week as $member)
+                                @php
+                                    $birthdate = \Carbon\Carbon::parse($member->birthdate);
+                                    $today = \Carbon\Carbon::today();
+                                    $birthdayThisYear = \Carbon\Carbon::create($today->year, $birthdate->month, $birthdate->day);
+                                    $daysUntil = $today->diffInDays($birthdayThisYear, false);
+                                    $age = $birthdate->age;
+                                @endphp
+                                <div class="flex items-center justify-between p-3 bg-indigo-50 rounded-lg hover:shadow-md transition-all">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2">
+                                            <p class="font-semibold text-gray-900">{{ $member->first_name }} {{ $member->last_name }}</p>
+                                            @if($daysUntil == 0)
+                                                <span class="px-2 py-0.5 bg-pink-500 text-white text-xs font-bold rounded-full animate-pulse">TODAY!</span>
+                                            @else
+                                                <span class="px-2 py-0.5 bg-indigo-500 text-white text-xs font-bold rounded-full">{{ abs($daysUntil) }}d</span>
+                                            @endif
+                                        </div>
+                                        <p class="text-xs text-gray-600">{{ $birthdayThisYear->format('M d') }} • Age {{ $age }}</p>
+                                        <p class="text-xs text-gray-500 mt-0.5">{{ ucfirst($member->member_type ?? 'N/A') }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="text-gray-500 text-center py-8">No upcoming birthdays this week</p>
+                    @endif
+                </div>
+            </div>
+
+            <!-- This Month Summary -->
+            @if($birthdays_this_month->count() > 0)
+                <div class="mt-6 p-4 bg-white rounded-xl border-2 border-dashed border-purple-200">
+                    <p class="text-center text-sm text-gray-700">
+                        <span class="font-bold text-purple-600">{{ $birthdays_this_month->count() }} birthdays</span> this month
+                        <span class="text-gray-500">• Make them feel special! 🎁</span>
+                    </p>
+                </div>
+            @endif
+        </div>
+    </div>
+
     <div class="grid gap-6 lg:grid-cols-12">
         <section class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-500 via-purple-500 to-sky-500 text-white shadow-xl lg:col-span-8">
             <div class="absolute inset-0 opacity-30">

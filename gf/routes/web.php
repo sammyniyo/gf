@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\RegistrationController;
+use Illuminate\Support\Facades\DB;
 
 //Events
 
@@ -59,6 +60,9 @@ Route::get('/story', function () {
 
 // Admin Story Images Management
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Birthday emails
+    Route::post('/birthdays/send', [App\Http\Controllers\Admin\DashboardController::class, 'sendBirthdayEmails'])->name('birthdays.send');
+
     Route::get('/story-images', [App\Http\Controllers\StoryImageController::class, 'index'])->name('story-images.index');
     Route::post('/story-images', [App\Http\Controllers\StoryImageController::class, 'store'])->name('story-images.store');
     Route::delete('/story-images/{filename}', [App\Http\Controllers\StoryImageController::class, 'destroy'])->name('story-images.destroy');
@@ -205,6 +209,28 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('system/health', function () {
+        try {
+            DB::connection()->getPdo();
+            DB::select('select 1');
+
+            return response()->json([
+                'ok' => true,
+                'database' => true,
+                'checked_at' => now()->toIso8601String(),
+            ]);
+        } catch (\Throwable $th) {
+            report($th);
+
+            return response()->json([
+                'ok' => false,
+                'database' => false,
+                'message' => config('app.debug') ? $th->getMessage() : 'Database connection failed.',
+                'checked_at' => now()->toIso8601String(),
+            ], 503);
+        }
+    })->name('system.health');
 
     // Notifications
     Route::get('notifications', [App\Http\Controllers\Admin\NotificationController::class, 'index'])->name('notifications.index');

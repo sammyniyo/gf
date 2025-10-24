@@ -11,16 +11,16 @@
 <section class="relative min-h-[70vh] overflow-hidden bg-white">
     <!-- Two-Tone Background -->
     <div class="absolute inset-0">
-        <!-- Left Side - Dark -->
-        <div class="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"></div>
+        <!-- Left Side - Light -->
+        <div class="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50"></div>
         <!-- Right Side - Image -->
         <div class="absolute inset-y-0 right-0 w-1/2">
             <img src="{{ asset('images/gf.jpg') }}" alt="Events" class="w-full h-full object-cover" />
-            <div class="absolute inset-0 bg-gradient-to-l from-transparent via-emerald-600/20 to-gray-900"></div>
+            <div class="absolute inset-0 bg-gradient-to-l from-white/50 via-blue-100/30 to-blue-50"></div>
         </div>
 
         <!-- Diagonal Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-amber-100/20 via-transparent to-transparent"></div>
     </div>
 
     <!-- Content Container -->
@@ -28,22 +28,22 @@
         <div class="max-w-7xl mx-auto px-6 py-16 w-full">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <!-- Left Content -->
-                <div class="text-white space-y-6">
+                <div class="text-gray-900 space-y-6">
                     <!-- Compact Badge -->
-                    <div class="inline-flex items-center gap-2 bg-emerald-500/20 backdrop-blur-sm border border-emerald-400/30 rounded-lg px-4 py-2">
-                        <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                        <span class="text-emerald-300 text-xs font-bold uppercase tracking-wider">Events & Concerts</span>
+                    <div class="inline-flex items-center gap-2 bg-blue-100 backdrop-blur-sm border border-blue-300 rounded-lg px-4 py-2">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                        <span class="text-blue-700 text-xs font-bold uppercase tracking-wider">Events & Concerts</span>
                     </div>
 
                     <!-- Bold Title -->
                     <div>
                         <h1 class="text-5xl md:text-6xl lg:text-7xl font-black leading-tight mb-4">
-                            <span class="block text-white">Worship</span>
-                            <span class="block bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text text-transparent">Events</span>
+                            <span class="block text-gray-900">Worship</span>
+                            <span class="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Events</span>
                         </h1>
                         <div class="flex items-center gap-3">
-                            <div class="h-1 w-16 bg-gradient-to-r from-emerald-400 to-transparent rounded-full"></div>
-                            <p class="text-base text-gray-300">
+                            <div class="h-1 w-16 bg-gradient-to-r from-blue-500 to-transparent rounded-full"></div>
+                            <p class="text-base text-gray-600">
                                 Discover upcoming worship gatherings
                             </p>
                         </div>
@@ -52,25 +52,25 @@
                     <!-- Compact Stats Row -->
                     <div class="flex items-center gap-6 pt-4">
                         <div class="flex items-baseline gap-2">
-                            <span class="text-4xl font-black text-emerald-400">{{ $events->total() }}</span>
-                            <span class="text-sm text-gray-400 font-medium">Events</span>
+                            <span class="text-4xl font-black text-blue-600">{{ $events->total() }}</span>
+                            <span class="text-sm text-gray-600 font-medium">Events</span>
                         </div>
-                        <div class="w-px h-10 bg-gray-700"></div>
+                        <div class="w-px h-10 bg-gray-300"></div>
                         <div class="flex items-baseline gap-2">
-                            <span class="text-4xl font-black text-amber-400">{{ $events->where('start_at', '>=', now())->count() }}</span>
-                            <span class="text-sm text-gray-400 font-medium">Upcoming</span>
+                            <span class="text-4xl font-black text-purple-600">{{ $events->where('start_at', '>=', now())->count() }}</span>
+                            <span class="text-sm text-gray-600 font-medium">Upcoming</span>
                         </div>
-                        <div class="w-px h-10 bg-gray-700"></div>
+                        <div class="w-px h-10 bg-gray-300"></div>
                         <div class="flex items-baseline gap-2">
-                            <span class="text-4xl font-black text-emerald-400">{{ $events->sum('capacity') ?? '∞' }}</span>
-                            <span class="text-sm text-gray-400 font-medium">Seats</span>
+                            <span class="text-4xl font-black text-blue-600">{{ $events->sum('capacity') ?? '∞' }}</span>
+                            <span class="text-sm text-gray-600 font-medium">Seats</span>
                         </div>
                     </div>
 
                     <!-- CTA Button -->
                     <div class="pt-2">
                         <button onclick="document.querySelector('#filters').scrollIntoView({behavior: 'smooth'})"
-                                class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold rounded-xl hover:shadow-2xl hover:shadow-emerald-500/50 hover:-translate-y-1 transition-all">
+                                class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-xl hover:shadow-2xl hover:shadow-blue-500/50 hover:-translate-y-1 transition-all">
                             <span>Browse All Events</span>
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
@@ -172,7 +172,7 @@
                             <input type="radio" name="status" value="{{ $key }}" class="peer sr-only" {{ $current === $key ? 'checked' : '' }} onchange="this.form.submit()">
                             <div class="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300
                                 {{ $current === $key
-                                    ? 'bg-gradient-to-r from-emerald-600 to-emerald-700 text-white shadow-lg shadow-emerald-500/30 scale-105'
+                                    ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/30 scale-105'
                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:scale-105' }}">
                                 <span>{{ $data['icon'] }}</span>
                                 <span>{{ $data['label'] }}</span>
@@ -186,7 +186,7 @@
                 <!-- Enhanced Search -->
                 <div class="relative flex-1 min-w-[280px]">
                     <input type="text" name="q" value="{{ request('q') }}" placeholder="Search events by name, type, location..."
-                        class="w-full pl-11 pr-4 py-2.5 rounded-xl border-2 border-gray-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 text-sm transition-all">
+                        class="w-full pl-11 pr-4 py-2.5 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-sm transition-all">
                     <svg class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>

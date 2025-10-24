@@ -11,6 +11,8 @@ use App\Models\Contribution;
 use App\Models\ContributionTarget;
 use App\Models\Song;
 use App\Models\PageView;
+use App\Mail\BirthdayWishEmail;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -70,6 +72,32 @@ class DashboardController extends Controller
 
         $unreadContactsCount = Contact::where('is_read', false)->count();
 
+        // Birthday data
+        $today = Carbon::today();
+        $birthdaysToday = Member::whereNotNull('birthdate')
+            ->whereRaw('MONTH(birthdate) = ?', [$today->month])
+            ->whereRaw('DAY(birthdate) = ?', [$today->day])
+            ->get();
+
+        $birthdaysThisWeek = Member::whereNotNull('birthdate')
+            ->get()
+            ->filter(function ($member) use ($today) {
+                $birthdate = Carbon::parse($member->birthdate);
+                $birthdayThisYear = Carbon::create($today->year, $birthdate->month, $birthdate->day);
+                return $birthdayThisYear->between($today, $today->copy()->addDays(7));
+            })
+            ->sortBy(function ($member) use ($today) {
+                $birthdate = Carbon::parse($member->birthdate);
+                $birthdayThisYear = Carbon::create($today->year, $birthdate->month, $birthdate->day);
+                return $birthdayThisYear->format('md');
+            })
+            ->values();
+
+        $birthdaysThisMonth = Member::whereNotNull('birthdate')
+            ->whereRaw('MONTH(birthdate) = ?', [$today->month])
+            ->orderByRaw('DAY(birthdate)')
+            ->get();
+
         $trendData = EventRegistration::selectRaw('DATE(created_at) as day, COUNT(*) as total')
             ->where('created_at', '>=', $trendWindowStart)
             ->groupBy('day')
@@ -120,6 +148,46 @@ class DashboardController extends Controller
             'month_views' => $monthViews,
             'popular_pages' => $popularPages,
             'page_view_trend' => $pageViewTrend,
+            // Birthday data
+            'birthdays_today' => $birthdaysToday,
+            'birthdays_this_week' => $birthdaysThisWeek,
+            'birthdays_this_month' => $birthdaysThisMonth,
         ]);
+    }
+
+    /**
+     * Send birthday emails to members with birthdays today
+     */
+    public function sendBirthdayEmails()
+    {
+        $today = Carbon::today();
+        $birthdaysToday = Member::whereNotNull('birthdate')
+            ->whereRaw('MONTH(birthdate) = ?', [$today->month])
+            ->whereRaw('DAY(birthdate) = ?', [$today->day])
+            ->get();
+
+        $successCount = 0;
+        $failCount = 0;
+
+        foreach ($birthdaysToday as $member) {
+            try {
+                Mail::to($member->email)->send(new BirthdayWishEmail($member));
+                $successCount++;
+            } catch (\Exception $e) {
+                \Log::error("Failed to send birthday email to {$member->email}: " . $e->getMessage());
+                $failCount++;
+            }
+        }
+
+        if ($successCount > 0) {
+            return redirect()->route('admin.dashboard')
+                ->with('success', "🎉 Birthday emails sent successfully to {$successCount} member(s)!");
+        } elseif ($failCount > 0) {
+            return redirect()->route('admin.dashboard')
+                ->with('error', "Failed to send {$failCount} birthday email(s). Check logs for details.");
+        } else {
+            return redirect()->route('admin.dashboard')
+                ->with('info', 'No birthdays today to send emails to.');
+        }
     }
 }

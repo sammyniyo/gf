@@ -148,6 +148,11 @@
                             @error('birthdate')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
+                            <!-- Age Display with Humor -->
+                            <div id="age-display" class="hidden mt-2 p-3 rounded-lg text-white text-sm font-semibold flex items-center gap-2 animate-slideIn">
+                                <span id="age-emoji" class="text-2xl"></span>
+                                <span id="age-text"></span>
+                            </div>
                         </div>
 
                         <div class="space-y-2">
@@ -491,6 +496,8 @@
 
 // Age calculation with sarcastic humor
 function calculateAge(birthDate) {
+    if (!birthDate) return;
+
     const today = new Date();
     const birth = new Date(birthDate);
     let age = today.getFullYear() - birth.getFullYear();
@@ -503,6 +510,11 @@ function calculateAge(birthDate) {
     const ageDisplay = document.getElementById('age-display');
     const ageEmoji = document.getElementById('age-emoji');
     const ageText = document.getElementById('age-text');
+
+    if (!ageDisplay || !ageEmoji || !ageText) {
+        console.error('Age display elements not found');
+        return;
+    }
 
     let emoji, message, bgClass;
 
@@ -559,6 +571,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('next-btn').addEventListener('click', nextStep);
     document.getElementById('prev-btn').addEventListener('click', prevStep);
+
+    // Add birthdate change listener
+    const birthdateInput = document.getElementById('birthdate');
+    if (birthdateInput) {
+        birthdateInput.addEventListener('change', function() {
+            calculateAge(this.value);
+        });
+        birthdateInput.addEventListener('input', function() {
+            calculateAge(this.value);
+        });
+    }
 
     // Add keyboard navigation support
     document.addEventListener('keydown', function(e) {

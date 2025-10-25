@@ -94,6 +94,9 @@
         <!-- Floating Action Buttons -->
         <x-landing.floating-action-button />
     </div>
+
+    <!-- Cookie Consent Banner -->
+    <x-cookie-consent />
 </body>
 <script src="//unpkg.com/alpinejs" defer></script>
 @stack('scripts')

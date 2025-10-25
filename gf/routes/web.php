@@ -18,6 +18,7 @@ use App\Http\Controllers\DevotionController;
 use App\Http\Controllers\StoryController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\CommitteeController;
+use App\Http\Controllers\ShopController;
 
 
 
@@ -198,6 +199,28 @@ Route::get('/register/thank-you', function () {
 
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
+// Shop Routes
+Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+Route::get('/shop/search', [ShopController::class, 'search'])->name('shop.search');
+Route::get('/shop/albums/{album}', [ShopController::class, 'show'])->name('shop.show');
+Route::get('/shop/albums/{album}/purchase', [ShopController::class, 'purchase'])->name('shop.purchase');
+Route::post('/shop/albums/{album}/purchase', [ShopController::class, 'processPurchase'])->name('shop.process-purchase');
+Route::get('/shop/download/{downloadCode}', [ShopController::class, 'download'])->name('shop.download');
+Route::post('/shop/download/{downloadCode}', [ShopController::class, 'processDownload'])->name('shop.process-download');
+Route::post('/shop/verify-purchase', [ShopController::class, 'verifyPurchase'])->name('shop.verify-purchase');
+
+// Payment gateway routes (to be implemented with actual payment integration)
+Route::get('/shop/payment/stripe/{purchase}', function() {
+    return view('shop.payment.stripe');
+})->name('shop.payment.stripe');
+
+Route::get('/shop/payment/paypal/{purchase}', function() {
+    return view('shop.payment.paypal');
+})->name('shop.payment.paypal');
+
+Route::get('/shop/payment/mobile/{purchase}', function() {
+    return view('shop.payment.mobile');
+})->name('shop.payment.mobile');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -290,6 +313,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Meetings Management
     Route::resource('meetings', App\Http\Controllers\Admin\MeetingController::class);
     Route::post('meetings/{meeting}/send-invitations', [App\Http\Controllers\Admin\MeetingController::class, 'sendInvitations'])->name('meetings.send-invitations');
+
+    // Albums Management (Shop)
+    Route::resource('albums', App\Http\Controllers\Admin\AlbumController::class);
+    Route::post('albums/{album}/toggle-featured', [App\Http\Controllers\Admin\AlbumController::class, 'toggleFeatured'])->name('albums.toggle-featured');
+    Route::post('albums/{album}/toggle-active', [App\Http\Controllers\Admin\AlbumController::class, 'toggleActive'])->name('albums.toggle-active');
 });
 
 Route::fallback(function () {

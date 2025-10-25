@@ -24,11 +24,12 @@
         }
     }
 
-    /* Fade in on scroll animations */
+    /* Fade in on scroll animations - Optimized for speed */
     .fade-in-section {
         opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 700ms cubic-bezier(.2,.65,.25,1), transform 700ms cubic-bezier(.2,.65,.25,1);
+        transform: translateY(20px);
+        transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1), transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
     }
 
     .fade-in-section.is-visible {
@@ -38,8 +39,9 @@
 
     .fade-in-left {
         opacity: 0;
-        transform: translateX(-50px);
-        transition: opacity 700ms cubic-bezier(.2,.65,.25,1), transform 700ms cubic-bezier(.2,.65,.25,1);
+        transform: translateX(-30px);
+        transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1), transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
     }
 
     .fade-in-left.is-visible {
@@ -49,8 +51,9 @@
 
     .fade-in-right {
         opacity: 0;
-        transform: translateX(50px);
-        transition: opacity 700ms cubic-bezier(.2,.65,.25,1), transform 700ms cubic-bezier(.2,.65,.25,1);
+        transform: translateX(30px);
+        transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1), transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
     }
 
     .fade-in-right.is-visible {
@@ -60,8 +63,9 @@
 
     .scale-in {
         opacity: 0;
-        transform: scale(0.9);
-        transition: opacity 500ms cubic-bezier(.2,.65,.25,1), transform 500ms cubic-bezier(.2,.65,.25,1);
+        transform: scale(0.95);
+        transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1), transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
     }
 
     .scale-in.is-visible {
@@ -133,12 +137,12 @@
         z-index: -1;
     }
 
-    /* Stagger animation delays */
-    .stagger-1 { transition-delay: 0.1s; }
-    .stagger-2 { transition-delay: 0.2s; }
-    .stagger-3 { transition-delay: 0.3s; }
-    .stagger-4 { transition-delay: 0.4s; }
-    .stagger-5 { transition-delay: 0.5s; }
+    /* Stagger animation delays - Optimized for speed */
+    .stagger-1 { transition-delay: 0.05s; }
+    .stagger-2 { transition-delay: 0.1s; }
+    .stagger-3 { transition-delay: 0.15s; }
+    .stagger-4 { transition-delay: 0.2s; }
+    .stagger-5 { transition-delay: 0.25s; }
 
     /* Pulse animation for CTAs */
     .pulse-glow {
@@ -194,17 +198,19 @@
 </style>
 
 <script>
-    // Intersection Observer for scroll animations
+    // Intersection Observer for scroll animations - Optimized
     document.addEventListener('DOMContentLoaded', function() {
         const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+            threshold: 0.05, // Trigger earlier for faster transitions
+            rootMargin: '0px 0px -100px 0px' // Start animation sooner
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
+                    // Unobserve after animation to improve performance
+                    observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
@@ -214,12 +220,12 @@
             observer.observe(el);
         });
 
-        // Create floating particles
+        // Create floating particles (optimized - fewer particles)
         function createParticles(container) {
             const particlesContainer = container.querySelector('.particles');
             if (!particlesContainer) return;
 
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 12; i++) { // Reduced from 20 to 12
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
@@ -232,17 +238,30 @@
         // Initialize particles for all particle containers
         document.querySelectorAll('.particles').forEach(createParticles);
 
-        // Parallax scroll effect
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
+        // Optimized parallax scroll effect with requestAnimationFrame
+        let ticking = false;
+        let lastScrollY = window.pageYOffset;
+
+        function updateParallax() {
             const parallaxElements = document.querySelectorAll('[data-parallax]');
 
             parallaxElements.forEach(el => {
-                const speed = el.dataset.parallax || 0.5;
-                const yPos = -(scrolled * speed);
+                const speed = parseFloat(el.dataset.parallax) || 0.5;
+                const yPos = -(lastScrollY * speed);
                 el.style.transform = `translateY(${yPos}px)`;
             });
-        });
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            lastScrollY = window.pageYOffset;
+
+            if (!ticking) {
+                window.requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }, { passive: true }); // Passive listener for better performance
     });
 </script>
 

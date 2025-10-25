@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -13,14 +14,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('members', function (Blueprint $table) {
-            // Change musical_experience to text if it's not already
-            $table->text('musical_experience')->change();
-            // Change choir_experience to text if it's not already
-            $table->text('choir_experience')->change();
-            // Change why_join to text if it's not already
-            $table->text('why_join')->change();
-        });
+        // Use raw SQL to avoid doctrine/dbal dependency
+        DB::statement('ALTER TABLE members MODIFY COLUMN musical_experience TEXT');
+        DB::statement('ALTER TABLE members MODIFY COLUMN choir_experience TEXT');
+        DB::statement('ALTER TABLE members MODIFY COLUMN why_join TEXT');
     }
 
     /**
@@ -30,11 +27,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('members', function (Blueprint $table) {
-            // Revert back to string columns
-            $table->string('musical_experience')->change();
-            $table->string('choir_experience')->change();
-            $table->string('why_join')->change();
-        });
+        // Use raw SQL to avoid doctrine/dbal dependency
+        DB::statement('ALTER TABLE members MODIFY COLUMN musical_experience VARCHAR(255)');
+        DB::statement('ALTER TABLE members MODIFY COLUMN choir_experience VARCHAR(255)');
+        DB::statement('ALTER TABLE members MODIFY COLUMN why_join VARCHAR(255)');
     }
 };

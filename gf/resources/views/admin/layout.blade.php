@@ -666,6 +666,19 @@
                                 <span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold admin-pill admin-pill--accent">{{ $resourcesCount }}</span>
                             @endif
                         </a>
+
+                        <a href="{{ route('admin.albums.index') }}" class="sidebar-link {{ request()->routeIs('admin.albums.*') ? 'active' : '' }}">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                            </svg>
+                            <span class="flex-1">Albums (Shop)</span>
+                            @php
+                                $albumsCount = \App\Models\Album::where('is_active', true)->count();
+                            @endphp
+                            @if($albumsCount > 0)
+                                <span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold admin-pill admin-pill--accent">{{ $albumsCount }}</span>
+                            @endif
+                        </a>
                     </div>
                 </div>
 

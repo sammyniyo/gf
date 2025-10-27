@@ -118,6 +118,14 @@ class Song extends Model
     }
 
     /**
+     * Get the album this song belongs to
+     */
+    public function album()
+    {
+        return $this->belongsTo(Album::class, 'album', 'title');
+    }
+
+    /**
      * Scope by genre.
      */
     public function scopeByGenre($query, $genre)

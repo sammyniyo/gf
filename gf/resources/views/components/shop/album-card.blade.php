@@ -1,13 +1,13 @@
 @props(['album', 'featured' => false])
 
-<div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 overflow-hidden border border-gray-100 dark:border-gray-700">
-    <!-- Gradient glow effect on hover -->
-    <div class="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl opacity-0 group-hover:opacity-20 blur transition-opacity duration-500"></div>
+<div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden border border-gray-100">
+    <!-- Subtle glow effect on hover -->
+    <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-400 to-purple-400 rounded-2xl opacity-0 group-hover:opacity-10 blur transition-opacity duration-300"></div>
 
     <!-- Featured Badge -->
     @if($featured)
     <div class="absolute top-4 right-4 z-20">
-        <span class="bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 text-yellow-900 text-xs font-extrabold px-4 py-2 rounded-full shadow-2xl flex items-center gap-1 animate-pulse">
+        <span class="bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 text-yellow-900 text-xs font-extrabold px-4 py-2 rounded-full shadow-lg flex items-center gap-1 animate-pulse">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
             </svg>
@@ -17,17 +17,17 @@
     @endif
 
     <!-- Album Cover -->
-    <a href="{{ route('shop.show', $album->id) }}" class="block relative aspect-square overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
+    <a href="{{ route('shop.show', $album->id) }}" class="block relative aspect-square overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
         <img src="{{ $album->cover_image_url }}"
              alt="{{ $album->title }}"
-             class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1">
+             class="w-full h-full object-cover transition-all duration-500 group-hover:scale-105">
 
-        <!-- Shimmer effect -->
-        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+        <!-- Subtle shimmer effect -->
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
 
         <!-- Overlay on hover -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
-            <div class="flex gap-3 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-8">
+            <div class="flex gap-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                 @if($album->spotify_url)
                 <a href="{{ $album->spotify_url }}"
                    target="_blank"
@@ -67,20 +67,20 @@
     <!-- Album Info -->
     <div class="p-6">
         <a href="{{ route('shop.show', $album->id) }}" class="block">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+            <h3 class="text-xl font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
                 {{ $album->title }}
             </h3>
         </a>
 
         @if($album->description)
-        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+        <p class="text-sm text-gray-600 mb-4 line-clamp-2">
             {{ $album->description }}
         </p>
         @endif
 
         <div class="flex items-center justify-between mb-4">
             @if($album->track_count > 0)
-            <span class="text-sm text-gray-500 dark:text-gray-400">
+            <span class="text-sm text-gray-500">
                 <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/>
                 </svg>
@@ -89,34 +89,34 @@
             @endif
 
             @if($album->release_date)
-            <span class="text-sm text-gray-500 dark:text-gray-400">
+            <span class="text-sm text-gray-500">
                 {{ $album->release_date->format('Y') }}
             </span>
             @endif
         </div>
 
         <!-- Price and CTA -->
-        <div class="flex items-center justify-between pt-6 mt-2 border-t-2 border-gray-200 dark:border-gray-700">
+        <div class="flex items-center justify-between pt-6 mt-2 border-t-2 border-gray-200">
             <div>
                 @if($album->isFree())
                 <div class="flex items-center gap-2">
-                    <span class="text-3xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">FREE</span>
-                    <svg class="w-5 h-5 text-emerald-500 animate-bounce" fill="currentColor" viewBox="0 0 20 20">
+                    <span class="text-3xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">FREE</span>
+                    <svg class="w-5 h-5 text-blue-500 animate-bounce" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                     </svg>
                 </div>
                 @else
                 <div>
-                    <span class="text-3xl font-extrabold text-gray-900 dark:text-white">${{ number_format($album->price, 2) }}</span>
-                    <div class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">One-time purchase</div>
+                    <span class="text-3xl font-extrabold text-gray-800">${{ number_format($album->price, 2) }}</span>
+                    <div class="text-xs text-gray-500 mt-0.5">One-time purchase</div>
                 </div>
                 @endif
             </div>
 
             <a href="{{ route('shop.show', $album->id) }}"
-               class="group relative bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-6 py-3 rounded-xl font-bold transition-all duration-300 transform hover:scale-110 hover:rotate-1 shadow-lg hover:shadow-2xl overflow-hidden">
-                <!-- Shine effect -->
-                <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></span>
+               class="group relative bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-6 py-3 rounded-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden">
+                <!-- Subtle shine effect -->
+                <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"></span>
                 <span class="relative flex items-center gap-2">
                     {{ $album->isFree() ? 'Download' : 'Buy Now' }}
                     <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

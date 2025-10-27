@@ -85,8 +85,6 @@
                         <div class="absolute inset-0 w-2 h-2 bg-emerald-300 rounded-full animate-ping"></div>
                     </div>
                     <span>Uniting Hearts Through Worship</span>
-                    <span class="text-white/60">·</span>
-                    <span class="text-emerald-300">Est. 1998</span>
                 </div>
 
                 <!-- Stunning Typography -->
@@ -113,12 +111,12 @@
 
                     <!-- Tagline -->
                     <p class="text-xl sm:text-2xl lg:text-3xl text-white/90 font-light leading-relaxed max-w-3xl mx-auto animate-fade-in-up animation-delay-400 drop-shadow-lg">
-                        Experience divine connection through <span class="text-emerald-300 font-semibold">powerful worship</span>, authentic fellowship, and musical excellence
+                        Experience divine connection through <span class="text-emerald-300 font-semibold">powerful worship</span> and musical excellence
                     </p>
                 </div>
 
                 <!-- Clean Stats Row -->
-                <div class="grid grid-cols-3 gap-8 max-w-3xl mx-auto animate-fade-in-up animation-delay-600">
+                <div class="grid grid-cols-2 gap-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-600">
                     <div class="group">
                         <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-emerald-400/30 transition-all duration-300 hover:-translate-y-1">
                             <div class="flex items-baseline justify-center gap-2 mb-2">
@@ -132,18 +130,8 @@
                     <div class="group">
                         <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-amber-400/30 transition-all duration-300 hover:-translate-y-1">
                             <div class="flex items-baseline justify-center gap-2 mb-2">
-                                <span class="text-4xl lg:text-5xl font-black text-white counter" data-target="4">0</span>
-                                <span class="text-2xl text-amber-400 font-bold">+</span>
-                            </div>
-                            <div class="text-xs lg:text-sm text-white/70 font-semibold uppercase tracking-wider">Albums</div>
-                        </div>
-                    </div>
-
-                    <div class="group">
-                        <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-teal-400/30 transition-all duration-300 hover:-translate-y-1">
-                            <div class="flex items-baseline justify-center gap-2 mb-2">
                                 <span class="text-4xl lg:text-5xl font-black text-white counter" data-target="27">0</span>
-                                <span class="text-2xl text-teal-400 font-bold"></span>
+                                <span class="text-2xl text-amber-400 font-bold"></span>
                             </div>
                             <div class="text-xs lg:text-sm text-white/70 font-semibold uppercase tracking-wider">Years</div>
                         </div>
@@ -166,51 +154,6 @@
                         </svg>
                         <span>Explore Events</span>
                     </a>
-                </div>
-
-                <!-- Feature Pills -->
-                <div class="flex flex-wrap items-center justify-center gap-3 animate-fade-in-up animation-delay-1000">
-                    @foreach([
-                        ['icon' => '🎵', 'text' => 'Worship Excellence'],
-                        ['icon' => '🙏', 'text' => 'Spiritual Growth'],
-                        ['icon' => '❤️', 'text' => 'Community Impact']
-                    ] as $feature)
-                        <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-lg border border-white/10 rounded-full hover:bg-white/10 hover:border-white/20 transition-all duration-300 group cursor-pointer">
-                            <span class="text-xl group-hover:scale-125 transition-transform">{{ $feature['icon'] }}</span>
-                            <span class="text-sm text-white/80 font-medium">{{ $feature['text'] }}</span>
-                        </div>
-                    @endforeach
-                </div>
-
-                <!-- Next Event Card -->
-                <div class="max-w-2xl mx-auto animate-fade-in-up animation-delay-1200">
-                    <div class="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1">
-                        <div class="flex items-center justify-between gap-6">
-                            <div class="flex items-center gap-4">
-                                <div class="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg">
-                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
-                                    </svg>
-                                </div>
-                                <div class="text-left">
-                                    <p class="text-xs font-bold uppercase tracking-wide text-emerald-300 mb-1">Join us in rehearsals</p>
-                                    <p class="text-base font-bold text-white">Every Monday and Thursday, 05:30 PM  - 08:00 PM</p>
-                                    <p class="text-sm text-white/70 flex items-center gap-1 mt-1">
-                                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        </svg>
-                                        ASA UR Nyarugenge SDA Church
-                                    </p>
-                                </div>
-                            </div>
-                            <a href="{{ route('about') }}" class="flex-shrink-0 inline-flex items-center justify-center w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full transition-all border border-white/20 hover:border-white/40">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -259,10 +202,10 @@
             transform: scale(1) rotate(0deg);
         }
         50% {
-            transform: scale(1.15) rotate(0.5deg);
+            transform: scale(1.05) rotate(0.2deg);
         }
         100% {
-            transform: scale(1.1) rotate(0deg);
+            transform: scale(1.02) rotate(0deg);
         }
     }
 

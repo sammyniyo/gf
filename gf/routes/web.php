@@ -19,6 +19,7 @@ use App\Http\Controllers\StoryController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\CommitteeController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\PaymentController;
 
 
 
@@ -200,14 +201,16 @@ Route::get('/register/thank-you', function () {
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 // Shop Routes
-Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-Route::get('/shop/search', [ShopController::class, 'search'])->name('shop.search');
-Route::get('/shop/albums/{album}', [ShopController::class, 'show'])->name('shop.show');
-Route::get('/shop/albums/{album}/purchase', [ShopController::class, 'purchase'])->name('shop.purchase');
-Route::post('/shop/albums/{album}/purchase', [ShopController::class, 'processPurchase'])->name('shop.process-purchase');
-Route::get('/shop/download/{downloadCode}', [ShopController::class, 'download'])->name('shop.download');
-Route::post('/shop/download/{downloadCode}', [ShopController::class, 'processDownload'])->name('shop.process-download');
-Route::post('/shop/verify-purchase', [ShopController::class, 'verifyPurchase'])->name('shop.verify-purchase');
+Route::middleware(['page.status:shop'])->group(function () {
+    Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+    Route::get('/shop/search', [ShopController::class, 'search'])->name('shop.search');
+    Route::get('/shop/albums/{album}', [ShopController::class, 'show'])->name('shop.show');
+    Route::get('/shop/albums/{album}/purchase', [ShopController::class, 'purchase'])->name('shop.purchase');
+    Route::post('/shop/albums/{album}/purchase', [ShopController::class, 'processPurchase'])->name('shop.process-purchase');
+    Route::get('/shop/download/{downloadCode}', [ShopController::class, 'download'])->name('shop.download');
+    Route::post('/shop/download/{downloadCode}', [ShopController::class, 'processDownload'])->name('shop.process-download');
+    Route::post('/shop/verify-purchase', [ShopController::class, 'verifyPurchase'])->name('shop.verify-purchase');
+});
 
 // Payment gateway routes (to be implemented with actual payment integration)
 Route::get('/shop/payment/stripe/{purchase}', function() {
@@ -221,6 +224,13 @@ Route::get('/shop/payment/paypal/{purchase}', function() {
 Route::get('/shop/payment/mobile/{purchase}', function() {
     return view('shop.payment.mobile');
 })->name('shop.payment.mobile');
+
+// IremboPay Payment Routes
+Route::get('/payments/irembopay/initialize/{purchase}', [PaymentController::class, 'initializeIremboPay'])->name('payments.irembopay.initialize');
+Route::get('/payments/irembopay/form/{purchase}', [PaymentController::class, 'showIremboPayForm'])->name('payments.irembopay.form');
+Route::post('/payments/irembopay/callback', [PaymentController::class, 'handleIremboPayCallback'])->name('payments.irembopay.callback');
+Route::get('/payments/irembopay/return', [PaymentController::class, 'handleIremboPayReturn'])->name('payments.irembopay.return');
+Route::get('/payments/irembopay/status/{purchase}', [PaymentController::class, 'checkPaymentStatus'])->name('payments.irembopay.status');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -318,6 +328,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('albums', App\Http\Controllers\Admin\AlbumController::class);
     Route::post('albums/{album}/toggle-featured', [App\Http\Controllers\Admin\AlbumController::class, 'toggleFeatured'])->name('albums.toggle-featured');
     Route::post('albums/{album}/toggle-active', [App\Http\Controllers\Admin\AlbumController::class, 'toggleActive'])->name('albums.toggle-active');
+
+    // Page Settings Management
+    Route::get('page-settings', [App\Http\Controllers\Admin\PageSettingsController::class, 'index'])->name('page-settings.index');
+    Route::get('page-settings/{pageSetting}/edit', [App\Http\Controllers\Admin\PageSettingsController::class, 'edit'])->name('page-settings.edit');
+    Route::patch('page-settings/{pageSetting}', [App\Http\Controllers\Admin\PageSettingsController::class, 'update'])->name('page-settings.update');
 });
 
 Route::fallback(function () {

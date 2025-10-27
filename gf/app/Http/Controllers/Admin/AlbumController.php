@@ -36,6 +36,7 @@ class AlbumController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'cover_image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
+            'zip_file' => 'nullable|file|mimes:zip|max:102400', // 100MB max for ZIP files
             'spotify_url' => 'nullable|url',
             'apple_music_url' => 'nullable|url',
             'youtube_url' => 'nullable|url',
@@ -50,6 +51,12 @@ class AlbumController extends Controller
         if ($request->hasFile('cover_image')) {
             $path = $request->file('cover_image')->store('albums', 'public');
             $validated['cover_image'] = $path;
+        }
+
+        // Handle ZIP file upload
+        if ($request->hasFile('zip_file')) {
+            $zipPath = $request->file('zip_file')->store('albums/zips', 'public');
+            $validated['download_link'] = $zipPath;
         }
 
         // Set defaults
@@ -80,6 +87,7 @@ class AlbumController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'cover_image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
+            'zip_file' => 'nullable|file|mimes:zip|max:102400', // 100MB max for ZIP files
             'spotify_url' => 'nullable|url',
             'apple_music_url' => 'nullable|url',
             'youtube_url' => 'nullable|url',
@@ -100,6 +108,16 @@ class AlbumController extends Controller
             $validated['cover_image'] = $path;
         }
 
+        // Handle ZIP file upload
+        if ($request->hasFile('zip_file')) {
+            // Delete old ZIP file
+            if ($album->download_link && Storage::disk('public')->exists($album->download_link)) {
+                Storage::disk('public')->delete($album->download_link);
+            }
+            $zipPath = $request->file('zip_file')->store('albums/zips', 'public');
+            $validated['download_link'] = $zipPath;
+        }
+
         // Set defaults
         $validated['is_featured'] = $request->has('is_featured');
         $validated['is_active'] = $request->has('is_active');
@@ -118,6 +136,11 @@ class AlbumController extends Controller
         // Delete cover image if exists
         if ($album->cover_image) {
             Storage::disk('public')->delete($album->cover_image);
+        }
+
+        // Delete ZIP file if exists
+        if ($album->download_link && Storage::disk('public')->exists($album->download_link)) {
+            Storage::disk('public')->delete($album->download_link);
         }
 
         $album->delete();

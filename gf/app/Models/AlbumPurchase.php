@@ -24,6 +24,10 @@ class AlbumPurchase extends Model
         'download_count',
         'max_downloads',
         'downloaded_at',
+        'irembo_invoice_id',
+        'irembo_reference',
+        'irembo_payment_details',
+        'payment_processed_at',
     ];
 
     protected $casts = [
@@ -32,6 +36,8 @@ class AlbumPurchase extends Model
         'max_downloads' => 'integer',
         'downloaded_at' => 'datetime',
         'payment_details' => 'array',
+        'irembo_payment_details' => 'array',
+        'payment_processed_at' => 'datetime',
     ];
 
     /**

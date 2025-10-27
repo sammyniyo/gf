@@ -3,31 +3,31 @@
 @section('title', 'Download ' . $purchase->album->title . ' | God\'s Family Choir')
 
 @section('content')
-<section class="py-12 bg-gray-50 dark:bg-gray-900 min-h-screen">
+<section class="py-12 bg-gradient-to-b from-blue-50 to-white min-h-screen">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Success Message -->
         @if(session('success'))
-        <div class="mb-8 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-6">
+        <div class="mb-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
             <div class="flex items-start">
-                <svg class="w-6 h-6 text-emerald-600 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-6 h-6 text-blue-600 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                 </svg>
                 <div>
-                    <h3 class="font-semibold text-emerald-900 dark:text-emerald-100 mb-1">{{ session('success') }}</h3>
+                    <h3 class="font-semibold text-blue-900 mb-1">{{ session('success') }}</h3>
                 </div>
             </div>
         </div>
         @endif
 
         <!-- Download Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden">
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
             <!-- Header -->
-            <div class="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white p-8 text-center">
+            <div class="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-8 text-center">
                 <svg class="w-20 h-20 mx-auto mb-4 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                 </svg>
                 <h1 class="text-3xl font-bold mb-2">Thank You for Your Purchase!</h1>
-                <p class="text-emerald-100">Your album is ready to download</p>
+                <p class="text-blue-100">Your album is ready to download</p>
             </div>
 
             <!-- Album Details -->
@@ -37,38 +37,44 @@
                          alt="{{ $purchase->album->title }}"
                          class="w-32 h-32 rounded-xl shadow-lg object-cover">
                     <div>
-                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">
                             {{ $purchase->album->title }}
                         </h2>
                         @if($purchase->album->track_count > 0)
-                        <p class="text-gray-600 dark:text-gray-400 mb-2">
+                        <p class="text-gray-600 mb-2">
                             {{ $purchase->album->track_count }} tracks
                         </p>
                         @endif
-                        <p class="text-sm text-gray-500 dark:text-gray-500">
+                        <p class="text-sm text-gray-500">
                             Purchased by {{ $purchase->customer_name }}
                         </p>
                     </div>
                 </div>
 
                 <!-- Download Button -->
-                <div class="bg-gray-50 dark:bg-gray-900 rounded-xl p-6 mb-8">
+                <div class="bg-gray-50 rounded-xl p-6 mb-8 border border-gray-100">
                     <div class="flex items-center justify-between mb-4">
                         <div>
-                            <h3 class="font-semibold text-gray-900 dark:text-white mb-1">Download Your Album</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <h3 class="font-semibold text-gray-800 mb-1">Download Your Album</h3>
+                            <p class="text-sm text-gray-600 mb-2">
                                 Downloads remaining: {{ $purchase->max_downloads - $purchase->download_count }}
                             </p>
+                            <div class="text-xs text-gray-500">
+                                <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                </svg>
+                                Complete album ZIP file with all tracks and album artwork
+                            </div>
                         </div>
                         @if($purchase->canDownload())
                         <form action="{{ route('shop.process-download', $purchase->download_code) }}" method="POST">
                             @csrf
                             <button type="submit"
-                                    class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2">
+                                    class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold px-8 py-3 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg>
-                                Download Now
+                                Download Album ZIP
                             </button>
                         </form>
                         @else
@@ -80,35 +86,83 @@
                     </div>
 
                     @if($purchase->downloaded_at)
-                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                    <p class="text-xs text-gray-500">
                         First downloaded: {{ $purchase->downloaded_at->format('M d, Y h:i A') }}
                     </p>
                     @endif
                 </div>
 
+                <!-- What's Included -->
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 mb-8 border border-green-100">
+                    <h3 class="font-semibold text-gray-800 mb-4 flex items-center">
+                        <svg class="w-5 h-5 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        What's Included in Your Download
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                            </svg>
+                            <div>
+                                <h4 class="font-medium text-gray-800">All Audio Tracks</h4>
+                                <p class="text-sm text-gray-600">High-quality MP3 files of all songs</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <div>
+                                <h4 class="font-medium text-gray-800">Album Artwork</h4>
+                                <p class="text-sm text-gray-600">Cover image in high resolution</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <div>
+                                <h4 class="font-medium text-gray-800">Album Information</h4>
+                                <p class="text-sm text-gray-600">Track listing and album details</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                            <div>
+                                <h4 class="font-medium text-gray-800">Sheet Music</h4>
+                                <p class="text-sm text-gray-600">PDF files for available tracks</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Download Code -->
-                <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 rounded-xl p-6 mb-8">
-                    <h3 class="font-semibold text-gray-900 dark:text-white mb-3">Your Download Code</h3>
+                <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6 mb-8 border border-blue-100">
+                    <h3 class="font-semibold text-gray-800 mb-3">Your Download Code</h3>
                     <div class="flex items-center gap-3">
-                        <code class="flex-1 bg-white dark:bg-gray-800 px-4 py-3 rounded-lg font-mono text-lg text-gray-900 dark:text-white border-2 border-emerald-300 dark:border-emerald-700">
+                        <code class="flex-1 bg-white px-4 py-3 rounded-lg font-mono text-lg text-gray-900 border-2 border-blue-200">
                             {{ $purchase->download_code }}
                         </code>
                         <button onclick="copyDownloadCode()"
-                                class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-lg transition-colors flex-shrink-0">
+                                class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-4 py-3 rounded-lg transition-colors flex-shrink-0">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                             </svg>
                         </button>
                     </div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                    <p class="text-sm text-gray-600 mt-2">
                         Save this code to access your download later. We've also sent it to {{ $purchase->customer_email }}
                     </p>
                 </div>
 
                 <!-- Streaming Options -->
                 @if($purchase->album->spotify_url || $purchase->album->apple_music_url || $purchase->album->youtube_url)
-                <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
-                    <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Listen Now on Your Favorite Platform</h3>
+                <div class="border-t border-gray-200 pt-6">
+                    <h3 class="font-semibold text-gray-800 mb-4">Listen Now on Your Favorite Platform</h3>
                     <div class="flex gap-3 flex-wrap">
                         @if($purchase->album->spotify_url)
                         <a href="{{ $purchase->album->spotify_url }}"
@@ -149,7 +203,7 @@
                 <!-- Back to Shop -->
                 <div class="mt-8 text-center">
                     <a href="{{ route('shop.index') }}"
-                       class="inline-flex items-center text-emerald-600 hover:text-emerald-700 font-medium">
+                       class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium">
                         Browse more albums
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />

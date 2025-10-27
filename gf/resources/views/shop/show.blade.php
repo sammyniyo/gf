@@ -4,12 +4,12 @@
 @section('description', $album->description ?? 'Purchase and download ' . $album->title . ' by God\'s Family Choir')
 
 @section('content')
-<section class="py-12 bg-gray-50 dark:bg-gray-900 min-h-screen">
+<section class="py-12 bg-gradient-to-b from-blue-50 to-white min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Back Button -->
         <div class="mb-8">
             <a href="{{ route('shop.index') }}"
-               class="inline-flex items-center text-emerald-600 hover:text-emerald-700 font-medium">
+               class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
@@ -21,7 +21,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
             <!-- Album Cover -->
             <div class="relative">
-                <div class="aspect-square rounded-2xl overflow-hidden shadow-2xl bg-gray-200 dark:bg-gray-800">
+                <div class="aspect-square rounded-2xl overflow-hidden shadow-2xl bg-gray-100">
                     <img src="{{ $album->cover_image_url }}"
                          alt="{{ $album->title }}"
                          class="w-full h-full object-cover">
@@ -66,22 +66,22 @@
 
             <!-- Album Info and Purchase -->
             <div>
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
                     {{ $album->title }}
                 </h1>
 
                 @if($album->description)
-                <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                <p class="text-lg text-gray-600 mb-6">
                     {{ $album->description }}
                 </p>
                 @endif
 
                 <!-- Album Details -->
-                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md mb-8">
+                <div class="bg-white rounded-xl p-6 shadow-md mb-8 border border-gray-100">
                     <div class="space-y-4">
                         @if($album->track_count > 0)
-                        <div class="flex items-center text-gray-700 dark:text-gray-300">
-                            <svg class="w-6 h-6 mr-3 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                        <div class="flex items-center text-gray-700">
+                            <svg class="w-6 h-6 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/>
                             </svg>
                             <span class="font-medium">{{ $album->track_count }} Tracks</span>
@@ -89,16 +89,16 @@
                         @endif
 
                         @if($album->release_date)
-                        <div class="flex items-center text-gray-700 dark:text-gray-300">
-                            <svg class="w-6 h-6 mr-3 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex items-center text-gray-700">
+                            <svg class="w-6 h-6 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             <span class="font-medium">Released {{ $album->release_date->format('F Y') }}</span>
                         </div>
                         @endif
 
-                        <div class="flex items-center text-gray-700 dark:text-gray-300">
-                            <svg class="w-6 h-6 mr-3 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="flex items-center text-gray-700">
+                            <svg class="w-6 h-6 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                             </svg>
                             <span class="font-medium">Downloadable after purchase</span>
@@ -107,23 +107,23 @@
                 </div>
 
                 <!-- Price and Purchase CTA -->
-                <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 rounded-xl p-8 shadow-lg">
+                <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-8 shadow-lg border border-blue-100">
                     <div class="mb-6">
                         @if($album->isFree())
-                        <div class="text-5xl font-bold text-emerald-600 mb-2">FREE</div>
-                        <p class="text-gray-700 dark:text-gray-300">Download this album at no cost</p>
+                        <div class="text-5xl font-bold text-blue-600 mb-2">FREE</div>
+                        <p class="text-gray-600">Download this album at no cost</p>
                         @else
-                        <div class="text-5xl font-bold text-gray-900 dark:text-white mb-2">${{ number_format($album->price, 2) }}</div>
-                        <p class="text-gray-700 dark:text-gray-300">One-time purchase, unlimited downloads</p>
+                        <div class="text-5xl font-bold text-gray-800 mb-2">${{ number_format($album->price, 2) }}</div>
+                        <p class="text-gray-600">One-time purchase, unlimited downloads</p>
                         @endif
                     </div>
 
                     <a href="{{ route('shop.purchase', $album->id) }}"
-                       class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white text-center px-8 py-4 rounded-lg font-bold text-lg transition-all duration-200 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
+                       class="block w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white text-center px-8 py-4 rounded-lg font-bold text-lg transition-all duration-200 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
                         {{ $album->isFree() ? 'Download Now' : 'Purchase & Download' }}
                     </a>
 
-                    <p class="mt-4 text-sm text-gray-600 dark:text-gray-400 text-center">
+                    <p class="mt-4 text-sm text-gray-600 text-center">
                         ✓ Instant access  ✓ High quality MP3  ✓ Support our ministry
                     </p>
                 </div>
@@ -132,8 +132,8 @@
 
         <!-- Related Albums -->
         @if($relatedAlbums->count() > 0)
-        <section class="border-t border-gray-200 dark:border-gray-700 pt-16">
-            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">You May Also Like</h2>
+        <section class="border-t border-gray-200 pt-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">You May Also Like</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 @foreach($relatedAlbums as $relatedAlbum)
                     <x-shop.album-card :album="$relatedAlbum" />

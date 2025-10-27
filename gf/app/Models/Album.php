@@ -44,6 +44,14 @@ class Album extends Model
     }
 
     /**
+     * Get all songs for this album
+     */
+    public function songs()
+    {
+        return $this->hasMany(Song::class, 'album', 'title');
+    }
+
+    /**
      * Get the album cover image URL
      */
     public function getCoverImageUrlAttribute()

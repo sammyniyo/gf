@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Album;
 use App\Models\AlbumPurchase;
+use App\Services\ZipService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -65,7 +66,7 @@ class ShopController extends Controller
             'customer_name' => 'required|string|max:255',
             'customer_email' => 'required|email|max:255',
             'customer_phone' => 'nullable|string|max:20',
-            'payment_method' => 'required|in:stripe,paypal,mobile_money',
+            'payment_method' => 'required|in:stripe,paypal,mobile_money,irembopay',
         ]);
 
         if ($validator->fails()) {
@@ -97,6 +98,8 @@ class ShopController extends Controller
                 return redirect()->route('shop.payment.paypal', $purchase->id);
             case 'mobile_money':
                 return redirect()->route('shop.payment.mobile', $purchase->id);
+            case 'irembopay':
+                return redirect()->route('payments.irembopay.initialize', $purchase->id);
             default:
                 return back()->with('error', 'Invalid payment method');
         }
@@ -130,17 +133,37 @@ class ShopController extends Controller
         // Increment download count
         $purchase->incrementDownloadCount();
 
-        // If download link is a URL, redirect to it
-        if ($album->download_link && filter_var($album->download_link, FILTER_VALIDATE_URL)) {
-            return redirect($album->download_link);
-        }
+        try {
+            // Create ZIP service instance
+            $zipService = new ZipService();
 
-        // If download link is a file path, download the file
-        if ($album->download_link && Storage::exists($album->download_link)) {
-            return Storage::download($album->download_link, $album->title . '.zip');
-        }
+            // Get or create the album ZIP file
+            $zipPath = $zipService->getOrCreateAlbumZip($album);
 
-        return back()->with('error', 'Download file not available. Please contact support.');
+            // Generate a clean filename for download
+            $cleanTitle = preg_replace('/[^a-zA-Z0-9\s\-_]/', '', $album->title);
+            $cleanTitle = str_replace(' ', '_', $cleanTitle);
+            $fileName = $cleanTitle . '_Album.zip';
+
+            // Download the ZIP file
+            return Storage::download($zipPath, $fileName);
+
+        } catch (\Exception $e) {
+            // Fallback to original download method if ZIP creation fails
+            \Log::error('ZIP creation failed for album ' . $album->id . ': ' . $e->getMessage());
+
+            // If download link is a URL, redirect to it
+            if ($album->download_link && filter_var($album->download_link, FILTER_VALIDATE_URL)) {
+                return redirect($album->download_link);
+            }
+
+            // If download link is a file path, download the file
+            if ($album->download_link && Storage::exists($album->download_link)) {
+                return Storage::download($album->download_link, $album->title . '.zip');
+            }
+
+            return back()->with('error', 'Download file not available. Please contact support.');
+        }
     }
 
     /**

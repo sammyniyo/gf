@@ -122,14 +122,21 @@ unset($__errorArgs, $__bag); ?>
 
         <!-- Cover Image -->
         <div class="mb-6">
-            <label for="cover_image" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                 Album Cover Image
             </label>
-            <input type="file"
-                   id="cover_image"
-                   name="cover_image"
-                   accept="image/jpeg,image/jpg,image/png,image/webp"
-                   class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+            <div class="flex items-center space-x-2">
+                <label for="cover_image" class="cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
+                    Choose File
+                </label>
+                <span id="cover_image_filename" class="text-gray-400 dark:text-gray-300">No file chosen</span>
+                <input type="file"
+                       id="cover_image"
+                       name="cover_image"
+                       accept="image/jpeg,image/jpg,image/png,image/webp"
+                       class="hidden"
+                       onchange="document.getElementById('cover_image_filename').textContent = this.files[0] ? this.files[0].name : 'No file chosen';">
+            </div>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">JPG, PNG, or WebP. Max 5MB.</p>
             <?php $__errorArgs = ['cover_image'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -141,6 +148,52 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+        </div>
+
+        <!-- ZIP File Upload -->
+        <div class="mb-6 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                <svg class="w-5 h-5 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+                Album ZIP File
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                Upload a ZIP file containing all the album tracks, artwork, and metadata. This will be used for downloads.
+            </p>
+            <div class="flex items-center space-x-2">
+                <label for="zip_file" class="cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
+                    Choose File
+                </label>
+                <span id="zip_file_filename" class="text-gray-400 dark:text-gray-300">No file chosen</span>
+                <input type="file"
+                       id="zip_file"
+                       name="zip_file"
+                       accept=".zip"
+                       class="hidden"
+                       onchange="document.getElementById('zip_file_filename').textContent = this.files[0] ? this.files[0].name : 'No file chosen';">
+            </div>
+            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">ZIP file only. Max 100MB.</p>
+            <?php $__errorArgs = ['zip_file'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+            <p class="mt-1 text-sm text-red-600 dark:text-red-400"><?php echo e($message); ?></p>
+            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+
+            <div class="mt-3 p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border border-emerald-200 dark:border-emerald-700">
+                <h4 class="text-sm font-semibold text-emerald-800 dark:text-emerald-200 mb-2">ZIP File Should Include:</h4>
+                <ul class="text-xs text-emerald-700 dark:text-emerald-300 space-y-1">
+                    <li>• All audio tracks (MP3 format recommended)</li>
+                    <li>• Album artwork (cover.jpg)</li>
+                    <li>• Album information file (album_info.txt)</li>
+                    <li>• Sheet music PDFs (if available)</li>
+                </ul>
+            </div>
         </div>
 
         <!-- Streaming Links -->

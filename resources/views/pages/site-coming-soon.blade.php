@@ -233,12 +233,32 @@
         }
 
         // Use target_date if set, otherwise use next Thursday
-        const targetDate = @json($settings->target_date ? \Carbon\Carbon::parse($settings->target_date)->format('Y-m-d H:i:s') : null);
-        const launchDate = targetDate ? new Date(targetDate + ' 23:59:59') : getNextThursday();
+        const targetDate = @json($settings->target_date ? $settings->target_date->format('Y-m-d') : null);
+        let launchDate;
+
+        if (targetDate) {
+            launchDate = new Date(targetDate + 'T23:59:59');
+        } else {
+            launchDate = getNextThursday();
+        }
+
+        // Debug: log the launch date
+        console.log('Launch date:', launchDate);
+        console.log('Target date:', targetDate);
 
         function updateCountdown() {
             const now = new Date();
             const diff = launchDate - now;
+
+            // Check if launchDate is valid
+            if (isNaN(launchDate.getTime())) {
+                console.error('Invalid launch date:', launchDate);
+                document.getElementById('days').textContent = '0';
+                document.getElementById('hours').textContent = '0';
+                document.getElementById('minutes').textContent = '0';
+                document.getElementById('seconds').textContent = '0';
+                return;
+            }
 
             if (diff <= 0) {
                 document.getElementById('days').textContent = '0';

@@ -22,13 +22,17 @@ class CheckSiteMaintenance
 
         // If site is in coming soon mode
         if ($settings->is_coming_soon) {
-            // Allow admins to access everything
-            if (Auth::check() && Auth::user()->is_admin) {
+            // Allow admin routes and authentication routes
+            if ($request->is('admin/*') ||
+                $request->is('login') ||
+                $request->is('register') ||
+                $request->is('password/*') ||
+                $request->is('email/verify/*')) {
                 return $next($request);
             }
 
-            // Allow admin routes
-            if ($request->is('admin/*')) {
+            // Allow logged-in admins to access everything
+            if (Auth::check() && Auth::user()->is_admin) {
                 return $next($request);
             }
 

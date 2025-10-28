@@ -51,25 +51,21 @@
                 Our Music
             </span>
             <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                Top <span class="bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent">Worship Songs</span>
+                Latest <span class="bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent">Releases</span>
             </h2>
             <p class="text-gray-600 text-sm max-w-xl mx-auto">
                 <?php if($spotifyTracks && isset($spotifyTracks['tracks']['items']) && count($spotifyTracks['tracks']['items']) > 0): ?>
-                    Our most popular worship tracks on Spotify
+                    Our newest albums and singles on Spotify
                 <?php else: ?>
-                    Connect your Spotify API to showcase your latest worship tracks
+                    Connect your Spotify API to showcase your latest releases
                 <?php endif; ?>
             </p>
         </div>
 
         <?php if($spotifyTracks && isset($spotifyTracks['tracks']['items']) && count($spotifyTracks['tracks']['items']) > 0): ?>
             <?php
-                // Sort tracks by popularity (most played first) and take top 3
-                $tracks = collect($spotifyTracks['tracks']['items'])
-                    ->sortByDesc(function($track) {
-                        return $track['popularity'] ?? 0;
-                    })
-                    ->take(3);
+                // Take latest 3 releases (already sorted by release date from API)
+                $tracks = collect($spotifyTracks['tracks']['items'])->take(3);
             ?>
 
             <!-- Clean Tracks Grid - Top 3 Most Popular -->
@@ -122,19 +118,22 @@
 
                                 <!-- Additional Info -->
                                 <div class="flex items-center justify-between mt-2 text-xs text-gray-400">
-                                    <span class="flex items-center gap-1">
-                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-                                        </svg>
-                                        <?php echo e(app('App\Services\SpotifyService')->formatDuration($track['duration_ms'])); ?>
+                                    <?php if(isset($track['release_date'])): ?>
+                                        <span class="flex items-center gap-1">
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                                            </svg>
+                                            <?php echo e(\Carbon\Carbon::parse($track['release_date'])->format('M Y')); ?>
 
-                                    </span>
-                                    <?php if(isset($track['popularity'])): ?>
+                                        </span>
+                                    <?php endif; ?>
+                                    <?php if(isset($track['total_tracks'])): ?>
                                         <span class="flex items-center gap-1 text-emerald-600 font-semibold">
                                             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                                <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/>
                                             </svg>
-                                            <?php echo e($track['popularity']); ?>%
+                                            <?php echo e($track['total_tracks']); ?> <?php echo e(Str::plural('track', $track['total_tracks'])); ?>
+
                                         </span>
                                     <?php endif; ?>
                                 </div>
@@ -158,7 +157,7 @@
 
                             <!-- Spotify Icon -->
                             <div class="relative z-10 transform group-hover:scale-110 transition-transform duration-500">
-                                <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-xl shadow-green-500/40 group-hover:shadow-green-500/60 transition-shadow duration-300 rotate-6 group-hover:rotate-12 transition-all">
+                                <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-xl shadow-green-500/40 group-hover:shadow-green-500/60 transition-all duration-300 rotate-6 group-hover:rotate-12">
                                     <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
                                     </svg>

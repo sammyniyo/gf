@@ -132,7 +132,35 @@ class SpotifyService
     }
 
     /**
-     * Get featured tracks for the homepage
+     * Get artist's albums (latest releases)
+     */
+    public function getArtistAlbums($artistId, $limit = 10)
+    {
+        try {
+            $accessToken = $this->getAccessToken();
+
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $accessToken,
+            ])->get("https://api.spotify.com/v1/artists/{$artistId}/albums", [
+                'market' => 'US',
+                'include_groups' => 'album,single',
+                'limit' => $limit
+            ]);
+
+            if ($response->successful()) {
+                $data = $response->json();
+                return $data['items'] ?? [];
+            }
+
+            return [];
+        } catch (\Exception $e) {
+            \Log::error('Spotify API Error: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    /**
+     * Get featured tracks for the homepage (now using latest releases)
      */
     public function getFeaturedTracks()
     {
@@ -142,11 +170,31 @@ class SpotifyService
             // Use God's Family Choir specific artist ID
             $artistId = '6qAFmjsmVuuXZEwzrIYy5J';
 
-            $tracks = $this->getArtistTopTracks($artistId, 6);
-            if (empty($tracks)) {
+            // Get latest albums/singles
+            $albums = $this->getArtistAlbums($artistId, 6);
+            if (empty($albums)) {
                 // If the artist ID fails, return null to show fallback message
                 return null;
             }
+
+            // Convert albums to tracks format for compatibility
+            $tracks = array_map(function($album) {
+                return [
+                    'id' => $album['id'],
+                    'name' => $album['name'],
+                    'album' => [
+                        'name' => $album['name'],
+                        'images' => $album['images'] ?? [],
+                        'release_date' => $album['release_date'] ?? '',
+                    ],
+                    'artists' => $album['artists'] ?? [],
+                    'external_urls' => $album['external_urls'] ?? [],
+                    'uri' => $album['uri'] ?? '',
+                    'type' => $album['album_type'] ?? 'album',
+                    'release_date' => $album['release_date'] ?? '',
+                    'total_tracks' => $album['total_tracks'] ?? 0,
+                ];
+            }, $albums);
 
             return [
                 'tracks' => [

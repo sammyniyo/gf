@@ -36,18 +36,18 @@
                     </div>
 
                     <!-- Quote -->
-                    <blockquote class="text-gray-700 text-lg leading-relaxed mb-6">
-                        "Joining God's Family Choir has been the most transformative experience of my spiritual journey. The harmony of voices united in worship creates an atmosphere where God's presence is truly tangible."
+                    <blockquote class="text-gray-700 text-base leading-relaxed mb-6">
+                        "Muryango w'Imana muraho neza. Nagize umugisha wo kuba nanjye mu muryango w'Imana Kandi nziko nta mugisha ubaho waruta uwo kuba mu muryango w'Imana. Tugomba kumva dukomeye kuko uhagarariye uno muryango ni umutware uri hejuru ya byose. Umuhati wacu ntabwo ari uw'ubusa ku mwami."
                     </blockquote>
 
                     <!-- Author -->
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-emerald-500 rounded-full flex items-center justify-center">
-                            <span class="text-white font-bold text-lg">SJ</span>
+                            <span class="text-white font-bold text-lg">TE</span>
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900">Sarah Johnson</h4>
-                            <p class="text-emerald-600 text-sm font-medium">SDA Church Member</p>
+                            <h4 class="font-bold text-gray-900">TUYIZERE Elyse</h4>
+                            <p class="text-emerald-600 text-sm font-medium">Choir Member</p>
                         </div>
                     </div>
                 </div>
@@ -66,18 +66,18 @@
                     </div>
 
                     <!-- Quote -->
-                    <blockquote class="text-gray-700 text-lg leading-relaxed mb-6">
-                        "The biblical truth woven into every song touches hearts and changes lives. Our Seventh-day Adventist congregation has been blessed beyond measure by this ministry."
+                    <blockquote class="text-gray-700 text-base leading-relaxed mb-6">
+                        "Imana yadukoreye ibikomeye natwe turishimye. Icyo dusabwa nugukorana umwete uyu murimo twiyemeje gukora kandi tukawukora tuwukunze tudahatwa kandi duharanira gushikirana na Yesu byuzuye. Abe ari ko umucyo wanyu ubonekera imbere yabantu, kugirango babone imirimo yanyu myiza."
                     </blockquote>
 
                     <!-- Author -->
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-500 rounded-full flex items-center justify-center">
-                            <span class="text-white font-bold text-lg">DM</span>
+                            <span class="text-white font-bold text-lg">TJ</span>
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900">David Mwangi</h4>
-                            <p class="text-amber-600 text-sm font-medium">SDA Pastor</p>
+                            <h4 class="font-bold text-gray-900">TUYISHIME Jimmy</h4>
+                            <p class="text-amber-600 text-sm font-medium">Choir Member</p>
                         </div>
                     </div>
                 </div>
@@ -96,18 +96,18 @@
                     </div>
 
                     <!-- Quote -->
-                    <blockquote class="text-gray-700 text-lg leading-relaxed mb-6">
-                        "Every Resurrection Sunday concert is a reminder of Christ's victory. The choir's dedication to excellence in worship inspires our entire community to draw closer to God."
+                    <blockquote class="text-gray-700 text-base leading-relaxed mb-6">
+                        "Ndashimira Imana ku bwo kungeza muri iyi choir nziza. Kuva nagera hano, mwanyakiriye nurukundo, ubushuti numutima mwiza, mbona ko ndi ahantu Imana yashatse. Niyemeje gukorana namwe numutima wanjye wose, kugira ngo amajwi yacu twese aheshe Imana icyubahiro."
                     </blockquote>
 
                     <!-- Author -->
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full flex items-center justify-center">
-                            <span class="text-white font-bold text-lg">GN</span>
+                            <span class="text-white font-bold text-lg">UA</span>
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900">Grace Nkurunziza</h4>
-                            <p class="text-blue-600 text-sm font-medium">Youth Leader</p>
+                            <h4 class="font-bold text-gray-900">UWAMAHORO Adeline</h4>
+                            <p class="text-blue-600 text-sm font-medium">Choir Member</p>
                         </div>
                     </div>
                 </div>
@@ -126,17 +126,17 @@
                     </div>
 
                     <!-- Quote -->
-                    <blockquote class="text-gray-700 text-lg leading-relaxed mb-6">
-                        "The training and mentorship I received has not only improved my vocal abilities but deepened my understanding of worship ministry. This is more than a choir—it's a family."
+                    <blockquote class="text-gray-700 text-base leading-relaxed mb-6">
+                        "Imana umuremyi nyiribyose yemeye gupfa kubera icyaha cy'umuntu. Ku iherezo ry'ibihe abacunguwe bazatembera ku yindi mibumbe berekanywa nkabaneshi batsinze satani burundu. Imana iduhane umugisha tube muri uwo mugabanembe."
                     </blockquote>
 
                     <!-- Author -->
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-500 rounded-full flex items-center justify-center">
-                            <span class="text-white font-bold text-lg">AK</span>
+                            <span class="text-white font-bold text-lg">UA</span>
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900">Andrew Kamanzi</h4>
+                            <h4 class="font-bold text-gray-900">UJENEZA Ange</h4>
                             <p class="text-purple-600 text-sm font-medium">Choir Member</p>
                         </div>
                     </div>
@@ -156,18 +156,18 @@
                     </div>
 
                     <!-- Quote -->
-                    <blockquote class="text-gray-700 text-lg leading-relaxed mb-6">
-                        "Through their outreach programs, God's Family Choir has brought hope to communities across Rwanda. Their commitment to service reflects the true heart of Seventh-day Adventist ministry."
+                    <blockquote class="text-gray-700 text-base leading-relaxed mb-6">
+                        "Ni yo ibaha kuba muri Kristo Yesu waduhindukiye ubwenge buva ku Mana, no gukiranuka no kwezwa no gucungurwa. Nuko bene Data bakundwa, mukomere mutanyeganyega murushaho iteka gukora imirimo y'Umwami, kuko muzi yuko umuhati wanyu atari uw'ubusa ku Mwami."
                     </blockquote>
 
                     <!-- Author -->
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-gradient-to-br from-teal-400 to-teal-500 rounded-full flex items-center justify-center">
-                            <span class="text-white font-bold text-lg">MN</span>
+                            <span class="text-white font-bold text-lg">IJ</span>
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900">Mary Niyonshuti</h4>
-                            <p class="text-teal-600 text-sm font-medium">Community Leader</p>
+                            <h4 class="font-bold text-gray-900">IZABAYO Jonas</h4>
+                            <p class="text-teal-600 text-sm font-medium">Choir Member</p>
                         </div>
                     </div>
                 </div>
@@ -186,18 +186,18 @@
                     </div>
 
                     <!-- Quote -->
-                    <blockquote class="text-gray-700 text-lg leading-relaxed mb-6">
-                        "The excellence in music ministry combined with genuine spirituality creates an atmosphere where God's glory is revealed. This choir truly represents the best of Adventist worship tradition."
+                    <blockquote class="text-gray-700 text-base leading-relaxed mb-6">
+                        "Bavandimwe muri Kristo umukiza wacu! Tuzirikane ko nk'abaririmbyi umurimo dukora ataruwacu ahubwo aruwa Data watwese uba mwijuru nuko tuwukore tutinuba tuzasarura nitutagwa isari. Imana ibarinde kandi iduhane imigisha!"
                     </blockquote>
 
                     <!-- Author -->
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-gradient-to-br from-indigo-400 to-indigo-500 rounded-full flex items-center justify-center">
-                            <span class="text-white font-bold text-lg">JM</span>
+                            <span class="text-white font-bold text-lg">NI</span>
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900">James Mugisha</h4>
-                            <p class="text-indigo-600 text-sm font-medium">SDA Conference President</p>
+                            <h4 class="font-bold text-gray-900">NTEZIMANA Ismael</h4>
+                            <p class="text-indigo-600 text-sm font-medium">Choir Member</p>
                         </div>
                     </div>
                 </div>

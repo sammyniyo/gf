@@ -117,7 +117,7 @@ Route::get('/about', function () {
 // Legacy story routes (redirect to new /stories routes)
 Route::get('/story', function () {
     return redirect()->route('stories.index');
-});
+})->name('story');
 Route::get('/story/{story}', function ($story) {
     return redirect()->route('story.show', $story);
 });

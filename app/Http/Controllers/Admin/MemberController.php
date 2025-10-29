@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Jobs\SendWelcomeEmail;
+use App\Services\NotificationService;
 
 class MemberController extends Controller
 {
@@ -78,8 +80,20 @@ class MemberController extends Controller
         // Create member
         $member = Member::create($data);
 
+        // Create notification for admins
+        NotificationService::newMemberRegistration($member);
+
+        // Send welcome email
+        try {
+            SendWelcomeEmail::dispatch($member, 'member');
+            \Log::info('Welcome email job dispatched for member: ' . $member->email);
+        } catch (\Exception $e) {
+            \Log::error('Failed to dispatch welcome email job: ' . $e->getMessage());
+            // Don't fail the creation if email fails
+        }
+
         return redirect()->route('admin.members.show', $member)
-            ->with('success', 'Member added successfully!');
+            ->with('success', 'Member added successfully! Welcome email has been sent.');
     }
 
     /**

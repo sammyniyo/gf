@@ -4,10 +4,38 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Services\MemberIdService;
 
 class Member extends Model
 {
     use HasFactory;
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Auto-generate member_id when creating a new member
+        static::creating(function ($member) {
+            if (empty($member->member_id)) {
+                $member->member_id = MemberIdService::generateUnique();
+            }
+
+            // Auto-generate full name from first_name and last_name
+            if (empty($member->name) && !empty($member->first_name) && !empty($member->last_name)) {
+                $member->name = trim($member->first_name . ' ' . $member->last_name);
+            }
+        });
+
+        // Update full name when updating member
+        static::updating(function ($member) {
+            if ($member->isDirty(['first_name', 'last_name'])) {
+                $member->name = trim($member->first_name . ' ' . $member->last_name);
+            }
+        });
+    }
 
     protected $fillable = [
         // Unique Identifiers
@@ -87,6 +115,30 @@ class Member extends Model
         'newsletter' => false,
         'member_type' => 'member',
     ];
+
+    /**
+     * Set date_of_birth and also update birthdate for consistency.
+     */
+    public function setDateOfBirthAttribute($value)
+    {
+        $this->attributes['date_of_birth'] = $value;
+        // Also set birthdate to maintain compatibility
+        if ($value) {
+            $this->attributes['birthdate'] = $value;
+        }
+    }
+
+    /**
+     * Set birthdate and also update date_of_birth for consistency.
+     */
+    public function setBirthdateAttribute($value)
+    {
+        $this->attributes['birthdate'] = $value;
+        // Also set date_of_birth to maintain compatibility
+        if ($value) {
+            $this->attributes['date_of_birth'] = $value;
+        }
+    }
 
     /**
      * Get the member's full name.

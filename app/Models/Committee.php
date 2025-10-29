@@ -44,6 +44,7 @@ class Committee extends Model
     public static function getDepartments()
     {
         return [
+            'Chairman',
             'Presidency',
             'Coaching Staff',
             'Spiritual Department',

@@ -105,6 +105,61 @@
             </div>
     @endif
 
+    <!-- Events Calendar -->
+    <div class="glass-card p-6">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-100 to-purple-100">
+                        <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    Events Calendar
+                </h2>
+                <p class="text-sm text-slate-600 mt-1">View all upcoming and past events</p>
+            </div>
+            <a href="{{ route('admin.events.create') }}" 
+                class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Create Event
+            </a>
+        </div>
+
+        <!-- Calendar Legend -->
+        <div class="flex flex-wrap gap-3 mb-4 p-4 bg-slate-50 rounded-xl">
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full" style="background-color: #8b5cf6;"></div>
+                <span class="text-xs font-medium text-slate-700">Concert</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full" style="background-color: #3b82f6;"></div>
+                <span class="text-xs font-medium text-slate-700">Workshop</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full" style="background-color: #10b981;"></div>
+                <span class="text-xs font-medium text-slate-700">Rehearsal</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full" style="background-color: #f59e0b;"></div>
+                <span class="text-xs font-medium text-slate-700">Meeting</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full" style="background-color: #ec4899;"></div>
+                <span class="text-xs font-medium text-slate-700">Performance</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full" style="background-color: #94a3b8;"></div>
+                <span class="text-xs font-medium text-slate-700">Past Events</span>
+            </div>
+        </div>
+
+        <!-- Calendar Container -->
+        <div id="eventsCalendar" class="bg-white rounded-xl p-4 border border-slate-200"></div>
+    </div>
+
     <!-- Birthday Widget - Always show if there are any birthdays this month -->
     <div class="bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 rounded-3xl shadow-xl border-2 border-pink-200 p-8">
             <div class="flex items-center justify-between mb-6">

@@ -70,6 +70,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Birthday emails
     Route::post('/birthdays/send', [App\Http\Controllers\Admin\DashboardController::class, 'sendBirthdayEmails'])->name('birthdays.send');
 
+    // Calendar Events API
+    Route::get('/calendar/events', [App\Http\Controllers\Admin\DashboardController::class, 'getCalendarEvents'])->name('calendar.events');
+
     // Audit Logs
     Route::get('/audit-logs', [App\Http\Controllers\Admin\AuditLogController::class, 'index'])->name('audit-logs.index');
     Route::get('/audit-logs/{auditLog}', [App\Http\Controllers\Admin\AuditLogController::class, 'show'])->name('audit-logs.show');

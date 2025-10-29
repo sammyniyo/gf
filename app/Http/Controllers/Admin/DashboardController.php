@@ -156,6 +156,52 @@ class DashboardController extends Controller
     }
 
     /**
+     * Get events for calendar in JSON format
+     */
+    public function getCalendarEvents()
+    {
+        $events = Event::all()->map(function($event) {
+            return [
+                'id' => $event->id,
+                'title' => $event->title,
+                'start' => $event->start_at->toIso8601String(),
+                'end' => $event->end_at ? $event->end_at->toIso8601String() : null,
+                'url' => route('admin.events.show', $event),
+                'backgroundColor' => $this->getEventColor($event),
+                'borderColor' => $this->getEventColor($event),
+                'textColor' => '#ffffff',
+                'extendedProps' => [
+                    'type' => $event->type,
+                    'location' => $event->location,
+                    'registrations' => $event->registrations()->count(),
+                    'capacity' => $event->capacity,
+                ],
+            ];
+        });
+
+        return response()->json($events);
+    }
+
+    /**
+     * Get color based on event type
+     */
+    private function getEventColor($event)
+    {
+        if ($event->isPast()) {
+            return '#94a3b8'; // slate-400
+        }
+
+        return match(strtoupper($event->type ?? '')) {
+            'CONCERT' => '#8b5cf6', // violet
+            'WORKSHOP' => '#3b82f6', // blue
+            'REHEARSAL' => '#10b981', // emerald
+            'MEETING' => '#f59e0b', // amber
+            'PERFORMANCE' => '#ec4899', // pink
+            default => '#6366f1', // indigo
+        };
+    }
+
+    /**
      * Send birthday emails to members with birthdays today
      */
     public function sendBirthdayEmails()

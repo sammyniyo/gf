@@ -222,16 +222,25 @@
     const form = document.querySelector('form');
     const contentField = document.querySelector('#content');
 
+    // Update content field continuously as user types
+    quill.on('text-change', function() {
+        contentField.value = quill.root.innerHTML;
+        console.log('Content updated:', quill.getText().trim().length, 'characters');
+    });
+
     form.addEventListener('submit', function(e) {
-        console.log('Form submit triggered');
+        console.log('📝 Form submit triggered');
 
         // Get content from Quill editor
         const content = quill.root.innerHTML;
         const textContent = quill.getText().trim();
+
+        // IMPORTANT: Update the hidden field BEFORE validation
         contentField.value = content;
 
         console.log('Content HTML:', content);
         console.log('Content text length:', textContent.length);
+        console.log('Content field value:', contentField.value);
         console.log('Title:', document.getElementById('title').value);
         console.log('Category:', document.querySelector('[name="category"]').value);
 
@@ -246,7 +255,15 @@
             // Show error message
             alert('⚠️ Please enter story content (at least 5 characters)');
 
-            console.error('Form validation failed: Content too short');
+            console.error('❌ Form validation failed: Content too short');
+            return false;
+        }
+
+        // Ensure the field has a value
+        if (!contentField.value || contentField.value.trim() === '') {
+            e.preventDefault();
+            alert('⚠️ Content field is empty. Please enter content.');
+            console.error('❌ Content field is empty');
             return false;
         }
 
@@ -265,6 +282,7 @@
         }
 
         console.log('✅ Form submitting... validation passed!');
+        console.log('Final content value:', contentField.value.substring(0, 100) + '...');
     });
 
     // Auto-generate slug from title

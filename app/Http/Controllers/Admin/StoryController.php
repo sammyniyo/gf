@@ -56,10 +56,23 @@ class StoryController extends Controller
      */
     public function store(Request $request)
     {
+        // Debug: Log what we're receiving
+        \Log::info('Story submission received', [
+            'has_content' => $request->has('content'),
+            'content_length' => strlen($request->input('content', '')),
+            'content_preview' => substr($request->input('content', ''), 0, 100),
+            'all_fields' => array_keys($request->all())
+        ]);
+
+        // Custom validation for content field (Quill editor)
+        $request->merge([
+            'content' => $request->input('content', '')
+        ]);
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'nullable|string|unique:stories,slug',
-            'content' => 'required|string',
+            'content' => 'required|string|min:10',
             'excerpt' => 'nullable|string|max:500',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'category' => 'required|string',
@@ -72,6 +85,14 @@ class StoryController extends Controller
             'is_featured' => 'nullable|boolean',
             'allow_comments' => 'nullable|boolean',
         ]);
+
+        // Additional check for empty Quill content (e.g., "<p><br></p>")
+        $strippedContent = strip_tags($validated['content']);
+        if (strlen(trim($strippedContent)) < 5) {
+            return back()
+                ->withInput()
+                ->withErrors(['content' => 'The content field must contain at least 5 characters of actual text.']);
+        }
 
         // Handle featured image upload
         if ($request->hasFile('featured_image')) {

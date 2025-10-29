@@ -901,11 +901,17 @@
             }
         });
     })();
+</script>
 
+<!-- FullCalendar CSS & JS - Load before initialization -->
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+
+<script>
     // FullCalendar Initialization
     (function() {
         var calendarEl = document.getElementById('eventsCalendar');
-        
+
         if (calendarEl) {
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -925,7 +931,7 @@
                 eventMouseEnter: function(info) {
                     const event = info.event;
                     const props = event.extendedProps;
-                    
+
                     let tooltip = '<div style="padding: 8px; background: white; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); max-width: 250px;">';
                     tooltip += '<div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">' + event.title + '</div>';
                     if (props.location) {
@@ -939,14 +945,14 @@
                         tooltip += '</div>';
                     }
                     tooltip += '</div>';
-                    
+
                     const tooltipEl = document.createElement('div');
                     tooltipEl.innerHTML = tooltip;
                     tooltipEl.style.position = 'absolute';
                     tooltipEl.style.zIndex = '9999';
                     tooltipEl.id = 'event-tooltip';
                     document.body.appendChild(tooltipEl);
-                    
+
                     const rect = info.el.getBoundingClientRect();
                     tooltipEl.style.left = rect.left + 'px';
                     tooltipEl.style.top = (rect.bottom + 5) + 'px';
@@ -970,14 +976,10 @@
                     }
                 }
             });
-            
+
             calendar.render();
         }
     })();
 </script>
-
-<!-- FullCalendar CSS & JS -->
-<link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css' rel='stylesheet' />
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
 
 @endpush

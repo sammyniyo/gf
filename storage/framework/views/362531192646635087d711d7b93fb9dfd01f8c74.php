@@ -127,7 +127,7 @@
 
                     <!-- Quote -->
                     <blockquote class="text-gray-700 text-base leading-relaxed mb-6">
-                        "Imana umuremyi nyiribyose yemeye gupfa kubera icyaha cy'umuntu. Ku iherezo ry'ibihe abacunguwe bazatembera ku yindi mibumbe berekanywa nkabaneshi batsinze satani burundu. Imana iduhane umugisha tube muri uwo mugabanembe."
+                        "Imana umuremyi nyiribyose yemeye gupfa kubera icyaha cy'umuntu. Ku iherezo ry'ibihe abacunguwe bazatembera ku yindi mibumbe berekanywa nkabaneshi batsinze satani burundu. Imana iduhane umugisha tube muri uwo mugabane."
                     </blockquote>
 
                     <!-- Author -->

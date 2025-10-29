@@ -160,7 +160,59 @@ class SpotifyService
     }
 
     /**
-     * Get featured tracks for the homepage (now using latest releases)
+     * Get album tracks
+     */
+    public function getAlbumTracks($albumId)
+    {
+        try {
+            $accessToken = $this->getAccessToken();
+
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $accessToken,
+            ])->get("https://api.spotify.com/v1/albums/{$albumId}/tracks");
+
+            if ($response->successful()) {
+                $data = $response->json();
+                return $data['items'] ?? [];
+            }
+
+            return [];
+        } catch (\Exception $e) {
+            \Log::error('Spotify API Error: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    /**
+     * Get artist's singles only
+     */
+    public function getArtistSingles($artistId, $limit = 10)
+    {
+        try {
+            $accessToken = $this->getAccessToken();
+
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $accessToken,
+            ])->get("https://api.spotify.com/v1/artists/{$artistId}/albums", [
+                'market' => 'US',
+                'include_groups' => 'single', // Only singles
+                'limit' => $limit
+            ]);
+
+            if ($response->successful()) {
+                $data = $response->json();
+                return $data['items'] ?? [];
+            }
+
+            return [];
+        } catch (\Exception $e) {
+            \Log::error('Spotify API Error: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    /**
+     * Get featured tracks for the homepage (now using tracks from latest single releases)
      */
     public function getFeaturedTracks()
     {
@@ -170,35 +222,55 @@ class SpotifyService
             // Use God's Family Choir specific artist ID
             $artistId = '6qAFmjsmVuuXZEwzrIYy5J';
 
-            // Get latest albums/singles
-            $albums = $this->getArtistAlbums($artistId, 6);
-            if (empty($albums)) {
+            // Get latest singles only
+            $singles = $this->getArtistSingles($artistId, 6);
+            if (empty($singles)) {
                 // If the artist ID fails, return null to show fallback message
                 return null;
             }
 
-            // Convert albums to tracks format for compatibility
-            $tracks = array_map(function($album) {
-                return [
-                    'id' => $album['id'],
-                    'name' => $album['name'],
-                    'album' => [
-                        'name' => $album['name'],
-                        'images' => $album['images'] ?? [],
-                        'release_date' => $album['release_date'] ?? '',
-                    ],
-                    'artists' => $album['artists'] ?? [],
-                    'external_urls' => $album['external_urls'] ?? [],
-                    'uri' => $album['uri'] ?? '',
-                    'type' => $album['album_type'] ?? 'album',
-                    'release_date' => $album['release_date'] ?? '',
-                    'total_tracks' => $album['total_tracks'] ?? 0,
-                ];
-            }, $albums);
+            $allTracks = [];
+
+            // Get tracks from each single
+            foreach ($singles as $single) {
+                // Get full single details to include tracks
+                $singleResponse = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $accessToken,
+                ])->get("https://api.spotify.com/v1/albums/{$single['id']}");
+
+                if ($singleResponse->successful()) {
+                    $fullSingle = $singleResponse->json();
+                    $tracks = $fullSingle['tracks']['items'] ?? [];
+
+                    // For singles, usually take the first/main track
+                    if (!empty($tracks)) {
+                        $track = $tracks[0]; // Singles typically have 1 main track
+                        $allTracks[] = [
+                            'id' => $track['id'],
+                            'name' => $track['name'],
+                            'duration_ms' => $track['duration_ms'] ?? 0,
+                            'album' => [
+                                'name' => $fullSingle['name'],
+                                'images' => $fullSingle['images'] ?? [],
+                                'release_date' => $fullSingle['release_date'] ?? '',
+                                'album_type' => 'single',
+                            ],
+                            'artists' => $track['artists'] ?? [],
+                            'external_urls' => $track['external_urls'] ?? [],
+                            'uri' => $track['uri'] ?? '',
+                            'preview_url' => $track['preview_url'] ?? null,
+                            'track_number' => $track['track_number'] ?? 0,
+                        ];
+                    }
+                }
+            }
+
+            // Take top 6 singles
+            $allTracks = array_slice($allTracks, 0, 6);
 
             return [
                 'tracks' => [
-                    'items' => $tracks
+                    'items' => $allTracks
                 ]
             ];
         } catch (\Exception $e) {

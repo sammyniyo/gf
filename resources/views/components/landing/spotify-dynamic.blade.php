@@ -51,13 +51,13 @@
                 Our Music
             </span>
             <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                Latest <span class="bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent">Releases</span>
+                Latest <span class="bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent">Singles</span>
             </h2>
             <p class="text-gray-600 text-sm max-w-xl mx-auto">
                 @if($spotifyTracks && isset($spotifyTracks['tracks']['items']) && count($spotifyTracks['tracks']['items']) > 0)
-                    Our newest albums and singles on Spotify
+                    Our newest single releases on Spotify
                 @else
-                    Connect your Spotify API to showcase your latest releases
+                    Connect your Spotify API to showcase your latest singles
                 @endif
             </p>
         </div>
@@ -116,20 +116,20 @@
 
                                 <!-- Additional Info -->
                                 <div class="flex items-center justify-between mt-2 text-xs text-gray-400">
-                                    @if(isset($track['release_date']))
+                                    @if(isset($track['duration_ms']))
                                         <span class="flex items-center gap-1">
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                            </svg>
+                                            {{ app('App\Services\SpotifyService')->formatDuration($track['duration_ms']) }}
+                                        </span>
+                                    @endif
+                                    @if(isset($track['album']['release_date']))
+                                        <span class="flex items-center gap-1 text-emerald-600 font-semibold">
                                             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
                                             </svg>
-                                            {{ \Carbon\Carbon::parse($track['release_date'])->format('M Y') }}
-                                        </span>
-                                    @endif
-                                    @if(isset($track['total_tracks']))
-                                        <span class="flex items-center gap-1 text-emerald-600 font-semibold">
-                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/>
-                                            </svg>
-                                            {{ $track['total_tracks'] }} {{ Str::plural('track', $track['total_tracks']) }}
+                                            {{ \Carbon\Carbon::parse($track['album']['release_date'])->format('M Y') }}
                                         </span>
                                     @endif
                                 </div>

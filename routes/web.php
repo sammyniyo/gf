@@ -109,8 +109,13 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/story', [StoryController::class, 'index'])->name('story');
-Route::get('/story/{story}', [StoryController::class, 'show'])->name('story.show');
+// Legacy story routes (redirect to new /stories routes)
+Route::get('/story', function () {
+    return redirect()->route('stories.index');
+});
+Route::get('/story/{story}', function ($story) {
+    return redirect()->route('story.show', $story);
+});
 
 // Devotions (Protected by Page Settings)
 Route::middleware(['page.status:devotions'])->group(function () {

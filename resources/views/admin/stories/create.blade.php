@@ -67,7 +67,7 @@
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">Content <span class="text-rose-500">*</span></label>
                     <div id="editor-container" class="bg-white rounded-lg border border-slate-300"></div>
-                    <textarea name="content" id="content" class="hidden" required>{{ old('content') }}</textarea>
+                    <textarea name="content" id="content" class="hidden">{{ old('content') }}</textarea>
                     @error('content')<p class="mt-1 text-sm text-rose-600">{{ $message }}</p>@enderror
                         </div>
                     </div>
@@ -238,7 +238,14 @@
         // Check if content is actually empty (less strict check)
         if (textContent.length < 5) {
             e.preventDefault();
-            alert('Please enter some story content before submitting (at least 5 characters).');
+            e.stopPropagation();
+
+            // Scroll to editor
+            document.getElementById('editor-container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Show error message
+            alert('⚠️ Please enter story content (at least 5 characters)');
+
             console.error('Form validation failed: Content too short');
             return false;
         }
@@ -257,7 +264,7 @@
             }, 10000);
         }
 
-        console.log('Form submitting... validation passed!');
+        console.log('✅ Form submitting... validation passed!');
     });
 
     // Auto-generate slug from title

@@ -187,44 +187,77 @@
 </div>
 
 <!-- Cleanup Modal -->
-<div id="cleanupModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+<div id="cleanupModal" class="hidden fixed inset-0 z-50 overflow-y-auto backdrop-blur-sm">
     <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
-        <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" onclick="document.getElementById('cleanupModal').classList.add('hidden')"></div>
+        <!-- Backdrop -->
+        <div class="fixed inset-0 transition-opacity bg-slate-900/50" onclick="document.getElementById('cleanupModal').classList.add('hidden')"></div>
 
-        <div class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <!-- Modal -->
+        <div class="relative inline-block overflow-hidden text-left align-bottom transition-all transform glass-card sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
             <form method="POST" action="{{ route('admin.audit-logs.cleanup') }}">
                 @csrf
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto bg-red-100 rounded-full sm:mx-0 sm:h-10 sm:w-10">
-                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="px-6 pt-6 pb-4">
+                    <div class="sm:flex sm:items-start gap-4">
+                        <!-- Icon -->
+                        <div class="flex items-center justify-center flex-shrink-0 w-14 h-14 mx-auto bg-gradient-to-br from-red-100 to-orange-100 rounded-2xl shadow-lg shadow-red-500/20 sm:mx-0">
+                            <svg class="w-7 h-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
                         </div>
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                            <h3 class="text-lg font-medium leading-6 text-gray-900">
+                        
+                        <!-- Content -->
+                        <div class="mt-4 text-center sm:mt-0 sm:text-left w-full">
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">
                                 Cleanup Old Audit Logs
                             </h3>
-                            <div class="mt-4">
-                                <label class="block text-sm font-medium text-slate-700 mb-2">
+                            <p class="text-sm text-slate-600 mb-5">
+                                Permanently delete audit logs older than a specified period. This action cannot be undone.
+                            </p>
+                            
+                            <!-- Input -->
+                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">
                                     Delete logs older than (days):
                                 </label>
                                 <input type="number" name="days" value="90" min="1" max="365" required
-                                    class="w-full rounded-lg border-slate-300 focus:border-red-500 focus:ring-red-500">
-                                <p class="mt-2 text-sm text-slate-500">
-                                    This action cannot be undone. Audit logs older than the specified days will be permanently deleted.
+                                    class="w-full rounded-xl border-slate-300 shadow-sm focus:border-red-500 focus:ring-red-500 text-lg font-semibold text-slate-900">
+                                <p class="mt-3 text-xs text-slate-500 flex items-start gap-2">
+                                    <svg class="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span>Recommended: Keep logs for at least 90 days for compliance and troubleshooting purposes.</span>
                                 </p>
+                            </div>
+
+                            <!-- Warning Box -->
+                            <div class="mt-4 p-3 bg-red-50 border border-red-200 rounded-xl">
+                                <div class="flex items-start gap-2">
+                                    <svg class="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                    </svg>
+                                    <div class="text-xs text-red-800">
+                                        <span class="font-semibold">Warning:</span> This will permanently delete all matching audit logs. This action cannot be reversed.
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-3">
+                
+                <!-- Actions -->
+                <div class="bg-gradient-to-r from-slate-50 to-slate-100 px-6 py-4 sm:flex sm:flex-row-reverse gap-3 border-t border-slate-200">
                     <button type="submit"
-                        class="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        class="w-full inline-flex justify-center items-center gap-2 rounded-xl px-5 py-2.5 bg-gradient-to-r from-red-600 to-red-700 text-sm font-semibold text-white shadow-lg shadow-red-600/30 hover:shadow-red-600/50 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all sm:w-auto">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
                         Delete Logs
                     </button>
                     <button type="button" onclick="document.getElementById('cleanupModal').classList.add('hidden')"
-                        class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
+                        class="mt-3 w-full inline-flex justify-center items-center gap-2 rounded-xl border-2 border-slate-200 px-5 py-2.5 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-all sm:mt-0 sm:w-auto">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
                         Cancel
                     </button>
                 </div>

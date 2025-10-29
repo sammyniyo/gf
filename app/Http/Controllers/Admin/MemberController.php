@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Jobs\SendWelcomeEmail;
 use App\Services\NotificationService;
+use App\Services\AuditLogger;
 
 class MemberController extends Controller
 {
@@ -105,6 +106,9 @@ class MemberController extends Controller
         // Create member
         $member = Member::create($data);
 
+        // Log audit
+        AuditLogger::created($member);
+
         // Create notification for admins
         NotificationService::newMemberRegistration($member);
 
@@ -126,6 +130,9 @@ class MemberController extends Controller
      */
     public function show(Member $member)
     {
+        // Log audit (optional - can be disabled if too verbose)
+        // AuditLogger::viewed($member);
+
         return view('admin.members.show', compact('member'));
     }
 
@@ -155,10 +162,18 @@ class MemberController extends Controller
             'notes' => $request->notes,
         ]);
 
+        // Log audit
+        if ($oldStatus !== $newStatus) {
+            AuditLogger::statusChanged($member, $oldStatus, $newStatus);
+        } else {
+            AuditLogger::updated($member, [], [], 'Updated member notes');
+        }
+
         // Send welcome email when member status changes from pending to active
         if ($oldStatus !== 'active' && $newStatus === 'active') {
             try {
                 \Mail::to($member->email)->send(new \App\Mail\MemberWelcomeMail($member));
+                AuditLogger::emailSent($member->email, 'Welcome Email', $member);
             } catch (\Exception $e) {
                 \Log::error('Failed to send welcome email to member: ' . $e->getMessage());
                 // Don't fail the update if email fails
@@ -174,6 +189,11 @@ class MemberController extends Controller
      */
     public function destroy(Member $member)
     {
+        $memberName = $member->full_name;
+
+        // Log audit before deleting
+        AuditLogger::deleted($member);
+
         // Delete profile photo if exists
         if ($member->profile_photo) {
             \Storage::delete('public/member-photos/' . $member->profile_photo);
@@ -191,6 +211,9 @@ class MemberController extends Controller
     public function export()
     {
         $members = Member::all();
+
+        // Log audit
+        AuditLogger::exported('members', $members->count());
 
         $filename = 'members_export_' . date('Y-m-d_H-i-s') . '.csv';
 

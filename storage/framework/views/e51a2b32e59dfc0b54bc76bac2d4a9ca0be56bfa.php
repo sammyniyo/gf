@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Admin Panel') - {{ config('app.name') }}</title>
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <title><?php echo $__env->yieldContent('title', 'Admin Panel'); ?> - <?php echo e(config('app.name')); ?></title>
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
@@ -30,7 +30,7 @@
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 
     <!-- Chart.js for charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -510,23 +510,23 @@
     </style>
 
 
-    @stack('styles')
+    <?php echo $__env->yieldPushContent('styles'); ?>
 </head>
 <body class="min-h-screen transition-colors admin-body">
     <div id="admin-toast-container" aria-live="polite" aria-atomic="true"></div>
     <script>
         window.__adminToastQueue = window.__adminToastQueue || [];
     </script>
-    @if(session('success'))
+    <?php if(session('success')): ?>
         <script>
-            window.__adminToastQueue.push({ type: 'success', message: @json(session('success')) });
+            window.__adminToastQueue.push({ type: 'success', message: <?php echo json_encode(session('success'), 15, 512) ?> });
         </script>
-    @endif
-    @if(session('error'))
+    <?php endif; ?>
+    <?php if(session('error')): ?>
         <script>
-            window.__adminToastQueue.push({ type: 'error', message: @json(session('error')) });
+            window.__adminToastQueue.push({ type: 'error', message: <?php echo json_encode(session('error'), 15, 512) ?> });
         </script>
-    @endif
+    <?php endif; ?>
     <div class="flex min-h-screen">
         <!-- Sidebar -->
         <aside class="hidden lg:flex lg:flex-col lg:w-72 admin-sidebar lg:fixed lg:inset-y-0 lg:left-0 lg:z-40 lg:h-screen lg:overflow-y-auto">
@@ -550,7 +550,7 @@
                         </svg>
                     </div>
                     <div class="flex-1 min-w-0">
-                        <p class="text-sm font-semibold text-slate-900 truncate">{{ Auth::user()->name }}</p>
+                        <p class="text-sm font-semibold text-slate-900 truncate"><?php echo e(Auth::user()->name); ?></p>
                         <p class="text-xs font-medium text-slate-500 truncate">Administrator</p>
                     </div>
                 </div>
@@ -560,34 +560,34 @@
                 <div>
                     <p class="px-3 text-xs font-semibold uppercase section-title">Overview</p>
                     <div class="mt-3 space-y-1.5">
-                        <a href="{{ route('admin.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.dashboard')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.dashboard') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                             </svg>
                             <span class="flex-1">Dashboard</span>
-                            @if(request()->routeIs('admin.dashboard'))
+                            <?php if(request()->routeIs('admin.dashboard')): ?>
                                 <span class="sidebar-dot"></span>
-                            @endif
+                            <?php endif; ?>
                         </a>
 
-                        <a href="{{ route('admin.events.index') }}" class="sidebar-link {{ request()->routeIs('admin.events.*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.events.index')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.events.*') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             <span class="flex-1">Events</span>
-                            @if(isset($upcoming_events_count) && $upcoming_events_count > 0)
-                                <span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold admin-pill admin-pill--accent">{{ $upcoming_events_count }}</span>
-                            @endif
+                            <?php if(isset($upcoming_events_count) && $upcoming_events_count > 0): ?>
+                                <span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold admin-pill admin-pill--accent"><?php echo e($upcoming_events_count); ?></span>
+                            <?php endif; ?>
                         </a>
 
-                        <a href="{{ route('admin.registrations.index') }}" class="sidebar-link {{ request()->routeIs('admin.registrations.*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.registrations.index')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.registrations.*') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
                             </svg>
                             <span class="flex-1">Registrations</span>
                         </a>
 
-                        <a href="{{ route('admin.members.index') }}" class="sidebar-link {{ request()->routeIs('admin.members.*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.members.index')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.members.*') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
@@ -596,24 +596,24 @@
 
                         <!-- Quick create links removed from sidebar (kept in header) -->
 
-                        <a href="{{ route('admin.contacts.index') }}" class="sidebar-link {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.contacts.index')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.contacts.*') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                             <span class="flex-1">Messages</span>
-                            @if(isset($unread_contacts_count) && $unread_contacts_count > 0)
-                                <span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold admin-pill admin-pill--alert animate-pulse">{{ $unread_contacts_count }}</span>
-                            @endif
+                            <?php if(isset($unread_contacts_count) && $unread_contacts_count > 0): ?>
+                                <span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold admin-pill admin-pill--alert animate-pulse"><?php echo e($unread_contacts_count); ?></span>
+                            <?php endif; ?>
                         </a>
 
-                        <a href="{{ route('admin.users.index') }}" class="sidebar-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.users.index')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.users.*') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                             </svg>
                             <span class="flex-1">Admin Users</span>
                         </a>
 
-                        <a href="{{ route('admin.committees.index') }}" class="sidebar-link {{ request()->routeIs('admin.committees.*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.committees.index')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.committees.*') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                             </svg>
@@ -625,62 +625,62 @@
                 <div>
                     <p class="px-3 text-xs font-bold uppercase tracking-widest section-title">Content</p>
                     <div class="mt-3 space-y-1.5">
-                        <a href="{{ route('admin.stories.index') }}" class="sidebar-link {{ request()->routeIs('admin.stories.*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.stories.index')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.stories.*') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                             </svg>
                             <span class="flex-1">Behind Stories</span>
                         </a>
 
-                        <a href="{{ route('admin.devotions.index') }}" class="sidebar-link {{ request()->routeIs('admin.devotions.*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.devotions.index')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.devotions.*') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                             </svg>
                             <span class="flex-1">Devotions</span>
                         </a>
 
-                        <a href="{{ route('admin.meetings.index') }}" class="sidebar-link {{ request()->routeIs('admin.meetings.*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.meetings.index')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.meetings.*') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             <span class="flex-1">Meetings</span>
                         </a>
 
-                        <a href="{{ route('admin.contributions.index') }}" class="sidebar-link {{ request()->routeIs('admin.contributions.*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.contributions.index')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.contributions.*') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             <span class="flex-1">Contributions</span>
                         </a>
 
-                        <a href="{{ route('admin.resources.index') }}" class="sidebar-link {{ request()->routeIs('admin.resources.*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.resources.index')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.resources.*') ? 'active' : ''); ?>">
                             <svg fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
                                 <path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
                             </svg>
                             <span class="flex-1">Resources</span>
-                            @php
+                            <?php
                                 $resourcesCount = \App\Models\Resource::count();
-                            @endphp
-                            @if($resourcesCount > 0)
-                                <span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold admin-pill admin-pill--accent">{{ $resourcesCount }}</span>
-                            @endif
+                            ?>
+                            <?php if($resourcesCount > 0): ?>
+                                <span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold admin-pill admin-pill--accent"><?php echo e($resourcesCount); ?></span>
+                            <?php endif; ?>
                         </a>
 
-                        <a href="{{ route('admin.albums.index') }}" class="sidebar-link {{ request()->routeIs('admin.albums.*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.albums.index')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.albums.*') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                             </svg>
                             <span class="flex-1">Albums (Shop)</span>
-                            @php
+                            <?php
                                 $albumsCount = \App\Models\Album::where('is_active', true)->count();
-                            @endphp
-                            @if($albumsCount > 0)
-                                <span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold admin-pill admin-pill--accent">{{ $albumsCount }}</span>
-                            @endif
+                            ?>
+                            <?php if($albumsCount > 0): ?>
+                                <span class="inline-flex items-center px-2 py-0.5 text-xs font-semibold admin-pill admin-pill--accent"><?php echo e($albumsCount); ?></span>
+                            <?php endif; ?>
                         </a>
 
-                        <a href="{{ route('admin.page-settings.index') }}" class="sidebar-link {{ request()->routeIs('admin.page-settings.*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.page-settings.index')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.page-settings.*') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -688,14 +688,14 @@
                             <span class="flex-1">Page Settings</span>
                         </a>
 
-                        <a href="{{ route('admin.site-settings.index') }}" class="sidebar-link {{ request()->routeIs('admin.site-settings.*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.site-settings.index')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.site-settings.*') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                             </svg>
                             <span class="flex-1">Site Settings</span>
                         </a>
 
-                        <a href="{{ route('admin.audit-logs.index') }}" class="sidebar-link {{ request()->routeIs('admin.audit-logs.*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.audit-logs.index')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.audit-logs.*') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
@@ -707,14 +707,14 @@
                 <div>
                     <p class="px-3 text-xs font-semibold uppercase section-title">Workspace</p>
                     <div class="mt-3 space-y-1.5">
-                        <a href="{{ route('home') }}" target="_blank" class="sidebar-link">
+                        <a href="<?php echo e(route('home')); ?>" target="_blank" class="sidebar-link">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                             </svg>
                             <span class="flex-1">View Website</span>
                         </a>
 
-                        <a href="{{ route('admin.profile') }}" class="sidebar-link {{ request()->routeIs('admin.profile') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.profile')); ?>" class="sidebar-link <?php echo e(request()->routeIs('admin.profile') ? 'active' : ''); ?>">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -726,8 +726,8 @@
             </nav>
 
             <div class="px-6 py-6 mt-auto sidebar-footer">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
+                <form method="POST" action="<?php echo e(route('logout')); ?>">
+                    <?php echo csrf_field(); ?>
                     <button type="submit" class="admin-danger-btn w-full inline-flex items-center justify-center gap-2 px-4 py-3 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-offset-2 focus:ring-offset-white">
                         <svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -750,7 +750,7 @@
                         </div>
                         <div>
                             <div class="flex items-center gap-2.5">
-                                <h2 class="text-xl font-semibold text-slate-900 tracking-tight">@yield('page-title', 'Dashboard')</h2>
+                                <h2 class="text-xl font-semibold text-slate-900 tracking-tight"><?php echo $__env->yieldContent('page-title', 'Dashboard'); ?></h2>
                                 <span class="inline-flex items-center gap-1.5 admin-header__badge">
                                     <span class="admin-header__badge-dot animate-pulse"></span>
                                     Live
@@ -777,25 +777,25 @@
                                  x-transition:leave-end="opacity-0 scale-95"
                                  class="absolute right-0 mt-2 w-56 rounded-xl border border-slate-200 bg-white/95 backdrop-blur-md py-2 shadow-xl shadow-slate-200 z-50"
                                  style="display:none;">
-                                <a href="{{ route('admin.events.create') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors rounded-lg">
+                                <a href="<?php echo e(route('admin.events.create')); ?>" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors rounded-lg">
                                     <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                     </svg>
                                     New Event
                                 </a>
-                                <a href="{{ route('admin.devotions.create') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors rounded-lg">
+                                <a href="<?php echo e(route('admin.devotions.create')); ?>" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors rounded-lg">
                                     <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                     </svg>
                                     New Devotion
                                 </a>
-                                <a href="{{ route('admin.stories.create') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors rounded-lg">
+                                <a href="<?php echo e(route('admin.stories.create')); ?>" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors rounded-lg">
                                     <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
                                     </svg>
                                     New Story
                                 </a>
-                                <a href="{{ route('admin.resources.create') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors rounded-lg">
+                                <a href="<?php echo e(route('admin.resources.create')); ?>" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors rounded-lg">
                                     <svg class="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
                                         <path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
@@ -803,7 +803,7 @@
                                     Upload Resource
                                 </a>
                                 <div class="my-1.5 border-t border-slate-200"></div>
-                                <a href="{{ route('registration.member') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors rounded-lg">
+                                <a href="<?php echo e(route('registration.member')); ?>" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors rounded-lg">
                                     <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                                     </svg>
@@ -900,16 +900,16 @@
                             <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span id="current-time" class="text-slate-600">{{ now()->format('M d, Y · H:i') }}</span>
+                            <span id="current-time" class="text-slate-600"><?php echo e(now()->format('M d, Y · H:i')); ?></span>
                         </div>
 
                         <!-- Profile Dropdown -->
                         <div x-data="{ open: false }" class="relative">
                             <button @click="open=!open" @click.away="open=false" class="admin-icon-button inline-flex items-center gap-2.5 pl-2 pr-3 py-2 text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2 focus:ring-offset-white">
                                 <div class="flex items-center justify-center w-8 h-8 rounded-lg admin-avatar-badge">
-                                    <span class="text-sm font-bold">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>
+                                    <span class="text-sm font-bold"><?php echo e(strtoupper(substr(Auth::user()->name, 0, 1))); ?></span>
                                 </div>
-                                <span class="hidden md:block text-sm font-semibold text-slate-600">{{ Auth::user()->name }}</span>
+                                <span class="hidden md:block text-sm font-semibold text-slate-600"><?php echo e(Auth::user()->name); ?></span>
                                 <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                 </svg>
@@ -926,18 +926,18 @@
                                  class="absolute right-0 mt-2 w-56 origin-top-right rounded-xl border border-slate-200 bg-white/95 backdrop-blur-md shadow-xl shadow-slate-200 z-50"
                                  style="display:none;">
                                 <div class="px-4 py-3 border-b border-slate-200">
-                                    <p class="text-sm font-semibold text-slate-900">{{ Auth::user()->name }}</p>
-                                    <p class="text-xs text-slate-400 truncate">{{ Auth::user()->email }}</p>
+                                    <p class="text-sm font-semibold text-slate-900"><?php echo e(Auth::user()->name); ?></p>
+                                    <p class="text-xs text-slate-400 truncate"><?php echo e(Auth::user()->email); ?></p>
                                 </div>
                                 <div class="py-2 space-y-1">
-                                    <a href="{{ route('admin.profile') }}" class="flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 transition rounded-lg">
+                                    <a href="<?php echo e(route('admin.profile')); ?>" class="flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 transition rounded-lg">
                                         <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                         </svg>
                                         Profile Settings
                                     </a>
-                                    <a href="{{ route('home') }}" target="_blank" class="flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 transition rounded-lg">
+                                    <a href="<?php echo e(route('home')); ?>" target="_blank" class="flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 transition rounded-lg">
                                         <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
                                         </svg>
@@ -945,8 +945,8 @@
                                     </a>
                                 </div>
                                 <div class="border-t border-slate-200 py-2">
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
+                                    <form method="POST" action="<?php echo e(route('logout')); ?>">
+                                        <?php echo csrf_field(); ?>
                                         <button type="submit" class="flex items-center gap-3 w-full px-4 py-2 text-sm text-rose-600 hover:bg-rose-50 transition rounded-lg">
                                             <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
@@ -964,7 +964,7 @@
             <main class="admin-main flex-1 overflow-y-auto">
                 <div class="py-10">
                     <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
-                        @yield('content')
+                        <?php echo $__env->yieldContent('content'); ?>
                     </div>
                 </div>
             </main>
@@ -1187,7 +1187,7 @@
         (function monitorDatabaseStatus() {
             const dbToastId = 'database-status';
             const state = { connected: null };
-            const healthEndpoint = '{{ route("admin.system.health") }}';
+            const healthEndpoint = '<?php echo e(route("admin.system.health")); ?>';
 
             async function check() {
                 if (!navigator.onLine) {
@@ -1326,7 +1326,7 @@
 
                 async fetchNotifications() {
                     try {
-                        const response = await fetch('{{ route("admin.notifications.index") }}', {
+                        const response = await fetch('<?php echo e(route("admin.notifications.index")); ?>', {
                             headers: {
                                 'X-Requested-With': 'XMLHttpRequest',
                                 'Accept': 'application/json',
@@ -1378,7 +1378,7 @@
 
                 async markAllAsRead() {
                     try {
-                        const response = await fetch('{{ route("admin.notifications.read-all") }}', {
+                        const response = await fetch('<?php echo e(route("admin.notifications.read-all")); ?>', {
                             method: 'POST',
                             headers: {
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -1421,6 +1421,7 @@
         }
     </script>
 
-    @stack('scripts')
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 </html>
+<?php /**PATH /Users/user/Documents/gf-1/resources/views/admin/layout.blade.php ENDPATH**/ ?>

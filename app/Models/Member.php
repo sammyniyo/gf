@@ -155,7 +155,16 @@ class Member extends Model
     {
         if ($this->profile_photo) {
             $photoName = basename($this->profile_photo);
-            return asset('storage/member-photos/' . $photoName);
+
+            // Check if file exists in storage
+            $storagePath = storage_path('app/public/member-photos/' . $photoName);
+
+            if (file_exists($storagePath)) {
+                return asset('storage/member-photos/' . $photoName);
+            }
+
+            // Fallback: Log missing file
+            \Log::warning("Member photo not found: {$photoName} for member ID: {$this->id}");
         }
 
         return null;

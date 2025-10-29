@@ -20,6 +20,7 @@ use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\CommitteeController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\StorageController;
 
 
 
@@ -35,6 +36,10 @@ use App\Http\Controllers\PaymentController;
 */
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Fallback storage routes (when symlink is not available)
+Route::get('/storage/member-photos/{filename}', [App\Http\Controllers\StorageController::class, 'memberPhoto'])->name('storage.member-photo');
+Route::get('/storage/{path}', [App\Http\Controllers\StorageController::class, 'serve'])->where('path', '.*')->name('storage.serve');
 
 Route::get('/dashboard', function () {
     // Redirect admins to admin dashboard

@@ -8,17 +8,22 @@
     <div class="glass-card p-6">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div class="flex items-center gap-4">
-                @if($member->profile_photo)
+                @if($member->profile_photo && $member->profile_photo_url)
                     <div class="relative group cursor-pointer" onclick="openImageModal('{{ $member->profile_photo_url }}', '{{ $member->full_name }}')">
                         <img class="h-20 w-20 rounded-full object-cover shadow-lg transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105"
                              src="{{ $member->profile_photo_url }}"
-                             alt="{{ $member->full_name }}">
+                             alt="{{ $member->full_name }}"
+                             onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';">
                         <!-- Zoom Icon Overlay -->
                         <div class="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                             </svg>
                         </div>
+                    </div>
+                    <!-- Fallback avatar (hidden by default, shown if image fails) -->
+                    <div class="h-20 w-20 rounded-full bg-gradient-to-br from-indigo-100 to-slate-100 items-center justify-center shadow-lg" style="display: none;">
+                        <span class="text-2xl font-bold text-indigo-600">{{ substr($member->first_name, 0, 1) }}{{ substr($member->last_name, 0, 1) }}</span>
                     </div>
                 @else
                     <div class="h-20 w-20 rounded-full bg-gradient-to-br from-indigo-100 to-slate-100 flex items-center justify-center shadow-lg">

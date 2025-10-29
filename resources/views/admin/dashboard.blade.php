@@ -119,7 +119,7 @@
                 </h2>
                 <p class="text-sm text-slate-600 mt-1">View all upcoming and past events</p>
             </div>
-            <a href="{{ route('admin.events.create') }}" 
+            <a href="{{ route('admin.events.create') }}"
                 class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -901,5 +901,83 @@
             }
         });
     })();
+
+    // FullCalendar Initialization
+    (function() {
+        var calendarEl = document.getElementById('eventsCalendar');
+        
+        if (calendarEl) {
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,listMonth'
+                },
+                height: 'auto',
+                events: '{{ route('admin.calendar.events') }}',
+                eventClick: function(info) {
+                    info.jsEvent.preventDefault();
+                    if (info.event.url) {
+                        window.location.href = info.event.url;
+                    }
+                },
+                eventMouseEnter: function(info) {
+                    const event = info.event;
+                    const props = event.extendedProps;
+                    
+                    let tooltip = '<div style="padding: 8px; background: white; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); max-width: 250px;">';
+                    tooltip += '<div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">' + event.title + '</div>';
+                    if (props.location) {
+                        tooltip += '<div style="font-size: 12px; color: #64748b; margin-bottom: 2px;">📍 ' + props.location + '</div>';
+                    }
+                    if (props.registrations !== undefined) {
+                        tooltip += '<div style="font-size: 12px; color: #64748b;">👥 ' + props.registrations + ' registered';
+                        if (props.capacity) {
+                            tooltip += ' / ' + props.capacity;
+                        }
+                        tooltip += '</div>';
+                    }
+                    tooltip += '</div>';
+                    
+                    const tooltipEl = document.createElement('div');
+                    tooltipEl.innerHTML = tooltip;
+                    tooltipEl.style.position = 'absolute';
+                    tooltipEl.style.zIndex = '9999';
+                    tooltipEl.id = 'event-tooltip';
+                    document.body.appendChild(tooltipEl);
+                    
+                    const rect = info.el.getBoundingClientRect();
+                    tooltipEl.style.left = rect.left + 'px';
+                    tooltipEl.style.top = (rect.bottom + 5) + 'px';
+                },
+                eventMouseLeave: function(info) {
+                    const tooltip = document.getElementById('event-tooltip');
+                    if (tooltip) {
+                        tooltip.remove();
+                    }
+                },
+                themeSystem: 'standard',
+                buttonText: {
+                    today: 'Today',
+                    month: 'Month',
+                    week: 'Week',
+                    list: 'List'
+                },
+                views: {
+                    dayGridMonth: {
+                        dayMaxEvents: 3
+                    }
+                }
+            });
+            
+            calendar.render();
+        }
+    })();
 </script>
+
+<!-- FullCalendar CSS & JS -->
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+
 @endpush

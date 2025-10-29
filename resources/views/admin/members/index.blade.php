@@ -14,21 +14,6 @@
             <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1.5 text-xs font-semibold text-slate-600">
                 Total: <span class="text-slate-900">{{ $members->total() }}</span>
             </span>
-            <span class="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50/70 px-3 py-1.5 text-xs font-semibold text-indigo-700">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                Members: <span class="text-indigo-900">{{ $members->where('member_type', 'member')->count() }}</span>
-            </span>
-            <span class="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50/70 px-3 py-1.5 text-xs font-semibold text-amber-700">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-                Friends: <span class="text-amber-900">{{ $members->where('member_type', 'friendship')->count() }}</span>
-            </span>
-            <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50/70 px-3 py-1.5 text-xs font-semibold text-emerald-700">
-                Active: <span class="text-emerald-900">{{ $members->where('status', 'active')->count() }}</span>
-            </span>
             <a href="{{ route('admin.members.create') }}"
                class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400/50">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -39,168 +24,177 @@
         </div>
     </div>
 
-    <!-- Filters -->
-    <div class="glass-card p-5">
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            <div>
-                <label for="member-type-filter" class="block mb-2 text-xs font-semibold text-slate-600 uppercase tracking-wide">Type</label>
-                <select id="member-type-filter" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400">
-                    <option value="">All Types</option>
-                    <option value="member">Members</option>
-                    <option value="friendship">Friends</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="status-filter" class="block mb-2 text-xs font-semibold text-slate-600 uppercase tracking-wide">Status</label>
-                <select id="status-filter" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400">
-                    <option value="">All Status</option>
-                    <option value="pending">Pending</option>
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="voice-type-filter" class="block mb-2 text-xs font-semibold text-slate-600 uppercase tracking-wide">Voice Type</label>
-                <select id="voice-type-filter" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400">
-                    <option value="">All Voice Types</option>
-                    <option value="soprano">Soprano</option>
-                    <option value="alto">Alto</option>
-                    <option value="tenor">Tenor</option>
-                    <option value="bass">Bass</option>
-                    <option value="unsure">Unsure</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="experience-filter" class="block mb-2 text-xs font-semibold text-slate-600 uppercase tracking-wide">Experience</label>
-                <select id="experience-filter" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400">
-                    <option value="">All Levels</option>
-                    <option value="beginner">Beginner</option>
-                    <option value="intermediate">Intermediate</option>
-                    <option value="advanced">Advanced</option>
-                    <option value="professional">Professional</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="search-input" class="block mb-2 text-xs font-semibold text-slate-600 uppercase tracking-wide">Search</label>
-                <div class="relative">
-                    <input type="text" id="search-input" placeholder="Search members..."
-                        class="w-full px-3 py-2 pl-9 text-sm border border-slate-200 rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400">
-                    <svg class="absolute w-4 h-4 text-slate-400 left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="glass-card p-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-slate-500">Total Members</p>
+                    <p class="mt-1 text-2xl font-bold text-slate-900">{{ $members->total() }}</p>
+                </div>
+                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-100">
+                    <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                 </div>
             </div>
         </div>
+
+        <div class="glass-card p-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-slate-500">Choir Members</p>
+                    <p class="mt-1 text-2xl font-bold text-slate-900">{{ App\Models\Member::where('member_type', 'member')->count() }}</p>
+                </div>
+                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card p-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-slate-500">Friends</p>
+                    <p class="mt-1 text-2xl font-bold text-slate-900">{{ App\Models\Member::where('member_type', 'friendship')->count() }}</p>
+                </div>
+                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100">
+                    <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+    <div class="glass-card p-5">
+            <div class="flex items-center justify-between">
+            <div>
+                    <p class="text-sm font-medium text-slate-500">Active</p>
+                    <p class="mt-1 text-2xl font-bold text-slate-900">{{ App\Models\Member::where('status', 'active')->count() }}</p>
+                </div>
+                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100">
+                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+            </div>
+
+    <!-- Search & Filters -->
+    <div class="glass-card p-5">
+        <form method="GET" action="{{ route('admin.members.index') }}" class="grid grid-cols-1 gap-4 md:grid-cols-4">
+            <div>
+                <label for="search" class="block mb-2 text-xs font-semibold text-slate-600 uppercase tracking-wide">Search</label>
+                <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Name, email, phone..."
+                    class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400">
+            </div>
+
+            <div>
+                <label for="member_type" class="block mb-2 text-xs font-semibold text-slate-600 uppercase tracking-wide">Type</label>
+                <select name="member_type" id="member_type" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400">
+                    <option value="">All Types</option>
+                    <option value="member" {{ request('member_type') == 'member' ? 'selected' : '' }}>Members</option>
+                    <option value="friendship" {{ request('member_type') == 'friendship' ? 'selected' : '' }}>Friends</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="status" class="block mb-2 text-xs font-semibold text-slate-600 uppercase tracking-wide">Status</label>
+                <select name="status" id="status" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400">
+                    <option value="">All Status</option>
+                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
+                    <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                </select>
+            </div>
+
+            <div class="flex items-end gap-2">
+                <button type="submit" class="flex-1 px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-lg transition hover:bg-indigo-500">
+                    Filter
+                </button>
+                <a href="{{ route('admin.members.index') }}" class="px-4 py-2 text-sm font-semibold text-slate-600 bg-slate-100 rounded-lg transition hover:bg-slate-200">
+                    Reset
+                </a>
+            </div>
+        </form>
     </div>
 
-    <!-- Members Grid -->
-    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3" id="members-grid">
+    <!-- Members Table -->
+    <div class="glass-card overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-slate-50 border-b border-slate-200">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Member</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Member ID</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Contact</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Type</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Voice</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Status</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Joined</th>
+                        <th class="px-4 py-3 text-right text-xs font-semibold text-slate-600 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200">
         @forelse($members as $member)
-            <div class="member-card glass-card overflow-hidden transition-all hover:shadow-lg"
-                data-member-type="{{ strtolower($member->member_type ?? 'member') }}"
-                data-status="{{ strtolower($member->status) }}"
-                data-voice-type="{{ strtolower($member->voice_type ?? '') }}"
-                data-experience="{{ strtolower($member->musical_experience ?? '') }}"
-                data-search="{{ strtolower($member->first_name . ' ' . $member->last_name . ' ' . ($member->occupation ?? '')) }}">
-
-                <!-- Member Header -->
-                <div class="relative h-24 bg-gradient-to-br from-indigo-100 to-slate-100">
-                    <div class="absolute bottom-0 left-0 right-0 px-5 pb-4 transform translate-y-1/2">
-                        <div class="flex items-end justify-between">
-                            <div class="relative">
-                                @if($member->profile_photo ?? false)
-                                    <div class="relative group cursor-pointer" onclick="openImageModal('{{ $member->profile_photo_url }}', '{{ $member->first_name }} {{ $member->last_name }}')">
-                                        <img class="object-cover w-16 h-16 border-4 border-white rounded-xl shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-2xl"
-                                             src="{{ $member->profile_photo_url }}"
-                                             alt="{{ $member->first_name }}">
-                                        <!-- Zoom Icon -->
-                                        <div class="absolute inset-0 flex items-center justify-center bg-black/40 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                                            </svg>
+                        <tr class="hover:bg-slate-50 transition">
+                            <!-- Member Info -->
+                            <td class="px-4 py-4">
+                                <div class="flex items-center gap-3">
+                                    @if($member->profile_photo)
+                                        <img src="{{ $member->profile_photo_url }}" alt="{{ $member->full_name }}"
+                                            class="w-10 h-10 rounded-full object-cover border-2 border-slate-200">
+                                    @else
+                                        <div class="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 font-semibold text-sm">
+                                            {{ substr($member->first_name, 0, 1) }}{{ substr($member->last_name, 0, 1) }}
                                         </div>
+                                    @endif
+                                    <div>
+                                        <div class="text-sm font-semibold text-slate-900">{{ $member->full_name }}</div>
+                                        @if($member->occupation)
+                                            <div class="text-xs text-slate-500">{{ $member->occupation }}</div>
+                                        @endif
                                     </div>
-                                @else
-                                    <div class="flex items-center justify-center w-16 h-16 text-lg font-bold text-indigo-600 bg-white border-4 border-white rounded-xl shadow-lg">
-                                        {{ substr($member->first_name, 0, 1) }}{{ substr($member->last_name, 0, 1) }}
-                                    </div>
-                                @endif
-
-                                <!-- Status Indicator -->
-                                <div class="absolute -bottom-1 -right-1 w-4 h-4 border-2 border-white rounded-full
-                                    {{ $member->status === 'active' ? 'bg-emerald-500' : '' }}
-                                    {{ $member->status === 'pending' ? 'bg-yellow-500' : '' }}
-                                    {{ $member->status === 'inactive' ? 'bg-slate-400' : '' }}">
                                 </div>
-                            </div>
+                            </td>
 
-                            <!-- Quick Actions -->
-                            <div class="flex gap-1.5">
-                                <a href="{{ route('admin.members.show', $member) }}"
-                                    class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/80 text-slate-600 transition hover:bg-white hover:text-indigo-600">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            <!-- Member ID -->
+                            <td class="px-4 py-4">
+                                <span class="inline-flex items-center px-2 py-1 text-xs font-bold text-indigo-600 bg-indigo-50 rounded">
+                                    {{ $member->member_id ?? 'N/A' }}
+                                </span>
+                            </td>
 
-                <!-- Member Details -->
-                <div class="px-5 pt-10 pb-5">
-                    <div class="mb-4">
-                        <h3 class="text-base font-semibold text-slate-900">{{ $member->first_name }} {{ $member->last_name }}</h3>
-                        @if($member->occupation ?? false)
-                            <p class="text-xs text-slate-500">{{ $member->occupation }}</p>
-                        @endif
-                    </div>
-
-                    <div class="space-y-2.5">
-                        <!-- Email -->
-                        <div class="flex items-center gap-2.5">
-                            <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-100">
-                                <svg class="w-3.5 h-3.5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                            </div>
-                            <span class="text-xs text-slate-600 truncate">{{ $member->email }}</span>
-                        </div>
-
-                        <!-- Phone -->
-                        @if($member->phone ?? false)
-                            <div class="flex items-center gap-2.5">
-                                <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-sky-100">
-                                    <svg class="w-3.5 h-3.5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                    </svg>
+                            <!-- Contact -->
+                            <td class="px-4 py-4">
+                                <div class="text-xs text-slate-600">
+                                    <div class="truncate max-w-[200px]">{{ $member->email }}</div>
+                                    <div class="text-slate-500">{{ $member->phone }}</div>
                                 </div>
-                                <span class="text-xs text-slate-600">{{ $member->phone }}</span>
-                            </div>
-                        @endif
+                            </td>
 
-                        <!-- Tags -->
-                        <div class="flex flex-wrap gap-1.5 pt-3 border-t border-slate-200">
-                            <!-- Member Type Badge -->
-                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold rounded-full
-                                {{ ($member->member_type ?? 'member') === 'member' ? 'bg-indigo-100 text-indigo-700' : 'bg-amber-100 text-amber-700' }}">
+                            <!-- Type -->
+                            <td class="px-4 py-4">
+                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold rounded-full
+                                    {{ $member->member_type === 'member' ? 'bg-indigo-100 text-indigo-700' : 'bg-amber-100 text-amber-700' }}">
                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    @if(($member->member_type ?? 'member') === 'member')
+                                        @if($member->member_type === 'member')
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                     @else
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                                     @endif
                                 </svg>
-                                {{ ($member->member_type ?? 'member') === 'member' ? 'Member' : 'Friend' }}
+                                    {{ $member->member_type === 'member' ? 'Member' : 'Friend' }}
                             </span>
+                            </td>
 
-                            @if($member->voice_type ?? false)
-                                <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold rounded-full
+                            <!-- Voice Type -->
+                            <td class="px-4 py-4">
+                                @if($member->voice_type)
+                                    <span class="inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full
                                     {{ $member->voice_type === 'soprano' ? 'bg-pink-100 text-pink-700' : '' }}
                                     {{ $member->voice_type === 'alto' ? 'bg-purple-100 text-purple-700' : '' }}
                                     {{ $member->voice_type === 'tenor' ? 'bg-blue-100 text-blue-700' : '' }}
@@ -208,80 +202,74 @@
                                     {{ $member->voice_type === 'unsure' ? 'bg-slate-100 text-slate-700' : '' }}">
                                     {{ ucfirst($member->voice_type) }}
                                 </span>
+                                @else
+                                    <span class="text-xs text-slate-400">-</span>
                             @endif
+                            </td>
 
-                            @if($member->musical_experience ?? false)
-                                <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold rounded-full bg-slate-100 text-slate-700">
-                                    {{ ucfirst($member->musical_experience) }}
-                                </span>
-                            @endif
-
-                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold rounded-full
+                            <!-- Status -->
+                            <td class="px-4 py-4">
+                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold rounded-full
                                 {{ $member->status === 'active' ? 'bg-emerald-100 text-emerald-700' : '' }}
-                                {{ $member->status === 'pending' ? 'bg-yellow-100 text-yellow-700' : '' }}
+                                    {{ $member->status === 'pending' ? 'bg-amber-100 text-amber-700' : '' }}
                                 {{ $member->status === 'inactive' ? 'bg-slate-100 text-slate-700' : '' }}">
+                                    <span class="w-1.5 h-1.5 rounded-full
+                                        {{ $member->status === 'active' ? 'bg-emerald-500' : '' }}
+                                        {{ $member->status === 'pending' ? 'bg-amber-500' : '' }}
+                                        {{ $member->status === 'inactive' ? 'bg-slate-400' : '' }}">
+                                    </span>
                                 {{ ucfirst($member->status) }}
                             </span>
-                        </div>
+                            </td>
 
                         <!-- Joined Date -->
-                        <div class="flex items-center justify-between pt-3 text-xs text-slate-500 border-t border-slate-200">
-                            <span>{{ $member->created_at->diffForHumans() }}</span>
-                            <span>{{ $member->created_at->format('M j, Y') }}</span>
+                            <td class="px-4 py-4">
+                                <div class="text-xs text-slate-600">
+                                    {{ $member->created_at->format('M j, Y') }}
                         </div>
+                                <div class="text-xs text-slate-400">
+                                    {{ $member->created_at->diffForHumans() }}
                     </div>
+                            </td>
 
-                    <!-- Action Buttons -->
-                    <div class="flex gap-2 mt-4">
+                            <!-- Actions -->
+                            <td class="px-4 py-4">
+                                <div class="flex items-center justify-end gap-2">
                         <a href="{{ route('admin.members.show', $member) }}"
-                            class="flex-1 px-3 py-2 text-xs font-semibold text-center text-white bg-indigo-600 rounded-lg transition hover:bg-indigo-500">
-                            View Details
-                        </a>
+                                        class="inline-flex items-center justify-center w-8 h-8 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition"
+                                        title="View Details">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                        </svg>
+                                    </a>
 
-                        @if($member->member_id)
-                        <div class="relative" x-data="{ open: false }">
-                            <button @click="open = !open" @click.away="open = false"
-                                class="px-3 py-2 text-xs font-semibold text-purple-600 bg-purple-100 rounded-lg transition hover:bg-purple-200">
+                                    <a href="{{ route('admin.members.edit', $member) }}"
+                                        class="inline-flex items-center justify-center w-8 h-8 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
+                                        title="Edit">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                 </svg>
-                            </button>
-                            <div x-show="open"
-                                x-transition:enter="transition ease-out duration-100"
-                                x-transition:enter-start="opacity-0 scale-95"
-                                x-transition:enter-end="opacity-100 scale-100"
-                                x-transition:leave="transition ease-in duration-75"
-                                x-transition:leave-start="opacity-100 scale-100"
-                                x-transition:leave-end="opacity-0 scale-95"
-                                class="absolute right-0 bottom-full mb-2 w-40 bg-white rounded-lg shadow-lg border border-slate-200 py-1 z-10"
-                                style="display: none;">
-                                <a href="{{ route('member.id-card.download', $member) }}"
-                                    class="block px-3 py-2 text-xs text-slate-700 hover:bg-purple-50 transition">
-                                    <i class="fas fa-id-card mr-2"></i>ID Card
-                                </a>
-                                <a href="{{ route('member.confirmation.download', $member) }}"
-                                    class="block px-3 py-2 text-xs text-slate-700 hover:bg-purple-50 transition">
-                                    <i class="fas fa-file-alt mr-2"></i>Confirmation
-                                </a>
-                            </div>
-                        </div>
-                        @endif
+                                    </a>
 
-                        <form method="POST" action="{{ route('admin.members.destroy', $member) }}"
-                            class="inline" onsubmit="return confirm('Are you sure you want to delete this member?')">
+                                    <form method="POST" action="{{ route('admin.members.destroy', $member) }}" class="inline"
+                                        onsubmit="return confirm('Are you sure you want to delete {{ $member->full_name }}?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit"
-                                class="px-3 py-2 text-xs font-semibold text-rose-600 bg-rose-100 rounded-lg transition hover:bg-rose-200">
-                                Delete
+                                            class="inline-flex items-center justify-center w-8 h-8 text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
+                                            title="Delete">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
                             </button>
                         </form>
                     </div>
-                </div>
-            </div>
+                            </td>
+                        </tr>
         @empty
-            <div class="col-span-full">
-                <div class="glass-card py-12 text-center">
+                        <tr>
+                            <td colspan="8" class="px-4 py-12 text-center">
                     <div class="flex flex-col items-center">
                         <div class="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100">
                             <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -289,11 +277,14 @@
                             </svg>
                         </div>
                         <h3 class="mt-4 text-sm font-semibold text-slate-900">No members found</h3>
-                        <p class="mt-1 text-sm text-slate-500">Members will appear here once they register</p>
+                                    <p class="mt-1 text-sm text-slate-500">Try adjusting your search or filter criteria</p>
                     </div>
-                </div>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
             </div>
-        @endforelse
     </div>
 
     <!-- Pagination -->
@@ -303,104 +294,4 @@
         </div>
     @endif
 </div>
-
-<!-- Image Lightbox Modal -->
-<div id="imageModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
-    <div class="relative max-w-5xl w-full">
-        <!-- Close Button -->
-        <button onclick="closeImageModal()" class="absolute top-4 right-4 z-10 flex items-center justify-center w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full transition-all duration-300">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
-
-        <!-- Image Container -->
-        <div class="relative bg-white rounded-2xl overflow-hidden shadow-2xl">
-            <img id="modalImage" src="" alt="" class="w-full h-auto max-h-[85vh] object-contain">
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                <p id="modalImageName" class="text-white text-xl font-semibold"></p>
-            </div>
-        </div>
-    </div>
-</div>
-
-@push('scripts')
-<script>
-function openImageModal(imageUrl, imageName) {
-    const modal = document.getElementById('imageModal');
-    const modalImage = document.getElementById('modalImage');
-    const modalImageName = document.getElementById('modalImageName');
-
-    modalImage.src = imageUrl;
-    modalImageName.textContent = imageName;
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeImageModal() {
-    const modal = document.getElementById('imageModal');
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    document.body.style.overflow = '';
-}
-
-// Close modal when clicking outside the image
-document.getElementById('imageModal')?.addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeImageModal();
-    }
-});
-
-// Close modal with Escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeImageModal();
-    }
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const memberTypeFilter = document.getElementById('member-type-filter');
-    const statusFilter = document.getElementById('status-filter');
-    const voiceTypeFilter = document.getElementById('voice-type-filter');
-    const experienceFilter = document.getElementById('experience-filter');
-    const searchInput = document.getElementById('search-input');
-    const memberCards = document.querySelectorAll('.member-card');
-
-    function filterMembers() {
-        const memberType = memberTypeFilter.value.toLowerCase();
-        const status = statusFilter.value.toLowerCase();
-        const voiceType = voiceTypeFilter.value.toLowerCase();
-        const experience = experienceFilter.value.toLowerCase();
-        const searchTerm = searchInput.value.toLowerCase();
-
-        memberCards.forEach(card => {
-            const cardMemberType = card.dataset.memberType;
-            const cardStatus = card.dataset.status;
-            const cardVoiceType = card.dataset.voiceType;
-            const cardExperience = card.dataset.experience;
-            const cardSearch = card.dataset.search;
-
-            const memberTypeMatch = !memberType || cardMemberType.includes(memberType);
-            const statusMatch = !status || cardStatus.includes(status);
-            const voiceTypeMatch = !voiceType || cardVoiceType.includes(voiceType);
-            const experienceMatch = !experience || cardExperience.includes(experience);
-            const searchMatch = !searchTerm || cardSearch.includes(searchTerm);
-
-            if (memberTypeMatch && statusMatch && voiceTypeMatch && experienceMatch && searchMatch) {
-                card.style.display = '';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    }
-
-    memberTypeFilter.addEventListener('change', filterMembers);
-    statusFilter.addEventListener('change', filterMembers);
-    voiceTypeFilter.addEventListener('change', filterMembers);
-    experienceFilter.addEventListener('change', filterMembers);
-    searchInput.addEventListener('input', filterMembers);
-});
-</script>
-@endpush
 @endsection

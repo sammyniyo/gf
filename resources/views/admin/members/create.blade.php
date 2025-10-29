@@ -322,7 +322,9 @@
         </div>
     </form>
 </div>
+@endsection
 
+@push('scripts')
 <script>
 function previewPhoto(event) {
     const input = event.target;
@@ -351,5 +353,5 @@ function removePhoto() {
     previewContainer.classList.add('hidden');
 }
 </script>
-@endsection
+@endpush
 

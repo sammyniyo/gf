@@ -14,9 +14,34 @@ class MemberController extends Controller
     /**
      * Display a listing of members.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $members = Member::latest()->paginate(15);
+        $query = Member::query();
+
+        // Search filter
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('first_name', 'like', "%{$search}%")
+                  ->orWhere('last_name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%")
+                  ->orWhere('member_id', 'like', "%{$search}%");
+            });
+        }
+
+        // Member type filter
+        if ($request->filled('member_type')) {
+            $query->where('member_type', $request->member_type);
+        }
+
+        // Status filter
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $members = $query->latest()->paginate(20)->withQueryString();
+
         return view('admin.members.index', compact('members'));
     }
 

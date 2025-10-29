@@ -35,7 +35,7 @@
                             {{ $member->status === 'inactive' ? 'bg-slate-100 text-slate-700' : '' }}">
                             {{ ucfirst($member->status) }}
                         </span>
-                        <span class="text-sm text-slate-500">Member #{{ str_pad($member->id, 4, '0', STR_PAD_LEFT) }}</span>
+                        <span class="text-sm font-semibold text-indigo-600 bg-indigo-50 px-2 py-1 rounded">{{ $member->member_id ?? 'N/A' }}</span>
                     </div>
                 </div>
             </div>
@@ -225,7 +225,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-500 mb-1">Member ID</label>
-                        <p class="text-sm text-slate-900">#{{ str_pad($member->id, 4, '0', STR_PAD_LEFT) }}</p>
+                        <p class="text-base font-bold text-indigo-600">{{ $member->member_id ?? 'Not assigned' }}</p>
                     </div>
                 </div>
             </div>

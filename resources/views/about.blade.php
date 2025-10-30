@@ -21,11 +21,14 @@
                         </svg>
                         Our Story
                     </span>
-                    <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl leading-tight">
+                    <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl leading-[1.1]">
                         One family, one sound, one <span class="bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 bg-clip-text text-transparent animate-gradient-x">mission</span>
                     </h1>
-                    <p class="max-w-2xl text-lg sm:text-xl text-gray-600 leading-relaxed font-medium">
-                        God's Family Choir emerged from a fellowship of Seventh-day Adventist students at Kigali Health Institute (KHI) and Kigali Institute of Science and Technology (KIST). What began as ASA KIST–KHI Choir in 1998 has grown into a vibrant family of over 300 worshippers, musicians, and storytellers whose voices unite to create transformative moments that draw hearts closer to Christ. For over two decades, we have beautifully blended contemporary expression with timeless truth, serving the words of life to the world through gospel messages.
+                    <p class="max-w-2xl text-base sm:text-lg text-gray-700 leading-[1.8]">
+                        God's Family Choir emerged from a fellowship of Seventh-day Adventist students at Kigali Health Institute (KHI) and Kigali Institute of Science and Technology (KIST). What began as ASA KIST–KHI Choir in 1998 has grown into a vibrant family of over 300 worshippers, musicians, and storytellers whose voices unite to create transformative moments that draw hearts closer to Christ.
+                    </p>
+                    <p class="max-w-2xl text-base sm:text-lg text-gray-700 leading-[1.8]">
+                        For over two decades, we have beautifully blended contemporary expression with timeless truth, serving the words of life to the world through gospel messages.
                     </p>
                     <div class="flex flex-wrap gap-4 pt-2">
                         <a href="#journey" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-8 py-4 text-sm font-bold text-white shadow-xl shadow-emerald-500/30 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/40 hover:-translate-y-1 hover:scale-105">
@@ -74,7 +77,7 @@
             </div>
 
             <!-- Enhanced Stats Grid -->
-            <div class="mt-24 grid gap-6 rounded-3xl border-2 border-emerald-100/50 bg-white/95 backdrop-blur-sm p-8 shadow-2xl sm:grid-cols-2 lg:grid-cols-4">
+            <div class="mt-20 grid gap-5 rounded-3xl border border-emerald-100 bg-white p-6 sm:p-8 shadow-xl sm:grid-cols-2 lg:grid-cols-4">
                 @php
                     $stats = [
                         ['label' => 'Active Members', 'value' => 300, 'color' => 'emerald', 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'],
@@ -86,25 +89,18 @@
                 @foreach($stats as $stat)
                     @php
                         $isEmerald = $stat['color'] === 'emerald';
-                        $bgClass = $isEmerald ? 'bg-gradient-to-br from-emerald-50 via-white to-emerald-50/30' : 'bg-gradient-to-br from-amber-50 via-white to-amber-50/30';
-                        $borderClass = $isEmerald ? 'border-emerald-100/50 hover:border-emerald-300' : 'border-amber-100/50 hover:border-amber-300';
-                        $decorClass = $isEmerald ? 'from-emerald-200/30' : 'from-amber-200/30';
-                        $iconBgClass = $isEmerald ? 'from-emerald-500 to-emerald-600' : 'from-amber-500 to-amber-600';
+                        $iconBgClass = $isEmerald ? 'bg-emerald-100' : 'bg-amber-100';
+                        $iconColorClass = $isEmerald ? 'text-emerald-600' : 'text-amber-600';
                         $textClass = $isEmerald ? 'text-emerald-600' : 'text-amber-600';
-                        $lineClass = $isEmerald ? 'from-emerald-500 via-emerald-400 to-emerald-300' : 'from-amber-500 via-amber-400 to-amber-300';
                     @endphp
-                    <div class="group relative overflow-hidden rounded-2xl {{ $bgClass }} p-6 shadow-lg border-2 {{ $borderClass }} transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br {{ $decorClass }} to-transparent rounded-bl-full"></div>
-                        <div class="relative">
-                            <div class="w-12 h-12 bg-gradient-to-br {{ $iconBgClass }} rounded-xl flex items-center justify-center text-white shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $stat['icon'] }}" />
-                                </svg>
-                            </div>
-                            <p class="text-xs font-bold {{ $textClass }} uppercase tracking-wider mb-2">{{ $stat['label'] }}</p>
-                            <p class="text-4xl font-black text-gray-900 mb-2"><span class="about-counter" data-target="{{ $stat['value'] }}">0</span>+</p>
-                            <div class="h-1 w-16 bg-gradient-to-r {{ $lineClass }} rounded-full"></div>
+                    <div class="group text-center">
+                        <div class="inline-flex w-14 h-14 {{ $iconBgClass }} rounded-2xl items-center justify-center {{ $iconColorClass }} mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $stat['icon'] }}" />
+                            </svg>
                         </div>
+                        <p class="text-sm font-bold {{ $textClass }} uppercase tracking-wider mb-2">{{ $stat['label'] }}</p>
+                        <p class="text-4xl font-extrabold text-gray-900"><span class="about-counter" data-target="{{ $stat['value'] }}">0</span>+</p>
                     </div>
                 @endforeach
             </div>
@@ -781,34 +777,40 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="relative z-10 px-6 pb-40 sm:px-8 lg:px-12">
-        <div class="mx-auto max-w-5xl rounded-3xl border-2 border-emerald-300 bg-gradient-to-br from-white via-emerald-50/40 to-white p-14 text-center shadow-2xl">
-            <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-6 py-2.5 text-xs font-black uppercase tracking-wide text-white shadow-xl">
+    <section class="relative z-10 px-6 pb-32 pt-24 sm:px-8 lg:px-12 bg-gradient-to-b from-white to-gray-50">
+        <div class="mx-auto max-w-5xl rounded-3xl border-2 border-emerald-200 bg-white p-12 sm:p-16 text-center shadow-2xl">
+            <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-5 py-2 text-xs font-bold uppercase tracking-wider text-white shadow-lg">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
                 </svg>
                 Join the family
             </span>
-            <h2 class="mt-8 text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight">Add your voice to the <span class="bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 bg-clip-text text-transparent animate-gradient-x">story</span></h2>
-            <p class="mt-6 text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-medium">
+            <h2 class="mt-6 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-[1.2]">
+                Add your voice to the <span class="bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 bg-clip-text text-transparent animate-gradient-x">story</span>
+            </h2>
+            <p class="mt-6 text-base sm:text-lg text-gray-600 max-w-3xl mx-auto leading-[1.8]">
                 We are always listening for new voices, musicians, production minds, and intercessors who feel called to serve through worship. Wherever you are on your journey, there is room for you here. Come as you are, and let's grow together.
             </p>
-            <div class="mt-8 mb-8 p-6 rounded-2xl bg-gradient-to-r from-emerald-50 to-amber-50 border-2 border-emerald-200 max-w-2xl mx-auto">
-                <p class="text-base sm:text-lg font-black text-gray-900 mb-2 text-center">Our Mission Statement</p>
-                <p class="text-lg sm:text-xl font-bold text-emerald-700 italic text-center leading-relaxed">
+
+            <!-- Mission Statement Box -->
+            <div class="mt-10 mb-10 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-emerald-50 via-emerald-50/50 to-amber-50/30 border-2 border-emerald-200/60 max-w-2xl mx-auto">
+                <p class="text-sm font-bold text-emerald-700 mb-3 uppercase tracking-wider">Our Mission Statement</p>
+                <p class="text-lg sm:text-xl font-semibold text-emerald-800 italic leading-[1.6]">
                     "A family to serve the words of life to the world through gospel messages."
                 </p>
             </div>
-            <div class="mt-12 flex flex-wrap justify-center gap-5">
-                <a href="{{ route('choir.register.form') }}" class="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-10 py-5 text-base font-black text-white shadow-2xl shadow-emerald-500/40 transition-all duration-300 hover:shadow-3xl hover:shadow-emerald-500/50 hover:-translate-y-1 hover:scale-105">
+
+            <!-- CTA Buttons -->
+            <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+                <a href="{{ route('choir.register.form') }}" class="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-8 py-4 text-base font-bold text-white shadow-xl shadow-emerald-500/30 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/40 hover:-translate-y-1">
                     Register to audition
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
                 </a>
-                <a href="{{ route('events.index') }}" class="inline-flex items-center gap-3 rounded-full border-2 border-emerald-300 bg-white/90 backdrop-blur-sm px-10 py-5 text-base font-black text-emerald-700 transition-all duration-300 hover:border-emerald-500 hover:bg-emerald-50 hover:-translate-y-1 shadow-lg">
+                <a href="{{ route('events.index') }}" class="inline-flex items-center justify-center gap-2 rounded-full border-2 border-emerald-300 bg-white px-8 py-4 text-base font-bold text-emerald-700 transition-all duration-300 hover:border-emerald-500 hover:bg-emerald-50 hover:-translate-y-1 shadow-md">
                     Experience a live worship night
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                 </a>

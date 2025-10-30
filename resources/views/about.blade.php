@@ -84,17 +84,26 @@
                     ];
                 @endphp
                 @foreach($stats as $stat)
-                    <div class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-{{ $stat['color'] }}-50 via-white to-{{ $stat['color'] }}-50/30 p-6 shadow-lg border-2 border-{{ $stat['color'] }}-100/50 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:border-{{ $stat['color'] }}-300">
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-{{ $stat['color'] }}-200/30 to-transparent rounded-bl-full"></div>
+                    @php
+                        $isEmerald = $stat['color'] === 'emerald';
+                        $bgClass = $isEmerald ? 'bg-gradient-to-br from-emerald-50 via-white to-emerald-50/30' : 'bg-gradient-to-br from-amber-50 via-white to-amber-50/30';
+                        $borderClass = $isEmerald ? 'border-emerald-100/50 hover:border-emerald-300' : 'border-amber-100/50 hover:border-amber-300';
+                        $decorClass = $isEmerald ? 'from-emerald-200/30' : 'from-amber-200/30';
+                        $iconBgClass = $isEmerald ? 'from-emerald-500 to-emerald-600' : 'from-amber-500 to-amber-600';
+                        $textClass = $isEmerald ? 'text-emerald-600' : 'text-amber-600';
+                        $lineClass = $isEmerald ? 'from-emerald-500 via-emerald-400 to-emerald-300' : 'from-amber-500 via-amber-400 to-amber-300';
+                    @endphp
+                    <div class="group relative overflow-hidden rounded-2xl {{ $bgClass }} p-6 shadow-lg border-2 {{ $borderClass }} transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br {{ $decorClass }} to-transparent rounded-bl-full"></div>
                         <div class="relative">
-                            <div class="w-12 h-12 bg-gradient-to-br from-{{ $stat['color'] }}-500 to-{{ $stat['color'] }}-600 rounded-xl flex items-center justify-center text-white shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <div class="w-12 h-12 bg-gradient-to-br {{ $iconBgClass }} rounded-xl flex items-center justify-center text-white shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $stat['icon'] }}" />
                                 </svg>
                             </div>
-                            <p class="text-xs font-bold text-{{ $stat['color'] }}-600 uppercase tracking-wider mb-2">{{ $stat['label'] }}</p>
+                            <p class="text-xs font-bold {{ $textClass }} uppercase tracking-wider mb-2">{{ $stat['label'] }}</p>
                             <p class="text-4xl font-black text-gray-900 mb-2"><span class="about-counter" data-target="{{ $stat['value'] }}">0</span>+</p>
-                            <div class="h-1 w-16 bg-gradient-to-r from-{{ $stat['color'] }}-500 via-{{ $stat['color'] }}-400 to-{{ $stat['color'] }}-300 rounded-full"></div>
+                            <div class="h-1 w-16 bg-gradient-to-r {{ $lineClass }} rounded-full"></div>
                         </div>
                     </div>
                 @endforeach
@@ -442,15 +451,22 @@
                     ];
                 @endphp
                 @foreach($values as $value)
-                    <div class="group relative overflow-hidden rounded-3xl border-2 border-{{ $value['color'] }}-200 bg-white p-8 shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:border-{{ $value['color'] }}-400">
-                        <div class="absolute inset-0 bg-gradient-to-br from-{{ $value['color'] }}-500/0 to-{{ $value['color'] }}-600/0 opacity-0 transition-opacity duration-500 group-hover:opacity-5"></div>
+                    @php
+                        $isEmerald = $value['color'] === 'emerald';
+                        $borderClass = $isEmerald ? 'border-emerald-200 hover:border-emerald-400' : 'border-amber-200 hover:border-amber-400';
+                        $hoverBgClass = $isEmerald ? 'from-emerald-500/0 to-emerald-600/0' : 'from-amber-500/0 to-amber-600/0';
+                        $iconBgClass = $isEmerald ? 'from-emerald-100 to-emerald-50 border-emerald-200' : 'from-amber-100 to-amber-50 border-amber-200';
+                        $lineClass = $isEmerald ? 'from-emerald-500 via-emerald-400 to-emerald-300' : 'from-amber-500 via-amber-400 to-amber-300';
+                    @endphp
+                    <div class="group relative overflow-hidden rounded-3xl border-2 {{ $borderClass }} bg-white p-8 shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl">
+                        <div class="absolute inset-0 bg-gradient-to-br {{ $hoverBgClass }} opacity-0 transition-opacity duration-500 group-hover:opacity-5"></div>
                         <div class="relative">
-                            <div class="w-16 h-16 bg-gradient-to-br from-{{ $value['color'] }}-100 to-{{ $value['color'] }}-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border-2 border-{{ $value['color'] }}-200">
+                            <div class="w-16 h-16 bg-gradient-to-br {{ $iconBgClass }} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border-2">
                                 <span class="text-4xl">{{ $value['icon'] }}</span>
                             </div>
                             <h3 class="mt-4 text-2xl font-black text-gray-900 mb-3">{{ $value['title'] }}</h3>
                             <p class="text-sm text-gray-600 leading-relaxed font-medium">{{ $value['body'] }}</p>
-                            <div class="mt-6 h-1.5 w-16 bg-gradient-to-r from-{{ $value['color'] }}-500 via-{{ $value['color'] }}-400 to-{{ $value['color'] }}-300 rounded-full"></div>
+                            <div class="mt-6 h-1.5 w-16 bg-gradient-to-r {{ $lineClass }} rounded-full"></div>
                         </div>
                     </div>
                 @endforeach
@@ -578,19 +594,19 @@
                                 </div>
                             </div>
 
-                            <!-- Lead Photo Section - Enhanced Overlapping -->
+                            <!-- Lead Photo Section - Fixed hover scale -->
                             <div class="relative px-6 -mt-20 mb-5 flex justify-center z-10">
-                                <div class="relative transform group-hover:scale-150 group-hover:z-50 transition-all duration-700 ease-out cursor-pointer">
+                                <div class="relative transform group-hover:scale-110 transition-all duration-500 ease-out cursor-pointer">
                                     <!-- Enhanced Glow Effect -->
-                                    <div class="absolute inset-0 bg-gradient-to-br {{ $dept['gradient'] }} rounded-3xl blur-2xl opacity-50 group-hover:opacity-100 group-hover:blur-3xl group-hover:scale-110 transition-all duration-700"></div>
+                                    <div class="absolute inset-0 bg-gradient-to-br {{ $dept['gradient'] }} rounded-3xl blur-2xl opacity-50 group-hover:opacity-100 group-hover:blur-3xl transition-all duration-500"></div>
 
                                     <!-- Photo Container -->
-                                    <div class="relative w-36 h-36 rounded-3xl overflow-hidden border-4 border-white shadow-2xl bg-gradient-to-br {{ $dept['bgGradient'] }} group-hover:shadow-[0_40px_100px_rgba(0,0,0,0.5)] group-hover:border-8 transition-all duration-700">
+                                    <div class="relative w-36 h-36 rounded-3xl overflow-hidden border-4 border-white shadow-2xl bg-gradient-to-br {{ $dept['bgGradient'] }} group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] group-hover:border-6 transition-all duration-500">
                                         @if(file_exists(public_path($dept['image'])))
-                                            <img src="{{ asset($dept['image']) }}" alt="{{ $dept['lead'] }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" />
+                                            <img src="{{ asset($dept['image']) }}" alt="{{ $dept['lead'] }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out" />
                                         @else
                                             <!-- Placeholder Avatar -->
-                                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br {{ $dept['gradient'] }} group-hover:scale-110 transition-transform duration-700">
+                                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br {{ $dept['gradient'] }} group-hover:scale-110 transition-transform duration-500">
                                                 <svg class="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                                 </svg>
@@ -599,7 +615,7 @@
                                     </div>
 
                                     <!-- Hover Hint Badge -->
-                                    <div class="absolute -bottom-3 -right-3 bg-white rounded-full p-2 shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 border-2 border-{{ $dept['textColor'] }}">
+                                    <div class="absolute -bottom-3 -right-3 bg-white rounded-full p-2 shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 border-2 {{ $dept['borderColor'] }}">
                                         <svg class="w-5 h-5 {{ $dept['textColor'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                                         </svg>
@@ -688,17 +704,25 @@
                     ];
                 @endphp
                 @foreach($foundingMembers as $member)
-                    <div class="group relative overflow-hidden rounded-2xl border-2 border-{{ $member['color'] }}-200 bg-white p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-{{ $member['color'] }}-200/20 to-transparent rounded-bl-full"></div>
+                    @php
+                        $isEmerald = $member['color'] === 'emerald';
+                        $borderClass = $isEmerald ? 'border-emerald-200' : 'border-amber-200';
+                        $decorClass = $isEmerald ? 'from-emerald-200/20' : 'from-amber-200/20';
+                        $iconBgClass = $isEmerald ? 'from-emerald-500 to-emerald-600' : 'from-amber-500 to-amber-600';
+                        $textClass = $isEmerald ? 'text-emerald-600' : 'text-amber-600';
+                        $lineClass = $isEmerald ? 'from-emerald-500 to-emerald-300' : 'from-amber-500 to-amber-300';
+                    @endphp
+                    <div class="group relative overflow-hidden rounded-2xl border-2 {{ $borderClass }} bg-white p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br {{ $decorClass }} to-transparent rounded-bl-full"></div>
                         <div class="relative text-center">
-                            <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-{{ $member['color'] }}-500 to-{{ $member['color'] }}-600 rounded-full flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                            <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br {{ $iconBgClass }} rounded-full flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300">
                                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                 </svg>
                             </div>
                             <h3 class="text-lg font-black text-gray-900 mb-2">{{ $member['name'] }}</h3>
-                            <p class="text-xs font-bold text-{{ $member['color'] }}-600 uppercase tracking-wider">Founding Member</p>
-                            <div class="mt-4 h-1 w-12 bg-gradient-to-r from-{{ $member['color'] }}-500 to-{{ $member['color'] }}-300 rounded-full mx-auto"></div>
+                            <p class="text-xs font-bold {{ $textClass }} uppercase tracking-wider">Founding Member</p>
+                            <div class="mt-4 h-1 w-12 bg-gradient-to-r {{ $lineClass }} rounded-full mx-auto"></div>
                         </div>
                     </div>
                 @endforeach
@@ -738,73 +762,19 @@
                         ];
                     @endphp
                     @foreach($leaders as $leader)
-                        <div class="group rounded-2xl border-2 border-{{ $leader['color'] }}-200 bg-white p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                        @php
+                            $isEmerald = $leader['color'] === 'emerald';
+                            $borderClass = $isEmerald ? 'border-emerald-200' : 'border-amber-200';
+                            $textClass = $isEmerald ? 'text-emerald-600' : 'text-amber-600';
+                            $lineClass = $isEmerald ? 'from-emerald-500 to-emerald-300' : 'from-amber-500 to-amber-300';
+                        @endphp
+                        <div class="group rounded-2xl border-2 {{ $borderClass }} bg-white p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
                             <p class="text-xl font-black text-gray-900 mb-1">{{ $leader['name'] }}</p>
-                            <p class="text-sm font-black text-{{ $leader['color'] }}-600 uppercase tracking-wider mb-3">{{ $leader['role'] }}</p>
+                            <p class="text-sm font-black {{ $textClass }} uppercase tracking-wider mb-3">{{ $leader['role'] }}</p>
                             <p class="text-sm text-gray-600 leading-relaxed font-medium">{{ $leader['bio'] }}</p>
-                            <div class="mt-4 h-1.5 w-14 bg-gradient-to-r from-{{ $leader['color'] }}-500 to-{{ $leader['color'] }}-300 rounded-full"></div>
+                            <div class="mt-4 h-1.5 w-14 bg-gradient-to-r {{ $lineClass }} rounded-full"></div>
                         </div>
                     @endforeach
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Training & Service Section -->
-    <section class="relative z-10 px-6 py-24 sm:px-8 lg:px-12">
-        <div class="mx-auto max-w-6xl">
-            <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
-                <div class="rounded-3xl border-2 border-emerald-200 bg-gradient-to-br from-emerald-50/60 to-white p-10 shadow-2xl">
-                    <span class="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-6 py-2 text-xs font-black uppercase tracking-wide text-white shadow-xl">Equip</span>
-                    <h2 class="mt-6 text-4xl sm:text-5xl font-black text-gray-900 leading-tight">Training the <span class="bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 bg-clip-text text-transparent animate-gradient-x">next generation</span></h2>
-                    <p class="mt-5 text-base sm:text-lg text-gray-600 leading-relaxed font-medium">
-                        Beyond the main choir, our academies nurture young vocalists and instrumentalists through mentorship, theory classes, and worship internships. We partner with local churches to host seasonal boot camps that strengthen choirs across the nation, investing in the broader worship community.
-                    </p>
-                    <dl class="mt-8 space-y-6">
-                        <div class="flex items-start gap-5">
-                            <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-xl flex-shrink-0">
-                                <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-lg font-black text-gray-900 mb-2">Mentorship circles</p>
-                                <p class="text-sm text-gray-600 leading-relaxed font-medium">Section leaders guide small groups through spiritual and musical development plans tailored to each member's journey.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-5">
-                            <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-xl flex-shrink-0">
-                                <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-lg font-black text-gray-900 mb-2">Songwriting labs</p>
-                                <p class="text-sm text-gray-600 leading-relaxed font-medium">Writers collaborate with pastors to craft songs rooted in sound doctrine, local stories, and authentic worship experiences.</p>
-                            </div>
-                        </div>
-                    </dl>
-                </div>
-                <div class="rounded-3xl border-2 border-amber-200 bg-gradient-to-br from-amber-50/60 to-white p-10 shadow-2xl">
-                    <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 px-6 py-2 text-xs font-black uppercase tracking-wide text-white shadow-xl">Serve</span>
-                    <h2 class="mt-6 text-4xl sm:text-5xl font-black text-gray-900 leading-tight">Serving beyond the <span class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 bg-clip-text text-transparent animate-gradient-x">stage</span></h2>
-                    <p class="mt-5 text-base sm:text-lg text-gray-600 leading-relaxed font-medium">
-                        Worship is our launchpad for tangible love. Through our "Hearts in Motion" initiative we volunteer in hospitals, support prison ministries, and collaborate with NGOs to provide relief in times of crisis. Music opens doors—service keeps them open.
-                    </p>
-                    <ul class="mt-8 space-y-5">
-                        <li class="flex items-start gap-5">
-                            <span class="mt-1 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 text-white font-black shadow-xl text-lg flex-shrink-0">1</span>
-                            <span class="text-sm sm:text-base text-gray-700 leading-relaxed font-medium pt-2">Scholarships for young musicians in underserved communities, investing in talent regardless of financial background.</span>
-                        </li>
-                        <li class="flex items-start gap-5">
-                            <span class="mt-1 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 text-white font-black shadow-xl text-lg flex-shrink-0">2</span>
-                            <span class="text-sm sm:text-base text-gray-700 leading-relaxed font-medium pt-2">Quarterly community worship nights with free medical outreaches, combining spiritual ministry with practical care.</span>
-                        </li>
-                        <li class="flex items-start gap-5">
-                            <span class="mt-1 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 text-white font-black shadow-xl text-lg flex-shrink-0">3</span>
-                            <span class="text-sm sm:text-base text-gray-700 leading-relaxed font-medium pt-2">Partnership with local churches to revitalize dormant choir ministries, sharing resources and expertise.</span>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>

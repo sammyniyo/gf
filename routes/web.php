@@ -338,6 +338,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Contributions Management
     Route::get('contributions/export', [App\Http\Controllers\Admin\ContributionController::class, 'export'])->name('contributions.export');
+
+    // Visitors Analytics
+    Route::get('visitors', [App\Http\Controllers\Admin\VisitorController::class, 'index'])->name('visitors.index');
     Route::post('contributions/toggle', [App\Http\Controllers\Admin\ContributionController::class, 'togglePayment'])->name('contributions.toggle');
     Route::post('contributions/target', [App\Http\Controllers\Admin\ContributionController::class, 'setTarget'])->name('contributions.target');
     Route::get('contributions/targets', [App\Http\Controllers\Admin\ContributionTargetController::class, 'index'])->name('contributions.targets');

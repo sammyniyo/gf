@@ -25,7 +25,7 @@
                         One family, one sound, one <span class="bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 bg-clip-text text-transparent animate-gradient-x">mission</span>
                     </h1>
                     <p class="max-w-2xl text-lg sm:text-xl text-gray-600 leading-relaxed font-medium">
-                        God's Family Choir is a vibrant collective of worshippers, musicians, and storytellers whose voices unite to create transformative moments that draw hearts closer to Christ. For over two decades, we have beautifully blended contemporary expression with timeless truth, carrying the sound of heaven from Rwanda to the world.
+                        God's Family Choir emerged from a fellowship of Seventh-day Adventist students at Kigali Health Institute (KHI) and Kigali Institute of Science and Technology (KIST). What began as ASA KIST–KHI Choir in 1998 has grown into a vibrant family of over 300 worshippers, musicians, and storytellers whose voices unite to create transformative moments that draw hearts closer to Christ. For over two decades, we have beautifully blended contemporary expression with timeless truth, serving the words of life to the world through gospel messages.
                     </p>
                     <div class="flex flex-wrap gap-4 pt-2">
                         <a href="#journey" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-8 py-4 text-sm font-bold text-white shadow-xl shadow-emerald-500/30 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/40 hover:-translate-y-1 hover:scale-105">
@@ -77,10 +77,10 @@
             <div class="mt-24 grid gap-6 rounded-3xl border-2 border-emerald-100/50 bg-white/95 backdrop-blur-sm p-8 shadow-2xl sm:grid-cols-2 lg:grid-cols-4">
                 @php
                     $stats = [
-                        ['label' => 'Active Members', 'value' => 400, 'color' => 'emerald', 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'],
+                        ['label' => 'Active Members', 'value' => 300, 'color' => 'emerald', 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'],
                         ['label' => 'Years of Service', 'value' => 27, 'color' => 'amber', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'],
-                        ['label' => 'Outreaches', 'value' => 10, 'color' => 'emerald', 'icon' => 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 002 2h2.945M15 11a3 3 0 11-6 0m5.945 2H18a2 2 0 012 2v1a2 2 0 01-2 2h-2.945M15 11a3 3 0 11-6 0m-4.055 2H6a2 2 0 00-2 2v1a2 2 0 002 2h2.945M9 11a3 3 0 11-6 0m12 0a3 3 0 11-6 0'],
-                        ['label' => 'Recorded Projects', 'value' => 4, 'color' => 'amber', 'icon' => 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'],
+                        ['label' => 'Evangelistic Campaigns', 'value' => 3, 'color' => 'emerald', 'icon' => 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 002 2h2.945M15 11a3 3 0 11-6 0m5.945 2H18a2 2 0 012 2v1a2 2 0 01-2 2h-2.945M15 11a3 3 0 11-6 0m-4.055 2H6a2 2 0 00-2 2v1a2 2 0 002 2h2.945M9 11a3 3 0 11-6 0m12 0a3 3 0 11-6 0'],
+                        ['label' => 'Audio Albums', 'value' => 4, 'color' => 'amber', 'icon' => 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'],
                     ];
                 @endphp
                 @foreach($stats as $stat)
@@ -116,8 +116,8 @@
                     Our <span class="bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 bg-clip-text text-transparent animate-gradient-x">History Roadmap</span>
                 </h2>
                 <p class="mt-6 max-w-3xl mx-auto text-lg sm:text-xl text-gray-600 leading-relaxed font-medium">
-                    From humble beginnings in 1998 to touching lives across nations, our journey has been marked by God's faithfulness and the dedication of countless voices united in worship. Each milestone represents a step forward in our mission to bring heaven's sound to earth.
-                        </p>
+                    From humble beginnings as a small group of Adventist students gathering for Sabbath worship to a thriving family of over 300 members, our journey has been marked by God's faithfulness and the dedication of countless voices united in worship. Each milestone represents a step forward in our mission to serve the words of life to the world through gospel messages.
+                </p>
                     </div>
 
             <!-- Enhanced Timeline Roadmap -->
@@ -131,55 +131,71 @@
                             [
                                 'year' => '1998',
                                 'title' => 'The Beginning',
-                                'description' => 'God\'s Family Choir was born from a prayer meeting where a small group of passionate young believers felt called to use their voices for God\'s glory. What started as a simple gathering became the foundation of a powerful ministry that would touch thousands of lives.',
+                                'description' => 'God\'s Family Choir was born when Adventist students from Kigali Health Institute (KHI) and Kigali Institute of Science and Technology (KIST) began organizing small spiritual activities. As their fellowship grew, they realized the need for a choir to lead Sabbath worship services. The group was officially recognized as the Adventist Students Association (ASA KIST–KHI), and their choir naturally adopted the same name.',
                                 'image' => '1.jpg',
                                 'position' => 'left',
                                 'icon' => 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
                             ],
                             [
-                                'year' => '2003',
-                                'title' => 'First Album Released',
-                                'description' => 'Our debut album "Songs of Zion" was released, touching hearts across the nation and establishing our musical identity rooted in authentic worship. This milestone marked our transition from a local choir to a recognized voice in Christian music.',
+                                'year' => '2000',
+                                'title' => 'A Name That Defines Us',
+                                'description' => 'The members decided to give the choir a more meaningful and distinctive name. From that moment, it became known as God\'s Family Choir—a name that soon extended to the entire association, which affectionately came to be called "God\'s Family." This name reflects our core identity: we are truly a family united in worship and service.',
                                 'image' => '2.jpg',
                                 'position' => 'right',
+                                'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'
+                            ],
+                            [
+                                'year' => '2013',
+                                'title' => 'First Album Released',
+                                'description' => 'We released our first audio album accompanied by DVD 1, marking a significant milestone in our musical journey. What began with just a few voices singing songs from other groups had evolved into a choir creating its own musical expressions of worship. This album established our commitment to excellence in recording and sharing the gospel through music.',
+                                'image' => '3.jpg',
+                                'position' => 'left',
                                 'icon' => 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'
                             ],
                             [
-                                'year' => '2008',
-                                'title' => 'Nationwide Impact',
-                                'description' => 'Our "One Voice" tour reached 12 cities with crusades, concerts, and community missions, bringing the message of hope to thousands. This was our first major outreach initiative, establishing our commitment to taking worship beyond the church walls.',
-                                'image' => '3.jpg',
-                                'position' => 'left',
+                                'year' => '2014',
+                                'title' => 'First Evangelistic Campaign',
+                                'description' => 'We organized and conducted our first public evangelistic campaign in Kibungo. This marked the beginning of our commitment to evangelism beyond music. The campaign brought many souls to Christ and strengthened our dedication to spreading the gospel through both song and direct evangelistic service.',
+                                'image' => '4.jpg',
+                                'position' => 'right',
                                 'icon' => 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 002 2h2.945M15 11a3 3 0 11-6 0m5.945 2H18a2 2 0 012 2v1a2 2 0 01-2 2h-2.945M15 11a3 3 0 11-6 0m-4.055 2H6a2 2 0 00-2 2v1a2 2 0 002 2h2.945M9 11a3 3 0 11-6 0m12 0a3 3 0 11-6 0'
                             ],
                             [
-                                'year' => '2012',
-                                'title' => 'GF Juniors Launched',
-                                'description' => 'We established our youth division to nurture the next generation of worshippers. GF Juniors has become a beacon of hope for young people discovering their musical calling, combining excellence in music with character development and spiritual growth.',
-                                'image' => '4.jpg',
-                                'position' => 'right',
-                                'icon' => 'M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
-                            ],
-                            [
-                                'year' => '2016',
-                                'title' => 'International Recognition',
-                                'description' => 'We released the live album "Heaven\'s Echo" recorded across multiple cities. Our music began reaching international audiences through streaming platforms, opening doors for global ministry partnerships and cross-cultural worship experiences.',
+                                'year' => '2015',
+                                'title' => 'Second Evangelistic Campaign',
+                                'description' => 'We conducted our second evangelistic campaign in Nyabisindu, continuing our mission to reach souls for Christ across different regions of Rwanda. Each campaign deepens our conviction that music and evangelism work hand in hand to transform lives and bring people into God\'s family.',
                                 'image' => '5.jpg',
                                 'position' => 'left',
                                 'icon' => 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 002 2h2.945M15 11a3 3 0 11-6 0m5.945 2H18a2 2 0 012 2v1a2 2 0 01-2 2h-2.945M15 11a3 3 0 11-6 0m-4.055 2H6a2 2 0 00-2 2v1a2 2 0 002 2h2.945M9 11a3 3 0 11-6 0m12 0a3 3 0 11-6 0'
                             ],
                             [
-                                'year' => '2022',
-                                'title' => 'Digital Transformation',
-                                'description' => 'We launched immersive online worship experiences that now connect thousands monthly, expanding our reach beyond physical boundaries. This digital leap allowed us to minister to hearts globally while maintaining our local community focus.',
+                                'year' => '2017',
+                                'title' => 'Second Album Released',
+                                'description' => 'We released our second audio album, continuing to grow musically and spiritually. With each project, we refine our sound and deepen our commitment to creating music that touches hearts and points people to Christ. Our musical journey reflects our spiritual growth as a family.',
                                 'image' => 'gf-2.jpg',
                                 'position' => 'right',
-                                'icon' => 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+                                'icon' => 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'
+                            ],
+                            [
+                                'year' => '2019',
+                                'title' => 'Third Album & Third Campaign',
+                                'description' => 'A remarkable year as we released our third audio album accompanied by DVD 2, and conducted our third evangelistic campaign in Nyacyonga. This dual achievement demonstrated our balanced commitment to both musical excellence and evangelistic service. We continue to see lives transformed through the power of worship and the gospel message.',
+                                'image' => 'gf-2.jpg',
+                                'position' => 'left',
+                                'icon' => 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'
+                            ],
+                            [
+                                'year' => '2023',
+                                'title' => 'Fourth Album Released',
+                                'description' => 'We released our fourth audio album accompanied by DVD 3, marking another milestone in our musical journey. Through these projects, we have grown from singing songs from other groups to creating our own expressions of worship. We are now preparing for our fifth album and DVD 4, continuing to build on this legacy.',
+                                'image' => '1.jpg',
+                                'position' => 'right',
+                                'icon' => 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'
                             ],
                             [
                                 'year' => '2025',
                                 'title' => 'Continuing the Legacy',
-                                'description' => 'Today, we stand strong with over 400 active members, multiple specialized departments, and a vision to reach even more souls with the gospel through music. Our commitment remains: to see lives transformed through the power of worship.',
+                                'description' => 'Today, we stand strong with over 300 members, including alumni, current students, and God\'s Family Juniors—children of choir members who form their own junior choir to ensure continuity. Our mission remains unchanged: "A family to serve the words of life to the world through gospel messages." We continue to prepare our fifth album and DVD 4, building on the foundation laid by our founding members.',
                                 'image' => '1.jpg',
                                 'position' => 'left',
                                 'icon' => 'M13 10V3L4 14h7v7l9-11h-7z'
@@ -340,7 +356,7 @@
                     </p>
 
                     <p class="text-lg text-gray-600 leading-relaxed font-medium">
-                        GF Juniors is more than a youth choir—it's a family where young worshippers discover their God-given talents, build lifelong friendships, and develop a deep relationship with Christ. Through weekly rehearsals, mentorship programs, and performance opportunities, we're shaping the next generation of worship leaders who will carry the torch forward.
+                        GF Juniors is the junior choir formed by children of choir members, ensuring the continuity of this ministry across generations. It's more than a youth choir—it's a family where young worshippers discover their God-given talents, build lifelong friendships, and develop a deep relationship with Christ. Through weekly rehearsals, mentorship programs, and performance opportunities, we're shaping the next generation of worship leaders who will carry the torch forward.
                     </p>
 
                     <!-- Enhanced Features List -->
@@ -468,7 +484,7 @@
                 @php
                     $departments = [
                         [
-                            'name' => 'Coaching Department',
+                            'name' => 'Coaching Staff',
                             'lead' => 'DM Heureuse Uwumutima',
                             'description' => 'Developing vocal excellence and musical skills through dedicated training, workshops, and one-on-one mentorship for all choir members. We believe that technical excellence serves spiritual purpose.',
                             'image' => 'departments/heureuse.png',
@@ -479,7 +495,7 @@
                             'textColor' => 'text-blue-600'
                         ],
                         [
-                            'name' => 'Spiritual Department',
+                            'name' => 'Spiritual Affairs',
                             'lead' => 'Yves Iraduhumuriza',
                             'description' => 'Anchoring our ministry in prayer, Bible study, and spiritual formation—ensuring hearts stay aligned with God\'s purpose. We nurture the inner life that fuels outward expression.',
                             'image' => 'departments/yves.png',
@@ -490,7 +506,7 @@
                             'textColor' => 'text-purple-600'
                         ],
                         [
-                            'name' => 'Fashion Department',
+                            'name' => 'Fashion & Kits',
                             'lead' => 'Olivier Nshimyumuremyi',
                             'description' => 'Designing and coordinating our visual identity with elegant, coordinated outfits that reflect professionalism and unity. We understand that presentation matters in ministry.',
                             'image' => 'departments/olivier.png',
@@ -512,7 +528,7 @@
                             'textColor' => 'text-amber-600'
                         ],
                         [
-                            'name' => 'Disciplinary Department',
+                            'name' => 'Disciplinary',
                             'lead' => 'Benie Solange Dusabimana',
                             'description' => 'Upholding standards of excellence, accountability, and godly conduct—creating an environment of respect and growth. Discipline is love in action.',
                             'image' => 'departments/benie.png',
@@ -523,7 +539,7 @@
                             'textColor' => 'text-slate-600'
                         ],
                         [
-                            'name' => 'Fellowship Department',
+                            'name' => 'Fellowship',
                             'lead' => 'Thierry Uwiringiye Hirwa',
                             'description' => 'Building authentic community through social events, team bonding, and care initiatives that make everyone feel valued and connected. We believe in doing life together.',
                             'image' => 'departments/hirwa.png',
@@ -639,6 +655,53 @@
                         </svg>
                     </a>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founding Members Section -->
+    <section class="relative z-10 px-6 py-24 sm:px-8 lg:px-12 bg-gradient-to-br from-amber-50/30 via-white to-emerald-50/30">
+        <div class="mx-auto max-w-6xl">
+            <div class="text-center mb-16">
+                <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 px-6 py-2 text-xs font-black uppercase tracking-wide text-white shadow-xl">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                        <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
+                    </svg>
+                    Our Foundation
+                </span>
+                <h2 class="mt-6 text-4xl font-black text-gray-900 sm:text-5xl lg:text-6xl">
+                    The <span class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 bg-clip-text text-transparent animate-gradient-x">Founding Pillars</span>
+                </h2>
+                <p class="mt-6 max-w-3xl mx-auto text-lg sm:text-xl text-gray-600 leading-relaxed font-medium">
+                    These individuals were among the pillars who laid the foundation of God's Family Choir. Their vision, dedication, and faith created the legacy we continue to build upon today.
+                </p>
+            </div>
+
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                @php
+                    $foundingMembers = [
+                        ['name' => 'Nshimiyimana Kizito', 'color' => 'emerald'],
+                        ['name' => 'Ntihinyuzwa Isaac', 'color' => 'amber'],
+                        ['name' => 'Nzitonda Jacques', 'color' => 'emerald'],
+                        ['name' => 'Munyazikwiye Bernard', 'color' => 'amber'],
+                    ];
+                @endphp
+                @foreach($foundingMembers as $member)
+                    <div class="group relative overflow-hidden rounded-2xl border-2 border-{{ $member['color'] }}-200 bg-white p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-{{ $member['color'] }}-200/20 to-transparent rounded-bl-full"></div>
+                        <div class="relative text-center">
+                            <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-{{ $member['color'] }}-500 to-{{ $member['color'] }}-600 rounded-full flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-black text-gray-900 mb-2">{{ $member['name'] }}</h3>
+                            <p class="text-xs font-bold text-{{ $member['color'] }}-600 uppercase tracking-wider">Founding Member</p>
+                            <div class="mt-4 h-1 w-12 bg-gradient-to-r from-{{ $member['color'] }}-500 to-{{ $member['color'] }}-300 rounded-full mx-auto"></div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -760,6 +823,12 @@
             <p class="mt-6 text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-medium">
                 We are always listening for new voices, musicians, production minds, and intercessors who feel called to serve through worship. Wherever you are on your journey, there is room for you here. Come as you are, and let's grow together.
             </p>
+            <div class="mt-8 mb-8 p-6 rounded-2xl bg-gradient-to-r from-emerald-50 to-amber-50 border-2 border-emerald-200 max-w-2xl mx-auto">
+                <p class="text-base sm:text-lg font-black text-gray-900 mb-2 text-center">Our Mission Statement</p>
+                <p class="text-lg sm:text-xl font-bold text-emerald-700 italic text-center leading-relaxed">
+                    "A family to serve the words of life to the world through gospel messages."
+                </p>
+            </div>
             <div class="mt-12 flex flex-wrap justify-center gap-5">
                 <a href="{{ route('choir.register.form') }}" class="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-10 py-5 text-base font-black text-white shadow-2xl shadow-emerald-500/40 transition-all duration-300 hover:shadow-3xl hover:shadow-emerald-500/50 hover:-translate-y-1 hover:scale-105">
                     Register to audition

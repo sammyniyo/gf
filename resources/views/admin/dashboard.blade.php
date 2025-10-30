@@ -417,6 +417,35 @@
             </div>
         </div>
 
+        <!-- Recent Visitors -->
+        <div class="mt-8 overflow-x-auto rounded-xl border border-slate-200 bg-white/70">
+            <table class="min-w-full text-left text-sm">
+                <thead class="bg-slate-50 text-slate-600">
+                    <tr>
+                        <th class="px-4 py-3 font-semibold">When</th>
+                        <th class="px-4 py-3 font-semibold">IP</th>
+                        <th class="px-4 py-3 font-semibold">URL</th>
+                        <th class="px-4 py-3 font-semibold">Referer</th>
+                        <th class="px-4 py-3 font-semibold">User Agent</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @forelse($recent_page_views as $pv)
+                        <tr>
+                            <td class="px-4 py-3 text-slate-700">{{ $pv->viewed_at->format('Y-m-d H:i') }}</td>
+                            <td class="px-4 py-3 font-mono text-slate-800">{{ $pv->visitor_ip }}</td>
+                            <td class="px-4 py-3"><a href="{{ $pv->url }}" class="text-indigo-600 hover:underline" target="_blank">{{ Str::limit($pv->url, 60) }}</a></td>
+                            <td class="px-4 py-3 text-slate-600">{{ Str::limit($pv->referer, 40) ?: '—' }}</td>
+                            <td class="px-4 py-3 text-slate-500">{{ Str::limit($pv->user_agent, 60) }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="px-4 py-6 text-center text-slate-500">No recent visitors tracked yet.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
         <!-- Popular Pages -->
         @if($popular_pages->count() > 0)
             <div class="rounded-xl border border-slate-200 bg-white/70 p-4">

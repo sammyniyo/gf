@@ -28,7 +28,9 @@
                 </p>
             </div>
         </div>
-    </section>
+</section>
+
+
 
     <!-- Quick Contact Cards -->
     <section class="relative z-10 px-6 pb-16 sm:px-8 lg:px-12">
@@ -243,6 +245,13 @@
                         <!-- Form -->
                         <form method="POST" action="{{ route('contact.submit') }}" class="p-8 space-y-6">
                             @csrf
+
+                            <!-- Honeypot field: real users won't see/fill this -->
+                            <div class="hidden" aria-hidden="true">
+                                <label for="website">Website</label>
+                                <input type="text" name="website" id="website" tabindex="-1" autocomplete="off" />
+                            </div>
+
 
                             <div class="grid sm:grid-cols-2 gap-6">
                                 <!-- Name -->

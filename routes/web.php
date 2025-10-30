@@ -225,7 +225,10 @@ Route::get('/register/thank-you', function () {
 //     }
 // });
 
-Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+// Contact form with basic rate limiting to reduce spam (3 submissions per minute per IP)
+Route::post('/contact', [ContactController::class, 'submit'])
+    ->middleware('throttle:3,1')
+    ->name('contact.submit');
 
 // Shop Routes
 Route::middleware(['page.status:shop'])->group(function () {

@@ -24,6 +24,13 @@ class TrackPageViews
                 'build/*',
                 'favicon.ico',
                 'robots.txt',
+                // common bot scan paths & assets
+                'wp-admin*',
+                'wp-login.php',
+                'wp-includes/*',
+                'wp-content/*',
+                'wordpress/*',
+                'images/*',
             ];
 
             $shouldTrack = true;
@@ -36,6 +43,10 @@ class TrackPageViews
 
             if ($shouldTrack) {
                 try {
+                    // naive bot detection via user agent
+                    $ua = strtolower($request->userAgent() ?? '');
+                    $isBot = (bool) preg_match('/bot|spider|crawl|slurp|wget|curl|httpclient|libwww|headless|phantom|node|python|java|wordpress/i', $ua);
+
                     PageView::create([
                         'url' => $request->fullUrl(),
                         'page_title' => $this->getPageTitle($request),

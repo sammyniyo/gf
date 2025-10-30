@@ -148,6 +148,7 @@ class DashboardController extends Controller
             'month_views' => $monthViews,
             'popular_pages' => $popularPages,
             'page_view_trend' => $pageViewTrend,
+            'recent_page_views' => \App\Models\PageView::orderByDesc('viewed_at')->limit(20)->get(),
             // Birthday data
             'birthdays_today' => $birthdaysToday,
             'birthdays_this_week' => $birthdaysThisWeek,

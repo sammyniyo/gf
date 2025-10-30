@@ -172,7 +172,10 @@ class ShopController extends Controller
             ->ordered()
             ->paginate(12);
 
-        return view('shop.search', compact('albums', 'query'));
+        // Reuse the shop index view for search results; hide featured section by passing empty collection
+        $featuredAlbums = collect([]);
+
+        return view('shop.index', compact('albums', 'featuredAlbums', 'query'));
     }
 
     /**

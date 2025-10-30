@@ -19,8 +19,7 @@
             <!-- Desktop Navigation - Grouped -->
             <nav class="hidden md:flex items-center space-x-1" x-data="{
                 aboutMenuOpen: false,
-                ministryMenuOpen: false,
-                resourcesMenuOpen: false
+                ministryMenuOpen: false
             }">
                 <!-- Home -->
                 <a href="/" class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('/') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
@@ -116,36 +115,7 @@
                     Our Music
                 </a>
 
-                <!-- Resources -->
-                <div class="relative">
-                    <button @click="resourcesMenuOpen = !resourcesMenuOpen" @click.away="resourcesMenuOpen = false"
-                        class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('utility-folder*') || request()->is('resources*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
-                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                        </svg>
-                        Resources
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                    <div x-show="resourcesMenuOpen"
-                         x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 scale-95"
-                         x-transition:enter-end="opacity-100 scale-100"
-                         x-transition:leave="transition ease-in duration-150"
-                         x-transition:leave-start="opacity-100 scale-100"
-                         x-transition:leave-end="opacity-0 scale-95"
-                         class="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
-                         x-cloak>
-                        <a href="{{ route('resources.index') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
-                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
-                                <path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
-                            </svg>
-                            Downloads
-                        </a>
-                    </div>
-                </div>
+
 
                 <!-- Contact -->
                 <a href="/contact" class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('contact*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
@@ -298,18 +268,7 @@
                 Our Music
             </a>
 
-            <!-- Resources Section -->
-            <div class="px-3 py-2">
-                <div class="text-xs font-semibold text-emerald-200 uppercase tracking-wider">Resources</div>
-            </div>
-            <a href="{{ route('resources.index') }}" @click="mobileMenuOpen = false"
-                class="flex items-center px-6 py-2 rounded-md text-sm font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('utility-folder*') || request()->is('resources*') ? 'bg-emerald-700 text-amber-100' : '' }}">
-                <svg class="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
-                    <path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
-                </svg>
-                Downloads
-            </a>
+
 
             <!-- Contact -->
             <a href="/contact" @click="mobileMenuOpen = false"

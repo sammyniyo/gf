@@ -44,32 +44,32 @@
                 </div>
                 <div class="flex-1 lg:pl-12">
                     <!-- Enhanced Stacked Images Effect -->
-                    <div class="relative mx-auto max-w-md h-[520px]">
+                    <div class="relative mx-auto max-w-md h-[450px] mb-8 lg:mb-0">
                         <!-- Image 3 - Back (furthest) -->
-                        <div class="absolute top-16 left-8 w-64 h-80 rounded-2xl overflow-hidden shadow-lg transform rotate-6 transition-all duration-500 hover:rotate-12 hover:scale-105 group" style="z-index: 1;">
+                        <div class="absolute top-8 left-8 w-56 h-72 rounded-2xl overflow-hidden shadow-lg transform rotate-6 transition-all duration-500 hover:rotate-12 hover:scale-105 group" style="z-index: 1;">
                             <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/30 via-transparent to-transparent"></div>
                             <img src="{{ asset('images/3.jpg') }}" alt="God's Family Choir - Early Years" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                         </div>
 
                         <!-- Image 2 - Middle -->
-                        <div class="absolute top-12 right-12 w-64 h-80 rounded-2xl overflow-hidden shadow-xl transform -rotate-3 transition-all duration-500 hover:-rotate-6 hover:scale-105 group" style="z-index: 2;">
+                        <div class="absolute top-4 right-8 w-56 h-72 rounded-2xl overflow-hidden shadow-xl transform -rotate-3 transition-all duration-500 hover:-rotate-6 hover:scale-105 group" style="z-index: 2;">
                             <div class="absolute inset-0 bg-gradient-to-t from-amber-900/30 via-transparent to-transparent"></div>
                             <img src="{{ asset('images/gf-2.jpg') }}" alt="God's Family Choir - Performance" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                         </div>
 
                         <!-- Image 1 - Front (Main) -->
-                        <div class="absolute top-20 left-1/2 -translate-x-1/2 w-72 h-[352px] rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-500 hover:scale-105 border-4 border-white group" style="z-index: 3;">
+                        <div class="absolute top-12 left-1/2 -translate-x-1/2 w-64 h-80 rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-500 hover:scale-105 border-4 border-white group" style="z-index: 3;">
                             <div class="absolute inset-0 bg-gradient-to-t from-gray-900/50 via-transparent to-transparent"></div>
                             <img src="{{ asset('images/1.jpg') }}" alt="God's Family Choir - Main" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                             <!-- Enhanced Badge Overlay -->
-                            <div class="absolute bottom-6 left-6 right-6 rounded-xl bg-white/95 backdrop-blur-md p-5 shadow-2xl border border-emerald-100/50" style="z-index: 10;">
+                            <div class="absolute bottom-4 left-4 right-4 rounded-xl bg-white/95 backdrop-blur-md p-4 shadow-2xl border border-emerald-100/50" style="z-index: 10;">
                                 <div class="flex items-center gap-2 mb-1">
                                     <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
                                     </svg>
                                     <p class="text-xs font-black uppercase tracking-wider text-emerald-600">Since 1998</p>
                                 </div>
-                                <p class="text-base font-bold text-gray-900 leading-tight">Voices raised in worship, hearts anchored in purpose.</p>
+                                <p class="text-sm font-bold text-gray-900 leading-tight">Voices raised in worship, hearts anchored in purpose.</p>
                             </div>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
             </div>
 
             <!-- Enhanced Stats Grid -->
-            <div class="mt-20 grid gap-5 rounded-3xl border border-emerald-100 bg-white p-6 sm:p-8 shadow-xl sm:grid-cols-2 lg:grid-cols-4">
+            <div class="mt-32 lg:mt-24 grid gap-5 rounded-3xl border border-emerald-100 bg-white p-6 sm:p-8 shadow-xl sm:grid-cols-2 lg:grid-cols-4">
                 @php
                     $stats = [
                         ['label' => 'Active Members', 'value' => 300, 'color' => 'emerald', 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'],

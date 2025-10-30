@@ -42,24 +42,24 @@
                 <div class="flex-1 lg:pl-12">
                     <!-- Enhanced Stacked Images Effect -->
                     <div class="relative mx-auto max-w-md h-[520px]">
-                        <!-- Image 3 - Back -->
-                        <div class="absolute top-8 left-4 w-72 h-96 rounded-2xl overflow-hidden shadow-2xl transform rotate-6 transition-all duration-500 hover:rotate-12 hover:scale-105 group">
-                            <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/30 via-transparent to-transparent z-10"></div>
+                        <!-- Image 3 - Back (furthest) -->
+                        <div class="absolute top-16 left-8 w-64 h-80 rounded-2xl overflow-hidden shadow-lg transform rotate-6 transition-all duration-500 hover:rotate-12 hover:scale-105 group" style="z-index: 1;">
+                            <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/30 via-transparent to-transparent"></div>
                             <img src="{{ asset('images/3.jpg') }}" alt="God's Family Choir - Early Years" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                         </div>
 
                         <!-- Image 2 - Middle -->
-                        <div class="absolute top-4 right-8 w-72 h-96 rounded-2xl overflow-hidden shadow-2xl transform -rotate-3 transition-all duration-500 hover:-rotate-6 hover:scale-105 group z-10">
-                            <div class="absolute inset-0 bg-gradient-to-t from-amber-900/30 via-transparent to-transparent z-10"></div>
+                        <div class="absolute top-12 right-12 w-64 h-80 rounded-2xl overflow-hidden shadow-xl transform -rotate-3 transition-all duration-500 hover:-rotate-6 hover:scale-105 group" style="z-index: 2;">
+                            <div class="absolute inset-0 bg-gradient-to-t from-amber-900/30 via-transparent to-transparent"></div>
                             <img src="{{ asset('images/gf-2.jpg') }}" alt="God's Family Choir - Performance" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                         </div>
 
                         <!-- Image 1 - Front (Main) -->
-                        <div class="absolute top-12 left-1/2 -translate-x-1/2 w-80 h-96 rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-500 hover:scale-105 border-4 border-white group z-20">
-                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/50 via-transparent to-transparent z-10"></div>
+                        <div class="absolute top-20 left-1/2 -translate-x-1/2 w-72 h-[352px] rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-500 hover:scale-105 border-4 border-white group" style="z-index: 3;">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/50 via-transparent to-transparent"></div>
                             <img src="{{ asset('images/1.jpg') }}" alt="God's Family Choir - Main" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                             <!-- Enhanced Badge Overlay -->
-                            <div class="absolute bottom-6 left-6 right-6 rounded-xl bg-white/95 backdrop-blur-md p-5 shadow-2xl border border-emerald-100/50 z-20">
+                            <div class="absolute bottom-6 left-6 right-6 rounded-xl bg-white/95 backdrop-blur-md p-5 shadow-2xl border border-emerald-100/50" style="z-index: 10;">
                                 <div class="flex items-center gap-2 mb-1">
                                     <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>

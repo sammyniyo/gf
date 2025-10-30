@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Services\AuditLogger;
 
 class EventController extends Controller
 {
@@ -42,7 +43,14 @@ class EventController extends Controller
         $validated['is_public'] = $request->boolean('is_public', true);
         $validated['accept_support'] = $request->boolean('accept_support', null);
 
-        Event::create($validated);
+        $event = Event::create($validated);
+
+        // Audit: event created
+        try {
+            AuditLogger::created($event);
+        } catch (\Throwable $e) {
+            \Log::warning('Audit log (event created) failed: ' . $e->getMessage());
+        }
 
         return redirect()->route('admin.events.index')->with('success', 'Event created successfully!');
     }
@@ -80,6 +88,13 @@ class EventController extends Controller
 
         $event->update($validated);
 
+        // Audit: event updated
+        try {
+            AuditLogger::updated($event, [], [], 'Updated event');
+        } catch (\Throwable $e) {
+            \Log::warning('Audit log (event updated) failed: ' . $e->getMessage());
+        }
+
         return redirect()->route('admin.events.index')->with('success', 'Event updated successfully!');
     }
 
@@ -87,6 +102,13 @@ class EventController extends Controller
     {
         if ($event->cover_image) {
             Storage::disk('public')->delete($event->cover_image);
+        }
+
+        // Audit before delete
+        try {
+            AuditLogger::deleted($event);
+        } catch (\Throwable $e) {
+            \Log::warning('Audit log (event deleted) failed: ' . $e->getMessage());
         }
 
         $event->delete();

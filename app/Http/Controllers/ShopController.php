@@ -66,43 +66,34 @@ class ShopController extends Controller
             'customer_name' => 'required|string|max:255',
             'customer_email' => 'required|email|max:255',
             'customer_phone' => 'nullable|string|max:20',
-            'payment_method' => 'required|in:stripe,paypal,mobile_money,irembopay',
         ]);
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
 
-        // Create the purchase record
+        // Create the purchase record - all albums are now free
         $purchase = AlbumPurchase::create([
             'album_id' => $album->id,
             'customer_name' => $request->customer_name,
             'customer_email' => $request->customer_email,
             'customer_phone' => $request->customer_phone,
-            'amount' => $album->price,
-            'payment_method' => $request->payment_method,
-            'payment_status' => $album->isFree() ? 'completed' : 'pending',
+            'amount' => 0, // All albums are free
+            'payment_method' => 'free',
+            'payment_status' => 'completed',
         ]);
 
-        // If free album, mark as completed immediately
-        if ($album->isFree()) {
-            return redirect()->route('shop.download', $purchase->download_code)
-                ->with('success', 'Thank you! Your free album is ready for download.');
+        // Send download link via email
+        try {
+            Mail::to($purchase->customer_email)->send(new \App\Mail\AlbumDownloadMail($purchase));
+        } catch (\Exception $e) {
+            \Log::error('Failed to send download email: ' . $e->getMessage());
+            // Continue anyway - user can still access via download code
         }
 
-        // Redirect to payment gateway based on payment method
-        switch ($request->payment_method) {
-            case 'stripe':
-                return redirect()->route('shop.payment.stripe', $purchase->id);
-            case 'paypal':
-                return redirect()->route('shop.payment.paypal', $purchase->id);
-            case 'mobile_money':
-                return redirect()->route('shop.payment.mobile', $purchase->id);
-            case 'irembopay':
-                return redirect()->route('payments.irembopay.initialize', $purchase->id);
-            default:
-                return back()->with('error', 'Invalid payment method');
-        }
+        // Redirect to download page
+        return redirect()->route('shop.download', $purchase->download_code)
+            ->with('success', 'Thank you! Check your email for the download link, or click the button below to download now.');
     }
 
     /**

@@ -273,12 +273,97 @@
                class="px-6 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold rounded-lg transition-colors">
                 Cancel
             </a>
-            <button type="submit"
+            <button type="submit" id="submit-btn"
                     class="px-8 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold rounded-lg transition-all transform hover:scale-105 shadow-lg">
                 Create Album
             </button>
         </div>
     </form>
+
+    <!-- Upload Progress -->
+    <div id="upload-progress" class="hidden mt-6 bg-white dark:bg-gray-800 rounded-xl border border-emerald-200 dark:border-emerald-700 p-6 shadow">
+        <div class="flex items-center gap-3 mb-2">
+            <svg class="w-5 h-5 text-emerald-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3" />
+            </svg>
+            <p class="text-sm font-semibold text-emerald-700 dark:text-emerald-300">Uploading files… <span id="upload-percent">0%</span></p>
+        </div>
+        <div class="w-full bg-emerald-100 dark:bg-emerald-900/30 rounded-full h-3 overflow-hidden">
+            <div id="upload-bar" class="h-3 bg-emerald-600 rounded-full transition-all" style="width: 0%"></div>
+        </div>
+        <p id="upload-detail" class="mt-2 text-xs text-emerald-700 dark:text-emerald-300">Starting…</p>
+    </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+(function() {
+    const form = document.querySelector('form[action="{{ route('admin.albums.store') }}"]');
+    if (!form) return;
+
+    const progressBox = document.getElementById('upload-progress');
+    const bar = document.getElementById('upload-bar');
+    const percent = document.getElementById('upload-percent');
+    const detail = document.getElementById('upload-detail');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', function(e) {
+        // Use XHR only when there is at least one file to track
+        const hasCover = document.getElementById('cover_image')?.files?.length > 0;
+        const hasZip = document.getElementById('zip_file')?.files?.length > 0;
+        if (!hasCover && !hasZip) return; // normal submit
+
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-60','cursor-not-allowed');
+        progressBox.classList.remove('hidden');
+        bar.style.width = '0%';
+        percent.textContent = '0%';
+        detail.textContent = 'Preparing files…';
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', form.action, true);
+
+        // CSRF
+        const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+        if (token) xhr.setRequestHeader('X-CSRF-TOKEN', token);
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+        xhr.upload.onprogress = function (evt) {
+            if (evt.lengthComputable) {
+                const p = Math.round((evt.loaded / evt.total) * 100);
+                bar.style.width = p + '%';
+                percent.textContent = p + '%';
+                detail.textContent = p < 100 ? 'Uploading…' : 'Processing on server…';
+            }
+        };
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    // Follow redirect if present
+                    const locationHeader = xhr.getResponseHeader('X-Redirect-To');
+                    if (locationHeader) {
+                        window.location.href = locationHeader;
+                    } else if (xhr.responseURL) {
+                        // Laravel usually responds with redirect; responseURL will be final URL
+                        window.location.href = '{{ route('admin.albums.index') }}';
+                    } else {
+                        window.location.href = '{{ route('admin.albums.index') }}';
+                    }
+                } else {
+                    detail.textContent = 'Upload failed. Please try again.';
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-60','cursor-not-allowed');
+                }
+            }
+        };
+
+        const formData = new FormData(form);
+        xhr.send(formData);
+    });
+})();
+</script>
+@endpush
 

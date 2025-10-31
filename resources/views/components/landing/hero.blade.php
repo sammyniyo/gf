@@ -8,29 +8,29 @@
         </div>
         <!-- Image 2 -->
         <div class="hero-slide absolute inset-0">
-            <img src="{{ asset('images/gf-21.jpg') }}" alt="God's Family Choir - Community"
+            <img src="{{ asset('images/GF-21.jpg') }}" alt="God's Family Choir - Community"
                  class="w-full h-full object-cover object-center" />
         </div>
         <!-- Image 3 -->
         <div class="hero-slide absolute inset-0">
-            <img src="{{ asset('images/gf-22.jpg') }}" alt="God's Family Choir - Excellence"
+            <img src="{{ asset('images/GF-22.jpg') }}" alt="God's Family Choir - Excellence"
                  class="w-full h-full object-cover object-center" />
         </div>
         <!-- Image 4 -->
         <div class="hero-slide absolute inset-0">
-            <img src="{{ asset('images/gf-23.jpg') }}" alt="God's Family Choir - Excellence"
+            <img src="{{ asset('images/GF-23.jpg') }}" alt="God's Family Choir - Excellence"
                  class="w-full h-full object-cover object-center" />
         </div>
         <!-- Image 5 -->
         <div class="hero-slide absolute inset-0">
-            <img src="{{ asset('images/gf-24.jpg') }}" alt="God's Family Choir - Excellence"
+            <img src="{{ asset('images/GF-24.jpg') }}" alt="God's Family Choir - Excellence"
                  class="w-full h-full object-cover object-center" />
         </div>
 
         <!-- Multi-Layer Overlays for Depth -->
-        <div class="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-emerald-900/30 via-transparent to-amber-900/30"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70 z-10"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 z-10"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-emerald-900/30 via-transparent to-amber-900/30 z-10"></div>
 
         <!-- Dissolving Gradient Grid Pattern -->
         <div class="absolute inset-0 opacity-[0.15]">
@@ -183,18 +183,26 @@
     /* Hero Slideshow with Morph Transitions */
     .hero-slide {
         opacity: 0;
-        transition: opacity 2s ease-in-out, transform 20s ease-in-out;
+        visibility: hidden;
+        transition: opacity 2s ease-in-out, visibility 0s 2s, transform 20s ease-in-out;
         transform: scale(1);
+        z-index: 1;
     }
 
     .hero-slide.active {
         opacity: 1;
+        visibility: visible;
+        transition: opacity 2s ease-in-out, visibility 0s, transform 20s ease-in-out;
+        z-index: 2;
         animation: morphZoom 8s ease-in-out forwards;
     }
 
     .hero-slide img {
         filter: blur(0px);
         transition: filter 2s ease-in-out;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     @keyframes morphZoom {

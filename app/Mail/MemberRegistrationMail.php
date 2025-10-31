@@ -30,7 +30,7 @@ class MemberRegistrationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Welcome to God\'s Family Choir - Registration Received',
+            subject: 'Registration Received - God\'s Family Choir',
         );
     }
 

@@ -6,6 +6,7 @@ use App\Models\Member;
 use App\Services\MemberIdService;
 use App\Mail\MemberWelcomeEmail;
 use App\Mail\FriendshipWelcomeEmail;
+use App\Mail\MemberRegistrationMail;
 use App\Jobs\SendWelcomeEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -139,12 +140,12 @@ class RegistrationController extends Controller
         // Create member
         $member = Member::create($data);
 
-        // Send welcome email immediately to avoid requiring a queue worker
+        // Send registration notification email (not welcome email - that comes after confirmation)
         try {
-            Mail::to($member->email)->send(new MemberWelcomeEmail($member));
-            \Log::info('Member welcome email sent to: ' . $member->email);
+            Mail::to($member->email)->send(new MemberRegistrationMail($member));
+            \Log::info('Member registration notification email sent to: ' . $member->email);
         } catch (\Exception $e) {
-            \Log::error('Failed to send welcome email: ' . $e->getMessage());
+            \Log::error('Failed to send registration notification email: ' . $e->getMessage());
         }
 
         return redirect()->route('registration.success')

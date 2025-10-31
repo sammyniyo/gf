@@ -169,11 +169,12 @@ class MemberController extends Controller
             AuditLogger::updated($member, [], [], 'Updated member notes');
         }
 
-        // Send welcome email when member status changes from pending to active
+        // Send welcome email with WhatsApp links when member status changes from pending to active
         if ($oldStatus !== 'active' && $newStatus === 'active') {
             try {
-                \Mail::to($member->email)->send(new \App\Mail\MemberWelcomeMail($member));
+                \Mail::to($member->email)->send(new \App\Mail\MemberWelcomeEmail($member));
                 AuditLogger::emailSent($member->email, 'Welcome Email', $member);
+                \Log::info('Welcome email with WhatsApp links sent to member: ' . $member->email);
             } catch (\Exception $e) {
                 \Log::error('Failed to send welcome email to member: ' . $e->getMessage());
                 // Don't fail the update if email fails

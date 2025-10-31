@@ -224,7 +224,6 @@
             <div class="contact-info">
                 <h4>Get in Touch</h4>
                 <p><strong>Email:</strong> asa.godsfamilychoir2017@gmail.com</p>
-                <p><strong>Phone:</strong> +250 783 871 782</p>
                 <p><strong>Address:</strong> ASA UR Nyarugenge SDA Kigali, Rwanda</p>
             </div>
 

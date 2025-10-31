@@ -481,8 +481,7 @@
                     <h3 class="font-bold text-blue-900 mb-2">Need Help?</h3>
                     <p class="text-blue-800 text-sm">
                         If you have any questions or need assistance filling out this form, please contact us at
-                        <a href="mailto:info@godsfamilychoir.org" class="underline">info@godsfamilychoir.org</a> or
-                        call <a href="tel:+250783871782" class="underline">+250 783 871 782</a>
+                        <a href="mailto:asa.godsfamilychoir2017@gmail.com" class="underline">asa.godsfamilychoir2017@gmail.com</a>
                     </p>
                 </div>
             </div>

@@ -43,7 +43,7 @@ class RegistrationController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:members,email',
-            'phone' => 'required|string|max:20',
+            'phone' => 'required|string|max:20|unique:members,phone',
             'birthdate' => 'required|date',
             'gender' => 'required|in:male,female,other',
             'address' => 'required|string',
@@ -167,7 +167,7 @@ class RegistrationController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:members,email',
-            'phone' => 'required|string|max:20',
+            'phone' => 'required|string|max:20|unique:members,phone',
             'birthdate' => 'nullable|date',
             'gender' => 'nullable|in:male,female,other',
             'address' => 'nullable|string',
@@ -223,5 +223,38 @@ class RegistrationController extends Controller
     public function success()
     {
         return view('registration.success');
+    }
+
+    /**
+     * Show form to remind member code by email.
+     */
+    public function showRemindCodeForm()
+    {
+        return view('registration.remind-code');
+    }
+
+    /**
+     * Send member code to existing email.
+     */
+    public function sendRemindCode(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $member = Member::where('email', $request->email)->first();
+
+        if (!$member) {
+            return back()->withErrors(['email' => 'We could not find a registration with this email.'])->withInput();
+        }
+
+        try {
+            Mail::to($member->email)->send(new \App\Mail\MemberCodeReminderEmail($member));
+        } catch (\Throwable $th) {
+            \Log::error('Failed to send code reminder: ' . $th->getMessage());
+            return back()->with('error', 'We could not send the email right now. Please try again later.');
+        }
+
+        return back()->with('success', 'We have emailed your registration code to you.');
     }
 }

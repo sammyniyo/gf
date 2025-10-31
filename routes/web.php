@@ -158,6 +158,10 @@ Route::post('/join/friendship', [RegistrationController::class, 'storeFriendship
 
 Route::get('/registration/success', [RegistrationController::class, 'success'])->name('registration.success');
 
+// Remind registration code
+Route::get('/registration/remind-code', [RegistrationController::class, 'showRemindCodeForm'])->name('registration.remind-code');
+Route::post('/registration/remind-code', [RegistrationController::class, 'sendRemindCode'])->name('registration.remind-code.send');
+
 // Language switcher
 Route::get('/lang/{locale}', function ($locale) {
     $available = ['en', 'rw'];

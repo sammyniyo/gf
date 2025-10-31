@@ -88,7 +88,7 @@
                         <div>
                             <h4 class="text-sm font-semibold text-blue-900">Status Change Notice</h4>
                             <p class="mt-1 text-sm text-blue-700">
-                                Changing this member's status to <strong>Active</strong> will send them a welcome email with login credentials.
+                                Changing this member's status to <strong>Active</strong> will send them a welcome email only. No login credentials are created or sent.
                             </p>
                         </div>
                     </div>

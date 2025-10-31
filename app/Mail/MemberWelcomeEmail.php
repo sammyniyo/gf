@@ -15,7 +15,6 @@ class MemberWelcomeEmail extends Mailable
 
     public $member;
     public $mainGroupLink;
-    public $choirGroupLink;
     public $activeChoristersLink;
 
     /**
@@ -27,7 +26,6 @@ class MemberWelcomeEmail extends Mailable
 
         // Group invite links - Update these with actual group links
         $this->mainGroupLink = config('services.whatsapp.main_group_link', 'https://chat.whatsapp.com/MAIN_GROUP');
-        $this->choirGroupLink = config('services.whatsapp.choir_group_link', 'https://chat.whatsapp.com/CHOIR_GROUP');
         $this->activeChoristersLink = config('services.whatsapp.active_choristers_link', 'https://chat.whatsapp.com/ACTIVE_CHORISTERS');
     }
 
@@ -51,7 +49,6 @@ class MemberWelcomeEmail extends Mailable
             with: [
                 'member' => $this->member,
                 'mainGroupLink' => $this->mainGroupLink,
-                'choirGroupLink' => $this->choirGroupLink,
                 'activeChoristersLink' => $this->activeChoristersLink,
             ]
         );

@@ -150,7 +150,6 @@
                                     <p class="text-gray-600 text-sm">Use the links in your email to join our WhatsApp groups:
                                         <ul class="list-disc ml-5 mt-2 space-y-1">
                                             <li>God's Family Main Group</li>
-                                            <li>God's Family Choir Group</li>
                                             <li>Active Choristers Group</li>
                                         </ul>
                                     </p>

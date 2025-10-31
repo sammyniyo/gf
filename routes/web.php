@@ -143,11 +143,10 @@ Route::get('/contact', function () {
 // Email Subscriber
 Route::post('/subscribe', [SubscriberController::class, 'subscribe'])->name('subscribe');
 
-Route::get('/register/member', [MemberController::class, 'create'])
-    ->name('choir.register.form');
-
-Route::post('/register/member', [MemberController::class, 'store'])
-    ->name('members.store');
+// Legacy registration routes (deprecated) -> Redirect to new join/member
+Route::match(['get','post'],'/register/member', function() {
+    return redirect()->route('registration.member');
+})->name('choir.register.form');
 
 // New Registration Routes
 Route::get('/join/member', [RegistrationController::class, 'showMemberForm'])->name('registration.member');

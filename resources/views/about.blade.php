@@ -43,10 +43,21 @@
                     </div>
                 </div>
                 <div class="flex-1 lg:pl-12">
+                    @php
+                        // Configure hero stacked images (can add more images to each array)
+                        $heroBackImages = ['3.jpg'];
+                        $heroMiddleImages = ['gf-2.jpg'];
+                        $heroFrontImages = ['1.jpg'];
+                    @endphp
+
                     <!-- Mobile: Simple hero image to avoid overlap -->
                     <div class="block lg:hidden mb-8">
                         <div class="rounded-2xl overflow-hidden shadow-xl border-4 border-white">
-                            <img src="{{ asset('images/1.jpg') }}" alt="God's Family Choir" class="w-full h-80 object-cover" />
+                            <div class="relative hero-stack-slider" data-interval="5000">
+                                @foreach($heroFrontImages as $i => $img)
+                                    <img src="{{ asset('images/' . $img) }}" alt="God's Family Choir" class="w-full h-80 object-cover hero-stack-slide {{ $i === 0 ? '' : 'hidden' }}" />
+                                @endforeach
+                            </div>
                         </div>
                     </div>
 
@@ -55,19 +66,31 @@
                         <!-- Image 3 - Back (furthest) -->
                         <div class="absolute top-8 left-8 w-56 h-72 rounded-2xl overflow-hidden shadow-lg transform rotate-6 transition-all duration-500 hover:rotate-12 hover:scale-105 group" style="z-index: 1;">
                             <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/30 via-transparent to-transparent"></div>
-                            <img src="{{ asset('images/3.jpg') }}" alt="God's Family Choir - Early Years" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                            <div class="relative h-full w-full hero-stack-slider" data-interval="6000">
+                                @foreach($heroBackImages as $i => $img)
+                                    <img src="{{ asset('images/' . $img) }}" alt="God's Family Choir - Early Years" class="h-full w-full object-cover hero-stack-slide {{ $i === 0 ? '' : 'hidden' }} transition-transform duration-700 group-hover:scale-110" />
+                                @endforeach
+                            </div>
                         </div>
 
                         <!-- Image 2 - Middle -->
                         <div class="absolute top-4 right-8 w-56 h-72 rounded-2xl overflow-hidden shadow-xl transform -rotate-3 transition-all duration-500 hover:-rotate-6 hover:scale-105 group" style="z-index: 2;">
                             <div class="absolute inset-0 bg-gradient-to-t from-amber-900/30 via-transparent to-transparent"></div>
-                            <img src="{{ asset('images/gf-2.jpg') }}" alt="God's Family Choir - Performance" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                            <div class="relative h-full w-full hero-stack-slider" data-interval="6000">
+                                @foreach($heroMiddleImages as $i => $img)
+                                    <img src="{{ asset('images/' . $img) }}" alt="God's Family Choir - Performance" class="h-full w-full object-cover hero-stack-slide {{ $i === 0 ? '' : 'hidden' }} transition-transform duration-700 group-hover:scale-110" />
+                                @endforeach
+                            </div>
                         </div>
 
                         <!-- Image 1 - Front (Main) -->
                         <div class="absolute top-12 left-1/2 -translate-x-1/2 w-64 h-80 rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-500 hover:scale-105 border-4 border-white group" style="z-index: 3;">
                             <div class="absolute inset-0 bg-gradient-to-t from-gray-900/50 via-transparent to-transparent"></div>
-                            <img src="{{ asset('images/1.jpg') }}" alt="God's Family Choir - Main" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                            <div class="relative h-full w-full hero-stack-slider" data-interval="6000">
+                                @foreach($heroFrontImages as $i => $img)
+                                    <img src="{{ asset('images/' . $img) }}" alt="God's Family Choir - Main" class="h-full w-full object-cover hero-stack-slide {{ $i === 0 ? '' : 'hidden' }} transition-transform duration-700 group-hover:scale-110" />
+                                @endforeach
+                            </div>
                             <!-- Enhanced Badge Overlay -->
                             <div class="absolute bottom-4 left-4 right-4 rounded-xl bg-white/95 backdrop-blur-md p-4 shadow-2xl border border-emerald-100/50" style="z-index: 10;">
                                 <div class="flex items-center gap-2 mb-1">
@@ -1093,6 +1116,26 @@
         };
 
         document.querySelectorAll('.milestone-slider').forEach(initMilestoneSlider);
+
+        // Hero stacked images slider (simple autoplay)
+        const initHeroStackSlider = (container) => {
+            const slides = container.querySelectorAll('.hero-stack-slide');
+            if (!slides || slides.length <= 1) return;
+            let i = 0;
+            const show = (idx) => {
+                slides.forEach((el, j) => {
+                    if (j === idx) el.classList.remove('hidden');
+                    else el.classList.add('hidden');
+                });
+            };
+            const intv = Number(container.dataset.interval || 6000);
+            const next = () => { i = (i + 1) % slides.length; show(i); };
+            let timer = setInterval(next, intv);
+            container.addEventListener('mouseenter', () => clearInterval(timer));
+            container.addEventListener('mouseleave', () => { timer = setInterval(next, intv); });
+        };
+
+        document.querySelectorAll('.hero-stack-slider').forEach(initHeroStackSlider);
     });
 </script>
 @endpush

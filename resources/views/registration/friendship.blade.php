@@ -121,6 +121,71 @@
                         </div>
                     </div>
 
+                    <!-- Code Reminder Section (shows when email/phone already exists) -->
+                    @if (session('show_reminder') && ($errors->has('email') || $errors->has('phone')))
+                        <div class="mt-4 animate-fade-in">
+                            <div class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 border-2 border-blue-200 rounded-xl p-6 shadow-lg">
+                                <div class="flex items-start gap-4">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-envelope-open-text text-white text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                            <span>Already Registered?</span>
+                                        </h3>
+                                        <p class="text-gray-700 mb-4">
+                                            It looks like this email or phone number is already registered. Enter your email below to receive your registration code.
+                                        </p>
+                                        
+                                        <!-- Inline Reminder Form -->
+                                        <div id="reminder-form-container">
+                                            @if (session('reminder_success'))
+                                                <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                                                    <div class="flex items-center gap-3">
+                                                        <i class="fas fa-check-circle text-green-600"></i>
+                                                        <p class="text-green-800 font-medium">{{ session('reminder_success') }}</p>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            
+                                            @if (session('reminder_error'))
+                                                <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                                                    <div class="flex items-center gap-3">
+                                                        <i class="fas fa-exclamation-circle text-red-600"></i>
+                                                        <p class="text-red-800 font-medium">{{ session('reminder_error') }}</p>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            
+                                            <form action="{{ route('registration.remind-code.send') }}" method="POST" class="reminder-form" id="reminder-form-friendship">
+                                                @csrf
+                                                <div class="flex gap-3">
+                                                    <input 
+                                                        type="email" 
+                                                        name="email" 
+                                                        value="{{ old('email', request('email')) }}"
+                                                        placeholder="Enter your registered email"
+                                                        required
+                                                        class="flex-1 px-4 py-3 border-2 border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                    >
+                                                    <button 
+                                                        type="submit"
+                                                        class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2"
+                                                    >
+                                                        <i class="fas fa-paper-plane"></i>
+                                                        <span>Get Code</span>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
@@ -302,9 +367,96 @@
 
 @endsection
 
+<style>
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.5s ease-out;
+}
+</style>
+
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Handle reminder form submission with AJAX
+    const reminderForm = document.getElementById('reminder-form-friendship');
+    if (reminderForm) {
+        reminderForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const button = this.querySelector('button[type="submit"]');
+            const originalHtml = button.innerHTML;
+            
+            // Show loading state
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Sending...</span>';
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                }
+            })
+            .then(response => {
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    return response.json();
+                }
+                // If not JSON, redirect to handle server-side response
+                window.location.reload();
+                return null;
+            })
+            .then(data => {
+                if (!data) return;
+                if (data.success) {
+                    // Show success message
+                    const container = document.getElementById('reminder-form-container');
+                    container.innerHTML = `
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-600"></i>
+                                <p class="text-green-800 font-medium">${data.message}</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // Show error message
+                    const container = document.getElementById('reminder-form-container');
+                    const existingForm = container.querySelector('.reminder-form');
+                    const errorHtml = `
+                        <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-exclamation-circle text-red-600"></i>
+                                <p class="text-red-800 font-medium">${data.message || 'An error occurred. Please try again.'}</p>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('afterbegin', errorHtml);
+                    button.disabled = false;
+                    button.innerHTML = originalHtml;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                button.disabled = false;
+                button.innerHTML = originalHtml;
+                alert('An error occurred. Please try again or refresh the page.');
+            });
+        });
+    }
+
     const form = document.getElementById('friendship-form');
     const sessionWarning = document.getElementById('session-warning');
     let sessionTimeout = null;

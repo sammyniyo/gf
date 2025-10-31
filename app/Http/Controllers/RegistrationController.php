@@ -72,9 +72,16 @@ class RegistrationController extends Controller
         ]);
 
         if ($validator->fails()) {
+            // Check if the error is due to duplicate email or phone
+            $hasDuplicateEmail = $validator->errors()->has('email') && 
+                str_contains($validator->errors()->first('email'), 'already been taken');
+            $hasDuplicatePhone = $validator->errors()->has('phone') && 
+                str_contains($validator->errors()->first('phone'), 'already been taken');
+            
             return redirect()->back()
                 ->withErrors($validator)
-                ->withInput();
+                ->withInput()
+                ->with('show_reminder', $hasDuplicateEmail || $hasDuplicatePhone);
         }
 
         // Generate unique member ID
@@ -182,9 +189,16 @@ class RegistrationController extends Controller
         ]);
 
         if ($validator->fails()) {
+            // Check if the error is due to duplicate email or phone
+            $hasDuplicateEmail = $validator->errors()->has('email') && 
+                str_contains($validator->errors()->first('email'), 'already been taken');
+            $hasDuplicatePhone = $validator->errors()->has('phone') && 
+                str_contains($validator->errors()->first('phone'), 'already been taken');
+            
             return redirect()->back()
                 ->withErrors($validator)
-                ->withInput();
+                ->withInput()
+                ->with('show_reminder', $hasDuplicateEmail || $hasDuplicatePhone);
         }
 
         // Regenerate session to prevent session fixation attacks
@@ -245,16 +259,46 @@ class RegistrationController extends Controller
         $member = Member::where('email', $request->email)->first();
 
         if (!$member) {
-            return back()->withErrors(['email' => 'We could not find a registration with this email.'])->withInput();
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'We could not find a registration with this email address.'
+                ], 422);
+            }
+            return back()
+                ->with('reminder_error', 'We could not find a registration with this email address.')
+                ->with('show_reminder', true)
+                ->withInput();
         }
 
         try {
             Mail::to($member->email)->send(new \App\Mail\MemberCodeReminderEmail($member));
         } catch (\Throwable $th) {
             \Log::error('Failed to send code reminder: ' . $th->getMessage());
-            return back()->with('error', 'We could not send the email right now. Please try again later.');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'We could not send the email right now. Please try again later.'
+                ], 500);
+            }
+            return back()
+                ->with('reminder_error', 'We could not send the email right now. Please try again later.')
+                ->with('show_reminder', true)
+                ->withInput();
         }
 
-        return back()->with('success', 'We have emailed your registration code to you.');
+        $successMessage = 'We have emailed your registration code (' . $member->member_id . ') to ' . $member->email . '. Please check your inbox!';
+        
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $successMessage
+            ]);
+        }
+
+        return back()
+            ->with('reminder_success', $successMessage)
+            ->with('show_reminder', true)
+            ->withInput();
     }
 }

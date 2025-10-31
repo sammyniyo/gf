@@ -129,72 +129,69 @@ class PageView extends Model
      */
     public static function isSuspiciousUrl(string $url): bool
     {
-        $url = strtolower($url);
+        $urlLower = strtolower($url);
 
-        // Common security scanning patterns
-        $suspiciousPatterns = [
+        // Common security scanning substrings (lowercase)
+        $needles = [
             // WordPress
-            '/wp-admin/',
-            '/wp-login\.php',
-            '/wp-includes/',
-            '/wp-content/',
-            '/wordpress/',
-            '/wp-config\.php',
-            '/xmlrpc\.php',
+            'wp-admin/',
+            'wp-login.php',
+            'wp-includes/',
+            'wp-content/',
+            'wordpress/',
+            'wp-config.php',
+            'xmlrpc.php',
 
             // Laravel/PHP
-            '/\.env',
-            '/\.env\.old',
-            '/\.env\.backup',
-            '/config/\.env',
-            '/modules/\.env',
-            '/core/\.env',
-            '/vendor/\.env',
-            '/phpinfo\.php',
-            '/info\.php',
-            '/test\.php',
-            '/shell\.php',
+            '.env',
+            '.env.old',
+            '.env.backup',
+            'config/.env',
+            'modules/.env',
+            'core/.env',
+            'vendor/.env',
+            'phpinfo.php',
+            'info.php',
+            'test.php',
+            'shell.php',
 
             // Common exploit attempts
-            '/admin/',
-            '/administrator/',
-            '/phpmyadmin/',
-            '/mysql/',
-            '/database/',
-            '/sql/',
-            '/backup/',
-            '/backups/',
+            'phpmyadmin',
+            '/mysql',
+            '/database',
+            '/sql',
+            '/backup',
+            '/backups',
 
             // Sensitive files
-            '/\.git/',
-            '/\.svn/',
-            '/\.htaccess',
-            '/\.htpasswd',
-            '/composer\.json',
-            '/package\.json',
-            '/\.gitignore',
+            '/.git/',
+            '/.svn/',
+            '.htaccess',
+            '.htpasswd',
+            'composer.json',
+            'package.json',
+            '.gitignore',
 
             // CMS-specific
-            '/administrator/',
-            '/joomla/',
-            '/drupal/',
-            '/cpanel/',
-            '/plesk/',
+            'joomla',
+            'drupal',
+            'cpanel',
+            'plesk',
 
             // API scanning
             '/api/v1/',
             '/api/user',
-            '/graphql',
+            'graphql',
 
             // Other suspicious patterns
-            '/setup-config\.php',
-            '/readme\.html',
-            '/license\.txt',
-            '/\.well-known/',
+            'setup-config.php',
+            'readme.html',
+            'license.txt',
+            '/.well-known/',
         ];
 
-        foreach ($suspiciousPatterns as $pattern) {
-            if (preg_match($pattern, $url)) {
+        foreach ($needles as $needle) {
+            if ($needle !== '' && strpos($urlLower, $needle) !== false) {
                 return true;
             }
         }

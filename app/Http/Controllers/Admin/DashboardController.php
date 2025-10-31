@@ -13,6 +13,7 @@ use App\Models\Song;
 use App\Models\PageView;
 use App\Mail\BirthdayWishEmail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -63,7 +64,13 @@ class DashboardController extends Controller
         $todayViews = PageView::getTodayViews();
         $weekViews = PageView::getWeekViews();
         $monthViews = PageView::getMonthViews();
-        $popularPages = PageView::getPopularPages(5);
+        $popularPages = PageView::where('url', 'not like', '%/admin/notifications%')
+            ->where('url', 'not like', '%/admin/system/health%')
+            ->select('url', 'page_title', DB::raw('COUNT(*) as views_count'))
+            ->groupBy('url', 'page_title')
+            ->orderByDesc('views_count')
+            ->limit(5)
+            ->get();
         $pageViewTrend = PageView::getDailyViews(30);
 
         $recentRegistrations = EventRegistration::with('event')->latest()->take(6)->get();
@@ -148,7 +155,11 @@ class DashboardController extends Controller
             'month_views' => $monthViews,
             'popular_pages' => $popularPages,
             'page_view_trend' => $pageViewTrend,
-            'recent_page_views' => \App\Models\PageView::orderByDesc('viewed_at')->limit(20)->get(),
+            'recent_page_views' => \App\Models\PageView::where('url', 'not like', '%/admin/notifications%')
+                ->where('url', 'not like', '%/admin/system/health%')
+                ->orderByDesc('viewed_at')
+                ->limit(20)
+                ->get(),
             // Birthday data
             'birthdays_today' => $birthdaysToday,
             'birthdays_this_week' => $birthdaysThisWeek,

@@ -28,7 +28,7 @@
                 </div>
 
                 <!-- Streaming Links -->
-                <div class="mt-6 flex gap-4 flex-wrap">
+                <div class="mt-6 mb-4 flex gap-4 flex-wrap">
                     @if($album->spotify_url)
                     <a href="{{ $album->spotify_url }}"
                        target="_blank"

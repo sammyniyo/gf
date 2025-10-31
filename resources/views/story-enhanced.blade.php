@@ -496,7 +496,7 @@
                     <i class="fab fa-linkedin-in"></i>
                     <span>LinkedIn</span>
                 </button>
-                <button onclick="copyLink()" class="group flex items-center gap-3 px-6 py-3 bg-gray-600 text-white rounded-xl hover:bg-gray-700 transition-colors">
+                <button onclick="copyLink(this)" class="group flex items-center gap-3 px-6 py-3 bg-gray-600 text-white rounded-xl hover:bg-gray-700 transition-colors">
                     <i class="fas fa-link"></i>
                     <span>Copy Link</span>
                 </button>
@@ -528,10 +528,38 @@ function shareOnSocial(platform) {
     }
 }
 
-function copyLink() {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-        alert('Link copied to clipboard!');
-    });
+function copyLink(buttonEl) {
+    const url = window.location.href;
+    const onSuccess = () => {
+        const btn = buttonEl && buttonEl.closest('button') ? buttonEl.closest('button') : null;
+        if (!btn) return;
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i><span>Copied!</span>';
+        setTimeout(() => { btn.innerHTML = originalHtml; }, 1500);
+    };
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(url).then(onSuccess).catch(() => fallbackCopy(url, onSuccess));
+    } else {
+        fallbackCopy(url, onSuccess);
+    }
+}
+
+function fallbackCopy(text, callback) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-1000px';
+    textarea.setAttribute('readonly', '');
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        document.execCommand('copy');
+        if (typeof callback === 'function') callback();
+    } catch (e) {
+        alert('Failed to copy link');
+    }
+    document.body.removeChild(textarea);
 }
 
 // Smooth scrolling for table of contents

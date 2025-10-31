@@ -241,7 +241,7 @@
                                 </svg>
                                 <span class="text-xs">Twitter</span>
                             </button>
-                            <button onclick="copyLink()" class="group flex flex-col items-center justify-center gap-2 rounded-xl bg-gray-700 px-4 py-3 font-bold text-white shadow-lg transition-all hover:bg-gray-800 hover:shadow-xl hover:scale-105">
+                            <button onclick="copyLink(this)" class="group flex flex-col items-center justify-center gap-2 rounded-xl bg-gray-700 px-4 py-3 font-bold text-white shadow-lg transition-all hover:bg-gray-800 hover:shadow-xl hover:scale-105">
                                 <svg class="h-5 w-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                                 </svg>
@@ -407,19 +407,39 @@ function shareOnSocial(platform) {
     }
 }
 
-// Copy Link
-function copyLink() {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-        // Show temporary success message
-        const btn = event.target.closest('button');
-        const originalText = btn.innerHTML;
+// Copy Link (with fallback for non-secure contexts)
+function copyLink(buttonEl) {
+    const url = window.location.href;
+    const onSuccess = () => {
+        const btn = buttonEl && buttonEl.closest('button') ? buttonEl.closest('button') : null;
+        if (!btn) return;
+        const originalHtml = btn.innerHTML;
         btn.innerHTML = '<svg class="h-5 w-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-xs mt-1">Copied!</span>';
-        setTimeout(() => {
-            btn.innerHTML = originalText;
-        }, 2000);
-    }).catch(err => {
+        setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
+    };
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(url).then(onSuccess).catch(() => fallbackCopy(url, onSuccess));
+    } else {
+        fallbackCopy(url, onSuccess);
+    }
+}
+
+function fallbackCopy(text, callback) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-1000px';
+    textarea.setAttribute('readonly', '');
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        document.execCommand('copy');
+        if (typeof callback === 'function') callback();
+    } catch (e) {
         alert('Failed to copy link');
-    });
+    }
+    document.body.removeChild(textarea);
 }
 
 // Reading Progress

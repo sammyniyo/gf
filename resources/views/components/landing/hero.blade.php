@@ -120,7 +120,7 @@
                     <div class="group">
                         <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-emerald-400/30 transition-all duration-300 hover:-translate-y-1">
                             <div class="flex items-baseline justify-center gap-2 mb-2">
-                                <span class="text-4xl lg:text-5xl font-black text-white counter" data-target="400">0</span>
+                                <span class="text-4xl lg:text-5xl font-black text-white counter" data-target="300">0</span>
                                 <span class="text-2xl text-emerald-400 font-bold">+</span>
                             </div>
                             <div class="text-xs lg:text-sm text-white/70 font-semibold uppercase tracking-wider">Members</div>

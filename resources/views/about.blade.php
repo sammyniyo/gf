@@ -43,8 +43,15 @@
                     </div>
                 </div>
                 <div class="flex-1 lg:pl-12">
-                    <!-- Enhanced Stacked Images Effect -->
-                    <div class="relative mx-auto max-w-md h-[450px] mb-8 lg:mb-0">
+                    <!-- Mobile: Simple hero image to avoid overlap -->
+                    <div class="block lg:hidden mb-8">
+                        <div class="rounded-2xl overflow-hidden shadow-xl border-4 border-white">
+                            <img src="{{ asset('images/1.jpg') }}" alt="God's Family Choir" class="w-full h-80 object-cover" />
+                        </div>
+                    </div>
+
+                    <!-- Desktop: Enhanced Stacked Images Effect -->
+                    <div class="relative mx-auto max-w-md h-[450px] mb-8 lg:mb-0 hidden lg:block">
                         <!-- Image 3 - Back (furthest) -->
                         <div class="absolute top-8 left-8 w-56 h-72 rounded-2xl overflow-hidden shadow-lg transform rotate-6 transition-all duration-500 hover:rotate-12 hover:scale-105 group" style="z-index: 1;">
                             <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/30 via-transparent to-transparent"></div>

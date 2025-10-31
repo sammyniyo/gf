@@ -208,20 +208,20 @@
         <div class="mt-16 bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 <div class="group">
-                    <div class="text-4xl md:text-5xl font-black text-emerald-600 mb-2 group-hover:scale-110 transition-transform duration-300">500+</div>
-                    <p class="text-gray-600 font-medium">Lives Transformed</p>
+                    <div class="text-4xl md:text-5xl font-black text-emerald-600 mb-2 group-hover:scale-110 transition-transform duration-300">300+</div>
+                    <p class="text-gray-600 font-medium">Members</p>
                 </div>
                 <div class="group">
-                    <div class="text-4xl md:text-5xl font-black text-amber-600 mb-2 group-hover:scale-110 transition-transform duration-300">25+</div>
-                    <p class="text-gray-600 font-medium">Years of Ministry</p>
+                    <div class="text-4xl md:text-5xl font-black text-amber-600 mb-2 group-hover:scale-110 transition-transform duration-300">27+</div>
+                    <p class="text-gray-600 font-medium">Years of Service</p>
                 </div>
                 <div class="group">
-                    <div class="text-4xl md:text-5xl font-black text-blue-600 mb-2 group-hover:scale-110 transition-transform duration-300">50+</div>
-                    <p class="text-gray-600 font-medium">Communities Served</p>
+                    <div class="text-4xl md:text-5xl font-black text-blue-600 mb-2 group-hover:scale-110 transition-transform duration-300">3</div>
+                    <p class="text-gray-600 font-medium">Evangelistic Campaigns</p>
                 </div>
                 <div class="group">
-                    <div class="text-4xl md:text-5xl font-black text-purple-600 mb-2 group-hover:scale-110 transition-transform duration-300">1000+</div>
-                    <p class="text-gray-600 font-medium">Worship Services</p>
+                    <div class="text-4xl md:text-5xl font-black text-purple-600 mb-2 group-hover:scale-110 transition-transform duration-300">4</div>
+                    <p class="text-gray-600 font-medium">Albums</p>
                 </div>
             </div>
         </div>

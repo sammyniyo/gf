@@ -90,7 +90,7 @@
                         ['label' => 'Active Members', 'value' => 300, 'color' => 'emerald', 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'],
                         ['label' => 'Years of Service', 'value' => 27, 'color' => 'amber', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'],
                         ['label' => 'Evangelistic Campaigns', 'value' => 3, 'color' => 'emerald', 'icon' => 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 002 2h2.945M15 11a3 3 0 11-6 0m5.945 2H18a2 2 0 012 2v1a2 2 0 01-2 2h-2.945M15 11a3 3 0 11-6 0m-4.055 2H6a2 2 0 00-2 2v1a2 2 0 002 2h2.945M9 11a3 3 0 11-6 0m12 0a3 3 0 11-6 0'],
-                        ['label' => 'Audio Albums', 'value' => 4, 'color' => 'amber', 'icon' => 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'],
+                        ['label' => 'Audio Albums', 'value' => 4, 'color' => 'amber', 'icon' => 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'],
                     ];
                 @endphp
                 @foreach($stats as $stat)
@@ -236,14 +236,17 @@
                                     <!-- Image Right -->
                                     <div class="roadmap-item" data-aos="fade-left">
                                         <div class="relative group">
-                                            <div class="absolute -inset-2 bg-gradient-to-r from-emerald-600 to-amber-600 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition duration-500"></div>
-                                            <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-                                                <img src="{{ asset('images/' . $milestone['image']) }}" alt="{{ $milestone['title'] }}" class="w-full h-80 object-cover transform group-hover:scale-110 transition duration-700" />
-                                                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/70 via-gray-900/20 to-transparent"></div>
-                                                <!-- Year Badge Overlay -->
-                                                <div class="absolute top-4 right-4 bg-white/95 backdrop-blur-md px-4 py-2 rounded-full shadow-xl">
-                                                    <span class="text-sm font-black text-emerald-600">{{ $milestone['year'] }}</span>
-                                                </div>
+                                            <div class="absolute -inset-2 bg-gradient-to-r from-amber-600 to-emerald-600 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition duration-500"></div>
+                                            @php $images = $milestone['images'] ?? [$milestone['image']]; @endphp
+                                            <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white milestone-slider" data-interval="6000">
+                                                @foreach($images as $i => $img)
+                                                    <img src="{{ asset('images/' . $img) }}" alt="{{ $milestone['title'] }}" class="w-full h-64 object-cover milestone-slide {{ $i === 0 ? '' : 'hidden' }}" />
+                                                @endforeach
+                                                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/70 via-transparent to-transparent"></div>
+                                                @if(count($images) > 1)
+                                                    <button type="button" class="milestone-prev absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 rounded-full w-8 h-8 flex items-center justify-center shadow"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button>
+                                                    <button type="button" class="milestone-next absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 rounded-full w-8 h-8 flex items-center justify-center shadow"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -252,13 +255,16 @@
                                     <div class="roadmap-item" data-aos="fade-right">
                                         <div class="relative group">
                                             <div class="absolute -inset-2 bg-gradient-to-r from-amber-600 to-emerald-600 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition duration-500"></div>
-                                            <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-                                                <img src="{{ asset('images/' . $milestone['image']) }}" alt="{{ $milestone['title'] }}" class="w-full h-80 object-cover transform group-hover:scale-110 transition duration-700" />
-                                                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/70 via-gray-900/20 to-transparent"></div>
-                                                <!-- Year Badge Overlay -->
-                                                <div class="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-4 py-2 rounded-full shadow-xl">
-                                                    <span class="text-sm font-black text-amber-600">{{ $milestone['year'] }}</span>
-                                                </div>
+                                            @php $images = $milestone['images'] ?? [$milestone['image']]; @endphp
+                                            <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white milestone-slider" data-interval="6000">
+                                                @foreach($images as $i => $img)
+                                                    <img src="{{ asset('images/' . $img) }}" alt="{{ $milestone['title'] }}" class="w-full h-64 object-cover milestone-slide {{ $i === 0 ? '' : 'hidden' }}" />
+                                                @endforeach
+                                                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/70 via-transparent to-transparent"></div>
+                                                @if(count($images) > 1)
+                                                    <button type="button" class="milestone-prev absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 rounded-full w-8 h-8 flex items-center justify-center shadow"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></button>
+                                                    <button type="button" class="milestone-next absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 rounded-full w-8 h-8 flex items-center justify-center shadow"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></button>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -334,7 +340,7 @@
                                         <div class="w-20 h-20 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center text-white shadow-2xl">
                                             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
-                                    </svg>
+                                            </svg>
                                         </div>
                                         <div>
                                             <p class="text-xs font-black uppercase tracking-wider text-amber-600 mb-1">Since 2012</p>
@@ -993,6 +999,100 @@
                 }
             });
         });
+
+        // Milestone slider initialization
+        const initMilestoneSlider = (container) => {
+            const slides = container.querySelectorAll('.milestone-slide');
+            if (!slides || slides.length <= 1) return;
+            let index = 0;
+            const intervalMs = Number(container.dataset.interval || 6000);
+
+            const show = (i) => {
+                slides.forEach((el, idx) => {
+                    if (idx === i) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
+                    }
+                });
+                if (dots && dots.length) {
+                    dots.forEach((d, di) => {
+                        if (di === i) {
+                            d.classList.add('bg-white');
+                            d.classList.remove('bg-white/50');
+                            d.classList.add('scale-125');
+                        } else {
+                            d.classList.remove('bg-white');
+                            d.classList.add('bg-white/50');
+                            d.classList.remove('scale-125');
+                        }
+                    });
+                }
+            };
+
+            const next = () => { index = (index + 1) % slides.length; show(index); };
+            const prev = () => { index = (index - 1 + slides.length) % slides.length; show(index); };
+
+            let timer = setInterval(next, intervalMs);
+
+            const reset = () => { clearInterval(timer); timer = setInterval(next, intervalMs); };
+
+            const nextBtn = container.querySelector('.milestone-next');
+            const prevBtn = container.querySelector('.milestone-prev');
+            if (nextBtn) nextBtn.addEventListener('click', () => { next(); reset(); });
+            if (prevBtn) prevBtn.addEventListener('click', () => { prev(); reset(); });
+
+            // Pagination dots
+            let dots = null;
+            const dotsWrap = document.createElement('div');
+            dotsWrap.className = 'absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10';
+            dots = [];
+            slides.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'w-2.5 h-2.5 rounded-full transition transform ' + (i === 0 ? 'bg-white scale-125' : 'bg-white/50');
+                dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+                dot.addEventListener('click', () => { index = i; show(index); reset(); });
+                dotsWrap.appendChild(dot);
+                dots.push(dot);
+            });
+            container.appendChild(dotsWrap);
+
+            // Pause on hover (desktop)
+            container.addEventListener('mouseenter', () => clearInterval(timer));
+            container.addEventListener('mouseleave', () => { reset(); });
+
+            // Keyboard navigation
+            container.setAttribute('tabindex', '0');
+            container.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') { next(); reset(); }
+                if (e.key === 'ArrowLeft') { prev(); reset(); }
+            });
+
+            // Touch / swipe navigation
+            let startX = 0;
+            let isTouching = false;
+            const threshold = 40;
+            const onStart = (x) => { startX = x; isTouching = true; };
+            const onMove = (x) => { if (!isTouching) return; };
+            const onEnd = (x) => {
+                if (!isTouching) return;
+                const dx = x - startX;
+                if (Math.abs(dx) > threshold) {
+                    if (dx < 0) { next(); } else { prev(); }
+                    reset();
+                }
+                isTouching = false;
+            };
+
+            container.addEventListener('touchstart', (e) => onStart(e.touches[0].clientX), { passive: true });
+            container.addEventListener('touchmove', (e) => onMove(e.touches[0].clientX), { passive: true });
+            container.addEventListener('touchend', (e) => onEnd((e.changedTouches && e.changedTouches[0]?.clientX) || startX));
+            container.addEventListener('pointerdown', (e) => onStart(e.clientX));
+            container.addEventListener('pointerup', (e) => onEnd(e.clientX));
+        };
+
+        document.querySelectorAll('.milestone-slider').forEach(initMilestoneSlider);
     });
 </script>
 @endpush

@@ -17,12 +17,12 @@
         <!-- Masonry Gallery Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery">
             @foreach([
-                ['image' => '1.jpg', 'title' => 'Sabbath Worship Service', 'category' => 'Worship'],
-                ['image' => '2.jpg', 'title' => 'Resurrection Sunday 2024', 'category' => 'Events'],
-                ['image' => '3.jpg', 'title' => 'Choir Rehearsal', 'category' => 'Behind the Scenes'],
-                ['image' => '4.jpg', 'title' => 'Community Outreach', 'category' => 'Outreach'],
-                ['image' => '5.jpg', 'title' => 'Youth Training Program', 'category' => 'Training'],
-                ['image' => 'gf-2.jpg', 'title' => 'Annual Concert', 'category' => 'Performance'],
+                ['image' => '1.jpg', 'title' => 'GF Performance in Gikondo SFB (2023)', 'category' => 'Worship'],
+                ['image' => '2.jpg', 'title' => 'GF Performance in Gikondo SFB (2023)', 'category' => 'Events'],
+                ['image' => '3.jpg', 'title' => 'After Service Fellowship (2024)', 'category' => 'Social'],
+                ['image' => '4.jpg', 'title' => 'After Service Meet & Great', 'category' => 'Social'],
+                ['image' => '5.jpg', 'title' => 'GF Juniors Performance (2024)', 'category' => 'Seddlings'],
+                ['image' => 'gf-2.jpg', 'title' => 'Mwubahe Uwiteka Video Shoot (2025)', 'category' => 'Music'],
             ] as $index => $photo)
                 <div class="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
                      onclick="openLightbox({{ $index }})">

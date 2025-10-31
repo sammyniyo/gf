@@ -112,12 +112,12 @@ class MemberController extends Controller
         // Create notification for admins
         NotificationService::newMemberRegistration($member);
 
-        // Send welcome email
+        // Send welcome email immediately (no queue worker required)
         try {
-            SendWelcomeEmail::dispatch($member, 'member');
-            \Log::info('Welcome email job dispatched for member: ' . $member->email);
+            \Mail::to($member->email)->send(new \App\Mail\MemberWelcomeEmail($member));
+            \Log::info('Welcome email sent for member: ' . $member->email);
         } catch (\Exception $e) {
-            \Log::error('Failed to dispatch welcome email job: ' . $e->getMessage());
+            \Log::error('Failed to send welcome email: ' . $e->getMessage());
             // Don't fail the creation if email fails
         }
 

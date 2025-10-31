@@ -53,6 +53,7 @@ class RegistrationController extends Controller
             'workplace' => 'nullable|string|max:255',
             'church' => 'nullable|string|max:255',
             'education_level' => 'nullable|string|in:primary,secondary,diploma,bachelor,master,phd,other',
+            'graduation_year' => 'nullable|integer|min:1990|max:'.(date('Y')+10),
 
             // Choir Details
             'voice' => 'required|string|in:soprano,alto,tenor,bass,unsure',
@@ -66,6 +67,7 @@ class RegistrationController extends Controller
             'availability' => 'nullable|string',
             'hobbies' => 'nullable|string|max:255',
             'skills' => 'nullable|string',
+            'graduation_year' => 'nullable|integer|min:1990|max:'.(date('Y')+10),
             'message' => 'nullable|string',
             'newsletter' => 'boolean',
             'profile_photo' => 'nullable|image|max:2048',
@@ -73,11 +75,11 @@ class RegistrationController extends Controller
 
         if ($validator->fails()) {
             // Check if the error is due to duplicate email or phone
-            $hasDuplicateEmail = $validator->errors()->has('email') && 
+            $hasDuplicateEmail = $validator->errors()->has('email') &&
                 str_contains($validator->errors()->first('email'), 'already been taken');
-            $hasDuplicatePhone = $validator->errors()->has('phone') && 
+            $hasDuplicatePhone = $validator->errors()->has('phone') &&
                 str_contains($validator->errors()->first('phone'), 'already been taken');
-            
+
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput()
@@ -137,12 +139,12 @@ class RegistrationController extends Controller
         // Create member
         $member = Member::create($data);
 
-        // Send welcome email using job queue to avoid rate limits
+        // Send welcome email immediately to avoid requiring a queue worker
         try {
-            SendWelcomeEmail::dispatch($member, 'member');
-            \Log::info('Member welcome email job dispatched for: ' . $member->email);
+            Mail::to($member->email)->send(new MemberWelcomeEmail($member));
+            \Log::info('Member welcome email sent to: ' . $member->email);
         } catch (\Exception $e) {
-            \Log::error('Failed to dispatch welcome email job: ' . $e->getMessage());
+            \Log::error('Failed to send welcome email: ' . $e->getMessage());
         }
 
         return redirect()->route('registration.success')
@@ -190,11 +192,11 @@ class RegistrationController extends Controller
 
         if ($validator->fails()) {
             // Check if the error is due to duplicate email or phone
-            $hasDuplicateEmail = $validator->errors()->has('email') && 
+            $hasDuplicateEmail = $validator->errors()->has('email') &&
                 str_contains($validator->errors()->first('email'), 'already been taken');
-            $hasDuplicatePhone = $validator->errors()->has('phone') && 
+            $hasDuplicatePhone = $validator->errors()->has('phone') &&
                 str_contains($validator->errors()->first('phone'), 'already been taken');
-            
+
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput()
@@ -218,12 +220,12 @@ class RegistrationController extends Controller
         // Create member
         $member = Member::create($data);
 
-        // Send welcome email using job queue to avoid rate limits
+        // Send welcome email immediately to avoid requiring a queue worker
         try {
-            SendWelcomeEmail::dispatch($member, 'friendship');
-            \Log::info('Friendship welcome email job dispatched for: ' . $member->email);
+            Mail::to($member->email)->send(new FriendshipWelcomeEmail($member));
+            \Log::info('Friendship welcome email sent to: ' . $member->email);
         } catch (\Exception $e) {
-            \Log::error('Failed to dispatch welcome email job: ' . $e->getMessage());
+            \Log::error('Failed to send friendship welcome email: ' . $e->getMessage());
         }
 
         return redirect()->route('registration.success')
@@ -288,7 +290,7 @@ class RegistrationController extends Controller
         }
 
         $successMessage = 'We have emailed your registration code (' . $member->member_id . ') to ' . $member->email . '. Please check your inbox!';
-        
+
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
                 'success' => true,

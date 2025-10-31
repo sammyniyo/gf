@@ -11,8 +11,8 @@
             margin: 0;
             padding: 10px;
             font-family: 'DejaVu Sans', sans-serif;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
+            background: #065f46; /* darker solid background for better print contrast */
+            color: #ffffff;
         }
         .card {
             width: 100%;
@@ -32,11 +32,11 @@
         .logo p {
             margin: 0;
             font-size: 8px;
-            color: #d1fae5;
+            color: #c7f9e8; /* brighter mint */
         }
         .member-id {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            color: #78350f;
+            background: #f59e0b;
+            color: #3f1d0b;
             text-align: center;
             padding: 5px;
             margin: 10px 0;
@@ -49,7 +49,7 @@
             font-size: 10px;
         }
         .info strong {
-            color: #fde68a;
+            color: #fff7ae; /* stronger label color */
         }
         .footer {
             position: absolute;
@@ -58,7 +58,7 @@
             right: 10px;
             text-align: center;
             font-size: 7px;
-            color: #d1fae5;
+            color: #e6fff7;
             border-top: 1px solid #34d399;
             padding-top: 3px;
         }

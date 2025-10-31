@@ -138,7 +138,7 @@
                                         <p class="text-gray-700 mb-4">
                                             It looks like this email or phone number is already registered. Enter your email below to receive your registration code.
                                         </p>
-                                        
+
                                         <!-- Inline Reminder Form -->
                                         <div id="reminder-form-container">
                                             @if (session('reminder_success'))
@@ -149,7 +149,7 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                            
+
                                             @if (session('reminder_error'))
                                                 <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
                                                     <div class="flex items-center gap-3">
@@ -158,19 +158,19 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                            
+
                                             <form action="{{ route('registration.remind-code.send') }}" method="POST" class="reminder-form" id="reminder-form-friendship">
                                                 @csrf
                                                 <div class="flex gap-3">
-                                                    <input 
-                                                        type="email" 
-                                                        name="email" 
+                                                    <input
+                                                        type="email"
+                                                        name="email"
                                                         value="{{ old('email', request('email')) }}"
                                                         placeholder="Enter your registered email"
                                                         required
                                                         class="flex-1 px-4 py-3 border-2 border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                                     >
-                                                    <button 
+                                                    <button
                                                         type="submit"
                                                         class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2"
                                                     >
@@ -210,6 +210,27 @@
                                 <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
                             </select>
                             @error('gender')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 mt-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Education Level
+                            </label>
+                            <input type="text" name="occupation" value="{{ old('occupation') }}"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="e.g. Undergraduate, Alumni, etc.">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Graduation / Completion Year
+                            </label>
+                            <input type="number" name="graduation_year" value="{{ old('graduation_year') }}" min="1990" max="{{ date('Y') + 10 }}"
+                                placeholder="e.g. {{ date('Y') }}"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                            @error('graduation_year')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -392,15 +413,15 @@ document.addEventListener('DOMContentLoaded', function() {
     if (reminderForm) {
         reminderForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             const formData = new FormData(this);
             const button = this.querySelector('button[type="submit"]');
             const originalHtml = button.innerHTML;
-            
+
             // Show loading state
             button.disabled = true;
             button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Sending...</span>';
-            
+
             fetch(this.action, {
                 method: 'POST',
                 body: formData,

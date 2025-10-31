@@ -8,23 +8,17 @@ use Illuminate\Support\Facades\DB;
 class MemberIdService
 {
     /**
-     * Generate a unique member ID in format: GF{YEAR}{RANDOM_NUMBER}
-     * Example: GF2024527, GF2024843, etc.
-     *
-     * @return string
+     * Generate a member ID in the format: GF{YEAR}{RANDOM_HEX}
+     * Example: GF2025A3F9C1D2 (YEAR + 8 hex chars)
+     * Using cryptographically secure randomness to avoid guessability.
      */
     public static function generate(): string
     {
         $year = date('Y');
         $prefix = 'GF' . $year;
-
-        // Generate a random 3-digit number (100-999)
-        $randomNumber = rand(100, 999);
-
-        // Format with leading zeros (3 digits)
-        $formattedNumber = str_pad($randomNumber, 3, '0', STR_PAD_LEFT);
-
-        return $prefix . $formattedNumber;
+        // 8 hex characters from secure random bytes
+        $randomHex = strtoupper(bin2hex(random_bytes(4))); // 8 chars
+        return $prefix . $randomHex;
     }
 
     /**
@@ -61,8 +55,8 @@ class MemberIdService
      */
     public static function isValidFormat(string $memberId): bool
     {
-        // Format: GF followed by 4-digit year and 3-digit number
-        return preg_match('/^GF\d{4}\d{3}$/', $memberId) === 1;
+        // Allow both old (3 digits) and new (8 hex) suffix formats for backward compatibility
+        return preg_match('/^GF\d{4}(\d{3}|[A-F0-9]{8})$/', $memberId) === 1;
     }
 
     /**
@@ -91,8 +85,12 @@ class MemberIdService
         if (!self::isValidFormat($memberId)) {
             return null;
         }
-
-        return (int) substr($memberId, -3);
+        // For legacy numeric IDs, return the last 3 digits; for new hex IDs, return null
+        $suffix = substr($memberId, 6);
+        if (ctype_digit($suffix)) {
+            return (int) $suffix;
+        }
+        return null;
     }
 }
 

@@ -58,6 +58,7 @@ class Member extends Model
         'workplace',
         'church',
         'education_level',
+        'graduation_year',
         'skills',
 
         // Choir Details (Members only)
@@ -103,6 +104,7 @@ class Member extends Model
         'birthdate' => 'date',
         'date_of_birth' => 'date',
         'joined_at' => 'date',
+        'graduation_year' => 'integer',
         'newsletter' => 'boolean',
         'monthly_target' => 'decimal:2',
         'yearly_target' => 'decimal:2',

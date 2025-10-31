@@ -51,7 +51,8 @@
                     </div>
                 </a>
 
-                <!-- Phone Card -->
+                <!-- Phone Card - hidden per request -->
+                <!--
                 <a href="tel:+250783871782" class="group relative overflow-hidden rounded-2xl border-2 border-amber-100 bg-white p-6 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-2 hover:border-amber-300">
                     <div class="absolute inset-0 bg-gradient-to-br from-amber-500/0 to-amber-600/0 opacity-0 transition group-hover:opacity-5"></div>
                     <div class="relative">
@@ -65,8 +66,10 @@
                         <p class="text-xs text-gray-500">Mon-Sat, 9AM-6PM</p>
                     </div>
                 </a>
+                -->
 
-                <!-- WhatsApp Card -->
+                <!-- WhatsApp Card - hidden per request -->
+                <!--
                 <a href="https://wa.me/250783871782" target="_blank" class="group relative overflow-hidden rounded-2xl border-2 border-green-100 bg-white p-6 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-2 hover:border-green-300">
                     <div class="absolute inset-0 bg-gradient-to-br from-green-500/0 to-green-600/0 opacity-0 transition group-hover:opacity-5"></div>
                     <div class="relative">
@@ -80,6 +83,7 @@
                         <p class="text-xs text-gray-500">Chat with us instantly</p>
                     </div>
                 </a>
+                -->
 
                 <!-- Location Card -->
                 <div class="group relative overflow-hidden rounded-2xl border-2 border-blue-100 bg-white p-6 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-2 hover:border-blue-300">
@@ -92,7 +96,7 @@
                             </svg>
                         </div>
                         <h3 class="text-lg font-bold text-gray-900 mb-2">Visit Us</h3>
-                        <p class="text-sm text-blue-600 font-semibold mb-1">ASA UR Nyarugenge SDA</p>
+                        <p class="text-sm text-blue-600 font-semibold mb-1">Nyamirambo SDA</p>
                         <p class="text-xs text-gray-500">Kigali, Rwanda</p>
                     </div>
                 </div>
@@ -289,7 +293,7 @@
                                     </label>
                                     <input type="tel" name="phone" value="{{ old('phone') }}"
                                         class="w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-900 transition-all focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none @error('phone') border-red-300 @enderror"
-                                        placeholder="+250 783 871 782">
+                                        placeholder="">
                                     @error('phone')
                                         <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
@@ -397,7 +401,7 @@
                         ],
                         [
                             'question' => 'When and where do rehearsals take place?',
-                            'answer' => 'We hold regular rehearsals at ASA UR Nyarugenge SDA in Kigali. Specific times vary throughout the year, so please contact us or join our WhatsApp community group for the current rehearsal schedule.'
+                            'answer' => 'We hold regular rehearsals at Nyamirambo SDA in Kigali. Specific times vary throughout the year, so please contact us or join our WhatsApp community group for the current rehearsal schedule.'
                         ],
                         [
                             'question' => 'How can I support the ministry?',
@@ -455,7 +459,7 @@
                 <h2 class="mt-6 text-4xl font-bold text-gray-900 sm:text-5xl">
                     Come <span class="bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">Visit Us</span>
                 </h2>
-                <p class="mt-4 text-lg text-gray-600">ASA UR Nyarugenge SDA, Kigali, Rwanda</p>
+                <p class="mt-4 text-lg text-gray-600">Nyamirambo SDA, Kigali, Rwanda</p>
             </div>
 
             <div class="overflow-hidden rounded-3xl border-2 border-gray-200 bg-white shadow-2xl">
@@ -468,10 +472,10 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-2">ASA UR Nyarugenge SDA</h3>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Nyamirambo SDA</h3>
                             <p class="text-lg text-gray-600 mb-6">Kigali, Rwanda</p>
                         </div>
-                        <a href="https://maps.google.com/?q=ASA+UR+Nyarugenge+SDA+Kigali" target="_blank"
+                        <a href="https://maps.google.com/?q=Nyamirambo+SDA+Kigali" target="_blank"
                            class="inline-flex items-center gap-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-4 text-base font-bold text-white shadow-xl shadow-blue-500/30 transition-all hover:shadow-2xl hover:shadow-blue-500/40 hover:-translate-y-1">
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />

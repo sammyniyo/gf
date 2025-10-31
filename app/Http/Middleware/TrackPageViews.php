@@ -33,29 +33,49 @@ class TrackPageViews
                 'images/*',
             ];
 
-            $shouldTrack = true;
-            foreach ($excludedPaths as $pattern) {
-                if ($request->is($pattern)) {
-                    $shouldTrack = false;
-                    break;
+            $url = $request->fullUrl();
+            $userAgent = $request->userAgent();
+
+            // Detect suspicious activity first
+            $isSuspicious = PageView::isSuspiciousUrl($url) ||
+                            PageView::isSuspiciousUserAgent($userAgent);
+
+            // Always track suspicious requests, even if on excluded paths
+            // This helps monitor security scanning attempts
+            $shouldTrack = $isSuspicious;
+
+            if (!$shouldTrack) {
+                foreach ($excludedPaths as $pattern) {
+                    if ($request->is($pattern)) {
+                        $shouldTrack = false;
+                        break;
+                    }
                 }
+                $shouldTrack = !$shouldTrack; // Invert: track if NOT excluded
             }
 
             if ($shouldTrack) {
                 try {
-                    // naive bot detection via user agent
-                    $ua = strtolower($request->userAgent() ?? '');
-                    $isBot = (bool) preg_match('/bot|spider|crawl|slurp|wget|curl|httpclient|libwww|headless|phantom|node|python|java|wordpress/i', $ua);
-
                     PageView::create([
-                        'url' => $request->fullUrl(),
+                        'url' => $url,
                         'page_title' => $this->getPageTitle($request),
                         'visitor_ip' => $request->ip(),
-                        'user_agent' => $request->userAgent(),
+                        'user_agent' => $userAgent,
                         'referer' => $request->header('referer'),
                         'user_id' => Auth::id(),
                         'viewed_at' => now(),
+                        'is_suspicious' => $isSuspicious,
                     ]);
+
+                    // Log suspicious activity for monitoring
+                    if ($isSuspicious) {
+                        \Log::warning('Suspicious page view detected', [
+                            'ip' => $request->ip(),
+                            'url' => $url,
+                            'user_agent' => $userAgent,
+                            'referer' => $request->header('referer'),
+                        ]);
+                    }
                 } catch (\Exception $e) {
                     // Fail silently to not break the application
                     \Log::error('Failed to track page view: ' . $e->getMessage());

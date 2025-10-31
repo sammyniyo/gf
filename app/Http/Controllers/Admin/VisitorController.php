@@ -36,6 +36,10 @@ class VisitorController extends Controller
             });
         }
 
+        if ($request->boolean('suspicious_only')) {
+            $query->where('is_suspicious', true);
+        }
+
         $pageViews = $query->paginate(50)->withQueryString();
 
         return view('admin.visitors.index', [

@@ -18,10 +18,12 @@ class PageView extends Model
         'referer',
         'user_id',
         'viewed_at',
+        'is_suspicious',
     ];
 
     protected $casts = [
         'viewed_at' => 'datetime',
+        'is_suspicious' => 'boolean',
     ];
 
     /**
@@ -120,5 +122,129 @@ class PageView extends Model
             'labels' => $labels,
             'data' => $data,
         ];
+    }
+
+    /**
+     * Check if a URL is suspicious (security scanning, bots, etc.)
+     */
+    public static function isSuspiciousUrl(string $url): bool
+    {
+        $url = strtolower($url);
+
+        // Common security scanning patterns
+        $suspiciousPatterns = [
+            // WordPress
+            '/wp-admin/',
+            '/wp-login\.php',
+            '/wp-includes/',
+            '/wp-content/',
+            '/wordpress/',
+            '/wp-config\.php',
+            '/xmlrpc\.php',
+
+            // Laravel/PHP
+            '/\.env',
+            '/\.env\.old',
+            '/\.env\.backup',
+            '/config/\.env',
+            '/modules/\.env',
+            '/core/\.env',
+            '/vendor/\.env',
+            '/phpinfo\.php',
+            '/info\.php',
+            '/test\.php',
+            '/shell\.php',
+
+            // Common exploit attempts
+            '/admin/',
+            '/administrator/',
+            '/phpmyadmin/',
+            '/mysql/',
+            '/database/',
+            '/sql/',
+            '/backup/',
+            '/backups/',
+
+            // Sensitive files
+            '/\.git/',
+            '/\.svn/',
+            '/\.htaccess',
+            '/\.htpasswd',
+            '/composer\.json',
+            '/package\.json',
+            '/\.gitignore',
+
+            // CMS-specific
+            '/administrator/',
+            '/joomla/',
+            '/drupal/',
+            '/cpanel/',
+            '/plesk/',
+
+            // API scanning
+            '/api/v1/',
+            '/api/user',
+            '/graphql',
+
+            // Other suspicious patterns
+            '/setup-config\.php',
+            '/readme\.html',
+            '/license\.txt',
+            '/\.well-known/',
+        ];
+
+        foreach ($suspiciousPatterns as $pattern) {
+            if (preg_match($pattern, $url)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if user agent is suspicious
+     */
+    public static function isSuspiciousUserAgent(?string $userAgent): bool
+    {
+        if (empty($userAgent)) {
+            return true; // No user agent is suspicious
+        }
+
+        $ua = strtolower($userAgent);
+
+        // Common bot/scanner user agents
+        $suspiciousPatterns = [
+            'bot', 'spider', 'crawl', 'slurp', 'wget', 'curl',
+            'httpclient', 'libwww', 'headless', 'phantom',
+            'scanner', 'scan', 'hack', 'exploit', 'sqlmap',
+            'nikto', 'masscan', 'nmap', 'dirbuster', 'gobuster',
+            'python-requests', 'java/', 'go-http-client',
+            'zgrab', 'masscan', 'nessus', 'openvas'
+        ];
+
+        foreach ($suspiciousPatterns as $pattern) {
+            if (str_contains($ua, $pattern)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Scope to get suspicious page views
+     */
+    public function scopeSuspicious($query)
+    {
+        return $query->where('is_suspicious', true);
+    }
+
+    /**
+     * Scope to get safe (non-suspicious) page views
+     */
+    public function scopeSafe($query)
+    {
+        return $query->where('is_suspicious', false);
     }
 }

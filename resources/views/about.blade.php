@@ -102,35 +102,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Enhanced Stats Grid -->
-            <div class="mt-32 lg:mt-24 grid gap-5 rounded-3xl border border-emerald-100 bg-white p-6 sm:p-8 shadow-xl sm:grid-cols-2 lg:grid-cols-4">
-                @php
-                    $stats = [
-                        ['label' => 'Active Members', 'value' => 300, 'color' => 'emerald', 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'],
-                        ['label' => 'Years of Service', 'value' => 27, 'color' => 'amber', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'],
-                        ['label' => 'Evangelistic Campaigns', 'value' => 3, 'color' => 'emerald', 'icon' => 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 002 2h2.945M15 11a3 3 0 11-6 0m5.945 2H18a2 2 0 012 2v1a2 2 0 01-2 2h-2.945M15 11a3 3 0 11-6 0m-4.055 2H6a2 2 0 00-2 2v1a2 2 0 002 2h2.945M9 11a3 3 0 11-6 0m12 0a3 3 0 11-6 0'],
-                        ['label' => 'Audio Albums', 'value' => 4, 'color' => 'amber', 'icon' => 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'],
-                    ];
-                @endphp
-                @foreach($stats as $stat)
-                    @php
-                        $isEmerald = $stat['color'] === 'emerald';
-                        $iconBgClass = $isEmerald ? 'bg-emerald-100' : 'bg-amber-100';
-                        $iconColorClass = $isEmerald ? 'text-emerald-600' : 'text-amber-600';
-                        $textClass = $isEmerald ? 'text-emerald-600' : 'text-amber-600';
-                    @endphp
-                    <div class="group text-center">
-                        <div class="inline-flex w-14 h-14 {{ $iconBgClass }} rounded-2xl items-center justify-center {{ $iconColorClass }} mb-4 group-hover:scale-110 transition-transform duration-300">
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $stat['icon'] }}" />
-                            </svg>
-                        </div>
-                        <p class="text-sm font-bold {{ $textClass }} uppercase tracking-wider mb-2">{{ $stat['label'] }}</p>
-                        <p class="text-4xl font-extrabold text-gray-900"><span class="about-counter" data-target="{{ $stat['value'] }}">0</span>+</p>
-                    </div>
-                @endforeach
-            </div>
         </div>
     </section>
 
@@ -497,6 +468,34 @@
                             <p class="text-sm text-gray-600 leading-relaxed font-medium">{{ $value['body'] }}</p>
                             <div class="mt-6 h-1.5 w-16 bg-gradient-to-r {{ $lineClass }} rounded-full"></div>
                         </div>
+                    </div>
+                @endforeach
+            </div>
+               <!-- Enhanced Stats Grid -->
+               <div class="mt-32 lg:mt-24 grid gap-5 rounded-3xl border border-emerald-100 bg-white p-6 sm:p-8 shadow-xl sm:grid-cols-2 lg:grid-cols-4">
+                @php
+                    $stats = [
+                        ['label' => 'Active Members', 'value' => 300, 'color' => 'emerald', 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'],
+                        ['label' => 'Years of Service', 'value' => 27, 'color' => 'amber', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'],
+                        ['label' => 'Evangelistic Campaigns', 'value' => 3, 'color' => 'emerald', 'icon' => 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 002 2h2.945M15 11a3 3 0 11-6 0m5.945 2H18a2 2 0 012 2v1a2 2 0 01-2 2h-2.945M15 11a3 3 0 11-6 0m-4.055 2H6a2 2 0 00-2 2v1a2 2 0 002 2h2.945M9 11a3 3 0 11-6 0m12 0a3 3 0 11-6 0'],
+                        ['label' => 'Audio Albums', 'value' => 4, 'color' => 'amber', 'icon' => 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'],
+                    ];
+                @endphp
+                @foreach($stats as $stat)
+                    @php
+                        $isEmerald = $stat['color'] === 'emerald';
+                        $iconBgClass = $isEmerald ? 'bg-emerald-100' : 'bg-amber-100';
+                        $iconColorClass = $isEmerald ? 'text-emerald-600' : 'text-amber-600';
+                        $textClass = $isEmerald ? 'text-emerald-600' : 'text-amber-600';
+                    @endphp
+                    <div class="group text-center">
+                        <div class="inline-flex w-14 h-14 {{ $iconBgClass }} rounded-2xl items-center justify-center {{ $iconColorClass }} mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $stat['icon'] }}" />
+                            </svg>
+                        </div>
+                        <p class="text-sm font-bold {{ $textClass }} uppercase tracking-wider mb-2">{{ $stat['label'] }}</p>
+                        <p class="text-4xl font-extrabold text-gray-900"><span class="about-counter" data-target="{{ $stat['value'] }}">0</span>+</p>
                     </div>
                 @endforeach
             </div>

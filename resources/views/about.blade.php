@@ -30,15 +30,12 @@
                     <p class="max-w-2xl text-base sm:text-lg text-gray-700 leading-[1.8]">
                         For over two decades, we have beautifully blended contemporary expression with timeless truth, serving the words of life to the world through gospel messages.
                     </p>
-                    <div class="flex flex-wrap gap-4 pt-2">
+                    <div class="pt-2">
                         <a href="#journey" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-8 py-4 text-sm font-bold text-white shadow-xl shadow-emerald-500/30 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/40 hover:-translate-y-1 hover:scale-105">
                             Explore our journey
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                             </svg>
-                        </a>
-                        <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 rounded-full border-2 border-emerald-300 bg-white/80 backdrop-blur-sm px-8 py-4 text-sm font-bold text-emerald-700 transition-all duration-300 hover:border-emerald-500 hover:bg-emerald-50 hover:-translate-y-1 shadow-md">
-                            Get in touch
                         </a>
                     </div>
                 </div>

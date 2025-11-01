@@ -138,8 +138,8 @@
                     </div>
                 </div>
 
-                <!-- Stunning CTA Buttons -->
-                <div class="flex flex-wrap items-center justify-center gap-8 animate-fade-in-up animation-delay-800">
+                <!-- Primary CTA Button -->
+                <div class="flex items-center justify-center animate-fade-in-up animation-delay-800">
                     <a href="{{ route('registration.member') }}" class="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-full shadow-2xl shadow-emerald-500/50 transition-all duration-300 hover:shadow-emerald-500/70 hover:-translate-y-1 hover:scale-105 overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-r from-teal-600 to-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                         <svg class="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -147,16 +147,6 @@
                         </svg>
                         <span class="relative z-10">Join the Choir</span>
                     </a>
-
-                    <div class="flex flex-col items-center gap-2">
-                        <span class="text-white/70 text-xs font-semibold uppercase tracking-wider">DISCOVER MORE</span>
-                        <a href="{{ route('events.index') }}" class="inline-flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-xl border-2 border-white/30 text-white font-bold rounded-full hover:bg-white/20 hover:border-white/50 transition-all duration-300 hover:-translate-y-1">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
-                            <span>Explore Events</span>
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>

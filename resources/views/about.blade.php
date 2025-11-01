@@ -11,7 +11,7 @@
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-emerald-100/20 to-amber-100/20 blur-3xl"></div>
 
     <!-- Hero Section -->
-    <section class="relative z-10 px-6 pt-32 pb-24 sm:px-8 lg:px-12">
+    <section class="relative z-10 px-6 pt-32 pb-32 sm:px-8 lg:px-12 sm:pb-40">
         <div class="mx-auto max-w-6xl">
             <div class="flex flex-col gap-12 lg:flex-row lg:items-center">
                 <div class="flex-1 space-y-6">
@@ -106,7 +106,7 @@
     </section>
 
     <!-- Journey Timeline Section -->
-    <section id="journey" class="relative z-10 px-6 py-24 sm:px-8 lg:px-12 bg-gradient-to-b from-white via-emerald-50/20 to-white">
+    <section id="journey" class="relative z-10 px-6 py-32 sm:px-8 lg:px-12 sm:py-40 bg-gradient-to-b from-white via-emerald-50/20 to-white">
         <div class="mx-auto max-w-7xl">
             <div class="text-center mb-20">
                 <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-6 py-2 text-xs font-bold uppercase tracking-wide text-white shadow-xl">
@@ -314,7 +314,7 @@
     </section>
 
     <!-- GF Juniors Section -->
-    <section class="relative z-10 px-6 py-24 sm:px-8 lg:px-12 bg-gradient-to-br from-amber-50/40 via-white to-emerald-50/30">
+    <section class="relative z-10 px-6 py-32 sm:px-8 lg:px-12 sm:py-40 bg-gradient-to-br from-amber-50/40 via-white to-emerald-50/30">
         <div class="mx-auto max-w-7xl">
             <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
                 <!-- Image Section -->
@@ -422,7 +422,7 @@
     </section>
 
     <!-- Values Section -->
-    <section class="relative z-10 px-6 py-24 sm:px-8 lg:px-12">
+    <section class="relative z-10 px-6 py-32 sm:px-8 lg:px-12 sm:py-40">
         <div class="mx-auto max-w-6xl">
             <div class="text-center mb-16">
                 <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 px-6 py-2 text-xs font-black uppercase tracking-wide text-white shadow-xl">
@@ -471,6 +471,7 @@
                     </div>
                 @endforeach
             </div>
+
                <!-- Enhanced Stats Grid -->
                <div class="mt-32 lg:mt-24 grid gap-5 rounded-3xl border border-emerald-100 bg-white p-6 sm:p-8 shadow-xl sm:grid-cols-2 lg:grid-cols-4">
                 @php
@@ -503,7 +504,7 @@
     </section>
 
     <!-- Departments Section -->
-    <section class="relative z-10 px-6 py-24 sm:px-8 lg:px-12">
+    <section class="relative z-10 px-6 py-32 sm:px-8 lg:px-12 sm:py-40">
         <div class="absolute inset-0 bg-gradient-to-b from-emerald-50/40 via-white to-amber-50/30"></div>
         <div class="absolute -top-40 -right-40 w-96 h-96 bg-emerald-200/30 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-amber-200/30 rounded-full blur-3xl"></div>
@@ -704,7 +705,7 @@
     </section>
 
     <!-- Founding Members Section -->
-    <section class="relative z-10 px-6 py-24 sm:px-8 lg:px-12 bg-gradient-to-br from-amber-50/30 via-white to-emerald-50/30">
+    <section class="relative z-10 px-6 py-32 sm:px-8 lg:px-12 sm:py-40 bg-gradient-to-br from-amber-50/30 via-white to-emerald-50/30">
         <div class="mx-auto max-w-6xl">
             <div class="text-center mb-16">
                 <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 px-6 py-2 text-xs font-black uppercase tracking-wide text-white shadow-xl">
@@ -759,7 +760,7 @@
     </section>
 
     <!-- Leadership Section -->
-    <section class="relative z-10 px-6 py-24 sm:px-8 lg:px-12">
+    <section class="relative z-10 px-6 py-32 sm:px-8 lg:px-12 sm:py-40">
         <div class="mx-auto max-w-6xl rounded-3xl border-2 border-emerald-200 bg-white/95 backdrop-blur-sm p-12 shadow-2xl">
             <div class="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
                 <div class="space-y-6">
@@ -809,7 +810,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="relative z-10 px-6 pb-32 pt-24 sm:px-8 lg:px-12 bg-gradient-to-b from-white to-gray-50">
+    <section class="relative z-10 px-6 pb-40 pt-32 sm:px-8 lg:px-12 sm:pb-48 sm:pt-40 bg-gradient-to-b from-white to-gray-50">
         <div class="mx-auto max-w-5xl rounded-3xl border-2 border-emerald-200 bg-white p-12 sm:p-16 text-center shadow-2xl">
             <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-5 py-2 text-xs font-bold uppercase tracking-wider text-white shadow-lg">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">

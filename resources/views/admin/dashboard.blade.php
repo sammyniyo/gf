@@ -258,10 +258,24 @@
             <!-- This Month Summary -->
             @if($birthdays_this_month->count() > 0)
                 <div class="mt-6 p-4 bg-white rounded-xl border-2 border-dashed border-purple-200">
-                    <p class="text-center text-sm text-gray-700">
+                    <p class="text-center text-sm text-gray-700 mb-3">
                         <span class="font-bold text-purple-600">{{ $birthdays_this_month->count() }} birthdays</span> this month
                         <span class="text-gray-500">• Make them feel special! 🎁</span>
                     </p>
+                    <div class="flex flex-wrap items-center justify-center gap-2 mt-3">
+                        @foreach($birthdays_this_month as $member)
+                            @php
+                                $birthdate = \Carbon\Carbon::parse($member->birthdate);
+                                $day = $birthdate->day;
+                                $age = $birthdate->age;
+                            @endphp
+                            <span class="inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-pink-50 to-purple-50 border border-purple-200 rounded-full text-xs font-medium text-gray-700">
+                                <span class="text-purple-600 font-semibold">{{ $member->first_name }} {{ $member->last_name }}</span>
+                                <span class="text-gray-500">•</span>
+                                <span class="text-purple-500">Day {{ $day }}</span>
+                            </span>
+                        @endforeach
+                    </div>
                 </div>
             @endif
         </div>

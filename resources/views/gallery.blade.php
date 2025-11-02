@@ -175,8 +175,163 @@
     }
 
     .gallery-card {
+        position: relative;
+        display: block;
         width: 100%;
-        max-width: 420px;
+        max-width: 440px;
+        padding: clamp(0.85rem, 1.4vw, 1.5rem);
+        border-radius: 1.75rem;
+        background: linear-gradient(140deg, rgba(16, 185, 129, 0.18), rgba(6, 182, 212, 0.08) 45%, rgba(249, 115, 22, 0.15));
+        cursor: pointer;
+        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1), filter 0.6s ease;
+    }
+
+    .gallery-card::after {
+        content: "";
+        position: absolute;
+        inset: -18% -18% auto -18%;
+        height: 60%;
+        border-radius: inherit;
+        background: radial-gradient(circle at center, rgba(16, 185, 129, 0.35), transparent 65%);
+        opacity: 0;
+        transition: opacity 0.6s ease;
+        pointer-events: none;
+        filter: blur(24px);
+    }
+
+    .gallery-card:hover {
+        transform: translateY(-16px) scale(1.01);
+        box-shadow: 0 40px 90px -35px rgba(15, 118, 110, 0.45);
+        filter: saturate(1.02);
+    }
+
+    .gallery-card:hover::after {
+        opacity: 1;
+    }
+
+    .gallery-card-inner {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        border-radius: 1.35rem;
+        overflow: hidden;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(236, 253, 245, 0.96) 100%);
+        box-shadow: 0 25px 60px -38px rgba(15, 118, 110, 0.55), 0 18px 40px -22px rgba(15, 23, 42, 0.25);
+        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .gallery-card:hover .gallery-card-inner {
+        transform: translateY(-2px);
+    }
+
+    .gallery-visual {
+        position: relative;
+        border-radius: clamp(1.1rem, 1.6vw, 1.4rem);
+        overflow: hidden;
+        background: radial-gradient(circle at top, rgba(15, 118, 110, 0.22), rgba(15, 23, 42, 0.85));
+        aspect-ratio: 4 / 3;
+    }
+
+    .gallery-visual img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1), filter 0.7s ease;
+    }
+
+    .gallery-card:hover .gallery-visual img {
+        transform: scale(1.08) translateY(-4px);
+        filter: saturate(1.1);
+    }
+
+    .gallery-card-meta {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: clamp(1.25rem, 2.1vw, 1.9rem);
+    }
+
+    .gallery-card-meta::before {
+        content: "";
+        position: absolute;
+        inset: 0 1.5rem auto;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(16, 185, 129, 0.25), rgba(14, 116, 144, 0.35), rgba(16, 185, 129, 0.25));
+        opacity: 0.6;
+        transform: translateY(-0.75rem);
+    }
+
+    .gallery-meta-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+    }
+
+    .gallery-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.4rem 0.95rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        background: rgba(236, 253, 245, 0.8);
+        color: #065f46;
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        backdrop-filter: blur(4px);
+    }
+
+    .gallery-chip svg {
+        width: 0.9rem;
+        height: 0.9rem;
+    }
+
+    .gallery-chip-featured {
+        background: linear-gradient(120deg, rgba(252, 211, 77, 0.9), rgba(249, 115, 22, 0.85));
+        color: #78350f;
+        border: none;
+        box-shadow: 0 8px 18px -10px rgba(250, 204, 21, 0.6);
+    }
+
+    .gallery-chip-muted {
+        background: rgba(15, 23, 42, 0.08);
+        color: #0f172a;
+        border: 1px solid rgba(15, 23, 42, 0.1);
+    }
+
+    .gallery-card-title {
+        font-size: clamp(1.25rem, 2.3vw, 1.6rem);
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: -0.015em;
+    }
+
+    .gallery-card-description {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: rgba(15, 23, 42, 0.78);
+    }
+
+    .gallery-card-meta-footer {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 600;
+        color: #047857;
+        font-size: 0.95rem;
+        transition: color 0.3s ease;
+    }
+
+    .gallery-card-meta-footer svg {
+        width: 1.15rem;
+        height: 1.15rem;
+        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .gallery-card:hover .gallery-card-meta-footer svg {
+        transform: translateX(6px);
     }
 </style>
 @endpush
@@ -234,65 +389,102 @@
             @if($galleries->count() > 0)
                 <div id="gallery-grid">
                     @foreach($galleries as $gallery)
-                        <div class="gallery-card group relative cursor-pointer gallery-item rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl bg-white transform transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_30px_55px_-18px_rgba(15,118,110,0.35)]"
+                        <div class="gallery-card group gallery-item"
                              data-category="{{ $gallery->category ?? 'other' }}"
                              onclick="openLightbox({{ $loop->index }})">
-                            <!-- Image Container -->
-                            <div class="relative w-full aspect-[4/3] overflow-hidden bg-gray-100">
-                                <img src="{{ $gallery->image_url }}"
-                                     alt="{{ $gallery->title ?? 'Gallery Image' }}"
-                                     class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                                     loading="lazy"
-                                     oncontextmenu="return false;">
+                            <div class="gallery-card-inner">
+                                <!-- Image Container -->
+                                <div class="gallery-visual">
+                                    <img src="{{ $gallery->image_url }}"
+                                         alt="{{ $gallery->title ?? 'Gallery Image' }}"
+                                         class="gallery-image"
+                                         loading="lazy"
+                                         oncontextmenu="return false;">
 
-                                @if($gallery->is_featured)
-                                    <div class="absolute top-4 left-4 z-20">
-                                        <span class="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-xs font-bold rounded-full shadow-xl flex items-center gap-1 backdrop-blur-sm">
-                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                            </svg>
-                                            Featured
-                                        </span>
-                                    </div>
-                                @endif
-
-                                <!-- Zoom Icon -->
-                                <div class="absolute top-4 right-4 w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
-                                    </svg>
-                                </div>
-
-                                <!-- Overlay -->
-                                <div class="gallery-overlay">
-                                <div class="gallery-info">
-                                    @if($gallery->category)
-                                        <span class="inline-block px-3 py-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full text-xs font-semibold mb-3">
-                                            {{ $categories[$gallery->category] ?? $gallery->category }}
-                                        </span>
-                                    @endif
-                                    @if($gallery->title)
-                                        <h3 class="text-white font-bold text-xl mb-2">{{ $gallery->title }}</h3>
-                                    @endif
-                                    @if($gallery->description)
-                                        <p class="text-white/90 text-sm line-clamp-2 mb-2">{{ $gallery->description }}</p>
-                                    @endif
-                                    @if($gallery->event_date)
-                                        <p class="text-white/80 text-xs mb-3">
-                                            {{ $gallery->event_date->format('F d, Y') }}
-                                        </p>
+                                    @if($gallery->is_featured)
+                                        <div class="absolute top-5 left-5 z-20">
+                                            <span class="gallery-chip gallery-chip-featured text-xs uppercase tracking-wide">
+                                                <svg fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                                </svg>
+                                                Featured
+                                            </span>
+                                        </div>
                                     @endif
 
-                                    <!-- View Button -->
-                                    <div class="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    <!-- Zoom Icon -->
+                                    <div class="absolute top-5 right-5 w-12 h-12 bg-white/15 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 text-white">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
                                         </svg>
-                                        <span class="text-sm font-medium">View Full Size</span>
+                                    </div>
+
+                                    <!-- Overlay -->
+                                    <div class="gallery-overlay"></div>
+                                    <div class="gallery-info">
+                                        @if($gallery->category)
+                                            <span class="gallery-chip gallery-chip-muted mb-3">
+                                                {{ $categories[$gallery->category] ?? $gallery->category }}
+                                            </span>
+                                        @endif
+                                        @if($gallery->title)
+                                            <h3 class="text-white font-bold text-2xl mb-2">{{ $gallery->title }}</h3>
+                                        @endif
+                                        @if($gallery->description)
+                                            <p class="text-white/85 text-sm leading-relaxed mb-3">{{ \Illuminate\Support\Str::limit($gallery->description, 120) }}</p>
+                                        @endif
+                                        @if($gallery->event_date)
+                                            <p class="text-white/80 text-xs tracking-wide">
+                                                {{ $gallery->event_date->format('F d, Y') }}
+                                            </p>
+                                        @endif
                                     </div>
                                 </div>
-                            </div>
+
+                                <!-- Meta -->
+                                <div class="gallery-card-meta">
+                                    <div class="gallery-meta-chips">
+                                        @if($gallery->category)
+                                            <span class="gallery-chip">
+                                                <svg fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h2.307c.339 0 .653.154.861.416l.84 1.049A1 1 0 009.193 5H15a2 2 0 012 2v1H3V4zm0 5h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V9zm5 2a1 1 0 100 2h4a1 1 0 100-2H8z" clip-rule="evenodd"/>
+                                                </svg>
+                                                {{ $categories[$gallery->category] ?? $gallery->category }}
+                                            </span>
+                                        @endif
+                                        @if($gallery->event_date)
+                                            <span class="gallery-chip gallery-chip-muted">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10m-9 4h8m-9 4h6m-6 4h4M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                                </svg>
+                                                {{ $gallery->event_date->format('M d, Y') }}
+                                            </span>
+                                        @endif
+                                        @if($gallery->is_featured)
+                                            <span class="gallery-chip gallery-chip-featured">
+                                                <svg fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                                </svg>
+                                                Featured
+                                            </span>
+                                        @endif
+                                    </div>
+
+                                    @if($gallery->title)
+                                        <h3 class="gallery-card-title">{{ $gallery->title }}</h3>
+                                    @endif
+
+                                    @if($gallery->description)
+                                        <p class="gallery-card-description">{{ \Illuminate\Support\Str::limit($gallery->description, 110) }}</p>
+                                    @endif
+
+                                    <div class="gallery-card-meta-footer">
+                                        <span>Open in lightbox</span>
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7-7 7m7-7H3"/>
+                                        </svg>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endforeach

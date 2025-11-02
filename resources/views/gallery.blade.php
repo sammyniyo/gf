@@ -153,6 +153,31 @@
         color: white !important;
         box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
     }
+
+    #gallery-grid {
+        display: grid;
+        gap: clamp(1.75rem, 2vw, 2.75rem);
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        justify-items: center;
+    }
+
+    @media (min-width: 1024px) {
+        #gallery-grid {
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        }
+    }
+
+    @media (min-width: 1536px) {
+        #gallery-grid {
+            gap: clamp(2.25rem, 3vw, 3.25rem);
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+        }
+    }
+
+    .gallery-card {
+        width: 100%;
+        max-width: 420px;
+    }
 </style>
 @endpush
 
@@ -205,11 +230,11 @@
 
     <!-- Gallery Grid -->
     <section class="relative py-16 px-6 bg-gray-50">
-        <div class="max-w-7xl mx-auto">
+            <div class="max-w-7xl mx-auto">
             @if($galleries->count() > 0)
-                <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+                <div id="gallery-grid">
                     @foreach($galleries as $gallery)
-                        <div class="group relative cursor-pointer gallery-item rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl bg-white transform transition-all duration-500 hover:-translate-y-2"
+                        <div class="gallery-card group relative cursor-pointer gallery-item rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl bg-white transform transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_30px_55px_-18px_rgba(15,118,110,0.35)]"
                              data-category="{{ $gallery->category ?? 'other' }}"
                              onclick="openLightbox({{ $loop->index }})">
                             <!-- Image Container -->

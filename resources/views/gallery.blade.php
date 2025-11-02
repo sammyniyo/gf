@@ -204,41 +204,42 @@
     </section>
 
     <!-- Gallery Grid -->
-    <section class="relative py-16 px-6 bg-white">
+    <section class="relative py-16 px-6 bg-gray-50">
         <div class="max-w-7xl mx-auto">
             @if($galleries->count() > 0)
-                <div id="gallery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
                     @foreach($galleries as $gallery)
-                        <div class="group relative cursor-pointer gallery-item rounded-2xl overflow-hidden shadow-lg bg-white"
+                        <div class="group relative cursor-pointer gallery-item rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl bg-white transform transition-all duration-500 hover:-translate-y-2"
                              data-category="{{ $gallery->category ?? 'other' }}"
                              onclick="openLightbox({{ $loop->index }})">
-                            <!-- Image -->
-                            <img src="{{ $gallery->image_url }}"
-                                 alt="{{ $gallery->title ?? 'Gallery Image' }}"
-                                 class="w-full h-auto transform group-hover:scale-110 transition-transform duration-700"
-                                 loading="lazy"
-                                 oncontextmenu="return false;">
+                            <!-- Image Container -->
+                            <div class="relative w-full aspect-[4/3] overflow-hidden bg-gray-100">
+                                <img src="{{ $gallery->image_url }}"
+                                     alt="{{ $gallery->title ?? 'Gallery Image' }}"
+                                     class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                     loading="lazy"
+                                     oncontextmenu="return false;">
 
-                            @if($gallery->is_featured)
-                                <div class="absolute top-4 left-4 z-10">
-                                    <span class="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1">
-                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                        </svg>
-                                        Featured
-                                    </span>
+                                @if($gallery->is_featured)
+                                    <div class="absolute top-4 left-4 z-20">
+                                        <span class="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-xs font-bold rounded-full shadow-xl flex items-center gap-1 backdrop-blur-sm">
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                            </svg>
+                                            Featured
+                                        </span>
+                                    </div>
+                                @endif
+
+                                <!-- Zoom Icon -->
+                                <div class="absolute top-4 right-4 w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
+                                    </svg>
                                 </div>
-                            @endif
 
-                            <!-- Zoom Icon -->
-                            <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
-                                </svg>
-                            </div>
-
-                            <!-- Overlay -->
-                            <div class="gallery-overlay">
+                                <!-- Overlay -->
+                                <div class="gallery-overlay">
                                 <div class="gallery-info">
                                     @if($gallery->category)
                                         <span class="inline-block px-3 py-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full text-xs font-semibold mb-3">
@@ -266,6 +267,7 @@
                                         <span class="text-sm font-medium">View Full Size</span>
                                     </div>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     @endforeach

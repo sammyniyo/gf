@@ -3,6 +3,7 @@
         <div class="flex items-center justify-between h-16">
             <!-- Logo -->
             <a href="/" class="flex items-center space-x-3 group">
+                <img src="{{ asset('images/logo.png') }}" alt="God's Family Choir Logo" class="h-10 w-10 lg:h-12 lg:w-12 object-contain transition-transform duration-300 group-hover:scale-110">
                 <div class="lg:hidden">
                     <div class="text-base font-bold bg-gradient-to-r from-amber-300 to-amber-100 bg-clip-text text-transparent">
                         GF Choir

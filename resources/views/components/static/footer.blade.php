@@ -6,9 +6,12 @@
 
             <!-- About Section -->
             <div class="lg:col-span-1">
-                <h3 class="text-xl font-bold mb-3 bg-gradient-to-r from-emerald-600 to-amber-600 bg-clip-text text-transparent">
-                    God's Family Choir
-                </h3>
+                <div class="flex items-center gap-3 mb-3">
+                    <img src="{{ asset('images/logo.png') }}" alt="God's Family Choir Logo" class="h-12 w-12 object-contain">
+                    <h3 class="text-xl font-bold bg-gradient-to-r from-emerald-600 to-amber-600 bg-clip-text text-transparent">
+                        God's Family Choir
+                    </h3>
+                </div>
                 <p class="text-slate-600 text-sm leading-relaxed mb-4">
                     Sharing the love of Christ through sacred music since 1998.
                 </p>

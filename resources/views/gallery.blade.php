@@ -12,10 +12,13 @@
 
     .gallery-item img {
         transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .gallery-item:hover img {
-        transform: scale(1.1);
+        transform: scale(1.08);
     }
 
     .gallery-overlay {
@@ -44,32 +47,36 @@
         transform: translateY(0);
     }
 
-    /* Masonry Layout */
-    .masonry-grid {
-        column-gap: 1.5rem;
+    /* Gallery Grid Layout */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
     }
 
     @media (min-width: 640px) {
-        .masonry-grid {
-            column-count: 2;
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         }
     }
 
     @media (min-width: 1024px) {
-        .masonry-grid {
-            column-count: 3;
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
         }
     }
 
     @media (min-width: 1280px) {
-        .masonry-grid {
-            column-count: 4;
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
         }
     }
 
-    .masonry-item {
-        break-inside: avoid;
-        margin-bottom: 1.5rem;
+    .gallery-item-wrapper {
+        position: relative;
+        aspect-ratio: 4/3;
+        overflow: hidden;
     }
 
     /* Lightbox Modal */
@@ -160,7 +167,7 @@
 @endpush
 
 @section('content')
-<div class="relative overflow-hidden bg-gradient-to-b from-gray-50 via-white to-slate-50">
+<div class="relative overflow-hidden bg-white">
     <!-- Hero Section -->
     <section class="relative py-20 px-6 bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-800 text-white overflow-hidden">
         <!-- Background Elements -->
@@ -207,17 +214,17 @@
     </section>
 
     <!-- Gallery Grid -->
-    <section class="py-12 px-6">
+    <section class="py-12 px-6 bg-white">
         <div class="max-w-7xl mx-auto">
             @if($galleries->count() > 0)
-                <div id="gallery-grid" class="masonry-grid">
+                <div id="gallery-grid" class="gallery-grid">
                     @foreach($galleries as $gallery)
-                        <div class="masonry-item gallery-item rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
+                        <div class="gallery-item rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white"
                              data-category="{{ $gallery->category ?? 'other' }}">
-                            <div class="relative">
+                            <div class="gallery-item-wrapper">
                                 <img src="{{ $gallery->image_url }}"
                                      alt="{{ $gallery->title ?? 'Gallery Image' }}"
-                                     class="w-full h-auto"
+                                     class="w-full h-full object-cover"
                                      loading="lazy"
                                      onclick="openLightbox({{ $loop->index }})">
 

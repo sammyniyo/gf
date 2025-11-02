@@ -106,6 +106,19 @@
     .gallery-item {
         display: flex;
         flex-direction: column;
+        min-height: 450px;
+    }
+
+    @media (min-width: 768px) {
+        .gallery-item {
+            min-height: 480px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .gallery-item {
+            min-height: 520px;
+        }
     }
 </style>
 @endpush
@@ -167,15 +180,22 @@
                              data-category="{{ $gallery->category ?? 'other' }}"
                              onclick="openLightbox({{ $loop->index }})">
                             <!-- Image Container -->
-                            <div class="relative w-full aspect-[4/3] overflow-hidden bg-gray-200">
+                            <div class="relative w-full aspect-[4/3] overflow-hidden bg-gray-100 rounded-t-2xl">
                                 <img src="{{ $gallery->image_url }}"
                                      alt="{{ $gallery->title ?? 'Gallery Image' }}"
-                                     class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                     class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                                      loading="lazy"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                                      oncontextmenu="return false;">
+                                <!-- Fallback if image fails to load -->
+                                <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center" style="display: none;">
+                                    <svg class="w-16 h-16 text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
 
                                 <!-- Overlay on Hover -->
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                                     <div class="absolute bottom-0 left-0 right-0 p-6">
                                         @if($gallery->category)
                                             <span class="inline-block px-3 py-1 bg-emerald-600 text-white rounded-full text-xs font-semibold mb-2">
@@ -198,7 +218,7 @@
                                 </div>
 
                                 <!-- Zoom Icon -->
-                                <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                                <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
                                     </svg>
@@ -206,25 +226,27 @@
                             </div>
 
                             <!-- Card Footer - Always Visible -->
-                            <div class="p-4 bg-white">
-                                @if($gallery->category)
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-semibold mb-2">
-                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h2.307c.339 0 .653.154.861.416l.84 1.049A1 1 0 009.193 5H15a2 2 0 012 2v1H3V4zm0 5h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" clip-rule="evenodd"/>
-                                        </svg>
-                                        {{ $categories[$gallery->category] ?? $gallery->category }}
-                                    </span>
-                                @endif
+                            <div class="p-5 bg-white rounded-b-2xl">
+                                <div class="flex items-start justify-between gap-3 mb-2">
+                                    @if($gallery->category)
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-full text-xs font-semibold">
+                                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h2.307c.339 0 .653.154.861.416l.84 1.049A1 1 0 009.193 5H15a2 2 0 012 2v1H3V4zm0 5h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" clip-rule="evenodd"/>
+                                            </svg>
+                                            {{ $categories[$gallery->category] ?? $gallery->category }}
+                                        </span>
+                                    @endif
+                                    @if($gallery->event_date)
+                                        <span class="text-gray-500 text-xs flex items-center gap-1.5 whitespace-nowrap">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                            </svg>
+                                            {{ $gallery->event_date->format('M d, Y') }}
+                                        </span>
+                                    @endif
+                                </div>
                                 @if($gallery->title)
-                                    <h3 class="text-gray-900 font-bold text-lg mb-1 line-clamp-2">{{ $gallery->title }}</h3>
-                                @endif
-                                @if($gallery->event_date)
-                                    <p class="text-gray-500 text-sm flex items-center gap-1.5">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                        {{ $gallery->event_date->format('M d, Y') }}
-                                    </p>
+                                    <h3 class="text-gray-900 font-bold text-lg leading-tight line-clamp-2">{{ $gallery->title }}</h3>
                                 @endif
                             </div>
                         </div>

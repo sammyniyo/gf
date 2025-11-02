@@ -95,24 +95,21 @@
 
     /* Gallery Grid */
     #gallery-grid {
-        @apply grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
-    }
-
-    .gallery-item {
-        @apply flex flex-col bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer transition-all duration-500;
-        min-height: 450px;
-    }
-
-    .gallery-item:hover {
-        @apply -translate-y-2 shadow-2xl;
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: 1.5rem;
     }
 
     @media (min-width: 768px) {
-        .gallery-item { min-height: 480px; }
+        #gallery-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
     }
 
     @media (min-width: 1024px) {
-        .gallery-item { min-height: 520px; }
+        #gallery-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
     }
 
     /* Hidden class for filtering */
@@ -171,86 +168,44 @@
                             $catKey = $gallery->category ?? 'other';
                             $catLabel = $categories[$catKey] ?? ucfirst($catKey);
                         @endphp
+                        <div class="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 gallery-item"
+                             data-category="{{ $catKey }}"
+                             onclick="openGalleryLightbox({{ $loop->index }})">
+                            <!-- Image -->
+                            <img src="{{ $gallery->image_url }}"
+                                 alt="{{ $gallery->title ?? 'Gallery Image' }}"
+                                 class="w-full h-auto transform group-hover:scale-110 transition-transform duration-700"
+                                 loading="lazy"
+                                 oncontextmenu="return false;">
 
-                        <article
-                            class="gallery-item"
-                            data-category="{{ $catKey }}"
-                            data-index="{{ $loop->index }}"
-                            onclick="openLightbox({{ $loop->index }})"
-                            aria-label="Open image in lightbox">
-
-                            <!-- Image Container -->
-                            <div class="relative w-full aspect-[4/3] overflow-hidden bg-gray-100">
-                                <img
-                                    src="{{ $gallery->image_url }}"
-                                    alt="{{ $gallery->title ?? 'Gallery image' }}"
-                                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                    loading="lazy"
-                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                                    oncontextmenu="return false;">
-
-                                <!-- Fallback -->
-                                <div class="hidden absolute inset-0 bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center">
-                                    <svg class="w-16 h-16 text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                    </svg>
-                                </div>
-
-                                <!-- Hover Overlay -->
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 text-white flex flex-col justify-end">
-                                    @if($gallery->category)
-                                        <span class="inline-block px-3 py-1 bg-emerald-600 rounded-full text-xs font-semibold mb-2">
-                                            {{ $catLabel }}
-                                        </span>
-                                    @endif
+                            <!-- Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div class="absolute bottom-0 left-0 right-0 p-6">
+                                    <span class="inline-block px-3 py-1 bg-emerald-600 text-white rounded-full text-xs font-semibold mb-2">
+                                        {{ $catLabel }}
+                                    </span>
                                     @if($gallery->title)
-                                        <h3 class="font-bold text-xl mb-2">{{ $gallery->title }}</h3>
+                                        <h3 class="text-white font-bold text-xl mb-2">{{ $gallery->title }}</h3>
                                     @endif
-                                    <div class="flex items-center gap-2">
+
+                                    <!-- View Button -->
+                                    <div class="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                         </svg>
                                         <span class="text-sm font-medium">View Full Size</span>
                                     </div>
                                 </div>
-
-                                <!-- Zoom Icon -->
-                                <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/>
-                                    </svg>
-                                </div>
                             </div>
 
-                            <!-- Card Footer -->
-                            <footer class="p-5 bg-white flex-1">
-                                <div class="flex items-start justify-between gap-3 mb-2">
-                                    @if($gallery->category)
-                                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-full text-xs font-semibold">
-                                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h2.307c.339 0 .653.154.861.416l.84 1.049A1 1 0 009.193 5H15a2 2 0 012 2v1H3V4zm0 5h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" clip-rule="evenodd"/>
-                                            </svg>
-                                            {{ $catLabel }}
-                                        </span>
-                                    @endif
-                                    @if($gallery->event_date)
-                                        <span class="text-gray-500 text-xs flex items-center gap-1.5 whitespace-nowrap">
-                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                            </svg>
-                                            {{ $gallery->event_date->format('M d, Y') }}
-                                        </span>
-                                    @endif
-                                </div>
-                                @if($gallery->title)
-                                    <h3 class="text-gray-900 font-bold text-lg leading-tight line-clamp-2">
-                                        {{ $gallery->title }}
-                                    </h3>
-                                @endif
-                            </footer>
-                        </article>
+                            <!-- Zoom Icon -->
+                            <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
+                                </svg>
+                            </div>
+                        </div>
                     @endforeach
                 </div>
 
@@ -279,16 +234,41 @@
 </div>
 
 <!-- Lightbox Modal -->
-<div id="lightbox-modal" class="lightbox-modal" role="dialog" aria-modal="true" aria-hidden="true" oncontextmenu="return false;">
-    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">×</button>
-    <button class="lightbox-nav lightbox-prev" onclick="changeImage(-1)" aria-label="Previous">‹</button>
-    <button class="lightbox-nav lightbox-next" onclick="changeImage(1)" aria-label="Next">›</button>
+<div id="gallery-lightbox" class="fixed inset-0 bg-black/95 z-[9999] hidden items-center justify-center p-4 backdrop-blur-sm" oncontextmenu="return false;">
+    <!-- Close Button -->
+    <button onclick="closeGalleryLightbox()" class="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors z-50">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+    </button>
 
-    <div class="lightbox-content">
-        <img id="lightbox-image" class="lightbox-image" src="" alt="" draggable="false">
-        <div id="lightbox-info" class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
-            <h3 id="lightbox-title" class="text-2xl font-bold mb-2">Gallery Image</h3>
-            <p id="lightbox-description" class="text-white/90"></p>
+    <!-- Previous Button -->
+    <button onclick="previousGalleryImage()" class="absolute left-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+    </button>
+
+    <!-- Next Button -->
+    <button onclick="nextGalleryImage()" class="absolute right-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+    </button>
+
+    <!-- Image Container -->
+    <div class="relative max-w-6xl w-full">
+        <img id="gallery-lightbox-image" src="" alt="" class="w-full h-auto rounded-2xl shadow-2xl max-h-[80vh] object-contain mx-auto" draggable="false">
+
+        <!-- Image Info -->
+        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-2xl">
+            <h3 id="gallery-lightbox-title" class="text-white font-bold text-2xl mb-2"></h3>
+            <p id="gallery-lightbox-category" class="text-white/80"></p>
+        </div>
+
+        <!-- Image Counter -->
+        <div class="absolute top-4 left-4 px-4 py-2 bg-white/10 backdrop-blur-xl rounded-full">
+            <span id="gallery-lightbox-counter" class="text-white font-semibold"></span>
         </div>
     </div>
 </div>
@@ -309,15 +289,16 @@
 
     const galleryImages = @json($galleryImages);
 
-    const filterBtns   = document.querySelectorAll('.filter-btn');
-    const items        = document.querySelectorAll('.gallery-item');
-    const noResults    = document.getElementById('no-results');
-    const modal        = document.getElementById('lightbox-modal');
-    const imgEl        = document.getElementById('lightbox-image');
-    const titleEl      = document.getElementById('lightbox-title');
-    const descEl       = document.getElementById('lightbox-description');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.gallery-item');
+    const noResults = document.getElementById('no-results');
+    const lightbox = document.getElementById('gallery-lightbox');
+    const imgEl = document.getElementById('gallery-lightbox-image');
+    const titleEl = document.getElementById('gallery-lightbox-title');
+    const categoryEl = document.getElementById('gallery-lightbox-category');
+    const counterEl = document.getElementById('gallery-lightbox-counter');
 
-    let currentIndex = 0;
+    let currentGalleryIndex = 0;
 
     // Filter
     filterBtns.forEach(btn => btn.addEventListener('click', () => {
@@ -334,51 +315,67 @@
         if (noResults) noResults.classList.toggle('hidden', visible > 0);
     }));
 
-    // Lightbox
-    window.openLightbox = (idx) => {
+    // Lightbox Functions
+    window.openGalleryLightbox = (idx) => {
         if (!galleryImages.length) return;
-        currentIndex = idx;
-        updateLightbox();
-        modal.classList.add('active');
-        modal.setAttribute('aria-hidden', 'false');
+        currentGalleryIndex = idx;
+        updateGalleryLightbox();
+        lightbox.classList.remove('hidden');
+        lightbox.classList.add('flex');
         document.body.style.overflow = 'hidden';
     };
 
-    window.closeLightbox = () => {
-        modal.classList.remove('active');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
+    window.closeGalleryLightbox = () => {
+        lightbox.classList.add('hidden');
+        lightbox.classList.remove('flex');
+        document.body.style.overflow = 'auto';
     };
 
-    window.changeImage = (dir) => {
-        currentIndex = (currentIndex + dir + galleryImages.length) % galleryImages.length;
-        updateLightbox();
+    window.previousGalleryImage = () => {
+        currentGalleryIndex = (currentGalleryIndex - 1 + galleryImages.length) % galleryImages.length;
+        updateGalleryLightbox();
     };
 
-    function updateLightbox() {
-        const i = galleryImages[currentIndex];
-        imgEl.src = i.url;
-        imgEl.alt = i.title || 'Gallery image';
-        titleEl.textContent = i.title || 'Gallery Image';
-        descEl.textContent = [i.category, i.date].filter(Boolean).join(' | ');
+    window.nextGalleryImage = () => {
+        currentGalleryIndex = (currentGalleryIndex + 1) % galleryImages.length;
+        updateGalleryLightbox();
+    };
+
+    function updateGalleryLightbox() {
+        const img = galleryImages[currentGalleryIndex];
+        imgEl.src = img.url;
+        imgEl.alt = img.title || 'Gallery image';
+        titleEl.textContent = img.title || 'Gallery Image';
+        categoryEl.textContent = img.category || '';
+        counterEl.textContent = `${currentGalleryIndex + 1} / ${galleryImages.length}`;
     }
 
-    // Keyboard
-    document.addEventListener('keydown', e => {
-        if (!modal.classList.contains('active')) return;
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowLeft') changeImage(-1);
-        if (e.key === 'ArrowRight') changeImage(1);
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (lightbox.classList.contains('hidden')) return;
+        if (e.key === 'ArrowLeft') previousGalleryImage();
+        if (e.key === 'ArrowRight') nextGalleryImage();
+        if (e.key === 'Escape') closeGalleryLightbox();
     });
 
-    // Click outside
-    modal.addEventListener('click', e => {
-        if (e.target === modal) closeLightbox();
+    // Close lightbox when clicking outside the image
+    lightbox.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeGalleryLightbox();
+        }
     });
 
-    // Prevent right-click & drag
-    document.addEventListener('contextmenu', e => e.target.tagName === 'IMG' && e.preventDefault());
-    document.addEventListener('dragstart', e => e.target.tagName === 'IMG' && e.preventDefault());
+    // Prevent right-click & drag on gallery images
+    document.addEventListener('contextmenu', e => {
+        if (e.target.tagName === 'IMG' && e.target.closest('#gallery-grid')) {
+            e.preventDefault();
+        }
+    });
+    document.addEventListener('dragstart', e => {
+        if (e.target.tagName === 'IMG' && e.target.closest('#gallery-grid')) {
+            e.preventDefault();
+        }
+    });
 </script>
 @endpush
 

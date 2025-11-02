@@ -117,8 +117,8 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-// Public Gallery
-Route::get('/gallery', [App\Http\Controllers\GalleryController::class, 'index'])->name('gallery');
+// Public Gallery (Disabled)
+// Route::get('/gallery', [App\Http\Controllers\GalleryController::class, 'index'])->name('gallery');
 
 // Legacy story routes (redirect to new /stories routes)
 Route::get('/story', function () {

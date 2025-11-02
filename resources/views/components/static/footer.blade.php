@@ -41,7 +41,6 @@
                         ['name' => 'Home', 'url' => route('home')],
                         ['name' => 'About Us', 'url' => route('about')],
                         ['name' => 'Events', 'url' => route('events.index')],
-                        ['name' => 'Gallery', 'url' => route('gallery')],
                         ['name' => 'Our Story', 'url' => route('story')],
                         ['name' => 'Devotions', 'url' => route('devotions.index')],
                         ['name' => 'Join Choir', 'url' => route('choir.register.form')],

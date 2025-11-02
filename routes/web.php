@@ -117,6 +117,9 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
+// Public Gallery
+Route::get('/gallery', [App\Http\Controllers\GalleryController::class, 'index'])->name('gallery');
+
 // Legacy story routes (redirect to new /stories routes)
 Route::get('/story', function () {
     return redirect()->route('stories.index');
@@ -373,6 +376,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Site Settings Management (Global Coming Soon Mode)
     Route::get('site-settings', [App\Http\Controllers\Admin\SiteSettingsController::class, 'index'])->name('site-settings.index');
     Route::put('site-settings', [App\Http\Controllers\Admin\SiteSettingsController::class, 'update'])->name('site-settings.update');
+
+    // Gallery Management
+    Route::resource('galleries', App\Http\Controllers\Admin\GalleryController::class);
+    Route::post('galleries/{gallery}/toggle-featured', [App\Http\Controllers\Admin\GalleryController::class, 'toggleFeatured'])->name('galleries.toggle-featured');
+    Route::post('galleries/{gallery}/toggle-active', [App\Http\Controllers\Admin\GalleryController::class, 'toggleActive'])->name('galleries.toggle-active');
 });
 
 Route::fallback(function () {

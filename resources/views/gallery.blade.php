@@ -101,7 +101,22 @@
 
     #gallery-grid {
         display: grid;
-        gap: 1.5rem;
+    }
+
+    .gallery-item {
+        min-height: 300px;
+    }
+
+    @media (min-width: 768px) {
+        .gallery-item {
+            min-height: 350px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .gallery-item {
+            min-height: 400px;
+        }
     }
 </style>
 @endpush
@@ -157,17 +172,19 @@
     <section class="relative py-16 px-6 bg-gray-50">
             <div class="max-w-7xl mx-auto">
             @if($galleries->count() > 0)
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="gallery-grid">
                     @foreach($galleries as $gallery)
                         <div class="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 gallery-item"
                              data-category="{{ $gallery->category ?? 'other' }}"
                              onclick="openLightbox({{ $loop->index }})">
-                            <!-- Image -->
-                            <img src="{{ $gallery->image_url }}"
-                                 alt="{{ $gallery->title ?? 'Gallery Image' }}"
-                                 class="w-full h-auto transform group-hover:scale-110 transition-transform duration-700"
-                                 loading="lazy"
-                                 oncontextmenu="return false;">
+                            <!-- Image Container -->
+                            <div class="relative w-full aspect-[4/3] overflow-hidden bg-gray-200">
+                                <img src="{{ $gallery->image_url }}"
+                                     alt="{{ $gallery->title ?? 'Gallery Image' }}"
+                                     class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                     loading="lazy"
+                                     oncontextmenu="return false;">
+                            </div>
 
                             <!-- Overlay -->
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">

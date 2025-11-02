@@ -7,7 +7,7 @@
             <!-- About Section -->
             <div class="lg:col-span-1">
                 <div class="flex items-center gap-3 mb-3">
-                    <img src="{{ asset('adventist-en--white.png') }}" alt="God's Family Choir Logo" class="h-12 w-12 object-contain">
+                    <img src="{{ asset('adventist-en-tm--denim.png') }}" alt="God's Family Choir Logo" class="h-12 w-12 object-contain">
                     <h3 class="text-xl font-bold bg-gradient-to-r from-emerald-600 to-amber-600 bg-clip-text text-transparent">
                         God's Family Choir
                     </h3>

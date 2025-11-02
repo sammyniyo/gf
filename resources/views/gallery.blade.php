@@ -11,26 +11,38 @@
     }
 
     .gallery-item img {
-        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         width: 100%;
-        height: 100%;
-        object-fit: cover;
+        height: auto;
+        display: block;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-user-drag: none;
     }
 
     .gallery-item:hover img {
-        transform: scale(1.08);
+        transform: scale(1.1);
     }
 
     .gallery-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+        background: linear-gradient(to top, rgba(0,0,0,0.8) via rgba(0,0,0,0.4), transparent);
         opacity: 0;
         transition: opacity 0.3s ease;
     }
 
     .gallery-item:hover .gallery-overlay {
         opacity: 1;
+    }
+
+    .gallery-item {
+        transform: translateY(0);
+        transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover {
+        transform: translateY(-8px);
     }
 
     .gallery-info {
@@ -47,36 +59,32 @@
         transform: translateY(0);
     }
 
-    /* Gallery Grid Layout */
+    /* Gallery Grid Layout - Match Landing Page Style */
     .gallery-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 1.5rem;
     }
 
     @media (min-width: 640px) {
         .gallery-grid {
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
         }
     }
 
     @media (min-width: 1024px) {
         .gallery-grid {
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
             gap: 2rem;
         }
     }
 
     @media (min-width: 1280px) {
         .gallery-grid {
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
         }
-    }
-
-    .gallery-item-wrapper {
-        position: relative;
-        aspect-ratio: 4/3;
-        overflow: hidden;
     }
 
     /* Lightbox Modal */
@@ -219,41 +227,58 @@
             @if($galleries->count() > 0)
                 <div id="gallery-grid" class="gallery-grid">
                     @foreach($galleries as $gallery)
-                        <div class="gallery-item rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white"
-                             data-category="{{ $gallery->category ?? 'other' }}">
-                            <div class="gallery-item-wrapper">
-                                <img src="{{ $gallery->image_url }}"
-                                     alt="{{ $gallery->title ?? 'Gallery Image' }}"
-                                     class="w-full h-full object-cover"
-                                     loading="lazy"
-                                     onclick="openLightbox({{ $loop->index }})">
+                        <div class="group relative cursor-pointer gallery-item rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 bg-white"
+                             data-category="{{ $gallery->category ?? 'other' }}"
+                             onclick="openLightbox({{ $loop->index }})">
+                            <!-- Image -->
+                            <img src="{{ $gallery->image_url }}"
+                                 alt="{{ $gallery->title ?? 'Gallery Image' }}"
+                                 class="w-full h-auto transform group-hover:scale-110 transition-transform duration-700"
+                                 loading="lazy"
+                                 oncontextmenu="return false;">
 
-                                @if($gallery->is_featured)
-                                    <div class="absolute top-4 left-4">
-                                        <span class="px-3 py-1 bg-amber-500 text-white text-xs font-bold rounded-full shadow-lg">
-                                            ⭐ Featured
+                            @if($gallery->is_featured)
+                                <div class="absolute top-4 left-4 z-10">
+                                    <span class="px-3 py-1 bg-amber-500 text-white text-xs font-bold rounded-full shadow-lg">
+                                        ⭐ Featured
+                                    </span>
+                                </div>
+                            @endif
+
+                            <!-- Zoom Icon -->
+                            <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
+                                </svg>
+                            </div>
+
+                            <!-- Overlay -->
+                            <div class="gallery-overlay">
+                                <div class="absolute bottom-0 left-0 right-0 p-6">
+                                    @if($gallery->category)
+                                        <span class="inline-block px-3 py-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full text-xs font-semibold mb-2">
+                                            {{ $categories[$gallery->category] ?? $gallery->category }}
                                         </span>
-                                    </div>
-                                @endif
+                                    @endif
+                                    @if($gallery->title)
+                                        <h3 class="text-white font-bold text-xl mb-2">{{ $gallery->title }}</h3>
+                                    @endif
+                                    @if($gallery->description)
+                                        <p class="text-white/90 text-sm line-clamp-2 mb-2">{{ $gallery->description }}</p>
+                                    @endif
+                                    @if($gallery->event_date)
+                                        <p class="text-white/80 text-xs">
+                                            {{ $gallery->event_date->format('F d, Y') }}
+                                        </p>
+                                    @endif
 
-                                <div class="gallery-overlay">
-                                    <div class="gallery-info">
-                                        @if($gallery->title)
-                                            <h3 class="text-white font-bold text-lg mb-1">{{ $gallery->title }}</h3>
-                                        @endif
-                                        @if($gallery->category)
-                                            <span class="inline-block px-2 py-1 bg-emerald-500/80 backdrop-blur-sm text-white text-xs font-medium rounded mb-2">
-                                                {{ $categories[$gallery->category] ?? $gallery->category }}
-                                            </span>
-                                        @endif
-                                        @if($gallery->description)
-                                            <p class="text-white/90 text-sm line-clamp-2">{{ $gallery->description }}</p>
-                                        @endif
-                                        @if($gallery->event_date)
-                                            <p class="text-white/70 text-xs mt-2">
-                                                {{ $gallery->event_date->format('F d, Y') }}
-                                            </p>
-                                        @endif
+                                    <!-- View Button -->
+                                    <div class="flex items-center gap-2 text-white/80 hover:text-white transition-colors mt-3">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                        </svg>
+                                        <span class="text-sm font-medium">View Full Size</span>
                                     </div>
                                 </div>
                             </div>
@@ -282,12 +307,12 @@
 </div>
 
 <!-- Lightbox Modal -->
-<div id="lightbox-modal" class="lightbox-modal">
+<div id="lightbox-modal" class="lightbox-modal" oncontextmenu="return false;">
     <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
     <button class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">&#8249;</button>
     <button class="lightbox-nav lightbox-next" onclick="changeImage(1)">&#8250;</button>
     <div class="lightbox-content">
-        <img id="lightbox-image" class="lightbox-image" src="" alt="">
+        <img id="lightbox-image" class="lightbox-image" src="" alt="" oncontextmenu="return false;" draggable="false">
         <div id="lightbox-info" class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
             <h3 id="lightbox-title" class="text-2xl font-bold mb-2"></h3>
             <p id="lightbox-description" class="text-white/90"></p>
@@ -367,6 +392,22 @@
         const description = [image.category, image.date].filter(Boolean).join(' • ');
         document.getElementById('lightbox-description').textContent = description;
     }
+
+    // Prevent image downloads
+    document.addEventListener('contextmenu', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    // Prevent drag
+    document.addEventListener('dragstart', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+            return false;
+        }
+    });
 
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {

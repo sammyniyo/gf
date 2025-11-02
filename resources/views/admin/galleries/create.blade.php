@@ -13,9 +13,9 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
             </a>
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Upload Gallery Image</h1>
+            <h1 class="text-3xl font-bold text-black">Upload Gallery Image</h1>
         </div>
-        <p class="text-gray-600 dark:text-gray-400 ml-9">Add a new image to your gallery</p>
+        <p class="text-gray-800 ml-9">Add a new image to your gallery</p>
     </div>
 
     <!-- Form -->

@@ -7,8 +7,8 @@
     <!-- Header -->
     <div class="flex justify-between items-center mb-8">
         <div>
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Albums Management</h1>
-            <p class="text-gray-600 dark:text-gray-400 mt-1">Manage your digital album store</p>
+            <h1 class="text-3xl font-bold text-black">Albums Management</h1>
+            <p class="text-gray-800 mt-1">Manage your digital album store</p>
         </div>
         <a href="{{ route('admin.albums.create') }}"
            class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl transform hover:scale-105">

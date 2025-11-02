@@ -371,11 +371,14 @@
         if (e.key === 'ArrowRight') changeImage(1);
     });
 
-    // Close on background click
-    document.getElementById('lightbox-modal').addEventListener('click', (e) => {
-        if (e.target.id === 'lightbox-modal') closeLightbox();
-    });
+        // Close on background click
+        document.getElementById('lightbox-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox-modal') closeLightbox();
+        });
 </script>
 @endpush
+
+    <!-- Footer -->
+    <x-static.footer />
 @endsection
 

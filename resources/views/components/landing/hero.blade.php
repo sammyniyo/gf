@@ -152,15 +152,6 @@
         </div>
     </div>
 
-    <!-- Slideshow Indicators -->
-    <div class="absolute bottom-32 left-1/2 transform -translate-x-1/2 z-20 flex gap-3">
-        <button class="slide-indicator active w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" data-slide="0"></button>
-        <button class="slide-indicator w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" data-slide="1"></button>
-        <button class="slide-indicator w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" data-slide="2"></button>
-        <button class="slide-indicator w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" data-slide="3"></button>
-        <button class="slide-indicator w-3 h-3 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" data-slide="4"></button>
-    </div>
-
     <!-- Elegant Scroll Indicator -->
     <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
         <button onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})" class="flex flex-col items-center gap-3 group">

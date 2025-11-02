@@ -179,11 +179,12 @@
         display: block;
         width: 100%;
         max-width: 440px;
-        padding: clamp(0.85rem, 1.4vw, 1.5rem);
-        border-radius: 1.75rem;
-        background: linear-gradient(140deg, rgba(16, 185, 129, 0.18), rgba(6, 182, 212, 0.08) 45%, rgba(249, 115, 22, 0.15));
+        padding: clamp(0.95rem, 1.5vw, 1.6rem);
+        border-radius: 1.85rem;
+        background: linear-gradient(140deg, rgba(16, 185, 129, 0.22), rgba(6, 182, 212, 0.12) 45%, rgba(249, 115, 22, 0.18));
+        border: 1.5px solid rgba(34, 197, 94, 0.15);
         cursor: pointer;
-        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1), filter 0.6s ease;
+        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1), filter 0.6s ease, border-color 0.4s ease;
     }
 
     .gallery-card::after {
@@ -192,17 +193,18 @@
         inset: -18% -18% auto -18%;
         height: 60%;
         border-radius: inherit;
-        background: radial-gradient(circle at center, rgba(16, 185, 129, 0.35), transparent 65%);
+        background: radial-gradient(circle at center, rgba(16, 185, 129, 0.4), transparent 65%);
         opacity: 0;
         transition: opacity 0.6s ease;
         pointer-events: none;
-        filter: blur(24px);
+        filter: blur(28px);
     }
 
     .gallery-card:hover {
-        transform: translateY(-16px) scale(1.01);
-        box-shadow: 0 40px 90px -35px rgba(15, 118, 110, 0.45);
-        filter: saturate(1.02);
+        transform: translateY(-18px) scale(1.02);
+        box-shadow: 0 45px 100px -35px rgba(15, 118, 110, 0.5);
+        filter: saturate(1.05);
+        border-color: rgba(34, 197, 94, 0.3);
     }
 
     .gallery-card:hover::after {
@@ -214,23 +216,26 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-        border-radius: 1.35rem;
+        min-height: 380px;
+        border-radius: 1.45rem;
         overflow: hidden;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(236, 253, 245, 0.96) 100%);
-        box-shadow: 0 25px 60px -38px rgba(15, 118, 110, 0.55), 0 18px 40px -22px rgba(15, 23, 42, 0.25);
-        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.99) 0%, rgba(236, 253, 245, 0.97) 100%);
+        box-shadow: 0 28px 65px -38px rgba(15, 118, 110, 0.6), 0 20px 45px -22px rgba(15, 23, 42, 0.28);
+        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
     }
 
     .gallery-card:hover .gallery-card-inner {
-        transform: translateY(-2px);
+        transform: translateY(-3px);
+        box-shadow: 0 32px 70px -38px rgba(15, 118, 110, 0.65), 0 22px 50px -22px rgba(15, 23, 42, 0.32);
     }
 
     .gallery-visual {
         position: relative;
-        border-radius: clamp(1.1rem, 1.6vw, 1.4rem);
+        border-radius: clamp(1.15rem, 1.7vw, 1.5rem);
         overflow: hidden;
-        background: radial-gradient(circle at top, rgba(15, 118, 110, 0.22), rgba(15, 23, 42, 0.85));
+        background: radial-gradient(circle at top, rgba(15, 118, 110, 0.25), rgba(15, 23, 42, 0.88));
         aspect-ratio: 4 / 3;
+        margin-bottom: 0.5rem;
     }
 
     .gallery-visual img {
@@ -249,8 +254,9 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
-        padding: clamp(1.25rem, 2.1vw, 1.9rem);
+        gap: 1.15rem;
+        padding: clamp(1.35rem, 2.2vw, 2rem);
+        flex: 1;
     }
 
     .gallery-card-meta::before {
@@ -258,9 +264,9 @@
         position: absolute;
         inset: 0 1.5rem auto;
         height: 1px;
-        background: linear-gradient(90deg, rgba(16, 185, 129, 0.25), rgba(14, 116, 144, 0.35), rgba(16, 185, 129, 0.25));
-        opacity: 0.6;
-        transform: translateY(-0.75rem);
+        background: linear-gradient(90deg, rgba(16, 185, 129, 0.3), rgba(14, 116, 144, 0.4), rgba(16, 185, 129, 0.3));
+        opacity: 0.7;
+        transform: translateY(-0.85rem);
     }
 
     .gallery-meta-chips {
@@ -272,15 +278,22 @@
     .gallery-chip {
         display: inline-flex;
         align-items: center;
-        gap: 0.4rem;
-        padding: 0.4rem 0.95rem;
+        gap: 0.45rem;
+        padding: 0.45rem 1rem;
         border-radius: 999px;
-        font-size: 0.75rem;
+        font-size: 0.78rem;
         font-weight: 600;
-        background: rgba(236, 253, 245, 0.8);
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.12));
         color: #065f46;
-        border: 1px solid rgba(16, 185, 129, 0.25);
+        border: 1px solid rgba(16, 185, 129, 0.3);
         backdrop-filter: blur(4px);
+        transition: all 0.3s ease;
+    }
+
+    .gallery-chip:hover {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(5, 150, 105, 0.18));
+        border-color: rgba(16, 185, 129, 0.4);
+        transform: translateY(-1px);
     }
 
     .gallery-chip svg {
@@ -296,32 +309,58 @@
     }
 
     .gallery-chip-muted {
-        background: rgba(15, 23, 42, 0.08);
-        color: #0f172a;
-        border: 1px solid rgba(15, 23, 42, 0.1);
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.1), rgba(51, 65, 85, 0.08));
+        color: #1e293b;
+        border: 1px solid rgba(15, 23, 42, 0.15);
+        transition: all 0.3s ease;
+    }
+
+    .gallery-chip-muted:hover {
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.15), rgba(51, 65, 85, 0.12));
+        border-color: rgba(15, 23, 42, 0.2);
+        transform: translateY(-1px);
     }
 
     .gallery-card-title {
-        font-size: clamp(1.25rem, 2.3vw, 1.6rem);
+        font-size: clamp(1.35rem, 2.5vw, 1.75rem);
         font-weight: 800;
         color: #0f172a;
-        letter-spacing: -0.015em;
+        letter-spacing: -0.018em;
+        line-height: 1.3;
+        margin-top: 0.25rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .gallery-card-description {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        color: rgba(15, 23, 42, 0.78);
+        font-size: 0.975rem;
+        line-height: 1.75;
+        color: rgba(15, 23, 42, 0.82);
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 0.5rem;
     }
 
     .gallery-card-meta-footer {
         display: inline-flex;
         align-items: center;
-        gap: 0.75rem;
+        gap: 0.8rem;
         font-weight: 600;
         color: #047857;
-        font-size: 0.95rem;
-        transition: color 0.3s ease;
+        font-size: 0.975rem;
+        transition: all 0.3s ease;
+        margin-top: auto;
+        padding-top: 0.75rem;
+    }
+
+    .gallery-card:hover .gallery-card-meta-footer {
+        color: #059669;
     }
 
     .gallery-card-meta-footer svg {
@@ -471,15 +510,15 @@
                                     </div>
 
                                     @if($gallery->title)
-                                        <h3 class="gallery-card-title">{{ $gallery->title }}</h3>
+                                        <h3 class="gallery-card-title" title="{{ $gallery->title }}">{{ $gallery->title }}</h3>
                                     @endif
 
                                     @if($gallery->description)
-                                        <p class="gallery-card-description">{{ \Illuminate\Support\Str::limit($gallery->description, 110) }}</p>
+                                        <p class="gallery-card-description" title="{{ $gallery->description }}">{{ $gallery->description }}</p>
                                     @endif
 
                                     <div class="gallery-card-meta-footer">
-                                        <span>Open in lightbox</span>
+                                        <span>View Details</span>
                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7-7 7m7-7H3"/>
                                         </svg>

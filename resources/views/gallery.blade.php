@@ -160,7 +160,7 @@
 @endpush
 
 @section('content')
-<div class="relative overflow-hidden bg-gradient-to-b from-gray-50 to-white">
+<div class="relative overflow-hidden bg-gradient-to-b from-gray-50 via-white to-slate-50">
     <!-- Hero Section -->
     <section class="relative py-20 px-6 bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-800 text-white overflow-hidden">
         <!-- Background Elements -->

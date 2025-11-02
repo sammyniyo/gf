@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="relative bg-gradient-to-b from-slate-50 to-white border-t border-slate-200">
+<footer class="relative bg-gradient-to-b from-slate-50 to-white">
     <div class="max-w-7xl mx-auto px-6 py-12">
         <!-- Main Footer Content -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

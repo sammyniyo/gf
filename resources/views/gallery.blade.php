@@ -104,19 +104,8 @@
     }
 
     .gallery-item {
-        min-height: 300px;
-    }
-
-    @media (min-width: 768px) {
-        .gallery-item {
-            min-height: 350px;
-        }
-    }
-
-    @media (min-width: 1024px) {
-        .gallery-item {
-            min-height: 400px;
-        }
+        display: flex;
+        flex-direction: column;
     }
 </style>
 @endpush
@@ -174,7 +163,7 @@
             @if($galleries->count() > 0)
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="gallery-grid">
                     @foreach($galleries as $gallery)
-                        <div class="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 gallery-item"
+                        <div class="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 gallery-item bg-white"
                              data-category="{{ $gallery->category ?? 'other' }}"
                              onclick="openLightbox({{ $loop->index }})">
                             <!-- Image Container -->
@@ -184,36 +173,59 @@
                                      class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                                      loading="lazy"
                                      oncontextmenu="return false;">
-                            </div>
 
-                            <!-- Overlay -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <div class="absolute bottom-0 left-0 right-0 p-6">
-                                    @if($gallery->category)
-                                        <span class="inline-block px-3 py-1 bg-emerald-600 text-white rounded-full text-xs font-semibold mb-2">
-                                            {{ $categories[$gallery->category] ?? $gallery->category }}
-                                        </span>
-                                    @endif
-                                    @if($gallery->title)
-                                        <h3 class="text-white font-bold text-xl mb-2">{{ $gallery->title }}</h3>
-                                    @endif
+                                <!-- Overlay on Hover -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                                        @if($gallery->category)
+                                            <span class="inline-block px-3 py-1 bg-emerald-600 text-white rounded-full text-xs font-semibold mb-2">
+                                                {{ $categories[$gallery->category] ?? $gallery->category }}
+                                            </span>
+                                        @endif
+                                        @if($gallery->title)
+                                            <h3 class="text-white font-bold text-xl mb-2">{{ $gallery->title }}</h3>
+                                        @endif
 
-                                    <!-- View Button -->
-                                    <div class="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                        </svg>
-                                        <span class="text-sm font-medium">View Full Size</span>
+                                        <!-- View Button -->
+                                        <div class="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                            </svg>
+                                            <span class="text-sm font-medium">View Full Size</span>
+                                        </div>
                                     </div>
+                                </div>
+
+                                <!-- Zoom Icon -->
+                                <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
+                                    </svg>
                                 </div>
                             </div>
 
-                            <!-- Zoom Icon -->
-                            <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
-                                </svg>
+                            <!-- Card Footer - Always Visible -->
+                            <div class="p-4 bg-white">
+                                @if($gallery->category)
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-semibold mb-2">
+                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h2.307c.339 0 .653.154.861.416l.84 1.049A1 1 0 009.193 5H15a2 2 0 012 2v1H3V4zm0 5h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" clip-rule="evenodd"/>
+                                        </svg>
+                                        {{ $categories[$gallery->category] ?? $gallery->category }}
+                                    </span>
+                                @endif
+                                @if($gallery->title)
+                                    <h3 class="text-gray-900 font-bold text-lg mb-1 line-clamp-2">{{ $gallery->title }}</h3>
+                                @endif
+                                @if($gallery->event_date)
+                                    <p class="text-gray-500 text-sm flex items-center gap-1.5">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                        {{ $gallery->event_date->format('M d, Y') }}
+                                    </p>
+                                @endif
                             </div>
                         </div>
                     @endforeach

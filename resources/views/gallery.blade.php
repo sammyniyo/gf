@@ -343,10 +343,12 @@
             });
 
             // Show/hide no results message
-            if (visibleCount === 0) {
-                noResults.classList.remove('hidden');
-            } else {
-                noResults.classList.add('hidden');
+            if (noResults) {
+                if (visibleCount === 0) {
+                    noResults.classList.remove('hidden');
+                } else {
+                    noResults.classList.add('hidden');
+                }
             }
         });
     });
@@ -377,7 +379,7 @@
         const image = galleryImages[currentIndex];
         document.getElementById('lightbox-image').src = image.url;
         document.getElementById('lightbox-title').textContent = image.title || 'Gallery Image';
-        const description = [image.category, image.date].filter(Boolean).join(' • ');
+        const description = [image.category, image.date].filter(Boolean).join(' | ');
         document.getElementById('lightbox-description').textContent = description;
     }
 

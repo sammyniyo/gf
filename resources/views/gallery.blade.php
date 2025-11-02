@@ -27,7 +27,7 @@
     .gallery-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.8) via rgba(0,0,0,0.4), transparent);
+        background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
         opacity: 0;
         transition: opacity 0.3s ease;
     }
@@ -38,11 +38,12 @@
 
     .gallery-item {
         transform: translateY(0);
-        transition: transform 0.5s ease;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .gallery-item:hover {
         transform: translateY(-8px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     }
 
     .gallery-info {
@@ -57,34 +58,6 @@
 
     .gallery-item:hover .gallery-info {
         transform: translateY(0);
-    }
-
-    /* Gallery Grid Layout - Match Landing Page Style */
-    .gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 1.5rem;
-    }
-
-    @media (min-width: 640px) {
-        .gallery-grid {
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-    }
-
-    @media (min-width: 1024px) {
-        .gallery-grid {
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 2rem;
-        }
-    }
-
-    @media (min-width: 1280px) {
-        .gallery-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
     }
 
     /* Lightbox Modal */
@@ -120,6 +93,8 @@
         max-height: 90vh;
         object-fit: contain;
         border-radius: 0.5rem;
+        user-select: none;
+        -webkit-user-drag: none;
     }
 
     .lightbox-close {
@@ -171,6 +146,13 @@
     .lightbox-next {
         right: 1rem;
     }
+
+    /* Filter buttons */
+    .filter-btn.active {
+        background: linear-gradient(to right, #059669, #047857) !important;
+        color: white !important;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    }
 </style>
 @endpush
 
@@ -205,7 +187,7 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-wrap items-center justify-center gap-3">
                 <button data-category="all"
-                        class="filter-btn active px-6 py-2 rounded-full font-semibold text-sm transition-all bg-gradient-to-r from-emerald-600 to-emerald-700 text-white shadow-lg">
+                        class="filter-btn active px-6 py-2.5 rounded-full font-semibold text-sm transition-all bg-gradient-to-r from-emerald-600 to-emerald-700 text-white shadow-lg">
                     All Images
                 </button>
                 @php
@@ -213,7 +195,7 @@
                 @endphp
                 @foreach($categories as $key => $label)
                     <button data-category="{{ $key }}"
-                            class="filter-btn px-6 py-2 rounded-full font-semibold text-sm transition-all bg-gray-100 text-gray-700 hover:bg-gray-200">
+                            class="filter-btn px-6 py-2.5 rounded-full font-semibold text-sm transition-all bg-gray-100 text-gray-700 hover:bg-gray-200">
                         {{ $label }}
                     </button>
                 @endforeach
@@ -222,12 +204,12 @@
     </section>
 
     <!-- Gallery Grid -->
-    <section class="py-12 px-6 bg-white">
+    <section class="relative py-16 px-6 bg-white">
         <div class="max-w-7xl mx-auto">
             @if($galleries->count() > 0)
-                <div id="gallery-grid" class="gallery-grid">
+                <div id="gallery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($galleries as $gallery)
-                        <div class="group relative cursor-pointer gallery-item rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 bg-white"
+                        <div class="group relative cursor-pointer gallery-item rounded-2xl overflow-hidden shadow-lg bg-white"
                              data-category="{{ $gallery->category ?? 'other' }}"
                              onclick="openLightbox({{ $loop->index }})">
                             <!-- Image -->
@@ -239,8 +221,11 @@
 
                             @if($gallery->is_featured)
                                 <div class="absolute top-4 left-4 z-10">
-                                    <span class="px-3 py-1 bg-amber-500 text-white text-xs font-bold rounded-full shadow-lg">
-                                        ⭐ Featured
+                                    <span class="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-xs font-bold rounded-full shadow-lg flex items-center gap-1">
+                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                        </svg>
+                                        Featured
                                     </span>
                                 </div>
                             @endif
@@ -254,9 +239,9 @@
 
                             <!-- Overlay -->
                             <div class="gallery-overlay">
-                                <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <div class="gallery-info">
                                     @if($gallery->category)
-                                        <span class="inline-block px-3 py-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full text-xs font-semibold mb-2">
+                                        <span class="inline-block px-3 py-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full text-xs font-semibold mb-3">
                                             {{ $categories[$gallery->category] ?? $gallery->category }}
                                         </span>
                                     @endif
@@ -267,13 +252,13 @@
                                         <p class="text-white/90 text-sm line-clamp-2 mb-2">{{ $gallery->description }}</p>
                                     @endif
                                     @if($gallery->event_date)
-                                        <p class="text-white/80 text-xs">
+                                        <p class="text-white/80 text-xs mb-3">
                                             {{ $gallery->event_date->format('F d, Y') }}
                                         </p>
                                     @endif
 
                                     <!-- View Button -->
-                                    <div class="flex items-center gap-2 text-white/80 hover:text-white transition-colors mt-3">
+                                    <div class="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -334,7 +319,8 @@
             // Update active button
             filterButtons.forEach(b => {
                 if (b === btn) {
-                    b.classList.add('active', 'bg-gradient-to-r', 'from-emerald-600', 'to-emerald-700', 'text-white', 'shadow-lg');
+                    b.classList.add('active');
+                    b.classList.add('bg-gradient-to-r', 'from-emerald-600', 'to-emerald-700', 'text-white', 'shadow-lg');
                     b.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
                 } else {
                     b.classList.remove('active', 'bg-gradient-to-r', 'from-emerald-600', 'to-emerald-700', 'text-white', 'shadow-lg');
@@ -419,14 +405,13 @@
         if (e.key === 'ArrowRight') changeImage(1);
     });
 
-        // Close on background click
-        document.getElementById('lightbox-modal').addEventListener('click', (e) => {
-            if (e.target.id === 'lightbox-modal') closeLightbox();
-        });
+    // Close on background click
+    document.getElementById('lightbox-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'lightbox-modal') closeLightbox();
+    });
 </script>
 @endpush
 
     <!-- Footer -->
     <x-static.footer />
 @endsection
-

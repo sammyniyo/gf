@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\Gallery;
 use App\Services\SpotifyService;
 
 class HomeController extends Controller
@@ -25,7 +26,15 @@ class HomeController extends Controller
             \Log::info('Spotify API not configured or failed: ' . $e->getMessage());
         }
 
-        return view('home', compact('nextEvent', 'spotifyTracks'));
+        // Get gallery images - featured first, then active, limit to 6 for landing page
+        $galleryImages = Gallery::active()
+            ->orderBy('is_featured', 'desc')
+            ->orderBy('order', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->limit(6)
+            ->get();
+
+        return view('home', compact('nextEvent', 'spotifyTracks', 'galleryImages'));
     }
     public function about()
     {

@@ -21,7 +21,7 @@
     <div class="fade-in-section"><x-landing.audio-player /></div>
 
     <!-- Interactive Photo Gallery -->
-    <div class="fade-in-section"><x-landing.interactive-gallery /></div>
+    <div class="fade-in-section"><x-landing.interactive-gallery :galleries="$galleryImages ?? collect([])" /></div>
 
     <!-- Upcoming Events -->
     <div class="fade-in-section"><x-landing.upcoming-events-dynamic :nextEvent="$nextEvent ?? null" /></div>

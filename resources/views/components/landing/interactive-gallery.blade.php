@@ -14,51 +14,102 @@
             </p>
         </div>
 
+        @props(['galleries' => collect([])])
+
+        @php
+            $categories = \App\Models\Gallery::getCategories();
+        @endphp
+
         <!-- Masonry Gallery Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery">
-            @foreach([
-                ['image' => '1.jpg', 'title' => 'GF Performance in Gikondo SFB (2023)', 'category' => 'Worship'],
-                ['image' => '2.jpg', 'title' => 'GF Performance in Gikondo SFB (2023)', 'category' => 'Events'],
-                ['image' => '3.jpg', 'title' => 'After Service Fellowship (2024)', 'category' => 'Social'],
-                ['image' => '4.jpg', 'title' => 'After Service Meet & Great', 'category' => 'Social'],
-                ['image' => '5.jpg', 'title' => 'GF Juniors Performance (2024)', 'category' => 'Seddlings'],
-                ['image' => 'gf-2.jpg', 'title' => 'Mwubahe Uwiteka Video Shoot (2025)', 'category' => 'Music'],
-            ] as $index => $photo)
-                <div class="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
-                     onclick="openLightbox({{ $index }})">
-                    <!-- Image -->
-                    <img src="{{ asset('images/' . $photo['image']) }}"
-                         alt="{{ $photo['title'] }}"
-                         class="w-full h-auto transform group-hover:scale-110 transition-transform duration-700">
+        @if($galleries->count() > 0)
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery">
+                @foreach($galleries as $index => $gallery)
+                    @php
+                        $catKey = $gallery->category ?? 'other';
+                        $catLabel = $categories[$catKey] ?? ucfirst($catKey);
+                    @endphp
+                    <div class="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+                         onclick="openLightbox({{ $index }})">
+                        <!-- Image -->
+                        <img src="{{ $gallery->image_url }}"
+                             alt="{{ $gallery->title ?? 'Gallery Image' }}"
+                             class="w-full h-auto transform group-hover:scale-110 transition-transform duration-700"
+                             loading="lazy">
 
-                    <!-- Overlay -->
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div class="absolute bottom-0 left-0 right-0 p-6">
-                            <span class="inline-block px-3 py-1 bg-purple-600 text-white rounded-full text-xs font-semibold mb-2">
-                                {{ $photo['category'] }}
-                            </span>
-                            <h3 class="text-white font-bold text-xl mb-2">{{ $photo['title'] }}</h3>
+                        <!-- Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <span class="inline-block px-3 py-1 bg-purple-600 text-white rounded-full text-xs font-semibold mb-2">
+                                    {{ $catLabel }}
+                                </span>
+                                @if($gallery->title)
+                                    <h3 class="text-white font-bold text-xl mb-2">{{ $gallery->title }}</h3>
+                                @endif
 
-                            <!-- View Button -->
-                            <div class="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                </svg>
-                                <span class="text-sm font-medium">View Full Size</span>
+                                <!-- View Button -->
+                                <div class="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    <span class="text-sm font-medium">View Full Size</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Zoom Icon -->
-                    <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
-                        </svg>
+                        <!-- Zoom Icon -->
+                        <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
+                            </svg>
+                        </div>
                     </div>
-                </div>
-            @endforeach
-        </div>
+                @endforeach
+            </div>
+        @else
+            <!-- Fallback if no gallery images -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery">
+                @foreach([
+                    ['image' => '1.jpg', 'title' => 'GF Performance in Gikondo SFB (2023)', 'category' => 'Worship'],
+                    ['image' => '2.jpg', 'title' => 'GF Performance in Gikondo SFB (2023)', 'category' => 'Events'],
+                    ['image' => '3.jpg', 'title' => 'After Service Fellowship (2024)', 'category' => 'Social'],
+                ] as $index => $photo)
+                    <div class="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+                         onclick="openLightbox({{ $index }})">
+                        <!-- Image -->
+                        <img src="{{ asset('images/' . $photo['image']) }}"
+                             alt="{{ $photo['title'] }}"
+                             class="w-full h-auto transform group-hover:scale-110 transition-transform duration-700">
+
+                        <!-- Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <span class="inline-block px-3 py-1 bg-purple-600 text-white rounded-full text-xs font-semibold mb-2">
+                                    {{ $photo['category'] }}
+                                </span>
+                                <h3 class="text-white font-bold text-xl mb-2">{{ $photo['title'] }}</h3>
+
+                                <!-- View Button -->
+                                <div class="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    <span class="text-sm font-medium">View Full Size</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Zoom Icon -->
+                        <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
 
     </div>
 </section>
@@ -104,14 +155,17 @@
 </div>
 
 <script>
-const photos = [
-    {image: '1.jpg', title: 'Sabbath Worship Service', category: 'Worship'},
-    {image: '2.jpg', title: 'Resurrection Sunday 2024', category: 'Events'},
-    {image: '3.jpg', title: 'Choir Rehearsal', category: 'Behind the Scenes'},
-    {image: '4.jpg', title: 'Community Outreach', category: 'Outreach'},
-    {image: '5.jpg', title: 'Youth Training Program', category: 'Training'},
-    {image: 'gf-2.jpg', title: 'Annual Concert', category: 'Performance'}
-];
+@php
+    $galleryPhotos = $galleries->map(function($g) use ($categories) {
+        return [
+            'image' => $g->image_url,
+            'title' => $g->title ?? 'Gallery Image',
+            'category' => $g->category ? ($categories[$g->category] ?? $g->category) : 'Other'
+        ];
+    })->toArray();
+@endphp
+
+const photos = @json($galleryPhotos);
 
 let currentImageIndex = 0;
 
@@ -141,7 +195,7 @@ function nextImage() {
 
 function updateLightboxImage() {
     const photo = photos[currentImageIndex];
-    document.getElementById('lightbox-image').src = `/images/${photo.image}`;
+    document.getElementById('lightbox-image').src = photo.image;
     document.getElementById('lightbox-title').textContent = photo.title;
     document.getElementById('lightbox-category').textContent = photo.category;
     document.getElementById('lightbox-counter').textContent = `${currentImageIndex + 1} / ${photos.length}`;

@@ -5,6 +5,13 @@
 
 @push('styles')
 <style>
+    /* Ensure navbar stays on top */
+    header.bg-gradient-to-r {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 100 !important;
+    }
+
     /* Lightbox Modal */
     .lightbox-modal {
         display: none;
@@ -106,13 +113,18 @@
         }
     }
 
+    /* Ensure content doesn't cover header */
+    body {
+        padding-top: 0;
+    }
+
     /* Hidden class for filtering */
     .hidden { display: none !important; }
 </style>
 @endpush
 
 @section('content')
-<div class="relative overflow-hidden bg-white">
+<div class="relative overflow-hidden bg-white pt-16">
 
     <!-- Hero Section -->
     <section class="relative py-20 px-6 bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-800 text-white overflow-hidden">

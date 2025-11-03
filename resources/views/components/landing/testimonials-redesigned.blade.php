@@ -43,7 +43,7 @@
                     <!-- Author -->
                     <div class="flex items-center gap-4">
                         <div class="relative">
-                            <img src="{{ asset('images/1.jpg') }}" alt="TUYIZERE Elyse" class="w-12 h-12 rounded-full object-cover ring-2 ring-emerald-200">
+                            <img src="{{ asset('images/elyse.jpg') }}" alt="TUYIZERE Elyse" class="w-12 h-12 rounded-full object-cover ring-2 ring-emerald-200">
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-900">TUYIZERE Elyse</h4>
@@ -73,7 +73,7 @@
                     <!-- Author -->
                     <div class="flex items-center gap-4">
                         <div class="relative">
-                            <img src="{{ asset('images/2.jpg') }}" alt="TUYISHIME Jimmy" class="w-12 h-12 rounded-full object-cover ring-2 ring-amber-200">
+                            <img src="{{ asset('images/jimmy.jpg') }}" alt="TUYISHIME Jimmy" class="w-12 h-12 rounded-full object-cover ring-2 ring-amber-200">
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-900">TUYISHIME Jimmy</h4>
@@ -103,7 +103,7 @@
                     <!-- Author -->
                     <div class="flex items-center gap-4">
                         <div class="relative">
-                            <img src="{{ asset('images/3.jpg') }}" alt="UWAMAHORO Adeline" class="w-12 h-12 rounded-full object-cover ring-2 ring-blue-200">
+                            <img src="{{ asset('images/adeline.jpg') }}" alt="UWAMAHORO Adeline" class="w-12 h-12 rounded-full object-cover ring-2 ring-blue-200">
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-900">UWAMAHORO Adeline</h4>
@@ -127,13 +127,13 @@
 
                     <!-- Quote -->
                     <blockquote class="text-gray-700 text-base leading-relaxed mb-6">
-                        "Imana umuremyi nyiribyose yemeye gupfa kubera icyaha cy'umuntu. Ku iherezo ry'ibihe abacunguwe bazatembera ku yindi mibumbe berekanywa nkabaneshi batsinze satani burundu. Imana iduhane umugisha tube muri uwo mugabanembe."
+                        "Imana umuremyi nyiribyose yemeye gupfa kubera icyaha cy'umuntu. Ku iherezo ry'ibihe abacunguwe bazatembera ku yindi mibumbe berekanywa nkabaneshi batsinze satani burundu. Imana iduhane umugisha tube muri uwo mugabane."
                     </blockquote>
 
                     <!-- Author -->
                     <div class="flex items-center gap-4">
                         <div class="relative">
-                            <img src="{{ asset('images/4.jpg') }}" alt="UJENEZA Ange" class="w-12 h-12 rounded-full object-cover ring-2 ring-purple-200">
+                            <img src="{{ asset('images/ange.jpg') }}" alt="UJENEZA Ange" class="w-12 h-12 rounded-full object-cover ring-2 ring-purple-200">
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-900">UJENEZA Ange</h4>
@@ -163,7 +163,7 @@
                     <!-- Author -->
                     <div class="flex items-center gap-4">
                         <div class="relative">
-                            <img src="{{ asset('images/5.jpg') }}" alt="IZABAYO Jonas" class="w-12 h-12 rounded-full object-cover ring-2 ring-teal-200">
+                            <img src="{{ asset('images/jonas.jpg') }}" alt="IZABAYO Jonas" class="w-12 h-12 rounded-full object-cover ring-2 ring-teal-200">
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-900">IZABAYO Jonas</h4>

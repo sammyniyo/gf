@@ -151,7 +151,7 @@
                                 'year' => '2013',
                                 'title' => 'First Album Released',
                                 'description' => 'We released our first audio album accompanied by DVD 1, marking a significant milestone in our musical journey. What began with just a few voices singing songs from other groups had evolved into a choir creating its own musical expressions of worship. This album established our commitment to excellence in recording and sharing the gospel through music.',
-                                'image' => '3.jpg',
+                                'image' => 'gf-be23.png',
                                 'position' => 'left',
                                 'icon' => 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'
                             ],

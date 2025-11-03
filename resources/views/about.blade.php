@@ -159,7 +159,7 @@
                                 'year' => '2014',
                                 'title' => 'First Evangelistic Campaign',
                                 'description' => 'We organized and conducted our first public evangelistic campaign in Kibungo. This marked the beginning of our commitment to evangelism beyond music. The campaign brought many souls to Christ and strengthened our dedication to spreading the gospel through both song and direct evangelistic service.',
-                                'image' => '4.jpg',
+                                'image' => 'kibungo-camp.jpg',
                                 'position' => 'right',
                                 'icon' => 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 002 2h2.945M15 11a3 3 0 11-6 0m5.945 2H18a2 2 0 012 2v1a2 2 0 01-2 2h-2.945M15 11a3 3 0 11-6 0m-4.055 2H6a2 2 0 00-2 2v1a2 2 0 002 2h2.945M9 11a3 3 0 11-6 0m12 0a3 3 0 11-6 0'
                             ],
@@ -175,7 +175,7 @@
                                 'year' => '2017',
                                 'title' => 'Second Album Released',
                                 'description' => 'We released our second audio album, continuing to grow musically and spiritually. With each project, we refine our sound and deepen our commitment to creating music that touches hearts and points people to Christ. Our musical journey reflects our spiritual growth as a family.',
-                                'image' => 'gf-2.jpg',
+                                'image' => 'album-2-2017.jpg',
                                 'position' => 'right',
                                 'icon' => 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'
                             ],
@@ -183,7 +183,7 @@
                                 'year' => '2019',
                                 'title' => 'Third Album & Third Campaign',
                                 'description' => 'A remarkable year as we released our third audio album accompanied by DVD 2, and conducted our third evangelistic campaign in Nyacyonga. This dual achievement demonstrated our balanced commitment to both musical excellence and evangelistic service. We continue to see lives transformed through the power of worship and the gospel message.',
-                                'image' => 'gf-2.jpg',
+                                'image' => 'album-3-2019.jpg',
                                 'position' => 'left',
                                 'icon' => 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'
                             ],
@@ -191,7 +191,7 @@
                                 'year' => '2023',
                                 'title' => 'Fourth Album Released',
                                 'description' => 'We released our fourth audio album accompanied by DVD 3, marking another milestone in our musical journey. Through these projects, we have grown from singing songs from other groups to creating our own expressions of worship. We are now preparing for our fifth album and DVD 4, continuing to build on this legacy.',
-                                'image' => '1.jpg',
+                                'image' => 'gf-2025.jpg',
                                 'position' => 'right',
                                 'icon' => 'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3'
                             ],
@@ -199,7 +199,7 @@
                                 'year' => '2025',
                                 'title' => 'Continuing the Legacy',
                                 'description' => 'Today, we stand strong with over 300 members, including alumni, current students, and God\'s Family Juniors—children of choir members who form their own junior choir to ensure continuity. Our mission remains unchanged: "A family to serve the words of life to the world through gospel messages." We continue to prepare our fifth album and DVD 4, building on the foundation laid by our founding members.',
-                                'image' => '1.jpg',
+                                'image' => 'gf-new.jpg',
                                 'position' => 'left',
                                 'icon' => 'M13 10V3L4 14h7v7l9-11h-7z'
                             ],

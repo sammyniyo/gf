@@ -193,7 +193,7 @@
                     <!-- Author -->
                     <div class="flex items-center gap-4">
                         <div class="relative">
-                            <img src="{{ asset('images/gf-2.jpg') }}" alt="NTEZIMANA Ismael" class="w-12 h-12 rounded-full object-cover ring-2 ring-indigo-200">
+                            <img src="{{ asset('images/ismael.jpg') }}" alt="NTEZIMANA Ismael" class="w-12 h-12 rounded-full object-cover ring-2 ring-indigo-200">
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-900">NTEZIMANA Ismael</h4>

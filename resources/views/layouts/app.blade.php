@@ -6,10 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'God\'s Family Choir - ASA UR Nyarugenge SDA')</title>
+    @php
+        // Get section values with proper fallbacks
+        $pageTitle = @hasSection('title') ? trim(e(view()->yieldContent('title'))) : 'God\'s Family Choir - ASA UR Nyarugenge SDA';
+        $metaDescription = @hasSection('meta_description') ? trim(e(view()->yieldContent('meta_description'))) : 'God\'s Family Choir is a vibrant worship ministry serving the words of life to the world through gospel messages. Join our family of over 300 worshippers, musicians, and storytellers.';
+        $ogTitle = @hasSection('og:title') ? trim(e(view()->yieldContent('og:title'))) : $pageTitle;
+        $ogDescription = @hasSection('og:description') ? trim(e(view()->yieldContent('og:description'))) : $metaDescription;
+    @endphp
+
+    <title>{{ $pageTitle }}</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="@yield('meta_description', 'God\'s Family Choir is a vibrant worship ministry serving the words of life to the world through gospel messages. Join our family of over 300 worshippers, musicians, and storytellers.')">
+    <meta name="description" content="{{ $metaDescription }}">
     <meta name="keywords" content="@yield('meta_keywords', 'God\'s Family Choir, ASA UR Nyarugenge SDA, Choir, Music, Worship, Jesus, Gospel, Christian, Church, Rwanda, Kigali, Adventist, Seventh-day Adventist, Worship Music, Gospel Music, Christian Music, Choir Ministry')">
     <meta name="author" content="@yield('meta_author', 'God\'s Family Choir')">
     <meta name="robots" content="@yield('meta_robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1')">
@@ -19,8 +27,8 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="@yield('og:type', 'website')">
     <meta property="og:url" content="@yield('og:url', url()->current())">
-    <meta property="og:title" content="@yield('og:title', @yield('title', 'God\'s Family Choir - ASA UR Nyarugenge SDA'))">
-    <meta property="og:description" content="@yield('og:description', @yield('meta_description', 'God\'s Family Choir is a vibrant worship ministry serving the words of life to the world through gospel messages.'))">
+    <meta property="og:title" content="{{ $ogTitle }}">
+    <meta property="og:description" content="{{ $ogDescription }}">
     <meta property="og:image" content="@yield('og:image', asset('images/hero.jpg'))">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -30,8 +38,8 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="@yield('og:url', url()->current())">
-    <meta name="twitter:title" content="@yield('og:title', @yield('title', 'God\'s Family Choir - ASA UR Nyarugenge SDA'))">
-    <meta name="twitter:description" content="@yield('og:description', @yield('meta_description', 'God\'s Family Choir is a vibrant worship ministry serving the words of life to the world through gospel messages.'))">
+    <meta name="twitter:title" content="{{ $ogTitle }}">
+    <meta name="twitter:description" content="{{ $ogDescription }}">
     <meta name="twitter:image" content="@yield('og:image', asset('images/hero.jpg'))">
 
     <!-- Favicons -->

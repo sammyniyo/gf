@@ -300,7 +300,23 @@
     <!-- Pagination -->
     @if($members->hasPages())
         <div class="glass-card px-6 py-4">
-            {{ $members->links() }}
+            <div class="flex items-center justify-between">
+                <div class="text-sm text-slate-600">
+                    Showing <span class="font-semibold text-slate-900">{{ $members->firstItem() }}</span> to 
+                    <span class="font-semibold text-slate-900">{{ $members->lastItem() }}</span> of 
+                    <span class="font-semibold text-slate-900">{{ $members->total() }}</span> results
+                </div>
+                <div>
+                    {{ $members->links('pagination.tailwind') }}
+                </div>
+            </div>
+        </div>
+    @else
+        <div class="glass-card px-6 py-4">
+            <div class="text-sm text-slate-600 text-center">
+                Showing <span class="font-semibold text-slate-900">{{ $members->count() }}</span> of 
+                <span class="font-semibold text-slate-900">{{ $members->total() }}</span> results
+            </div>
         </div>
     @endif
 </div>

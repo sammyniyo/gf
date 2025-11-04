@@ -80,6 +80,7 @@ class Member extends Model
         'is_active_chorister',
         'roles',
         'joined_at',
+        'joining_year',
 
         // Additional Information
         'hobbies',
@@ -194,6 +195,69 @@ class Member extends Model
     public function getFullNameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * Get the joining year (from joining_year field or derived from joined_at).
+     */
+    public function getJoiningYearAttribute($value)
+    {
+        // If joining_year is set, return it
+        if (isset($this->attributes['joining_year']) && $this->attributes['joining_year'] !== null) {
+            return $this->attributes['joining_year'];
+        }
+        
+        // Fallback to joined_at year if joining_year is not set
+        if ($this->joined_at) {
+            return (int)$this->joined_at->format('Y');
+        }
+        
+        return (int)date('Y');
+    }
+
+    /**
+     * Get membership duration in years.
+     */
+    public function getMembershipYearsAttribute(): int
+    {
+        $joiningYear = isset($this->attributes['joining_year']) && $this->attributes['joining_year'] !== null 
+            ? (int)$this->attributes['joining_year']
+            : ($this->joined_at ? (int)$this->joined_at->format('Y') : (int)date('Y'));
+        $currentYear = (int)date('Y');
+        return max(0, $currentYear - $joiningYear);
+    }
+
+    /**
+     * Get membership category based on duration.
+     * Returns: 'fresh', 'member', 'veteran', 'elite'
+     */
+    public function getMembershipCategoryAttribute(): string
+    {
+        $years = $this->membership_years;
+        
+        if ($years < 2) {
+            return 'fresh';
+        } elseif ($years < 5) {
+            return 'member';
+        } elseif ($years < 10) {
+            return 'veteran';
+        } else {
+            return 'elite';
+        }
+    }
+
+    /**
+     * Get membership title based on category.
+     */
+    public function getMembershipTitleAttribute(): string
+    {
+        return match($this->membership_category) {
+            'fresh' => 'Fresh',
+            'member' => 'Member',
+            'veteran' => 'Veteran',
+            'elite' => 'Elite',
+            default => 'Member',
+        };
     }
 
     /**

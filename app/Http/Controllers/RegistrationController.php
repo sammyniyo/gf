@@ -47,6 +47,7 @@ class RegistrationController extends Controller
             'phone' => 'required|string|max:20|unique:members,phone',
             'birthdate' => 'required|date',
             'gender' => 'required|in:male,female',
+            'joining_year' => 'nullable|integer|min:1998|max:'.date('Y'),
             'address' => 'required|string',
 
             // Professional Information
@@ -303,5 +304,33 @@ class RegistrationController extends Controller
             ->with('reminder_success', $successMessage)
             ->with('show_reminder', true)
             ->withInput();
+    }
+
+    /**
+     * Show form to download ID card by member code.
+     */
+    public function showDownloadIdCardForm()
+    {
+        return view('registration.download-id-card');
+    }
+
+    /**
+     * Download ID card by member code.
+     */
+    public function downloadIdCard(Request $request)
+    {
+        $request->validate([
+            'member_code' => 'required|string',
+        ]);
+
+        $member = Member::where('member_id', strtoupper($request->member_code))->first();
+
+        if (!$member) {
+            return redirect()->back()
+                ->with('error', 'Member code not found. Please check your code and try again.')
+                ->withInput();
+        }
+
+        return \App\Services\PdfService::downloadMemberIdCard($member);
     }
 }

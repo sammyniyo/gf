@@ -1,3 +1,37 @@
+@php
+    $category = $member->membership_category;
+    $title = $member->membership_title;
+    
+    // Color schemes based on membership category
+    $colors = [
+        'fresh' => [
+            'bg' => '#10b981', // Green - Fresh
+            'accent' => '#34d399',
+            'text' => '#ffffff',
+            'border' => '#059669',
+        ],
+        'member' => [
+            'bg' => '#3b82f6', // Blue - Member
+            'accent' => '#60a5fa',
+            'text' => '#ffffff',
+            'border' => '#2563eb',
+        ],
+        'veteran' => [
+            'bg' => '#8b5cf6', // Purple - Veteran
+            'accent' => '#a78bfa',
+            'text' => '#ffffff',
+            'border' => '#7c3aed',
+        ],
+        'elite' => [
+            'bg' => '#f59e0b', // Amber/Gold - Elite
+            'accent' => '#fbbf24',
+            'text' => '#ffffff',
+            'border' => '#d97706',
+        ],
+    ];
+    
+    $scheme = $colors[$category] ?? $colors['member'];
+@endphp
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,8 +45,8 @@
             margin: 0;
             padding: 10px;
             font-family: 'DejaVu Sans', sans-serif;
-            background: #065f46; /* darker solid background for better print contrast */
-            color: #ffffff;
+            background: {{ $scheme['bg'] }};
+            color: {{ $scheme['text'] }};
         }
         .card {
             width: 100%;
@@ -32,11 +66,23 @@
         .logo p {
             margin: 0;
             font-size: 8px;
-            color: #c7f9e8; /* brighter mint */
+            color: {{ $scheme['accent'] }};
+        }
+        .membership-title {
+            background: {{ $scheme['accent'] }};
+            color: {{ $scheme['bg'] }};
+            text-align: center;
+            padding: 3px 8px;
+            margin: 5px 0 8px 0;
+            font-weight: bold;
+            font-size: 11px;
+            border-radius: 3px;
+            display: inline-block;
+            width: 100%;
         }
         .member-id {
-            background: #f59e0b;
-            color: #3f1d0b;
+            background: {{ $scheme['accent'] }};
+            color: {{ $scheme['bg'] }};
             text-align: center;
             padding: 5px;
             margin: 10px 0;
@@ -49,7 +95,7 @@
             font-size: 10px;
         }
         .info strong {
-            color: #fff7ae; /* stronger label color */
+            color: {{ $scheme['accent'] }};
         }
         .footer {
             position: absolute;
@@ -58,8 +104,8 @@
             right: 10px;
             text-align: center;
             font-size: 7px;
-            color: #e6fff7;
-            border-top: 1px solid #34d399;
+            color: {{ $scheme['accent'] }};
+            border-top: 1px solid {{ $scheme['border'] }};
             padding-top: 3px;
         }
     </style>
@@ -69,6 +115,10 @@
         <div class="logo">
             <h1>GOD'S FAMILY CHOIR</h1>
             <p>ASA UR Nyarugenge SDA</p>
+        </div>
+
+        <div class="membership-title">
+            {{ $title }} MEMBER
         </div>
 
         <div class="member-id">
@@ -90,8 +140,13 @@
         @endif
 
         <div class="info">
-            <strong>Joined:</strong> {{ $member->joined_at ? $member->joined_at->format('M Y') : date('M Y') }}
+            <strong>Joined:</strong> {{ $member->joining_year ?? ($member->joined_at ? $member->joined_at->format('Y') : date('Y')) }}
         </div>
+        @if($member->membership_years > 0)
+        <div class="info">
+            <strong>Years:</strong> {{ $member->membership_years }} {{ $member->membership_years == 1 ? 'year' : 'years' }}
+        </div>
+        @endif
 
         <div class="footer">
             Valid Member | Keep this card safe | www.godsfamilychoir.org

@@ -164,6 +164,10 @@ Route::get('/registration/success', [RegistrationController::class, 'success'])-
 Route::get('/registration/remind-code', [RegistrationController::class, 'showRemindCodeForm'])->name('registration.remind-code');
 Route::post('/registration/remind-code', [RegistrationController::class, 'sendRemindCode'])->name('registration.remind-code.send');
 
+// Download ID Card by member code
+Route::get('/download/id-card', [RegistrationController::class, 'showDownloadIdCardForm'])->name('download.id-card');
+Route::post('/download/id-card', [RegistrationController::class, 'downloadIdCard'])->name('download.id-card.submit');
+
 // Language switcher
 Route::get('/lang/{locale}', function ($locale) {
     $available = ['en', 'rw'];

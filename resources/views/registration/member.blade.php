@@ -175,6 +175,21 @@
                         @enderror
                     </div>
 
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Joining Year
+                        </label>
+                        <input type="number" name="joining_year" value="{{ old('joining_year') }}" min="1998" max="{{ date('Y') }}"
+                            placeholder="e.g. {{ date('Y') }}"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
+                        <p class="text-xs text-gray-500 mt-1">Enter the year you joined God's Family Choir</p>
+                        @error('joining_year')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
                     <div class="md:col-span-2">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">
                             Address <span class="text-red-500">*</span>

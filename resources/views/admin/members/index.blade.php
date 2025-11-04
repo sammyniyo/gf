@@ -178,17 +178,27 @@
 
                             <!-- Type -->
                             <td class="px-4 py-4">
-                                <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold rounded-full
-                                    {{ $member->member_type === 'member' ? 'bg-indigo-100 text-indigo-700' : 'bg-amber-100 text-amber-700' }}">
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        @if($member->member_type === 'member')
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    @else
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                    @endif
-                                </svg>
-                                    {{ $member->member_type === 'member' ? 'Member' : 'Friend' }}
-                            </span>
+                                <div class="flex flex-col gap-1">
+                                    <span class="inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold rounded-full
+                                        {{ $member->member_type === 'member' ? 'bg-indigo-100 text-indigo-700' : 'bg-amber-100 text-amber-700' }}">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            @if($member->member_type === 'member')
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        @else
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                        @endif
+                                    </svg>
+                                        {{ $member->member_type === 'member' ? 'Member' : 'Friend' }}
+                                </span>
+                                @if($member->member_type === 'member' && $member->is_active_chorister)
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-100 text-blue-700" title="Active Chorister">
+                                        <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                                        </svg>
+                                        Chorister
+                                    </span>
+                                @endif
+                                </div>
                             </td>
 
                             <!-- Voice Type -->

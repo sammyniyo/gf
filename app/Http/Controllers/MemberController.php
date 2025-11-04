@@ -166,14 +166,16 @@ class MemberController extends Controller
      */
     public function lookupByCode($code)
     {
+        // Only allow lookup for active choristers (members who actively sing)
         $member = Member::where('member_id', strtoupper($code))
             ->where('status', 'active')
+            ->where('is_active_chorister', true)
             ->first();
 
         if (!$member) {
             return response()->json([
                 'success' => false,
-                'message' => 'Member code not found or inactive'
+                'message' => 'Member code not found or member is not an active chorister'
             ], 404);
         }
 

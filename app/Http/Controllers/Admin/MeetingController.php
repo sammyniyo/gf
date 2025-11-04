@@ -21,7 +21,8 @@ class MeetingController extends Controller
 
     public function create()
     {
-        $members = Member::where('status', 'active')->get();
+        // Get active choristers (members who actively sing) for choir meetings
+        $members = Member::activeChoristers()->get();
         $committees = Committee::where('is_active', true)->get();
         return view('admin.meetings.create', compact('members', 'committees'));
     }
@@ -84,7 +85,8 @@ class MeetingController extends Controller
                 }
             }
         } elseif ($type === 'all_members') {
-            $members = Member::where('status', 'active')->get();
+            // For "all_members", include only active choristers (members who actively sing)
+            $members = Member::activeChoristers()->get();
             foreach ($members as $member) {
                 $attendees[] = [
                     'member_id' => $member->id,

@@ -77,6 +77,7 @@ class Member extends Model
 
         // Status & Roles
         'status',
+        'is_active_chorister',
         'roles',
         'joined_at',
 
@@ -106,6 +107,7 @@ class Member extends Model
         'joined_at' => 'date',
         'graduation_year' => 'integer',
         'newsletter' => 'boolean',
+        'is_active_chorister' => 'boolean',
         'monthly_target' => 'decimal:2',
         'yearly_target' => 'decimal:2',
         'has_payment_award' => 'boolean',
@@ -239,6 +241,26 @@ class Member extends Model
     public function isFriendship(): bool
     {
         return $this->member_type === 'friendship';
+    }
+
+    /**
+     * Scope a query to only include active choristers (members who actively sing).
+     */
+    public function scopeActiveChoristers($query)
+    {
+        return $query->where('member_type', 'member')
+            ->where('status', 'active')
+            ->where('is_active_chorister', true);
+    }
+
+    /**
+     * Check if this member is an active chorister (actively singing).
+     */
+    public function isActiveChorister(): bool
+    {
+        return $this->member_type === 'member' 
+            && $this->status === 'active' 
+            && $this->is_active_chorister === true;
     }
 
     /**

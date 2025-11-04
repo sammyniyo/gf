@@ -40,6 +40,14 @@
                             {{ $member->status === 'inactive' ? 'bg-slate-100 text-slate-700' : '' }}">
                             {{ ucfirst($member->status) }}
                         </span>
+                        @if($member->member_type === 'member' && $member->is_active_chorister)
+                            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700" title="Active Chorister">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                                </svg>
+                                Active Chorister
+                            </span>
+                        @endif
                         <span class="text-sm font-semibold text-indigo-600 bg-indigo-50 px-2 py-1 rounded">{{ $member->member_id ?? 'N/A' }}</span>
                     </div>
                 </div>

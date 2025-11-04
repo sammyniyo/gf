@@ -42,6 +42,24 @@
                     @enderror
                 </div>
 
+                <!-- Active Chorister (only for members, not friendship) -->
+                @if($member->member_type === 'member')
+                <div>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" name="is_active_chorister" value="1" 
+                            {{ old('is_active_chorister', $member->is_active_chorister ?? false) ? 'checked' : '' }}
+                            class="w-5 h-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+                        <div>
+                            <span class="block text-sm font-medium text-slate-700">Active Chorister</span>
+                            <span class="block text-xs text-slate-500 mt-0.5">Participates in choir activities</span>
+                        </div>
+                    </label>
+                    @error('is_active_chorister')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+                @endif
+
                 <!-- Voice Type -->
                 <div>
                     <label for="voice_type" class="block text-sm font-medium text-slate-700 mb-2">
@@ -142,12 +160,24 @@
             </div>
             <div>
                 <label class="block text-sm font-medium text-slate-500 mb-1">Current Status</label>
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
-                    {{ $member->status === 'active' ? 'bg-emerald-100 text-emerald-700' : '' }}
-                    {{ $member->status === 'pending' ? 'bg-amber-100 text-amber-700' : '' }}
-                    {{ $member->status === 'inactive' ? 'bg-slate-100 text-slate-700' : '' }}">
-                    {{ ucfirst($member->status) }}
-                </span>
+                <div class="flex flex-col gap-1">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
+                        {{ $member->status === 'active' ? 'bg-emerald-100 text-emerald-700' : '' }}
+                        {{ $member->status === 'pending' ? 'bg-amber-100 text-amber-700' : '' }}
+                        {{ $member->status === 'inactive' ? 'bg-slate-100 text-slate-700' : '' }}">
+                        {{ ucfirst($member->status) }}
+                    </span>
+                    @if($member->member_type === 'member' && $member->is_active_chorister)
+                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700 w-fit">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                            </svg>
+                            Active Chorister
+                        </span>
+                    @elseif($member->member_type === 'member')
+                        <span class="text-xs text-slate-500">Not an active chorister</span>
+                    @endif
+                </div>
             </div>
             <div>
                 <label class="block text-sm font-medium text-slate-500 mb-1">Member Since</label>

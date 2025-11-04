@@ -102,6 +102,11 @@ class MemberController extends Controller
         $data['status'] = 'active'; // Admin-created members are active by default
         $data['joined_at'] = now();
         $data['newsletter'] = $request->has('newsletter');
+        
+        // Set is_active_chorister for members (default to true for admin-created members)
+        if (($data['member_type'] ?? 'member') === 'member') {
+            $data['is_active_chorister'] = $request->has('is_active_chorister') ? (bool)$request->is_active_chorister : true;
+        }
 
         // Create member
         $member = Member::create($data);
@@ -151,16 +156,24 @@ class MemberController extends Controller
     {
         $request->validate([
             'status' => 'required|in:pending,active,inactive',
+            'is_active_chorister' => 'nullable|boolean',
             'notes' => 'nullable|string|max:1000',
         ]);
 
         $oldStatus = $member->status;
         $newStatus = $request->status;
 
-        $member->update([
+        $updateData = [
             'status' => $newStatus,
             'notes' => $request->notes,
-        ]);
+        ];
+
+        // Only update is_active_chorister for members (not friendship)
+        if ($member->member_type === 'member') {
+            $updateData['is_active_chorister'] = $request->has('is_active_chorister') ? (bool)$request->is_active_chorister : false;
+        }
+
+        $member->update($updateData);
 
         // Log audit
         if ($oldStatus !== $newStatus) {

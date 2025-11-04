@@ -333,4 +333,107 @@ class RegistrationController extends Controller
 
         return \App\Services\PdfService::downloadMemberIdCard($member);
     }
+
+    /**
+     * Show member portal lookup form.
+     */
+    public function showMemberPortal()
+    {
+        return view('registration.member-portal');
+    }
+
+    /**
+     * Access member portal by code.
+     */
+    public function accessMemberPortal(Request $request)
+    {
+        $request->validate([
+            'member_code' => 'required|string',
+        ]);
+
+        $member = Member::where('member_id', strtoupper($request->member_code))->first();
+
+        if (!$member) {
+            return redirect()->back()
+                ->with('error', 'Member code not found. Please check your code and try again.')
+                ->withInput();
+        }
+
+        // Store member ID in session for security
+        session(['member_portal_id' => $member->id]);
+
+        return redirect()->route('member.portal.view', $member);
+    }
+
+    /**
+     * View member portal (profile, card, edit).
+     */
+    public function viewMemberPortal(Member $member)
+    {
+        // Verify the member ID matches the session (security check)
+        if (session('member_portal_id') != $member->id) {
+            return redirect()->route('member.portal')
+                ->with('error', 'Please enter your member code to access your profile.');
+        }
+
+        return view('registration.member-portal-view', compact('member'));
+    }
+
+    /**
+     * Show edit form for member portal.
+     */
+    public function editMemberPortal(Member $member)
+    {
+        // Verify the member ID matches the session (security check)
+        if (session('member_portal_id') != $member->id) {
+            return redirect()->route('member.portal')
+                ->with('error', 'Please enter your member code to access your profile.');
+        }
+
+        return view('registration.member-portal-edit', compact('member'));
+    }
+
+    /**
+     * Update member information from portal.
+     */
+    public function updateMemberPortal(Request $request, Member $member)
+    {
+        // Verify the member ID matches the session (security check)
+        if (session('member_portal_id') != $member->id) {
+            return redirect()->route('member.portal')
+                ->with('error', 'Please enter your member code to access your profile.');
+        }
+
+        $request->validate([
+            'phone' => 'required|string|max:20|unique:members,phone,' . $member->id,
+            'address' => 'nullable|string|max:500',
+            'occupation' => 'nullable|string|max:255',
+            'workplace' => 'nullable|string|max:255',
+            'church' => 'nullable|string|max:255',
+            'joining_year' => 'nullable|integer|min:1998|max:'.date('Y'),
+            'profile_photo' => 'nullable|image|max:2048',
+        ]);
+
+        $updateData = $request->only([
+            'phone', 'address', 'occupation', 'workplace', 'church', 'joining_year'
+        ]);
+
+        // Handle profile photo upload
+        if ($request->hasFile('profile_photo')) {
+            // Delete old photo if exists
+            if ($member->profile_photo) {
+                \Storage::delete('public/member-photos/' . basename($member->profile_photo));
+            }
+
+            $photo = $request->file('profile_photo');
+            $photoName = $member->member_id . '_' . time() . '.' . $photo->getClientOriginalExtension();
+            $photo->storeAs('public/member-photos', $photoName);
+            $updateData['profile_photo'] = $photoName;
+        }
+
+        $member->update($updateData);
+
+        return redirect()->route('member.portal.view', $member)
+            ->with('success', 'Your profile has been updated successfully!');
+    }
 }

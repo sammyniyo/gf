@@ -44,6 +44,7 @@
                         ['name' => 'Our Story', 'url' => route('story')],
                         ['name' => 'Devotions', 'url' => route('devotions.index')],
                         ['name' => 'Join Choir', 'url' => route('choir.register.form')],
+                        ['name' => 'Member Portal', 'url' => route('member.portal')],
                     ] as $link)
                         <li>
                             <a href="{{ $link['url'] }}" class="text-sm text-slate-600 hover:text-emerald-600 transition-colors">

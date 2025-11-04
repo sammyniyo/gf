@@ -168,6 +168,13 @@ Route::post('/registration/remind-code', [RegistrationController::class, 'sendRe
 Route::get('/download/id-card', [RegistrationController::class, 'showDownloadIdCardForm'])->name('download.id-card');
 Route::post('/download/id-card', [RegistrationController::class, 'downloadIdCard'])->name('download.id-card.submit');
 
+// Member Portal - View profile, card, and edit
+Route::get('/member-portal', [RegistrationController::class, 'showMemberPortal'])->name('member.portal');
+Route::post('/member-portal', [RegistrationController::class, 'accessMemberPortal'])->name('member.portal.access');
+Route::get('/member-portal/{member}', [RegistrationController::class, 'viewMemberPortal'])->name('member.portal.view');
+Route::get('/member-portal/{member}/edit', [RegistrationController::class, 'editMemberPortal'])->name('member.portal.edit');
+Route::post('/member-portal/{member}/edit', [RegistrationController::class, 'updateMemberPortal'])->name('member.portal.update');
+
 // Language switcher
 Route::get('/lang/{locale}', function ($locale) {
     $available = ['en', 'rw'];

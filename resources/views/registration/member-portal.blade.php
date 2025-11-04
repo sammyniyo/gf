@@ -1,4 +1,4 @@
-@php($title = 'Download Member ID Card')
+@php($title = 'Member Portal')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,24 +24,32 @@
         .info-box { background: #ecfdf5; border: 1px solid #d1fae5; padding: 16px; border-radius: 8px; margin-bottom: 24px; }
         .info-box p { margin: 0; color: #065f46; font-size: 14px; }
         .info-box strong { display: block; margin-bottom: 4px; }
+        .features { list-style: none; padding: 0; margin: 16px 0; }
+        .features li { padding: 8px 0; color: #065f46; font-size: 14px; }
+        .features li:before { content: "✓ "; color: #10b981; font-weight: bold; margin-right: 8px; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="card">
-            <h1>🎵 Download Your ID Card</h1>
-            <p class="subtitle">Enter your GF member code to download your membership card</p>
+            <h1>🎵 Member Portal</h1>
+            <p class="subtitle">Enter your GF member code to access your profile</p>
 
             @if(session('error'))
                 <div class="error">{{ session('error') }}</div>
             @endif
 
             <div class="info-box">
-                <strong>💡 Don't have your code?</strong>
-                <p>You can request your member code by email using the <a href="{{ route('registration.remind-code') }}">remind code</a> feature.</p>
+                <strong>💡 What you can do:</strong>
+                <ul class="features">
+                    <li>View your member profile and details</li>
+                    <li>Download your ID card</li>
+                    <li>Update your information</li>
+                    <li>Change your profile photo</li>
+                </ul>
             </div>
 
-            <form method="POST" action="{{ route('download.id-card.submit') }}">
+            <form method="POST" action="{{ route('member.portal.access') }}">
                 @csrf
                 <label for="member_code">GF Member Code</label>
                 <input type="text" 
@@ -55,14 +63,11 @@
                     <div class="error">{{ $message }}</div>
                 @enderror
 
-                <button type="submit">Download ID Card</button>
+                <button type="submit">Access My Profile</button>
             </form>
 
             <p class="muted">
-                Want to view and edit your profile? <a href="{{ route('member.portal') }}">Access Member Portal</a>
-            </p>
-            <p class="muted" style="margin-top: 8px;">
-                Remembered your code? You can go back to <a href="{{ route('registration.member') }}">Member</a> or <a href="{{ route('registration.friendship') }}">Friendship</a> registration.
+                Don't have your code? <a href="{{ route('registration.remind-code') }}">Request it by email</a>
             </p>
         </div>
     </div>

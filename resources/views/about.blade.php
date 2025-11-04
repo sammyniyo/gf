@@ -167,7 +167,7 @@
                                 'year' => '2015',
                                 'title' => 'Second Evangelistic Campaign',
                                 'description' => 'We conducted our second evangelistic campaign in Nyabisindu, continuing our mission to reach souls for Christ across different regions of Rwanda. Each campaign deepens our conviction that music and evangelism work hand in hand to transform lives and bring people into God\'s family.',
-                                'image' => '5.jpg',
+                                'image' => 'amavuna.jpeg',
                                 'position' => 'left',
                                 'icon' => 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 002 2h2.945M15 11a3 3 0 11-6 0m5.945 2H18a2 2 0 012 2v1a2 2 0 01-2 2h-2.945M15 11a3 3 0 11-6 0m-4.055 2H6a2 2 0 00-2 2v1a2 2 0 002 2h2.945M9 11a3 3 0 11-6 0m12 0a3 3 0 11-6 0'
                             ],

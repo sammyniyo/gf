@@ -23,7 +23,7 @@
                         <p class="text-xs text-slate-500">Years</p>
                     </div>
                     <div class="text-center">
-                        <p class="text-lg font-bold text-amber-600">400+</p>
+                        <p class="text-lg font-bold text-amber-600">300+</p>
                         <p class="text-xs text-slate-500">Members</p>
                     </div>
                     <div class="text-center">

@@ -287,7 +287,10 @@
                 <h3 style="margin: 0 0 12px 0; color: #92400e; font-size: 18px;">📅 Rehearsal Schedule</h3>
                 <p style="margin: 5px 0; color: #78350f; font-weight: 600;">Every Monday and Thursday</p>
                 <p style="margin: 5px 0; color: #78350f;">Time: 05:30 PM - 08:00 PM</p>
-                <p style="margin: 5px 0; color: #78350f;">📍 Location: ASA UR Nyarugenge SDA Church</p>
+                <p style="margin: 5px 0; color: #78350f;">📍 Location: Nyamirambo SDA</p>
+                <p style="margin: 10px 0 5px 0; color: #78350f; font-weight: 600;">Sunday</p>
+                <p style="margin: 5px 0; color: #78350f;">Time: 01:00 PM - 05:00 PM</p>
+                <p style="margin: 5px 0; color: #78350f;">📍 Location: Nyamirambo SDA</p>
             </div>
 
             <!-- Contact Section -->

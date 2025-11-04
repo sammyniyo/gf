@@ -28,26 +28,28 @@
                         $catKey = $gallery->category ?? 'other';
                         $catLabel = $categories[$catKey] ?? ucfirst($catKey);
                     @endphp
-                    <div class="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+                    <div class="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-gray-100"
                          onclick="openLightbox({{ $index }})">
-                        <!-- Image -->
-                        <img src="{{ $gallery->image_url }}"
-                             alt="{{ $gallery->title ?? 'Gallery Image' }}"
-                             class="w-full h-auto transform group-hover:scale-110 transition-transform duration-700"
-                             loading="lazy">
+                        <!-- Image Container with Aspect Ratio -->
+                        <div class="relative w-full aspect-[4/3] overflow-hidden">
+                            <img src="{{ $gallery->image_url }}"
+                                 alt="{{ $gallery->title ?? 'Gallery Image' }}"
+                                 class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                 loading="lazy">
+                        </div>
 
                         <!-- Overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                             <div class="absolute bottom-0 left-0 right-0 p-6">
-                                <span class="inline-block px-3 py-1 bg-purple-600 text-white rounded-full text-xs font-semibold mb-2">
+                                <span class="inline-block px-3 py-1.5 bg-purple-600/90 backdrop-blur-sm text-white rounded-full text-xs font-semibold mb-3 shadow-lg">
                                     {{ $catLabel }}
                                 </span>
                                 @if($gallery->title)
-                                    <h3 class="text-white font-bold text-xl mb-2">{{ $gallery->title }}</h3>
+                                    <h3 class="text-white font-bold text-xl mb-3 line-clamp-2">{{ $gallery->title }}</h3>
                                 @endif
 
                                 <!-- View Button -->
-                                <div class="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
+                                <div class="flex items-center gap-2 text-white/90 group-hover:text-white transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -58,7 +60,7 @@
                         </div>
 
                         <!-- Zoom Icon -->
-                        <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
                             </svg>
@@ -74,23 +76,26 @@
                     ['image' => '2.jpg', 'title' => 'GF Performance in Gikondo SFB (2023)', 'category' => 'Events'],
                     ['image' => '3.jpg', 'title' => 'After Service Fellowship (2024)', 'category' => 'Social'],
                 ] as $index => $photo)
-                    <div class="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+                    <div class="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-gray-100"
                          onclick="openLightbox({{ $index }})">
-                        <!-- Image -->
-                        <img src="{{ asset('images/' . $photo['image']) }}"
-                             alt="{{ $photo['title'] }}"
-                             class="w-full h-auto transform group-hover:scale-110 transition-transform duration-700">
+                        <!-- Image Container with Aspect Ratio -->
+                        <div class="relative w-full aspect-[4/3] overflow-hidden">
+                            <img src="{{ asset('images/' . $photo['image']) }}"
+                                 alt="{{ $photo['title'] }}"
+                                 class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                 loading="lazy">
+                        </div>
 
                         <!-- Overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                             <div class="absolute bottom-0 left-0 right-0 p-6">
-                                <span class="inline-block px-3 py-1 bg-purple-600 text-white rounded-full text-xs font-semibold mb-2">
+                                <span class="inline-block px-3 py-1.5 bg-purple-600/90 backdrop-blur-sm text-white rounded-full text-xs font-semibold mb-3 shadow-lg">
                                     {{ $photo['category'] }}
                                 </span>
-                                <h3 class="text-white font-bold text-xl mb-2">{{ $photo['title'] }}</h3>
+                                <h3 class="text-white font-bold text-xl mb-3 line-clamp-2">{{ $photo['title'] }}</h3>
 
                                 <!-- View Button -->
-                                <div class="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
+                                <div class="flex items-center gap-2 text-white/90 group-hover:text-white transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -101,7 +106,7 @@
                         </div>
 
                         <!-- Zoom Icon -->
-                        <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
                             </svg>
@@ -117,21 +122,21 @@
 <!-- Lightbox Modal -->
 <div id="lightbox" class="fixed inset-0 bg-black/95 z-50 hidden items-center justify-center p-4 backdrop-blur-sm">
     <!-- Close Button -->
-    <button onclick="closeLightbox()" class="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors z-50">
+    <button onclick="closeLightbox()" class="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-300 z-50 shadow-lg hover:scale-110">
         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
     </button>
 
     <!-- Previous Button -->
-    <button onclick="previousImage()" class="absolute left-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors">
+    <button onclick="previousImage()" class="absolute left-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-110">
         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
     </button>
 
     <!-- Next Button -->
-    <button onclick="nextImage()" class="absolute right-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors">
+    <button onclick="nextImage()" class="absolute right-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-110">
         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
@@ -139,17 +144,17 @@
 
     <!-- Image Container -->
     <div class="relative max-w-6xl w-full">
-        <img id="lightbox-image" src="" alt="" class="w-full h-auto rounded-2xl shadow-2xl max-h-[80vh] object-contain mx-auto">
+        <img id="lightbox-image" src="" alt="" class="w-full h-auto rounded-2xl shadow-2xl max-h-[80vh] object-contain mx-auto transition-opacity duration-300">
 
         <!-- Image Info -->
-        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-2xl">
+        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 rounded-b-2xl">
             <h3 id="lightbox-title" class="text-white font-bold text-2xl mb-2"></h3>
-            <p id="lightbox-category" class="text-white/80"></p>
+            <p id="lightbox-category" class="text-white/80 text-sm"></p>
         </div>
 
         <!-- Image Counter -->
-        <div class="absolute top-4 left-4 px-4 py-2 bg-white/10 backdrop-blur-xl rounded-full">
-            <span id="lightbox-counter" class="text-white font-semibold"></span>
+        <div class="absolute top-4 left-4 px-4 py-2 bg-white/10 backdrop-blur-xl rounded-full border border-white/20">
+            <span id="lightbox-counter" class="text-white font-semibold text-sm"></span>
         </div>
     </div>
 </div>

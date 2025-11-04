@@ -3,42 +3,54 @@
     $title = $member->membership_title;
     $years = $member->membership_years;
     
-    // Custom card designs for each membership category
+    // Professional card designs with white background and colored accents
     $cardDesigns = [
         'fresher' => [
-            'bg' => '#10b981', // Fresh Green
-            'accent' => '#34d399',
-            'text' => '#ffffff',
-            'border' => '#059669',
-            'title_bg' => '#ffffff',
-            'title_text' => '#10b981',
+            'bg' => '#ffffff',
+            'accent' => '#10b981', // Green accent
+            'text' => '#111827',
+            'border' => '#10b981',
+            'border_width' => '3px',
+            'title_bg' => '#10b981',
+            'title_text' => '#ffffff',
+            'id_bg' => '#ecfdf5',
+            'id_text' => '#065f46',
             'badge_text' => 'NEW',
         ],
         'member' => [
-            'bg' => '#3b82f6', // Professional Blue
-            'accent' => '#60a5fa',
-            'text' => '#ffffff',
-            'border' => '#2563eb',
-            'title_bg' => '#ffffff',
-            'title_text' => '#3b82f6',
+            'bg' => '#ffffff',
+            'accent' => '#3b82f6', // Blue accent
+            'text' => '#111827',
+            'border' => '#3b82f6',
+            'border_width' => '3px',
+            'title_bg' => '#3b82f6',
+            'title_text' => '#ffffff',
+            'id_bg' => '#eff6ff',
+            'id_text' => '#1e40af',
             'badge_text' => 'ACTIVE',
         ],
         'veteran' => [
-            'bg' => '#8b5cf6', // Distinguished Purple
-            'accent' => '#a78bfa',
-            'text' => '#ffffff',
-            'border' => '#7c3aed',
-            'title_bg' => '#ffffff',
-            'title_text' => '#8b5cf6',
+            'bg' => '#ffffff',
+            'accent' => '#8b5cf6', // Purple accent
+            'text' => '#111827',
+            'border' => '#8b5cf6',
+            'border_width' => '3px',
+            'title_bg' => '#8b5cf6',
+            'title_text' => '#ffffff',
+            'id_bg' => '#f5f3ff',
+            'id_text' => '#6b21a8',
             'badge_text' => 'VETERAN',
         ],
         'elite' => [
-            'bg' => '#d97706', // Gold/Amber
-            'accent' => '#fbbf24',
-            'text' => '#ffffff',
-            'border' => '#b45309',
-            'title_bg' => '#fbbf24',
+            'bg' => '#ffffff',
+            'accent' => '#f59e0b', // Gold accent
+            'text' => '#111827',
+            'border' => '#f59e0b',
+            'border_width' => '4px',
+            'title_bg' => 'linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)',
             'title_text' => '#78350f',
+            'id_bg' => 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
+            'id_text' => '#78350f',
             'badge_text' => '⭐ ELITE',
         ],
     ];
@@ -58,73 +70,71 @@
             margin: 0;
             padding: 10px;
             font-family: 'DejaVu Sans', sans-serif;
-            background: {{ $design['bg'] }};
+            background: #f3f4f6;
             color: {{ $design['text'] }};
         }
         .card {
             width: 100%;
             height: 100%;
             position: relative;
-            border: 2px solid {{ $design['border'] }};
-            border-radius: 4px;
-            @if($category === 'elite')
-            background: linear-gradient(135deg, {{ $design['bg'] }} 0%, {{ $design['accent'] }} 100%);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            @endif
+            background: {{ $design['bg'] }};
+            border: {{ $design['border_width'] }} solid {{ $design['border'] }};
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .top-accent {
+            height: 8px;
+            background: {{ $design['accent'] }};
+            width: 100%;
+            border-radius: 6px 6px 0 0;
         }
         .logo {
             text-align: center;
             margin-bottom: 5px;
+            padding-top: 5px;
         }
         .logo h1 {
             margin: 0;
             font-size: 16px;
-            color: #ffffff;
+            color: {{ $design['accent'] }};
             font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
         .logo p {
             margin: 0;
             font-size: 8px;
-            color: {{ $design['accent'] }};
+            color: #6b7280;
         }
         .membership-title {
             background: {{ $design['title_bg'] }};
             color: {{ $design['title_text'] }};
             text-align: center;
-            padding: 5px 8px;
+            padding: 6px 8px;
             margin: 5px 0 8px 0;
             font-weight: bold;
-            font-size: @if($category === 'elite') 13px @else 12px @endif;
-            border-radius: 3px;
+            font-size: @if($category === 'elite') 13px @else 11px @endif;
+            border-radius: 4px;
             display: inline-block;
             width: 100%;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-            @if($category === 'elite')
-            border: 1px solid {{ $design['accent'] }};
-            @endif
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .member-id {
-            @if($category === 'elite')
-            background: linear-gradient(135deg, {{ $design['accent'] }} 0%, #fbbf24 100%);
-            color: #78350f;
-            @else
-            background: {{ $design['accent'] }};
-            color: {{ $design['bg'] }};
-            @endif
+            background: {{ $design['id_bg'] }};
+            color: {{ $design['id_text'] }};
             text-align: center;
-            padding: 6px;
+            padding: 8px;
             margin: 10px 0;
             font-weight: bold;
-            font-size: 15px;
-            border-radius: 3px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            font-size: 16px;
+            border-radius: 4px;
+            border: 2px solid {{ $design['accent'] }};
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         .info {
             margin: 5px 0;
             font-size: 10px;
+            color: #374151;
         }
         .info strong {
             color: {{ $design['accent'] }};
@@ -132,8 +142,8 @@
         }
         .badge {
             display: inline-block;
-            background: {{ $design['title_bg'] }};
-            color: {{ $design['title_text'] }};
+            background: {{ $design['accent'] }};
+            color: #ffffff;
             padding: 2px 6px;
             border-radius: 3px;
             font-size: 8px;
@@ -147,9 +157,16 @@
             right: 10px;
             text-align: center;
             font-size: 7px;
-            color: {{ $design['accent'] }};
-            border-top: 1px solid {{ $design['border'] }};
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
             padding-top: 3px;
+        }
+        .accent-line {
+            height: 2px;
+            background: {{ $design['accent'] }};
+            width: 60%;
+            margin: 5px auto;
+            border-radius: 2px;
         }
         @if($category === 'elite')
         .elite-star {
@@ -162,10 +179,12 @@
 </head>
 <body>
     <div class="card">
+        <div class="top-accent"></div>
         <div class="logo">
             <h1>GOD'S FAMILY CHOIR</h1>
             <p>ASA UR Nyarugenge SDA</p>
         </div>
+        <div class="accent-line"></div>
 
         <div class="membership-title">
             {{ $title }}

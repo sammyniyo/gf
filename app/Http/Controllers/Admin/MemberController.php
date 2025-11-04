@@ -66,7 +66,7 @@ class MemberController extends Controller
             'email' => 'required|email|unique:members,email',
             'phone' => 'required|string|max:20',
             'date_of_birth' => 'required|date|before:today',
-            'gender' => 'required|in:male,female,other',
+            'gender' => 'required|in:male,female',
             'address' => 'required|string|max:500',
             // Professional Information
             'occupation' => 'required|string|max:255',
@@ -157,6 +157,7 @@ class MemberController extends Controller
         $request->validate([
             'status' => 'required|in:pending,active,inactive',
             'is_active_chorister' => 'nullable|boolean',
+            'voice_type' => 'nullable|in:soprano,alto,tenor,bass,unsure',
             'notes' => 'nullable|string|max:1000',
         ]);
 
@@ -171,6 +172,11 @@ class MemberController extends Controller
         // Only update is_active_chorister for members (not friendship)
         if ($member->member_type === 'member') {
             $updateData['is_active_chorister'] = $request->has('is_active_chorister') ? (bool)$request->is_active_chorister : false;
+            
+            // Update voice_type if provided (will automatically sync to voice via model mutator)
+            if ($request->has('voice_type')) {
+                $updateData['voice_type'] = $request->voice_type;
+            }
         }
 
         $member->update($updateData);

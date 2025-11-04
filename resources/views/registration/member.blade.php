@@ -169,7 +169,6 @@
                             <option value="">Select Gender</option>
                             <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
                             <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
-                            <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
                         </select>
                         @error('gender')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -255,19 +254,6 @@
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-6 mt-6">
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">
-                            Graduation / Completion Year
-                        </label>
-                        <input type="number" name="graduation_year" value="{{ old('graduation_year') }}" min="1990" max="{{ date('Y') + 10 }}"
-                            placeholder="e.g. {{ date('Y') }}"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
-                        @error('graduation_year')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
             </div>
 
             <!-- Section 3: Choir Details -->

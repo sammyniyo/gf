@@ -46,7 +46,7 @@ class RegistrationController extends Controller
             'email' => 'required|email|unique:members,email',
             'phone' => 'required|string|max:20|unique:members,phone',
             'birthdate' => 'required|date',
-            'gender' => 'required|in:male,female,other',
+            'gender' => 'required|in:male,female',
             'address' => 'required|string',
 
             // Professional Information
@@ -54,7 +54,6 @@ class RegistrationController extends Controller
             'workplace' => 'nullable|string|max:255',
             'church' => 'nullable|string|max:255',
             'education_level' => 'nullable|string|in:primary,secondary,diploma,bachelor,master,phd,other',
-            'graduation_year' => 'nullable|integer|min:1990|max:'.(date('Y')+10),
 
             // Choir Details
             'voice' => 'required|string|in:soprano,alto,tenor,bass,unsure',
@@ -68,7 +67,6 @@ class RegistrationController extends Controller
             'availability' => 'nullable|string',
             'hobbies' => 'nullable|string|max:255',
             'skills' => 'nullable|string',
-            'graduation_year' => 'nullable|integer|min:1990|max:'.(date('Y')+10),
             'message' => 'nullable|string',
             'newsletter' => 'boolean',
             'profile_photo' => 'nullable|image|max:2048',
@@ -116,6 +114,8 @@ class RegistrationController extends Controller
             if (array_key_exists($normalizedVoice, $voiceMap)) {
                 $data['voice'] = $voiceMap[$normalizedVoice];
             }
+            // Ensure voice_type is also set (will be synced by model mutator, but set explicitly for clarity)
+            $data['voice_type'] = $data['voice'];
         }
 
         $data['newsletter'] = $request->boolean('newsletter');
@@ -179,7 +179,7 @@ class RegistrationController extends Controller
             'email' => 'required|email|unique:members,email',
             'phone' => 'required|string|max:20|unique:members,phone',
             'birthdate' => 'nullable|date',
-            'gender' => 'nullable|in:male,female,other',
+            'gender' => 'nullable|in:male,female',
             'address' => 'nullable|string',
 
             // Professional Information

@@ -31,7 +31,7 @@ return [
             'email' => 'required|email|unique:members,email',
             'phone' => 'required|string|max:20',
             'birthdate' => 'required|date|before:today',
-            'gender' => 'required|in:male,female,other',
+            'gender' => 'required|in:male,female',
             'address' => 'required|string|max:500',
 
             // Professional Information

@@ -145,6 +145,50 @@ class Member extends Model
     }
 
     /**
+     * Set voice and also update voice_type for consistency.
+     */
+    public function setVoiceAttribute($value)
+    {
+        $this->attributes['voice'] = $value;
+        // Always sync voice_type to match voice
+        $this->attributes['voice_type'] = $value;
+    }
+
+    /**
+     * Set voice_type and also update voice for consistency.
+     */
+    public function setVoiceTypeAttribute($value)
+    {
+        $this->attributes['voice_type'] = $value;
+        // Always sync voice to match voice_type
+        $this->attributes['voice'] = $value;
+    }
+
+    /**
+     * Get voice_type, fallback to voice if voice_type is null.
+     */
+    public function getVoiceTypeAttribute($value)
+    {
+        // If voice_type is null or empty, return voice (the alias)
+        if (empty($value) && !empty($this->attributes['voice'] ?? null)) {
+            return $this->attributes['voice'];
+        }
+        return $value;
+    }
+    
+    /**
+     * Get voice, fallback to voice_type if voice is null.
+     */
+    public function getVoiceAttribute($value)
+    {
+        // If voice is null or empty, return voice_type (the alias)
+        if (empty($value) && !empty($this->attributes['voice_type'] ?? null)) {
+            return $this->attributes['voice_type'];
+        }
+        return $value;
+    }
+
+    /**
      * Get the member's full name.
      */
     public function getFullNameAttribute(): string

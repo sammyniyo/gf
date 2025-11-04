@@ -90,7 +90,7 @@
         @endif
 
         <div class="info">
-            <strong>Member Since:</strong> {{ $member->joined_at ? $member->joined_at->format('Y') : date('Y') }}
+            <strong>Joined:</strong> {{ $member->joined_at ? $member->joined_at->format('M Y') : date('M Y') }}
         </div>
 
         <div class="footer">

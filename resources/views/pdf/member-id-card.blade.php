@@ -217,11 +217,6 @@
         <div class="info">
             <strong>Joined:</strong> {{ $member->joining_year ?? ($member->joined_at ? $member->joined_at->format('Y') : date('Y')) }}
         </div>
-        @if($member->membership_years > 0)
-        <div class="info">
-            <strong>Years:</strong> {{ $member->membership_years }} {{ $member->membership_years == 1 ? 'year' : 'years' }}
-        </div>
-        @endif
 
         <div class="footer">
             Valid Member | Keep this card safe | www.godsfamilychoir.org

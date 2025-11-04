@@ -2,6 +2,13 @@
 
 @section('title', "About Us | God's Family Choir")
 
+@section('meta_description', "Learn about God's Family Choir, a vibrant worship ministry with over 300 members serving the words of life to the world through gospel messages. Founded in 1998, we blend contemporary expression with timeless truth.")
+@section('meta_keywords', "God's Family Choir, About Us, Worship Ministry, Gospel Music, Seventh-day Adventist, Kigali, Rwanda, Choir History, ASA UR Nyarugenge")
+@section('canonical_url', route('about'))
+@section('og:title', "About Us | God's Family Choir")
+@section('og:description', "Learn about God's Family Choir, a vibrant worship ministry with over 300 members serving the words of life to the world through gospel messages.")
+@section('og:url', route('about'))
+
 @section('content')
 <div class="relative overflow-hidden bg-gradient-to-b from-gray-50 to-white">
     <!-- Background Elements -->
@@ -135,7 +142,7 @@
                                 'year' => '1998',
                                 'title' => 'The Beginning',
                                 'description' => 'God\'s Family Choir was born when Adventist students from Kigali Health Institute (KHI) and Kigali Institute of Science and Technology (KIST) began organizing small spiritual activities. As their fellowship grew, they realized the need for a choir to lead Sabbath worship services. The group was officially recognized as the Adventist Students Association (ASA KIST–KHI), and their choir naturally adopted the same name.',
-                                'image' => 'gf-beg.jpg', 
+                                'image' => 'gf-beg.jpg',
                                 'position' => 'left',
                                 'icon' => 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
                             ],

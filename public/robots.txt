@@ -1,2 +1,6 @@
 User-agent: *
-Disallow:
+Allow: /
+
+# Sitemap location
+# Note: Replace with your actual domain or use a dynamic solution
+Sitemap: /sitemap.xml

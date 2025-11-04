@@ -8,6 +8,32 @@
 
     <title>@yield('title', 'God\'s Family Choir - ASA UR Nyarugenge SDA')</title>
 
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="@yield('meta_description', 'God\'s Family Choir is a vibrant worship ministry serving the words of life to the world through gospel messages. Join our family of over 300 worshippers, musicians, and storytellers.')">
+    <meta name="keywords" content="@yield('meta_keywords', 'God\'s Family Choir, ASA UR Nyarugenge SDA, Choir, Music, Worship, Jesus, Gospel, Christian, Church, Rwanda, Kigali, Adventist, Seventh-day Adventist, Worship Music, Gospel Music, Christian Music, Choir Ministry')">
+    <meta name="author" content="@yield('meta_author', 'God\'s Family Choir')">
+    <meta name="robots" content="@yield('meta_robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1')">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="@yield('canonical_url', url()->current())">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="@yield('og:type', 'website')">
+    <meta property="og:url" content="@yield('og:url', url()->current())">
+    <meta property="og:title" content="@yield('og:title', @yield('title', 'God\'s Family Choir - ASA UR Nyarugenge SDA'))">
+    <meta property="og:description" content="@yield('og:description', @yield('meta_description', 'God\'s Family Choir is a vibrant worship ministry serving the words of life to the world through gospel messages.'))">
+    <meta property="og:image" content="@yield('og:image', asset('images/hero.jpg'))">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="@yield('og:locale', 'en_US')">
+    <meta property="og:site_name" content="God's Family Choir">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="@yield('og:url', url()->current())">
+    <meta name="twitter:title" content="@yield('og:title', @yield('title', 'God\'s Family Choir - ASA UR Nyarugenge SDA'))">
+    <meta name="twitter:description" content="@yield('og:description', @yield('meta_description', 'God\'s Family Choir is a vibrant worship ministry serving the words of life to the world through gospel messages.'))">
+    <meta name="twitter:image" content="@yield('og:image', asset('images/hero.jpg'))">
+
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">

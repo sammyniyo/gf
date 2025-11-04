@@ -229,14 +229,14 @@ class Member extends Model
 
     /**
      * Get membership category based on duration.
-     * Returns: 'fresh', 'member', 'veteran', 'elite'
+     * Returns: 'fresher', 'member', 'veteran', 'elite'
      */
     public function getMembershipCategoryAttribute(): string
     {
         $years = $this->membership_years;
         
         if ($years < 2) {
-            return 'fresh';
+            return 'fresher';
         } elseif ($years < 5) {
             return 'member';
         } elseif ($years < 10) {
@@ -252,10 +252,10 @@ class Member extends Model
     public function getMembershipTitleAttribute(): string
     {
         return match($this->membership_category) {
-            'fresh' => 'Fresh',
+            'fresher' => 'Fresher',
             'member' => 'Member',
             'veteran' => 'Veteran',
-            'elite' => 'Elite',
+            'elite' => 'Elite Gold',
             default => 'Member',
         };
     }

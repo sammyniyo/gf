@@ -1,36 +1,49 @@
 @php
     $category = $member->membership_category;
     $title = $member->membership_title;
+    $years = $member->membership_years;
     
-    // Color schemes based on membership category
-    $colors = [
-        'fresh' => [
-            'bg' => '#10b981', // Green - Fresh
+    // Custom card designs for each membership category
+    $cardDesigns = [
+        'fresher' => [
+            'bg' => '#10b981', // Fresh Green
             'accent' => '#34d399',
             'text' => '#ffffff',
             'border' => '#059669',
+            'title_bg' => '#ffffff',
+            'title_text' => '#10b981',
+            'badge_text' => 'NEW',
         ],
         'member' => [
-            'bg' => '#3b82f6', // Blue - Member
+            'bg' => '#3b82f6', // Professional Blue
             'accent' => '#60a5fa',
             'text' => '#ffffff',
             'border' => '#2563eb',
+            'title_bg' => '#ffffff',
+            'title_text' => '#3b82f6',
+            'badge_text' => 'ACTIVE',
         ],
         'veteran' => [
-            'bg' => '#8b5cf6', // Purple - Veteran
+            'bg' => '#8b5cf6', // Distinguished Purple
             'accent' => '#a78bfa',
             'text' => '#ffffff',
             'border' => '#7c3aed',
+            'title_bg' => '#ffffff',
+            'title_text' => '#8b5cf6',
+            'badge_text' => 'VETERAN',
         ],
         'elite' => [
-            'bg' => '#f59e0b', // Amber/Gold - Elite
+            'bg' => '#d97706', // Gold/Amber
             'accent' => '#fbbf24',
             'text' => '#ffffff',
-            'border' => '#d97706',
+            'border' => '#b45309',
+            'title_bg' => '#fbbf24',
+            'title_text' => '#78350f',
+            'badge_text' => '⭐ ELITE',
         ],
     ];
     
-    $scheme = $colors[$category] ?? $colors['member'];
+    $design = $cardDesigns[$category] ?? $cardDesigns['member'];
 @endphp
 <!DOCTYPE html>
 <html>
@@ -45,13 +58,19 @@
             margin: 0;
             padding: 10px;
             font-family: 'DejaVu Sans', sans-serif;
-            background: {{ $scheme['bg'] }};
-            color: {{ $scheme['text'] }};
+            background: {{ $design['bg'] }};
+            color: {{ $design['text'] }};
         }
         .card {
             width: 100%;
             height: 100%;
             position: relative;
+            border: 2px solid {{ $design['border'] }};
+            border-radius: 4px;
+            @if($category === 'elite')
+            background: linear-gradient(135deg, {{ $design['bg'] }} 0%, {{ $design['accent'] }} 100%);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            @endif
         }
         .logo {
             text-align: center;
@@ -62,40 +81,64 @@
             font-size: 16px;
             color: #ffffff;
             font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
         .logo p {
             margin: 0;
             font-size: 8px;
-            color: {{ $scheme['accent'] }};
+            color: {{ $design['accent'] }};
         }
         .membership-title {
-            background: {{ $scheme['accent'] }};
-            color: {{ $scheme['bg'] }};
+            background: {{ $design['title_bg'] }};
+            color: {{ $design['title_text'] }};
             text-align: center;
-            padding: 3px 8px;
+            padding: 5px 8px;
             margin: 5px 0 8px 0;
             font-weight: bold;
-            font-size: 11px;
+            font-size: @if($category === 'elite') 13px @else 12px @endif;
             border-radius: 3px;
             display: inline-block;
             width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            @if($category === 'elite')
+            border: 1px solid {{ $design['accent'] }};
+            @endif
         }
         .member-id {
-            background: {{ $scheme['accent'] }};
-            color: {{ $scheme['bg'] }};
+            @if($category === 'elite')
+            background: linear-gradient(135deg, {{ $design['accent'] }} 0%, #fbbf24 100%);
+            color: #78350f;
+            @else
+            background: {{ $design['accent'] }};
+            color: {{ $design['bg'] }};
+            @endif
             text-align: center;
-            padding: 5px;
+            padding: 6px;
             margin: 10px 0;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 15px;
             border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         .info {
             margin: 5px 0;
             font-size: 10px;
         }
         .info strong {
-            color: {{ $scheme['accent'] }};
+            color: {{ $design['accent'] }};
+            font-weight: bold;
+        }
+        .badge {
+            display: inline-block;
+            background: {{ $design['title_bg'] }};
+            color: {{ $design['title_text'] }};
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 8px;
+            font-weight: bold;
+            margin-left: 5px;
         }
         .footer {
             position: absolute;
@@ -104,10 +147,17 @@
             right: 10px;
             text-align: center;
             font-size: 7px;
-            color: {{ $scheme['accent'] }};
-            border-top: 1px solid {{ $scheme['border'] }};
+            color: {{ $design['accent'] }};
+            border-top: 1px solid {{ $design['border'] }};
             padding-top: 3px;
         }
+        @if($category === 'elite')
+        .elite-star {
+            display: inline;
+            font-size: 12px;
+            margin-left: 3px;
+        }
+        @endif
     </style>
 </head>
 <body>
@@ -118,11 +168,17 @@
         </div>
 
         <div class="membership-title">
-            {{ $title }} MEMBER
+            {{ $title }}
+            @if($category === 'elite')
+                <span class="elite-star">⭐</span>
+            @endif
         </div>
 
         <div class="member-id">
             {{ $member->member_id }}
+            @if($years > 0)
+                <span class="badge">{{ $years }} {{ $years == 1 ? 'Yr' : 'Yrs' }}</span>
+            @endif
         </div>
 
         <div class="info">

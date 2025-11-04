@@ -26,10 +26,10 @@ class HomeController extends Controller
             \Log::info('Spotify API not configured or failed: ' . $e->getMessage());
         }
 
-        // Get gallery images - randomly select 8 active images for landing page
+        // Get gallery images - randomly select 9 active images for landing page
         $galleryImages = Gallery::active()
             ->inRandomOrder()
-            ->limit(8)
+            ->limit(9)
             ->get();
 
         return view('home', compact('nextEvent', 'spotifyTracks', 'galleryImages'));

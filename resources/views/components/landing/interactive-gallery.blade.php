@@ -18,12 +18,14 @@
 
         @php
             $categories = \App\Models\Gallery::getCategories();
+            // Limit galleries to 9 images maximum
+            $limitedGalleries = $galleries->take(9);
         @endphp
 
         <!-- Masonry Gallery Grid -->
-        @if($galleries->count() > 0)
+        @if($limitedGalleries->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery">
-                @foreach($galleries as $index => $gallery)
+                @foreach($limitedGalleries as $index => $gallery)
                     @php
                         $catKey = $gallery->category ?? 'other';
                         $catLabel = $categories[$catKey] ?? ucfirst($catKey);
@@ -161,7 +163,7 @@
 
 <script>
 @php
-    $galleryPhotos = $galleries->map(function($g) use ($categories) {
+    $galleryPhotos = $limitedGalleries->map(function($g) use ($categories) {
         return [
             'image' => $g->image_url,
             'title' => $g->title ?? 'Gallery Image',

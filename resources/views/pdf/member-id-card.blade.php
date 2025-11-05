@@ -79,8 +79,9 @@
             position: relative;
             background: {{ $design['bg'] }};
             border: {{ $design['border_width'] }} solid {{ $design['border'] }};
-            border-radius: 6px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
         }
         .top-accent {
             height: 8px;
@@ -95,7 +96,7 @@
         }
         .logo h1 {
             margin: 0;
-            font-size: 16px;
+            font-size: 14px;
             color: {{ $design['accent'] }};
             font-weight: bold;
         }
@@ -108,55 +109,62 @@
             background: {{ $design['title_bg'] }};
             color: {{ $design['title_text'] }};
             text-align: center;
-            padding: 6px 8px;
-            margin: 5px 0 8px 0;
+            padding: 5px 8px;
+            margin: 4px 0 6px 0;
             font-weight: bold;
-            font-size: @if($category === 'elite') 13px @else 11px @endif;
-            border-radius: 4px;
+            font-size: @if($category === 'elite') 12px @else 10px @endif;
+            border-radius: 6px;
             display: inline-block;
             width: 100%;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
         .member-id {
             background: {{ $design['id_bg'] }};
             color: {{ $design['id_text'] }};
             text-align: center;
-            padding: 8px;
-            margin: 10px 0;
+            padding: 6px 8px;
+            margin: 6px 0 8px 0;
             font-weight: bold;
-            font-size: 16px;
-            border-radius: 4px;
+            font-size: 14px;
+            border-radius: 6px;
             border: 2px solid {{ $design['accent'] }};
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .content {
+            padding: 0 10px 28px 10px;
         }
         .info {
-            margin: 5px 0;
-            font-size: 10px;
+            margin: 3px 0;
+            font-size: 9px;
             color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
-        .info strong {
-            color: {{ $design['accent'] }};
-            font-weight: bold;
-        }
+        .label { color: {{ $design['accent'] }}; font-weight: bold; min-width: 46px; }
+        .value { flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
         .badge {
             display: inline-block;
             background: {{ $design['accent'] }};
             color: #ffffff;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-size: 8px;
+            padding: 1px 6px;
+            border-radius: 999px;
+            font-size: 7px;
             font-weight: bold;
             margin-left: 5px;
         }
         .footer {
             position: absolute;
-            bottom: 5px;
+            bottom: 6px;
             left: 10px;
             right: 10px;
             text-align: center;
-            font-size: 7px;
+            font-size: 6.5px;
             color: #6b7280;
             border-top: 1px solid #e5e7eb;
             padding-top: 3px;
@@ -185,7 +193,6 @@
             <p>ASA UR Nyarugenge SDA</p>
         </div>
         <div class="accent-line"></div>
-
         <div class="membership-title">
             {{ $title }}
             @if($category === 'elite')
@@ -200,22 +207,13 @@
             @endif
         </div>
 
-        <div class="info">
-            <strong>Name:</strong> {{ $member->first_name }} {{ $member->last_name }}
-        </div>
-
-        <div class="info">
-            <strong>Type:</strong> {{ ucfirst($member->member_type) }}
-        </div>
-
-        @if($member->voice)
-        <div class="info">
-            <strong>Voice:</strong> {{ ucfirst($member->voice) }}
-        </div>
-        @endif
-
-        <div class="info">
-            <strong>Joined:</strong> {{ $member->joining_year ?? ($member->joined_at ? $member->joined_at->format('Y') : date('Y')) }}
+        <div class="content">
+            <div class="info"><span class="label">Name:</span><span class="value">{{ $member->first_name }} {{ $member->last_name }}</span></div>
+            <div class="info"><span class="label">Type:</span><span class="value">{{ ucfirst($member->member_type) }}</span></div>
+            @if($member->voice)
+            <div class="info"><span class="label">Voice:</span><span class="value">{{ ucfirst($member->voice) }}</span></div>
+            @endif
+            <div class="info"><span class="label">Joined:</span><span class="value">{{ $member->joining_year ?? ($member->joined_at ? $member->joined_at->format('Y') : date('Y')) }}</span></div>
         </div>
 
         <div class="footer">

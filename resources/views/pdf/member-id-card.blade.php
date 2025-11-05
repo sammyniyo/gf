@@ -3,47 +3,33 @@
     $title = $member->membership_title;
     $years = $member->membership_years;
     
-    // Simplified but still beautiful designs
+    // Simple, clean designs matching the sample
     $cardDesigns = [
         'fresher' => [
-            'bg' => '#ffffff',
+            'bg' => '#fef9e7',
             'accent' => '#10b981',
-            'accent_light' => '#d1fae5',
             'text' => '#064e3b',
-            'title_bg' => '#10b981',
-            'title_text' => '#ffffff',
-            'badge_text' => '✨ NEW',
         ],
         'member' => [
-            'bg' => '#ffffff',
+            'bg' => '#fef9e7',
             'accent' => '#3b82f6',
-            'accent_light' => '#dbeafe',
             'text' => '#1e3a8a',
-            'title_bg' => '#3b82f6',
-            'title_text' => '#ffffff',
-            'badge_text' => '🌟 ACTIVE',
         ],
         'veteran' => [
-            'bg' => '#ffffff',
+            'bg' => '#fef9e7',
             'accent' => '#8b5cf6',
-            'accent_light' => '#ede9fe',
             'text' => '#5b21b6',
-            'title_bg' => '#8b5cf6',
-            'title_text' => '#ffffff',
-            'badge_text' => '⚡ VETERAN',
         ],
         'elite' => [
-            'bg' => '#fffdf6',
+            'bg' => '#fef9e7',
             'accent' => '#f59e0b',
-            'accent_light' => '#fef3c7',
             'text' => '#78350f',
-            'title_bg' => 'linear-gradient(45deg, #f59e0b, #fbbf24)',
-            'title_text' => '#78350f',
-            'badge_text' => '👑 ELITE',
         ],
     ];
     
     $design = $cardDesigns[$category] ?? $cardDesigns['member'];
+    $initials = strtoupper(substr($member->first_name, 0, 1) . substr($member->last_name, 0, 1));
+    $joiningYear = $member->joining_year ?? ($member->joined_at ? $member->joined_at->format('Y') : date('Y'));
 @endphp
 <!DOCTYPE html>
 <html>
@@ -53,83 +39,96 @@
     <style>
         @page {
             margin: 0;
-            size: 3.375in 2.125in; /* Standard ID card size */
+            size: 3.375in 2.125in;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         body {
             margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f8fafc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            padding: 10px;
+            font-family: 'Arial', sans-serif;
+            background: #e5e7eb;
         }
         .card {
             width: 3.375in;
             height: 2.125in;
             background: {{ $design['bg'] }};
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-radius: 8px;
             position: relative;
             overflow: hidden;
             border: 2px solid {{ $design['accent'] }};
         }
-        .card-header {
-            height: 45px;
+        /* Top Header Bar */
+        .header-bar {
+            height: 32px;
             background: {{ $design['accent'] }};
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 15px;
+            justify-content: center;
             position: relative;
         }
-        .logo {
+        .header-text {
             color: white;
+            text-align: center;
         }
-        .logo h1 {
-            margin: 0;
-            font-size: 14px;
+        .header-text h1 {
+            font-size: 12px;
             font-weight: bold;
-        }
-        .logo p {
             margin: 0;
-            font-size: 8px;
-            opacity: 0.9;
+            line-height: 1.2;
         }
-        .years-badge {
+        .header-text p {
+            font-size: 7px;
+            margin: 0;
+            opacity: 0.95;
+        }
+        /* Age Badge */
+        .age-badge {
+            position: absolute;
+            left: 8px;
+            top: 8px;
+            width: 28px;
+            height: 28px;
             background: white;
-            color: {{ $design['accent'] }};
-            width: 35px;
-            height: 35px;
+            border: 2px solid {{ $design['accent'] }};
             border-radius: 50%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 10;
         }
-        .years-badge .number {
-            font-size: 12px;
+        .age-badge .number {
+            font-size: 11px;
+            font-weight: bold;
+            color: black;
             line-height: 1;
         }
-        .card-body {
-            padding: 12px 15px;
-            display: flex;
-            gap: 12px;
-            height: calc(100% - 45px);
+        .age-badge .label {
+            font-size: 5px;
+            color: black;
+            font-weight: bold;
         }
-        .avatar-section {
+        /* Main Content Area */
+        .content-area {
+            padding: 8px 10px 24px 10px;
+            display: flex;
+            gap: 10px;
+            height: calc(100% - 32px);
+        }
+        /* Left Side - Photo and ID */
+        .left-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
-        .avatar {
-            width: 60px;
-            height: 60px;
+        .photo-placeholder {
+            width: 50px;
+            height: 50px;
             background: {{ $design['accent'] }};
             border-radius: 50%;
             display: flex;
@@ -137,153 +136,169 @@
             justify-content: center;
             color: white;
             font-weight: bold;
-            font-size: 18px;
-            border: 3px solid {{ $design['accent_light'] }};
+            font-size: 16px;
+            margin-top: 2px;
         }
-        .member-id {
-            background: {{ $design['accent_light'] }};
-            color: {{ $design['text'] }};
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 9px;
+        .id-bar {
+            background: {{ $design['accent'] }}33;
+            color: black;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 7px;
             font-weight: bold;
             text-align: center;
+            max-width: 70px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        .info-section {
+        /* Right Side - Name and Details */
+        .right-section {
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
         }
         .member-name {
-            font-size: 16px;
+            font-size: 13px;
             font-weight: bold;
             color: {{ $design['text'] }};
-            margin: 0;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        .membership-title {
-            background: {{ $design['title_bg'] }};
-            color: {{ $design['title_text'] }};
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4px;
-            margin-top: 4px;
-        }
-        .detail-item {
-            display: flex;
-            flex-direction: column;
-        }
-        .detail-label {
-            font-size: 7px;
-            color: #64748b;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        .detail-value {
+        .membership-level {
             font-size: 9px;
             color: {{ $design['text'] }};
             font-weight: 600;
+            text-transform: uppercase;
         }
-        .status-badge {
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-            background: {{ $design['accent'] }};
-            color: white;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 8px;
+        /* Bottom Details Section */
+        .details-section {
+            margin-top: 4px;
+            padding-left: 8px;
+            border-left: 3px solid {{ $design['accent'] }};
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .detail-row {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            font-size: 7px;
+        }
+        .detail-label {
+            color: {{ $design['accent'] }};
             font-weight: bold;
+            text-transform: uppercase;
+            min-width: 38px;
         }
-        .accent-corner {
+        .detail-value {
+            color: {{ $design['text'] }};
+            font-weight: 600;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .status-active {
+            color: {{ $design['accent'] }};
+        }
+        /* Footer */
+        .footer {
+            position: absolute;
+            bottom: 4px;
+            left: 10px;
+            right: 10px;
+            text-align: center;
+            font-size: 6px;
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 2px;
+        }
+        /* Corner Accent */
+        .corner-accent {
             position: absolute;
             bottom: 0;
             right: 0;
             width: 0;
             height: 0;
-            border-bottom: 40px solid {{ $design['accent_light'] }};
-            border-left: 40px solid transparent;
-        }
-        .footer {
-            position: absolute;
-            bottom: 4px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: 6px;
-            color: #64748b;
+            border-bottom: 35px solid {{ $design['accent'] }}22;
+            border-left: 35px solid transparent;
         }
     </style>
 </head>
 <body>
     <div class="card">
-        <div class="card-header">
-            <div class="logo">
+        <!-- Top Header Bar -->
+        <div class="header-bar">
+            @if($years > 0)
+            <div class="age-badge">
+                <span class="number">{{ $years }}</span>
+                <span class="label">YRS</span>
+            </div>
+            @endif
+            <div class="header-text">
                 <h1>GOD'S FAMILY CHOIR</h1>
                 <p>ASA UR Nyarugenge SDA</p>
             </div>
-            @if($years > 0)
-            <div class="years-badge">
-                <span class="number">{{ $years }}</span>
-                <span>YRS</span>
-            </div>
-            @endif
         </div>
         
-        <div class="card-body">
-            <div class="avatar-section">
-                <div class="avatar">
-                    {{ strtoupper(substr($member->first_name, 0, 1)) }}{{ strtoupper(substr($member->last_name, 0, 1)) }}
+        <!-- Main Content -->
+        <div class="content-area">
+            <!-- Left: Photo and ID -->
+            <div class="left-section">
+                <div class="photo-placeholder">
+                    {{ $initials }}
                 </div>
-                <div class="member-id">
+                <div class="id-bar">
                     {{ $member->member_id }}
                 </div>
             </div>
             
-            <div class="info-section">
-                <h2 class="member-name">{{ $member->first_name }} {{ $member->last_name }}</h2>
-                
-                <div class="membership-title">
+            <!-- Right: Name and Details -->
+            <div class="right-section">
+                <div class="member-name">
+                    {{ $member->first_name }} {{ $member->last_name }}
+                </div>
+                <div class="membership-level">
                     {{ $title }}
                 </div>
                 
-                <div class="details-grid">
-                    <div class="detail-item">
+                <!-- Details Section -->
+                <div class="details-section">
+                    <div class="detail-row">
                         <span class="detail-label">Type</span>
                         <span class="detail-value">{{ ucfirst($member->member_type) }}</span>
                     </div>
-                    <div class="detail-item">
+                    @if($member->voice)
+                    <div class="detail-row">
                         <span class="detail-label">Voice</span>
-                        <span class="detail-value">{{ $member->voice ? ucfirst($member->voice) : 'All' }}</span>
+                        <span class="detail-value">{{ ucfirst($member->voice) }}</span>
                     </div>
-                    <div class="detail-item">
+                    @endif
+                    <div class="detail-row">
                         <span class="detail-label">Joined</span>
-                        <span class="detail-value">{{ $member->joining_year ?? ($member->joined_at ? $member->joined_at->format('Y') : date('Y')) }}</span>
+                        <span class="detail-value">{{ $joiningYear }}</span>
                     </div>
-                    <div class="detail-item">
+                    <div class="detail-row">
                         <span class="detail-label">Status</span>
-                        <span class="detail-value" style="color: {{ $design['accent'] }}">Active</span>
+                        <span class="detail-value status-active">Active</span>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="status-badge">
-            {{ $design['badge_text'] }}
-        </div>
+        <!-- Corner Accent -->
+        <div class="corner-accent"></div>
         
-        <div class="accent-corner"></div>
-        
+        <!-- Footer -->
         <div class="footer">
             Official Member ID • Valid through {{ date('Y') + 1 }} • www.godsfamilychoir.org
         </div>
     </div>
 </body>
 </html>
+

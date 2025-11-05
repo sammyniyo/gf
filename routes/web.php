@@ -72,6 +72,10 @@ Route::get('/story', function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     // Birthday emails
     Route::post('/birthdays/send', [App\Http\Controllers\Admin\DashboardController::class, 'sendBirthdayEmails'])->name('birthdays.send');
+    
+    // Bulk Email
+    Route::get('/bulk-email', [App\Http\Controllers\Admin\BulkEmailController::class, 'index'])->name('bulk-email.index');
+    Route::post('/bulk-email/send', [App\Http\Controllers\Admin\BulkEmailController::class, 'send'])->name('bulk-email.send');
 
     // Calendar Events API
     Route::get('/calendar/events', [App\Http\Controllers\Admin\DashboardController::class, 'getCalendarEvents'])->name('calendar.events');

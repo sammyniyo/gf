@@ -8,7 +8,7 @@
 
     @php
         // Get section values with proper fallbacks
-        $pageTitle = view()->hasSection('title') ? trim(e(view()->yieldContent('title'))) : 'God's Family Choir - ASA UR Nyarugenge SDA';
+        $pageTitle = view()->hasSection('title') ? trim(e(view()->yieldContent('title'))) : 'Gods Family Choir - ASA UR Nyarugenge SDA';
         $metaDescription = view()->hasSection('meta_description') ? trim(e(view()->yieldContent('meta_description'))) : 'God\'s Family Choir is a vibrant worship ministry serving the words of life to the world through gospel messages. Join our family of over 300 worshippers, musicians, and storytellers.';
         $ogTitle = view()->hasSection('og:title') ? trim(e(view()->yieldContent('og:title'))) : $pageTitle;
         $ogDescription = view()->hasSection('og:description') ? trim(e(view()->yieldContent('og:description'))) : $metaDescription;
@@ -18,8 +18,8 @@
 
     <!-- SEO Meta Tags -->
     <meta name="description" content="{{ $metaDescription }}">
-    <meta name="keywords" content="@yield('meta_keywords', 'God\'s Family Choir, ASA UR Nyarugenge SDA, Choir, Music, Worship, Jesus, Gospel, Christian, Church, Rwanda, Kigali, Adventist, Seventh-day Adventist, Worship Music, Gospel Music, Christian Music, Choir Ministry')">
-    <meta name="author" content="@yield('meta_author', 'God\'s Family Choir')">
+    <meta name="keywords" content="@yield('meta_keywords', 'Gods Family Choir, ASA UR Nyarugenge SDA, Choir, Music, Worship, Jesus, Gospel, Christian, Church, Rwanda, Kigali, Adventist, Seventh-day Adventist, Worship Music, Gospel Music, Christian Music, Choir Ministry')">
+    <meta name="author" content="@yield('meta_author', 'Gods Family Choir')">
     <meta name="robots" content="@yield('meta_robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1')">
     <meta name="googlebot" content="index, follow">
     <link rel="canonical" href="@yield('canonical_url', url()->current())">

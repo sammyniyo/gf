@@ -63,7 +63,7 @@
         }
         /* Top Header Bar */
         .header-bar {
-            height: 32px;
+            height: 28px;
             background: {{ $design['accent'] }};
             display: flex;
             align-items: center;
@@ -75,23 +75,23 @@
             text-align: center;
         }
         .header-text h1 {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             margin: 0;
-            line-height: 1.2;
+            line-height: 1.1;
         }
         .header-text p {
-            font-size: 7px;
+            font-size: 6.5px;
             margin: 0;
             opacity: 0.95;
         }
         /* Age Badge */
         .age-badge {
             position: absolute;
-            left: 8px;
-            top: 8px;
-            width: 28px;
-            height: 28px;
+            left: 6px;
+            top: 6px;
+            width: 24px;
+            height: 24px;
             background: white;
             border: 2px solid {{ $design['accent'] }};
             border-radius: 50%;
@@ -102,33 +102,34 @@
             z-index: 10;
         }
         .age-badge .number {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
             color: black;
             line-height: 1;
         }
         .age-badge .label {
-            font-size: 5px;
+            font-size: 4.5px;
             color: black;
             font-weight: bold;
         }
         /* Main Content Area */
         .content-area {
-            padding: 8px 10px 24px 10px;
+            padding: 6px 8px 20px 8px;
             display: flex;
-            gap: 10px;
-            height: calc(100% - 32px);
+            gap: 8px;
+            height: calc(100% - 28px);
         }
         /* Left Side - Photo and ID */
         .left-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
+            flex-shrink: 0;
         }
         .photo-placeholder {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             background: {{ $design['accent'] }};
             border-radius: 50%;
             display: flex;
@@ -136,18 +137,17 @@
             justify-content: center;
             color: white;
             font-weight: bold;
-            font-size: 16px;
-            margin-top: 2px;
+            font-size: 14px;
         }
         .id-bar {
             background: {{ $design['accent'] }}33;
             color: black;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-size: 7px;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 6.5px;
             font-weight: bold;
             text-align: center;
-            max-width: 70px;
+            max-width: 65px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -157,10 +157,11 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
+            min-width: 0;
         }
         .member-name {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
             color: {{ $design['text'] }};
             line-height: 1.2;
@@ -169,31 +170,34 @@
             text-overflow: ellipsis;
         }
         .membership-level {
-            font-size: 9px;
+            font-size: 8px;
             color: {{ $design['text'] }};
             font-weight: 600;
             text-transform: uppercase;
+            margin-bottom: 2px;
         }
         /* Bottom Details Section */
         .details-section {
-            margin-top: 4px;
-            padding-left: 8px;
+            padding-left: 6px;
             border-left: 3px solid {{ $design['accent'] }};
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 1.5px;
+            flex: 1;
         }
         .detail-row {
             display: flex;
             align-items: baseline;
-            gap: 6px;
-            font-size: 7px;
+            gap: 5px;
+            font-size: 6.5px;
+            line-height: 1.2;
         }
         .detail-label {
             color: {{ $design['accent'] }};
             font-weight: bold;
             text-transform: uppercase;
-            min-width: 38px;
+            min-width: 35px;
+            flex-shrink: 0;
         }
         .detail-value {
             color: {{ $design['text'] }};
@@ -209,14 +213,14 @@
         /* Footer */
         .footer {
             position: absolute;
-            bottom: 4px;
-            left: 10px;
-            right: 10px;
+            bottom: 3px;
+            left: 8px;
+            right: 8px;
             text-align: center;
-            font-size: 6px;
+            font-size: 5.5px;
             color: #6b7280;
             border-top: 1px solid #e5e7eb;
-            padding-top: 2px;
+            padding-top: 1px;
         }
         /* Corner Accent */
         .corner-accent {

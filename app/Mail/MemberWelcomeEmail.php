@@ -25,8 +25,8 @@ class MemberWelcomeEmail extends Mailable
         $this->member = $member;
 
         // Group invite links - Update these with actual group links
-        $this->mainGroupLink = config('services.whatsapp.main_group_link', 'https://chat.whatsapp.com/MAIN_GROUP');
-        $this->activeChoristersLink = config('services.whatsapp.active_choristers_link', 'https://chat.whatsapp.com/ACTIVE_CHORISTERS');
+        $this->mainGroupLink = config('services.whatsapp.main_group_link', 'https://chat.whatsapp.com/Df0ga59rC7wFDcMWqMbMCK?mode=wwt');
+        $this->activeChoristersLink = config('services.whatsapp.active_choristers_link', 'https://chat.whatsapp.com/BbBhLCpiOXrEpjB5u1bNwq?mode=wwt');
     }
 
     /**

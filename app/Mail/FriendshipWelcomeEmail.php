@@ -24,7 +24,7 @@ class FriendshipWelcomeEmail extends Mailable
         $this->member = $member;
 
         // Main group invite link - Update with actual group link
-        $this->mainGroupLink = config('services.whatsapp.main_group_link', 'https://chat.whatsapp.com/MAIN_GROUP');
+        $this->mainGroupLink = config('services.whatsapp.main_group_link', 'https://chat.whatsapp.com/Df0ga59rC7wFDcMWqMbMCK?mode=wwt');
     }
 
     /**

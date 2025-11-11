@@ -52,6 +52,7 @@ class Committee extends Model
             'Fashion and Kits',
             'Fellowship',
             'Treasurer',
+            'Communication Department',
             'Auditors',
             'Disciplinary Department',
             'Church Construction Department',

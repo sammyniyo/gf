@@ -53,7 +53,7 @@ class Committee extends Model
             'Fellowship',
             'Treasurer',
             'Auditors',
-            'Discplinary Department',
+            'Disciplinary Department',
             'Church Construction Department',
             'GF Junior',
             'GF Diaspora',

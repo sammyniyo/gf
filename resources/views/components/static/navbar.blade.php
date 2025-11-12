@@ -21,7 +21,7 @@
             <nav class="hidden md:flex items-center space-x-1" x-data="{
                 aboutMenuOpen: false,
                 ministryMenuOpen: false
-            }">
+            }" @keyup.escape="aboutMenuOpen = false; ministryMenuOpen = false">
                 <!-- Home -->
                 <a href="/" class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('/') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
                     <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -31,17 +31,19 @@
                 </a>
 
                 <!-- About Group -->
-                <div class="relative">
-                    <button @click="aboutMenuOpen = !aboutMenuOpen" @click.away="aboutMenuOpen = false"
-                        class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('about*') || request()->is('story*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
+                <div class="relative" @mouseenter="aboutMenuOpen = true" @mouseleave="aboutMenuOpen = false">
+                    <a href="{{ url('/about') }}"
+                        class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('about*') || request()->is('story*') ? 'bg-emerald-700/50 text-amber-100' : '' }}"
+                        @focus="aboutMenuOpen = true">
                         <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         About
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 ml-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                             :class="aboutMenuOpen ? 'rotate-180' : ''">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
-                    </button>
+                    </a>
                     <div x-show="aboutMenuOpen"
                          x-transition:enter="transition ease-out duration-200"
                          x-transition:enter-start="opacity-0 scale-95"
@@ -51,11 +53,11 @@
                          x-transition:leave-end="opacity-0 scale-95"
                          class="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
                          x-cloak>
-                        <a href="/about" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
+                        <a href="{{ url('/about') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Our Story
+                            About Overview
                         </a>
                         <a href="{{ route('story') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,17 +75,19 @@
                 </div>
 
                 <!-- Ministry Group -->
-                <div class="relative">
-                    <button @click="ministryMenuOpen = !ministryMenuOpen" @click.away="ministryMenuOpen = false"
-                        class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('events*') || request()->is('devotions*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
+                <div class="relative" @mouseenter="ministryMenuOpen = true" @mouseleave="ministryMenuOpen = false">
+                    <a href="{{ route('events.index') }}"
+                        class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('events*') ? 'bg-emerald-700/50 text-amber-100' : '' }}"
+                        @focus="ministryMenuOpen = true">
                         <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                         </svg>
                         Ministry
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 ml-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                             :class="ministryMenuOpen ? 'rotate-180' : ''">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
-                    </button>
+                    </a>
                     <div x-show="ministryMenuOpen"
                          x-transition:enter="transition ease-out duration-200"
                          x-transition:enter-start="opacity-0 scale-95"
@@ -93,7 +97,7 @@
                          x-transition:leave-end="opacity-0 scale-95"
                          class="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
                          x-cloak>
-                        <a href="/events" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
+                        <a href="{{ route('events.index') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
@@ -226,12 +230,12 @@
             <div class="px-3 py-2">
                 <div class="text-xs font-semibold text-emerald-200 uppercase tracking-wider">About Us</div>
             </div>
-            <a href="/about" @click="mobileMenuOpen = false"
+            <a href="{{ url('/about') }}" @click="mobileMenuOpen = false"
                 class="flex items-center px-6 py-2 rounded-md text-sm font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('about*') ? 'bg-emerald-700 text-amber-100' : '' }}">
                 <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                Our Story
+                About Overview
             </a>
             <a href="{{ route('story') }}" @click="mobileMenuOpen = false"
                 class="flex items-center px-6 py-2 rounded-md text-sm font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('story*') ? 'bg-emerald-700 text-amber-100' : '' }}">
@@ -252,7 +256,7 @@
             <div class="px-3 py-2">
                 <div class="text-xs font-semibold text-emerald-200 uppercase tracking-wider">Ministry</div>
             </div>
-            <a href="/events" @click="mobileMenuOpen = false"
+                        <a href="{{ route('events.index') }}" @click="mobileMenuOpen = false"
                 class="flex items-center px-6 py-2 rounded-md text-sm font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('events*') ? 'bg-emerald-700 text-amber-100' : '' }}">
                 <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />

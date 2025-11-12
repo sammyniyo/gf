@@ -13,9 +13,9 @@
 <div class="relative overflow-hidden bg-gradient-to-b from-gray-50 to-white">
     <!-- Background Elements -->
     <div class="absolute inset-0 bg-gradient-to-br from-emerald-50/50 via-white to-amber-50/30"></div>
-    <div class="absolute -top-32 -left-20 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl animate-pulse"></div>
-    <div class="absolute bottom-0 right-[-10rem] h-80 w-80 rounded-full bg-amber-200/50 blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-emerald-100/20 to-amber-100/20 blur-3xl"></div>
+    <div class="hidden md:block absolute -top-32 -left-20 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl animate-pulse"></div>
+    <div class="hidden md:block absolute bottom-0 right-[-10rem] h-80 w-80 rounded-full bg-amber-200/50 blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+    <div class="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-emerald-100/20 to-amber-100/20 blur-3xl"></div>
 
     <!-- Hero Section -->
     <section class="relative z-10 px-4 pt-28 pb-20 sm:px-8 lg:px-12 sm:pt-32 sm:pb-36">
@@ -135,7 +135,7 @@
                 <!-- Timeline Line -->
                 <div class="absolute left-1/2 top-0 bottom-0 w-1.5 bg-gradient-to-b from-emerald-200 via-emerald-400 to-emerald-200 transform -translate-x-1/2 hidden lg:block shadow-lg"></div>
 
-                <div class="space-y-20">
+                <div class="space-y-12 sm:space-y-16 lg:space-y-20">
                     @php
                         $roadmapMilestones = [
                             [
@@ -348,8 +348,8 @@
                                 </div>
                             </div>
                             <!-- Decorative Elements -->
-                            <div class="absolute -top-8 -right-8 w-40 h-40 bg-amber-200/50 rounded-full blur-3xl"></div>
-                            <div class="absolute -bottom-8 -left-8 w-48 h-48 bg-emerald-200/50 rounded-full blur-3xl"></div>
+                            <div class="hidden md:block absolute -top-8 -right-8 w-40 h-40 bg-amber-200/50 rounded-full blur-3xl"></div>
+                            <div class="hidden md:block absolute -bottom-8 -left-8 w-48 h-48 bg-emerald-200/50 rounded-full blur-3xl"></div>
                         </div>
                     </div>
                 </div>
@@ -513,8 +513,8 @@
     <!-- Departments Section -->
     <section class="relative z-10 px-4 py-20 sm:px-8 lg:px-12 sm:py-32">
         <div class="absolute inset-0 bg-gradient-to-b from-emerald-50/40 via-white to-amber-50/30"></div>
-        <div class="absolute -top-40 -right-40 w-96 h-96 bg-emerald-200/30 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-amber-200/30 rounded-full blur-3xl"></div>
+        <div class="hidden md:block absolute -top-40 -right-40 w-96 h-96 bg-emerald-200/30 rounded-full blur-3xl"></div>
+        <div class="hidden md:block absolute -bottom-40 -left-40 w-96 h-96 bg-amber-200/30 rounded-full blur-3xl"></div>
 
         <div class="relative mx-auto max-w-7xl">
             <div class="text-center mb-14 sm:mb-20">
@@ -817,7 +817,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="relative z-10 px-4 pt-24 pb-24 sm:px-8 lg:px-12 sm:pt-36 sm:pb-40 bg-gradient-to-b from-white to-gray-50">
+    <section class="relative z-10 px-4 pt-20 pb-24 sm:px-8 lg:px-12 sm:pt-36 sm:pb-40 bg-gradient-to-b from-white to-gray-50">
         <div class="mx-auto max-w-5xl rounded-3xl border-2 border-emerald-200 bg-white p-8 sm:p-14 text-center shadow-2xl">
             <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-5 py-2 text-xs font-bold uppercase tracking-wider text-white shadow-lg">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">

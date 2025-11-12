@@ -36,14 +36,29 @@ class MeetingController extends Controller
             'location' => 'nullable|string|max:255',
             'meeting_link' => 'nullable|url',
             'attendee_type' => 'required|in:committee,all_members,custom',
-            'custom_attendees' => 'nullable|array',
+            'committee_departments' => 'required_if:attendee_type,committee|array',
+            'committee_departments.*' => 'string|max:255',
+            'custom_attendees' => 'required_if:attendee_type,custom|array',
             'custom_attendees.*' => 'exists:members,id',
         ]);
 
-        $meeting = Meeting::create($validated);
+        $meetingData = collect($validated)->except(['custom_attendees', 'committee_departments'])->toArray();
+        if ($validated['attendee_type'] === 'custom') {
+            $meetingData['custom_attendees'] = $validated['custom_attendees'];
+        }
+        if ($validated['attendee_type'] === 'committee') {
+            $meetingData['custom_attendees'] = $validated['committee_departments'];
+        }
+
+        $meeting = Meeting::create($meetingData);
 
         // Add attendees based on type
-        $this->addAttendees($meeting, $validated['attendee_type'], $validated['custom_attendees'] ?? []);
+        $this->addAttendees(
+            $meeting,
+            $validated['attendee_type'],
+            $validated['custom_attendees'] ?? [],
+            $validated['committee_departments'] ?? []
+        );
 
         return redirect()->route('admin.meetings.index')
             ->with('success', 'Meeting created successfully!');
@@ -70,19 +85,29 @@ class MeetingController extends Controller
         return back()->with('success', 'Invitations sent successfully!');
     }
 
-    private function addAttendees(Meeting $meeting, $type, $customIds = [])
+    private function addAttendees(Meeting $meeting, $type, $customIds = [], $committeeDepartments = [])
     {
         $attendees = [];
 
         if ($type === 'committee') {
-            $committees = Committee::where('is_active', true)->get();
+            $committeesQuery = Committee::where('is_active', true);
+            if (!empty($committeeDepartments)) {
+                $committeesQuery->whereIn('department', $committeeDepartments);
+            }
+            $committees = $committeesQuery->with('member')->get();
             foreach ($committees as $committee) {
-                if ($committee->email) {
-                    $attendees[] = [
-                        'email' => $committee->email,
-                        'name' => $committee->name,
-                    ];
+                $member = $committee->member;
+                $email = $member?->email ?? $committee->email;
+                if (!$email) {
+                    continue;
                 }
+                $attendees[] = [
+                    'member_id' => $member?->id,
+                    'email' => $email,
+                    'name' => $member
+                        ? $member->first_name . ' ' . $member->last_name
+                        : ($committee->name ?? $committee->department ?? 'Committee Contact'),
+                ];
             }
         } elseif ($type === 'all_members') {
             // For "all_members", include only active choristers (members who actively sing)
@@ -105,7 +130,18 @@ class MeetingController extends Controller
             }
         }
 
+        $uniqueEmails = [];
         foreach ($attendees as $attendee) {
+            if (empty($attendee['email'])) {
+                continue;
+            }
+
+            $emailKey = strtolower($attendee['email']);
+            if (isset($uniqueEmails[$emailKey])) {
+                continue;
+            }
+
+            $uniqueEmails[$emailKey] = true;
             $meeting->attendees()->create($attendee);
         }
     }

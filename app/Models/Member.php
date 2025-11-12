@@ -199,41 +199,6 @@ class Member extends Model
     }
 
     /**
-     * Generate a public URL for the member's profile photo.
-     */
-    public function getProfilePhotoUrlAttribute(): ?string
-    {
-        $photo = $this->attributes['profile_photo'] ?? $this->attributes['photo_path'] ?? null;
-
-        if (!$photo) {
-            return null;
-        }
-
-        // If the value is already a full URL, return it as-is.
-        if (filter_var($photo, FILTER_VALIDATE_URL)) {
-            return $photo;
-        }
-
-        $normalized = ltrim($photo, '/');
-
-        // Common storage locations to try.
-        $possiblePaths = [
-            $normalized,
-            'member-photos/' . $normalized,
-            'public/member-photos/' . $normalized,
-        ];
-
-        foreach ($possiblePaths as $path) {
-            if (Storage::disk('public')->exists($path)) {
-                return Storage::url($path);
-            }
-        }
-
-        // Fallback to standard storage path assumption.
-        return asset('storage/member-photos/' . $normalized);
-    }
-
-    /**
      * Get the joining year (from joining_year field or derived from joined_at).
      */
     public function getJoiningYearAttribute($value)

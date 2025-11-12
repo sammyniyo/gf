@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('title', 'Welcome to Gods Family Choir | ASA UR Nyarugenge SDA')
-@section('description', 'Gods Family Choir is a choir that sings for God. It is a choir that sings for the people. It is a choir that sings for the community. It is a choir that sings for the world.')
-@section('keywords', 'Gods Family Choir, ASA UR Nyarugenge SDA, Choir, Music, Worship, Jesus, Gospel, Christian, Church')
-@section('author', 'Gods Family Choir')
+@section('meta_description', 'Experience God\'s Family Choir from Kigali, Rwanda—over 300 worshippers serving the words of life to the world through gospel music, ministry, and community.')
+@section('meta_keywords', 'Gods Family Choir, ASA UR Nyarugenge, Adventist choir Rwanda, gospel music Kigali, worship ministry, Seventh-day Adventist choir')
+@section('meta_author', 'Gods Family Choir')
 @section('og:title', 'Welcome to Gods Family Choir | ASA UR Nyarugenge SDA')
 @section('og:description', 'Gods Family Choir is a choir that sings for God. It is a choir that sings for the people. It is a choir that sings for the community. It is a choir that sings for the world.')
 @section('og:image', asset('images/hero.jpg'))

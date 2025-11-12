@@ -106,6 +106,8 @@
     </style>
 
     @stack('styles')
+    <x-seo.organization />
+    @stack('structured-data')
 </head>
 
 <body class="font-sans antialiased">

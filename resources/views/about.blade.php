@@ -18,9 +18,9 @@
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-emerald-100/20 to-amber-100/20 blur-3xl"></div>
 
     <!-- Hero Section -->
-    <section class="relative z-10 px-6 pt-32 pb-32 sm:px-8 lg:px-12 sm:pb-40">
+    <section class="relative z-10 px-4 pt-28 pb-20 sm:px-8 lg:px-12 sm:pt-32 sm:pb-36">
         <div class="mx-auto max-w-6xl">
-            <div class="flex flex-col gap-12 lg:flex-row lg:items-center">
+            <div class="flex flex-col gap-10 lg:gap-12 lg:flex-row lg:items-center">
                 <div class="flex-1 space-y-6">
                     <span class="inline-flex items-center gap-2 rounded-full bg-emerald-100/80 backdrop-blur-sm px-5 py-2 text-xs font-bold uppercase tracking-[0.32em] text-emerald-700 shadow-lg border border-emerald-200/50">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -28,7 +28,7 @@
                         </svg>
                         Our Story
                     </span>
-                    <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl leading-[1.1]">
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 leading-[1.1]">
                         One family, one sound, one <span class="bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 bg-clip-text text-transparent animate-gradient-x">mission</span>
                     </h1>
                     <p class="max-w-2xl text-base sm:text-lg text-gray-700 leading-[1.8]">
@@ -38,7 +38,7 @@
                         For over two decades, we have beautifully blended contemporary expression with timeless truth, serving the words of life to the world through gospel messages.
                     </p>
                     <div class="pt-2">
-                        <a href="#journey" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-8 py-4 text-sm font-bold text-white shadow-xl shadow-emerald-500/30 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/40 hover:-translate-y-1 hover:scale-105">
+                        <a href="#journey" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-7 py-3 text-sm font-bold text-white shadow-xl shadow-emerald-500/30 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/40 hover:-translate-y-1 hover:scale-105">
                             Explore our journey
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -113,19 +113,19 @@
     </section>
 
     <!-- Journey Timeline Section -->
-    <section id="journey" class="relative z-10 px-6 py-32 sm:px-8 lg:px-12 sm:py-40 bg-gradient-to-b from-white via-emerald-50/20 to-white">
+    <section id="journey" class="relative z-10 px-4 py-20 sm:px-8 lg:px-12 sm:py-32 bg-gradient-to-b from-white via-emerald-50/20 to-white">
         <div class="mx-auto max-w-7xl">
-            <div class="text-center mb-20">
+            <div class="text-center mb-14 sm:mb-20">
                 <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-6 py-2 text-xs font-bold uppercase tracking-wide text-white shadow-xl">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
                     </svg>
                     Our Journey
                 </span>
-                <h2 class="mt-6 text-4xl font-bold text-gray-900 sm:text-5xl lg:text-6xl">
+                <h2 class="mt-6 text-3xl sm:text-5xl lg:text-6xl font-bold text-gray-900">
                     Our <span class="bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 bg-clip-text text-transparent animate-gradient-x">History Roadmap</span>
                 </h2>
-                <p class="mt-6 max-w-3xl mx-auto text-lg sm:text-xl text-gray-600 leading-relaxed font-medium">
+                <p class="mt-6 max-w-3xl mx-auto text-base sm:text-xl text-gray-600 leading-relaxed font-medium">
                     From humble beginnings as a small group of Adventist students gathering for Sabbath worship to a thriving family of over 300 members, our journey has been marked by God's faithfulness and the dedication of countless voices united in worship. Each milestone represents a step forward in our mission to serve the words of life to the world through gospel messages.
                 </p>
                     </div>
@@ -321,16 +321,16 @@
     </section>
 
     <!-- GF Juniors Section -->
-    <section class="relative z-10 px-6 py-32 sm:px-8 lg:px-12 sm:py-40 bg-gradient-to-br from-amber-50/40 via-white to-emerald-50/30">
+    <section class="relative z-10 px-4 py-20 sm:px-8 lg:px-12 sm:py-32 bg-gradient-to-br from-amber-50/40 via-white to-emerald-50/30">
         <div class="mx-auto max-w-7xl">
-            <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+            <div class="grid gap-10 lg:gap-12 lg:grid-cols-2 lg:items-center">
                 <!-- Image Section -->
                 <div class="order-2 lg:order-1" data-aos="fade-right">
                     <div class="relative">
                         <div class="absolute -inset-6 bg-gradient-to-r from-amber-400 via-emerald-400 to-amber-400 rounded-3xl blur-3xl opacity-30 animate-pulse"></div>
                         <div class="relative">
                             <div class="rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
-                                <img src="{{ asset('images/choir_of_god_1761667510314.jpeg') }}" alt="GF Juniors - Young Worshippers" class="w-full h-[550px] object-cover" />
+                                <img src="{{ asset('images/choir_of_god_1761667510314.jpeg') }}" alt="GF Juniors - Young Worshippers" class="w-full h-[340px] sm:h-[500px] lg:h-[550px] object-cover" />
                                 <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/30 to-transparent"></div>
                                 <!-- Enhanced Floating Badge -->
                                 <div class="absolute bottom-8 left-8 right-8 rounded-2xl bg-white/97 backdrop-blur-md p-6 shadow-2xl border-2 border-amber-100">
@@ -363,15 +363,15 @@
                         Featured Department
                     </div>
 
-                    <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight">
+                    <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight">
                         GF <span class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 bg-clip-text text-transparent animate-gradient-x">Juniors</span>
                     </h2>
 
-                    <p class="text-xl sm:text-2xl text-gray-700 leading-relaxed font-bold">
+                    <p class="text-lg sm:text-2xl text-gray-700 leading-relaxed font-bold">
                         Nurturing young hearts to worship with passion and purpose
                     </p>
 
-                    <p class="text-lg text-gray-600 leading-relaxed font-medium">
+                    <p class="text-base sm:text-lg text-gray-600 leading-relaxed font-medium">
                         GF Juniors is the junior choir formed by children of choir members, ensuring the continuity of this ministry across generations. It's more than a youth choir—it's a family where young worshippers discover their God-given talents, build lifelong friendships, and develop a deep relationship with Christ. Through weekly rehearsals, mentorship programs, and performance opportunities, we're shaping the next generation of worship leaders who will carry the torch forward.
                     </p>
 
@@ -416,7 +416,7 @@
 
                     <!-- CTA -->
                     <div class="pt-6">
-                        <a href="{{ route('choir.register.form') }}" class="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 px-10 py-5 text-base font-black text-white shadow-2xl shadow-amber-500/40 transition-all duration-300 hover:shadow-3xl hover:shadow-amber-500/50 hover:-translate-y-1 hover:scale-105">
+                        <a href="{{ route('choir.register.form') }}" class="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 px-8 py-4 text-sm sm:text-base font-black text-white shadow-2xl shadow-amber-500/40 transition-all duration-300 hover:shadow-3xl hover:shadow-amber-500/50 hover:-translate-y-1 hover:scale-105">
                             Join GF Juniors Today
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -429,7 +429,7 @@
     </section>
 
     <!-- Values Section -->
-    <section class="relative z-10 px-6 py-32 sm:px-8 lg:px-12 sm:py-40">
+    <section class="relative z-10 px-4 py-20 sm:px-8 lg:px-12 sm:py-32">
         <div class="mx-auto max-w-6xl">
             <div class="text-center mb-16">
                 <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 px-6 py-2 text-xs font-black uppercase tracking-wide text-white shadow-xl">
@@ -438,15 +438,15 @@
                     </svg>
                     Purpose & Values
                 </span>
-                <h2 class="mt-6 text-4xl font-black text-gray-900 sm:text-5xl lg:text-6xl">
+                <h2 class="mt-6 text-3xl sm:text-5xl lg:text-6xl font-black text-gray-900">
                     Why we sing and how we <span class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 bg-clip-text text-transparent animate-gradient-x">live it out</span>
                 </h2>
-                <p class="mt-6 max-w-3xl mx-auto text-lg sm:text-xl text-gray-600 leading-relaxed font-medium">
+                <p class="mt-6 max-w-3xl mx-auto text-base sm:text-xl text-gray-600 leading-relaxed font-medium">
                     Our ministry flows from a clear identity. We pursue the presence of God, honor excellence, and cultivate a culture of discipleship and service on and off stage. These core values shape everything we do.
                 </p>
             </div>
 
-            <div class="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div class="mt-12 sm:mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 @php
                     $values = [
                         ['icon' => '✨', 'title' => 'Pure Worship', 'body' => 'We create environments where people encounter Jesus, beyond performances and playlists. Every song is a prayer, every note a declaration of God\'s goodness.', 'color' => 'emerald'],
@@ -480,7 +480,7 @@
             </div>
 
                <!-- Enhanced Stats Grid -->
-               <div class="mt-32 lg:mt-24 grid gap-5 rounded-3xl border border-emerald-100 bg-white p-6 sm:p-8 shadow-xl sm:grid-cols-2 lg:grid-cols-4">
+               <div class="mt-20 sm:mt-24 lg:mt-24 grid gap-5 rounded-3xl border border-emerald-100 bg-white p-6 sm:p-8 shadow-xl sm:grid-cols-2 lg:grid-cols-4">
                 @php
                     $stats = [
                         ['label' => 'Active Members', 'value' => 300, 'color' => 'emerald', 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'],
@@ -511,20 +511,20 @@
     </section>
 
     <!-- Departments Section -->
-    <section class="relative z-10 px-6 py-32 sm:px-8 lg:px-12 sm:py-40">
+    <section class="relative z-10 px-4 py-20 sm:px-8 lg:px-12 sm:py-32">
         <div class="absolute inset-0 bg-gradient-to-b from-emerald-50/40 via-white to-amber-50/30"></div>
         <div class="absolute -top-40 -right-40 w-96 h-96 bg-emerald-200/30 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-amber-200/30 rounded-full blur-3xl"></div>
 
         <div class="relative mx-auto max-w-7xl">
-            <div class="text-center mb-20">
+            <div class="text-center mb-14 sm:mb-20">
                 <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-6 py-2 text-xs font-black uppercase tracking-wide text-white shadow-xl">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
                     </svg>
                     Our Departments
                 </span>
-                <h2 class="mt-6 text-4xl font-black text-gray-900 sm:text-5xl lg:text-6xl">
+                <h2 class="mt-6 text-3xl sm:text-5xl lg:text-6xl font-black text-gray-900">
                     Departments that <span class="bg-gradient-to-r from-emerald-600 via-emerald-500 to-amber-500 bg-clip-text text-transparent animate-gradient-x">Shape Us</span>
                 </h2>
                 <p class="mt-6 max-w-3xl mx-auto text-lg sm:text-xl text-gray-600 leading-relaxed font-medium">
@@ -687,8 +687,8 @@
             </div>
 
             <!-- Enhanced CTA to Committee Page -->
-            <div class="mt-20 text-center">
-                <div class="inline-flex flex-col items-center gap-6 p-10 rounded-3xl bg-gradient-to-br from-white via-emerald-50/50 to-white border-2 border-emerald-200 shadow-2xl max-w-2xl">
+            <div class="mt-16 sm:mt-20 text-center">
+                <div class="inline-flex flex-col items-center gap-6 p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-white via-emerald-50/50 to-white border-2 border-emerald-200 shadow-2xl max-w-2xl">
                     <div class="flex items-center gap-4">
                         <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-2xl">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -700,7 +700,7 @@
                             <p class="text-2xl font-black text-gray-900">View our full committee structure</p>
                         </div>
                     </div>
-                    <a href="{{ route('committee.index') }}" class="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-10 py-4 text-base font-black text-white shadow-xl shadow-emerald-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/50 hover:-translate-y-1 hover:scale-105">
+                    <a href="{{ route('committee.index') }}" class="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-8 py-3.5 text-sm sm:text-base font-black text-white shadow-xl shadow-emerald-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/50 hover:-translate-y-1 hover:scale-105">
                         Explore All Team Members
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -712,7 +712,7 @@
     </section>
 
     <!-- Founding Members Section -->
-    <section class="relative z-10 px-6 py-32 sm:px-8 lg:px-12 sm:py-40 bg-gradient-to-br from-amber-50/30 via-white to-emerald-50/30">
+    <section class="relative z-10 px-4 py-20 sm:px-8 lg:px-12 sm:py-32 bg-gradient-to-br from-amber-50/30 via-white to-emerald-50/30">
         <div class="mx-auto max-w-6xl">
             <div class="text-center mb-16">
                 <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 px-6 py-2 text-xs font-black uppercase tracking-wide text-white shadow-xl">
@@ -722,10 +722,10 @@
                     </svg>
                     Our Foundation
                 </span>
-                <h2 class="mt-6 text-4xl font-black text-gray-900 sm:text-5xl lg:text-6xl">
+                <h2 class="mt-6 text-3xl sm:text-5xl lg:text-6xl font-black text-gray-900">
                     The <span class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 bg-clip-text text-transparent animate-gradient-x">Founding Pillars</span>
                 </h2>
-                <p class="mt-6 max-w-3xl mx-auto text-lg sm:text-xl text-gray-600 leading-relaxed font-medium">
+                <p class="mt-6 max-w-3xl mx-auto text-base sm:text-xl text-gray-600 leading-relaxed font-medium">
                     These individuals were among the pillars who laid the foundation of God's Family Choir. Their vision, dedication, and faith created the legacy we continue to build upon today.
                 </p>
             </div>
@@ -767,8 +767,8 @@
     </section>
 
     <!-- Leadership Section -->
-    <section class="relative z-10 px-6 py-32 sm:px-8 lg:px-12 sm:py-40">
-        <div class="mx-auto max-w-6xl rounded-3xl border-2 border-emerald-200 bg-white/95 backdrop-blur-sm p-12 shadow-2xl">
+    <section class="relative z-10 px-4 py-20 sm:px-8 lg:px-12 sm:py-32">
+        <div class="mx-auto max-w-6xl rounded-3xl border-2 border-emerald-200 bg-white/95 backdrop-blur-sm p-8 sm:p-12 shadow-2xl">
             <div class="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
                 <div class="space-y-6">
                     <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-6 py-2.5 text-xs font-black uppercase tracking-wide text-white shadow-xl">
@@ -777,11 +777,11 @@
                         </svg>
                         Meet the directors
                     </span>
-                    <h2 class="text-4xl sm:text-5xl font-black text-gray-900 leading-tight">Guided by <span class="bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 bg-clip-text text-transparent animate-gradient-x">servant leaders</span></h2>
+                    <h2 class="text-3xl sm:text-5xl font-black text-gray-900 leading-tight">Guided by <span class="bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 bg-clip-text text-transparent animate-gradient-x">servant leaders</span></h2>
                     <p class="text-base sm:text-lg text-gray-600 leading-relaxed font-medium">
                         Our leadership team shepherds the choir with humility and strategy, equipping every section—sopranos to band—to thrive spiritually and musically. They steward vision, develop emerging leaders, and ensure our ministry stays anchored in sound doctrine and authentic worship.
                     </p>
-                    <a href="{{ route('committee.index') }}" class="inline-flex items-center gap-2 rounded-full border-2 border-emerald-300 bg-white px-8 py-4 text-sm font-black text-emerald-700 transition-all duration-300 hover:border-emerald-500 hover:bg-emerald-50 hover:-translate-y-1 shadow-md">
+                    <a href="{{ route('committee.index') }}" class="inline-flex items-center gap-2 rounded-full border-2 border-emerald-300 bg-white px-7 py-3.5 text-sm font-black text-emerald-700 transition-all duration-300 hover:border-emerald-500 hover:bg-emerald-50 hover:-translate-y-1 shadow-md">
                         View leadership directory
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -817,8 +817,8 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="relative z-10 px-6 pb-40 pt-32 sm:px-8 lg:px-12 sm:pb-48 sm:pt-40 bg-gradient-to-b from-white to-gray-50">
-        <div class="mx-auto max-w-5xl rounded-3xl border-2 border-emerald-200 bg-white p-12 sm:p-16 text-center shadow-2xl">
+    <section class="relative z-10 px-4 pt-24 pb-24 sm:px-8 lg:px-12 sm:pt-36 sm:pb-40 bg-gradient-to-b from-white to-gray-50">
+        <div class="mx-auto max-w-5xl rounded-3xl border-2 border-emerald-200 bg-white p-8 sm:p-14 text-center shadow-2xl">
             <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-5 py-2 text-xs font-bold uppercase tracking-wider text-white shadow-lg">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>

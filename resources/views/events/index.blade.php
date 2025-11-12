@@ -4,7 +4,12 @@
     use Illuminate\Support\Facades\Storage;
 @endphp
 
-@section('title', 'Events | God\'s Family Choir')
+@section('title', 'Gospel Events & Concerts | God\'s Family Choir')
+@section('meta_description', 'Browse upcoming and past gospel events, concerts, and worship gatherings hosted by God\'s Family Choir in Kigali, Rwanda.')
+@section('meta_keywords', 'Gods Family Choir events, Kigali gospel concerts, Adventist worship events Rwanda, choir concerts Kigali, Seventh-day Adventist events')
+@section('canonical_url', route('events.index'))
+@section('og:title', 'Upcoming Choir Events & Concerts | God\'s Family Choir')
+@section('og:description', 'Discover upcoming gospel concerts, outreach programs, and worship gatherings with God\'s Family Choir. Join us in Kigali or online for uplifting ministry.')
 
 @section('content')
 <!-- Revolutionary Split Hero Section -->
@@ -500,6 +505,18 @@ function toggleAdvanced() {
 </section>
 
 <x-static.footer />
+
+@isset($nextEvent)
+    <x-seo.event-schema
+        :name="$nextEvent->title"
+        :description="$nextEvent->description"
+        :start-date="$nextEvent->start_at"
+        :end-date="$nextEvent->end_at ?? null"
+        :image="$nextEvent->cover_image ? Storage::url($nextEvent->cover_image) : asset('images/gf.jpg')"
+        :location-name="$nextEvent->location"
+        :url="route('events.show', $nextEvent)"
+    />
+@endisset
 
 <style>
     /* Smooth Floating Animation */

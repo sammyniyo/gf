@@ -190,6 +190,7 @@ class RegistrationController extends Controller
             // Additional
             'message' => 'nullable|string',
             'newsletter' => 'boolean',
+            'profile_photo' => 'required|image|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -212,12 +213,20 @@ class RegistrationController extends Controller
         $memberId = MemberIdService::generateUnique();
 
         // Prepare member data
-        $data = $request->all();
+        $data = $request->except('profile_photo');
         $data['member_id'] = $memberId;
         $data['member_type'] = 'friendship';
         $data['name'] = $request->first_name . ' ' . $request->last_name;
         $data['status'] = 'active'; // Friends are automatically active
         $data['joined_at'] = now();
+
+        if ($request->hasFile('profile_photo')) {
+            $photo = $request->file('profile_photo');
+            $photoName = $memberId . '_' . time() . '.' . $photo->getClientOriginalExtension();
+            $photo->storeAs('public/member-photos', $photoName);
+            $data['profile_photo'] = $photoName;
+            $data['photo_path'] = $photoName;
+        }
 
         // Create member
         $member = Member::create($data);

@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('title', 'Utility Folder | God\'s Family Choir')
+@section('meta_description', 'Download choir resources including lyrics, sheet music, announcements, and uniforms from God\'s Family Choir—your hub for ministry materials.')
+@section('meta_keywords', 'God\'s Family Choir resources, choir sheet music, Adventist lyrics, worship announcements, choir uniforms, gospel resources Rwanda')
+@section('canonical_url', route('resources.index'))
+@section('og:title', 'Choir Resources & Utility Folder | God\'s Family Choir')
+@section('og:description', 'Access lyrics, music sheets, announcements, the code of conduct, and stunning uniform galleries from God\'s Family Choir in Kigali, Rwanda.')
+@section('og:image', asset('images/hero.jpg'))
 
 @section('content')
 <!-- Hero Section -->
@@ -9,7 +15,7 @@
     <div class="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-emerald-200/30 blur-3xl"></div>
     <div class="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-amber-200/30 blur-3xl"></div>
 
-    <section class="relative z-10 px-6 pt-32 pb-20 sm:px-8 lg:px-12">
+    <section class="relative z-10 px-4 pt-28 pb-16 sm:px-8 lg:px-12 sm:pt-32 sm:pb-20">
         <div class="mx-auto max-w-6xl text-center">
             <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-5 py-2 text-xs font-bold uppercase tracking-wide text-white shadow-lg">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -18,7 +24,7 @@
                 </svg>
                 Utility Folder
             </span>
-            <h1 class="mt-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+            <h1 class="mt-6 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
                 Choir <span class="bg-gradient-to-r from-emerald-600 to-amber-500 bg-clip-text text-transparent">Resources</span>
             </h1>
             <p class="mx-auto mt-6 max-w-3xl text-lg text-gray-600 leading-relaxed">
@@ -30,9 +36,10 @@
 
 <!-- Category Filter -->
 <section class="relative bg-white py-8">
-    <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+    <div class="mx-auto max-w-7xl px-4 sm:px-8 lg:px-12">
         <div class="flex items-center justify-center">
-            <div class="inline-flex items-center gap-3 p-2 bg-gray-100 rounded-xl">
+            <div class="w-full max-w-full overflow-x-auto pb-2 sm:pb-0">
+                <div class="inline-flex min-w-max items-center gap-3 p-2 bg-gray-100 rounded-xl">
                 <a href="{{ route('resources.index') }}"
                    class="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all
                    {{ $selectedCategory === 'all' ? 'bg-white text-emerald-600 shadow-md' : 'text-gray-600 hover:text-gray-900' }}">
@@ -48,6 +55,7 @@
                         {{ $label }}
                     </a>
                 @endforeach
+                </div>
             </div>
         </div>
     </div>
@@ -55,10 +63,10 @@
 
 @if($uniforms->count() > 0 && ($selectedCategory === 'all' || $selectedCategory === 'uniforms'))
 <!-- Uniforms Showcase Section -->
-<section class="relative bg-gradient-to-b from-white to-gray-50 py-24">
+<section class="relative bg-gradient-to-b from-white to-gray-50 py-20 sm:py-24">
     <div class="absolute inset-0 bg-gradient-to-br from-pink-50/30 via-white to-rose-50/20"></div>
 
-    <div class="relative mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-8 lg:px-12">
         <div class="text-center mb-16">
             <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-600 to-rose-600 px-5 py-2 text-xs font-bold uppercase tracking-wide text-white shadow-lg">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -75,12 +83,12 @@
         </div>
 
         <!-- Uniforms Grid -->
-        <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-1 gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
             @foreach($uniforms as $uniform)
                 <div class="group relative">
                     <div class="relative overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:border-pink-300">
                         <!-- Image -->
-                        <div class="relative h-96 overflow-hidden bg-gradient-to-br from-pink-50 to-gray-100">
+                        <div class="relative h-80 md:h-96 overflow-hidden bg-gradient-to-br from-pink-50 to-gray-100">
                             <img src="{{ $uniform->file_url }}"
                                  alt="{{ $uniform->title }}"
                                  class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110">
@@ -127,12 +135,12 @@
 @endif
 
 <!-- Documents Section -->
-<section class="relative bg-white py-24">
-    <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+<section class="relative bg-white py-20 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-8 lg:px-12">
         @if($resources->count() > 0)
             @foreach($resources as $category => $items)
                 @if($category !== 'uniforms') <!-- Skip uniforms as they're showcased above -->
-                    <div class="mb-16 last:mb-0">
+                    <div class="mb-14 sm:mb-16 last:mb-0">
                         <!-- Category Header -->
                         <div class="mb-8">
                             <h2 class="text-2xl font-bold text-gray-900">{{ \App\Models\Resource::getCategories()[$category] ?? $category }}</h2>
@@ -140,9 +148,9 @@
                         </div>
 
                         <!-- Documents Grid -->
-                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        <div class="grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
                             @foreach($items as $resource)
-                                <div class="group relative overflow-hidden rounded-xl border-2 border-gray-200 bg-white p-6 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-emerald-300">
+                                <div class="group relative overflow-hidden rounded-xl border-2 border-gray-200 bg-white p-5 sm:p-6 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-emerald-300">
                                     <!-- File Icon/Preview -->
                                     <div class="mb-4">
                                         @if($resource->isImage())
@@ -205,7 +213,7 @@
             @endforeach
         @else
             <!-- Empty State -->
-            <div class="text-center py-16">
+            <div class="text-center py-12 sm:py-16">
                 <div class="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
                     <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
@@ -224,25 +232,27 @@
 <!-- Preview Modal -->
 <div id="previewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/95 p-4 backdrop-blur-sm" onclick="closePreviewModal(event)">
     <div class="relative w-full max-w-6xl h-[90vh]" onclick="event.stopPropagation()">
-        <!-- Close Button -->
-        <button onclick="closePreviewModal()" class="absolute -top-12 right-0 z-10 flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-all duration-300 text-white font-semibold">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-            Close Preview
-        </button>
-
-        <!-- Download Button -->
-        <a id="downloadButton" href="#" class="absolute -top-12 right-36 z-10 flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 rounded-lg transition-all duration-300 text-white font-semibold shadow-lg">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-            Download
-        </a>
-
-        <!-- Resource Title -->
-        <div class="absolute -top-12 left-0 z-10 px-4 py-2 bg-white/10 rounded-lg backdrop-blur-sm">
-            <p id="previewTitle" class="text-white font-semibold"></p>
+        <!-- Controls -->
+        <div class="absolute inset-x-0 top-4 px-4 sm:px-0 sm:-top-12 sm:flex sm:items-center sm:justify-between gap-3 z-20 pointer-events-none">
+            <div class="pointer-events-auto max-w-full">
+                <div class="inline-flex max-w-full items-center rounded-lg bg-white/10 px-3 py-2 backdrop-blur-sm sm:bg-white/15">
+                    <p id="previewTitle" class="text-sm sm:text-base font-semibold text-white truncate"></p>
+                </div>
+            </div>
+            <div class="mt-4 sm:mt-0 flex items-center gap-3 pointer-events-auto justify-end">
+                <a id="downloadButton" href="#" class="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-emerald-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Download
+                </a>
+                <button onclick="closePreviewModal()" class="inline-flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/20">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    Close
+                </button>
+            </div>
         </div>
 
         <!-- Preview Container -->

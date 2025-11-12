@@ -1,4 +1,4 @@
-<section class="relative min-h-screen overflow-hidden bg-black">
+<section class="relative min-h-[85vh] sm:min-h-screen overflow-hidden bg-black">
     <!-- Slideshow Background Images with Morph Transitions -->
     <div class="absolute inset-0 z-0">
         <!-- Image 1 -->
@@ -74,9 +74,9 @@
     </div>
 
     <!-- Main Hero Content -->
-    <div class="relative z-10 min-h-screen flex items-center">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12 py-20 w-full">
-            <div class="text-center max-w-5xl mx-auto space-y-10">
+    <div class="relative z-10 min-h-[85vh] sm:min-h-screen flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-16 sm:py-20 w-full">
+            <div class="text-center max-w-5xl mx-auto space-y-8 sm:space-y-10">
 
                 <!-- Elegant Badge -->
                 <div class="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white shadow-2xl animate-fade-in-up">
@@ -91,10 +91,10 @@
                 <div class="space-y-8">
                     <h1 class="relative animate-fade-in-up animation-delay-200">
                         <div class="space-y-4">
-                            <span class="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-white leading-none tracking-tight drop-shadow-2xl">
+                            <span class="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-white leading-none tracking-tight drop-shadow-2xl">
                                 Sing to the
                             </span>
-                            <span class="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black leading-none tracking-tight">
+                            <span class="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black leading-none tracking-tight">
                                 <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-400 bg-clip-text text-transparent drop-shadow-2xl animate-gradient-text" style="background-size: 200% 200%;">
                                     Glory of God
                                 </span>
@@ -110,15 +110,15 @@
                     </h1>
 
                     <!-- Tagline -->
-                    <p class="text-xl sm:text-2xl lg:text-3xl text-white/90 font-light leading-relaxed max-w-3xl mx-auto animate-fade-in-up animation-delay-400 drop-shadow-lg">
+                    <p class="text-lg sm:text-xl lg:text-2xl text-white/90 font-light leading-relaxed max-w-3xl mx-auto animate-fade-in-up animation-delay-400 drop-shadow-lg">
                         Experience divine connection through <span class="text-emerald-300 font-semibold">powerful worship</span> and musical excellence
                     </p>
                 </div>
 
                 <!-- Clean Stats Row -->
-                <div class="grid grid-cols-2 gap-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-600">
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 max-w-md sm:max-w-2xl mx-auto animate-fade-in-up animation-delay-600">
                     <div class="group">
-                        <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-emerald-400/30 transition-all duration-300 hover:-translate-y-1">
+                        <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-5 sm:p-6 hover:bg-white/10 hover:border-emerald-400/30 transition-all duration-300 hover:-translate-y-1">
                             <div class="flex items-baseline justify-center gap-2 mb-2">
                                 <span class="text-4xl lg:text-5xl font-black text-white counter" data-target="300">0</span>
                                 <span class="text-2xl text-emerald-400 font-bold">+</span>
@@ -128,7 +128,7 @@
                     </div>
 
                     <div class="group">
-                        <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-amber-400/30 transition-all duration-300 hover:-translate-y-1">
+                        <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-5 sm:p-6 hover:bg-white/10 hover:border-amber-400/30 transition-all duration-300 hover:-translate-y-1">
                             <div class="flex items-baseline justify-center gap-2 mb-2">
                                 <span class="text-4xl lg:text-5xl font-black text-white counter" data-target="27">0</span>
                                 <span class="text-2xl text-amber-400 font-bold"></span>
@@ -140,7 +140,7 @@
 
                 <!-- Primary CTA Button -->
                 <div class="flex items-center justify-center animate-fade-in-up animation-delay-800">
-                    <a href="{{ route('registration.member') }}" class="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-full shadow-2xl shadow-emerald-500/50 transition-all duration-300 hover:shadow-emerald-500/70 hover:-translate-y-1 hover:scale-105 overflow-hidden">
+                    <a href="{{ route('registration.member') }}" class="group relative inline-flex items-center gap-3 px-7 py-3.5 sm:px-8 sm:py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-full shadow-2xl shadow-emerald-500/50 transition-all duration-300 hover:shadow-emerald-500/70 hover:-translate-y-1 hover:scale-105 overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-r from-teal-600 to-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                         <svg class="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
@@ -153,7 +153,7 @@
     </div>
 
     <!-- Elegant Scroll Indicator -->
-    <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+    <div class="absolute bottom-8 sm:bottom-12 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
         <button onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})" class="flex flex-col items-center gap-3 group">
             <span class="text-white/70 text-xs font-semibold uppercase tracking-wider group-hover:text-emerald-300 transition-colors">Discover More</span>
             <div class="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-1 group-hover:border-emerald-400 transition-all">

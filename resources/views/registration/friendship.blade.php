@@ -19,7 +19,7 @@
         </div>
 
         <!-- Registration Form -->
-        <form action="{{ route('registration.friendship.store') }}" method="POST" class="space-y-8" id="friendship-form">
+        <form action="{{ route('registration.friendship.store') }}" method="POST" class="space-y-8" id="friendship-form" enctype="multipart/form-data">
             @csrf
 
             <!-- Session timeout warning -->
@@ -72,6 +72,32 @@
                 </div>
 
                 <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Profile Photo <span class="text-red-500">*</span>
+                        </label>
+                        <div class="flex flex-col sm:flex-row items-center gap-5">
+                            <div class="relative w-28 h-28 rounded-xl border-2 border-dashed border-amber-300 bg-amber-50 flex items-center justify-center overflow-hidden">
+                                <img id="photo-preview-img" src="" alt="Selected profile preview" class="hidden w-full h-full object-cover">
+                                <div id="photo-preview-placeholder" class="flex flex-col items-center justify-center text-amber-600 text-xs font-semibold">
+                                    <i class="fas fa-camera text-2xl mb-1"></i>
+                                    Preview
+                                </div>
+                            </div>
+                            <div class="flex-1 w-full">
+                                <input type="file" name="profile_photo" id="profile_photo" accept="image/*" required
+                                    class="block w-full text-sm text-gray-700 file:mr-4 file:py-3 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-amber-100 file:text-amber-700 hover:file:bg-amber-200 cursor-pointer">
+                                <p id="photo-file-name" class="text-xs text-gray-500 mt-2 hidden"></p>
+                                <p class="text-xs text-gray-500 mt-2">
+                                    Upload a clear headshot (JPG or PNG, max 2MB). This helps us recognize you in our community.
+                                </p>
+                            </div>
+                        </div>
+                        @error('profile_photo')
+                            <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
@@ -467,8 +493,55 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const form = document.getElementById('friendship-form');
     const sessionWarning = document.getElementById('session-warning');
+    const photoInput = document.getElementById('profile_photo');
+    const photoPreviewImg = document.getElementById('photo-preview-img');
+    const photoPreviewPlaceholder = document.getElementById('photo-preview-placeholder');
+    const photoFileName = document.getElementById('photo-file-name');
     let sessionTimeout = null;
     let warningShown = false;
+
+    if (photoInput) {
+        const resetPhotoPreview = () => {
+            if (photoPreviewImg) {
+                photoPreviewImg.src = '';
+                photoPreviewImg.classList.add('hidden');
+            }
+            if (photoPreviewPlaceholder) {
+                photoPreviewPlaceholder.classList.remove('hidden');
+            }
+            if (photoFileName) {
+                photoFileName.textContent = '';
+                photoFileName.classList.add('hidden');
+            }
+        };
+
+        photoInput.addEventListener('change', function() {
+            const file = this.files && this.files[0];
+            if (!file) {
+                resetPhotoPreview();
+                return;
+            }
+
+            if (photoFileName) {
+                photoFileName.textContent = file.name;
+                photoFileName.classList.remove('hidden');
+            }
+
+            if (!photoPreviewImg) {
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                photoPreviewImg.src = event.target?.result || '';
+                photoPreviewImg.classList.remove('hidden');
+                if (photoPreviewPlaceholder) {
+                    photoPreviewPlaceholder.classList.add('hidden');
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    }
 
     // Session timeout warning (show warning 5 minutes before session expires)
     // Laravel default session lifetime is 120 minutes, so warn at 115 minutes
@@ -517,22 +590,47 @@ document.addEventListener('DOMContentLoaded', function() {
     // Auto-save form data to localStorage to prevent data loss
     const formInputs = form.querySelectorAll('input, textarea, select');
     formInputs.forEach(function(input) {
-        // Load saved data
-        const savedValue = localStorage.getItem('friendship_' + input.name);
-        if (savedValue && !input.value) {
+        if (!input.name) {
+            return;
+        }
+
+        if (input.type === 'file') {
+            return;
+        }
+
+        if (input.type === 'checkbox' || input.type === 'radio') {
+            const checkedKey = 'friendship_' + input.name + '_checked';
+            const savedChecked = localStorage.getItem(checkedKey);
+            if (savedChecked !== null) {
+                input.checked = savedChecked === 'true';
+            }
+            input.addEventListener('change', function() {
+                localStorage.setItem(checkedKey, String(input.checked));
+            });
+            return;
+        }
+
+        const storageKey = 'friendship_' + input.name;
+        const savedValue = localStorage.getItem(storageKey);
+        if (savedValue !== null && !input.value) {
             input.value = savedValue;
         }
 
-        // Save data on change
         input.addEventListener('input', function() {
-            localStorage.setItem('friendship_' + input.name, input.value);
+            localStorage.setItem(storageKey, input.value);
         });
     });
 
     // Clear saved data on successful submission
     form.addEventListener('submit', function() {
         formInputs.forEach(function(input) {
+            if (!input.name) {
+                return;
+            }
             localStorage.removeItem('friendship_' + input.name);
+            if (input.type === 'checkbox' || input.type === 'radio') {
+                localStorage.removeItem('friendship_' + input.name + '_checked');
+            }
         });
     });
 

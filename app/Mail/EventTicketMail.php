@@ -20,11 +20,17 @@ class EventTicketMail extends Mailable
     {
         $event = $this->registration->event;
 
+        // Ensure we have a registration code
+        $code = $this->registration->registration_code;
+        if (empty($code)) {
+            $code = $this->generateAndPersistRegistrationCode();
+        }
+
         // QR payload (verification URL)
-        $verifyUrl = route('tickets.verify', $this->registration->registration_code);
+        $verifyUrl = route('tickets.verify', $code);
 
         // Generate QR code as base64 for PDF (PDFs support base64)
-        $qrBase64 = QrCodeService::generateTicketQr($this->registration->registration_code);
+        $qrBase64 = QrCodeService::generateTicketQr($code);
 
         // Generate QR code as direct URL for email (email clients prefer direct URLs)
         $qrUrl = QrCodeService::generateUrl($verifyUrl, 300);
@@ -50,6 +56,16 @@ class EventTicketMail extends Mailable
                 'qrUrl'        => $qrUrl, // Direct URL for email display
                 'verifyUrl'    => $verifyUrl,
             ]);
+    }
+
+    protected function generateAndPersistRegistrationCode(): string
+    {
+        // Generate a simple unique code; if collisions are a concern, loop/check
+        $newCode = strtoupper(\Illuminate\Support\Str::random(10));
+        // Persist to make sure all subsequent uses have it
+        $this->registration->registration_code = $newCode;
+        $this->registration->save();
+        return $newCode;
     }
 
     protected function buildIcs($title, $start, $end, $location, $url): string

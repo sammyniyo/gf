@@ -9,9 +9,12 @@ use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
-    public function verify(string $code)
+    public function verify(?string $code = null)
     {
-        $reg = EventRegistration::where('registration_code', $code)->first();
+        $reg = null;
+        if (!empty($code)) {
+            $reg = EventRegistration::where('registration_code', $code)->first();
+        }
         return view('tickets.verify', ['registration' => $reg]);
     }
 

@@ -220,7 +220,7 @@ Route::middleware(['page.status:events'])->group(function () {
 });
 
 Route::get('/tickets/verify/{code?}', [TicketController::class, 'verify'])->name('tickets.verify');
-Route::get('/tickets/pdf/{code}', [TicketController::class, 'pdf'])->name('tickets.pdf');
+Route::get('/tickets/pdf/{code?}', [TicketController::class, 'pdf'])->name('tickets.pdf');
 
 // Test QR code route
 Route::get('/test-qr', function () {

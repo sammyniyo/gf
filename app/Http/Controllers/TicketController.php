@@ -18,8 +18,11 @@ class TicketController extends Controller
         return view('tickets.verify', ['registration' => $reg]);
     }
 
-    public function pdf(string $code): Response
+    public function pdf(?string $code = null): Response
     {
+        if (empty($code)) {
+            abort(404);
+        }
         $reg = EventRegistration::with('event')->where('registration_code', $code)->firstOrFail();
 
         // Generate QR code for the PDF

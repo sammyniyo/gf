@@ -55,7 +55,18 @@ class EventRegistrationController extends Controller
         $data = $request->validate($rules, [
             'email.unique' => 'This email is already registered for this event.',
         ]);
-        $amount = (int) ($data['amount_offered'] ?? 0);
+        // Resolve amount from multiple possible inputs to avoid reliance on JS
+        $amount = null;
+        if ($request->filled('amount_offered')) {
+            $amount = (int) $request->input('amount_offered');
+        } elseif ($request->filled('amount_preset') && $request->input('amount_preset') !== 'custom') {
+            $amount = (int) $request->input('amount_preset');
+        } elseif ($request->input('amount_preset') === 'custom' && $request->filled('custom_amount')) {
+            $amount = (int) $request->input('custom_amount');
+        }
+        if ($amount === null) {
+            $amount = 0;
+        }
 
         // Check if this is a custom amount (not in presets)
         $customAmount = $event->isConcert() && !in_array($amount, $presets) && $amount > 0;

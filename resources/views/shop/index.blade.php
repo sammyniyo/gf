@@ -43,9 +43,7 @@
                 
                 <!-- Badge -->
                 <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6 animate-fade-in-up shadow-lg">
-                    <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
-                    </svg>
+                    <i class="fas fa-compact-disc text-blue-400"></i>
                     <span class="text-sm font-semibold text-white">Premium Digital Albums</span>
                 </div>
 
@@ -71,9 +69,7 @@
                                    value="{{ request('q') }}">
                             <button type="submit"
                                     class="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
+                                <i class="fas fa-search"></i>
                             </button>
                         </div>
                     </div>
@@ -159,9 +155,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div class="text-center mb-16">
             <div class="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-400 to-orange-400 text-white rounded-full px-6 py-3 mb-6 shadow-lg">
-                <svg class="w-5 h-5 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
+                <i class="fas fa-star animate-pulse"></i>
                 <span class="font-bold text-sm uppercase tracking-wider">Staff Picks</span>
             </div>
             <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4">
@@ -200,9 +194,7 @@
             </div>
             <div class="mt-4 md:mt-0">
                 <div class="inline-flex items-center gap-3 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full px-6 py-3 border-2 border-blue-200 shadow-lg">
-                    <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
-                    </svg>
+                    <i class="fas fa-compact-disc text-blue-600"></i>
                     <span class="font-black text-2xl text-blue-600">{{ $albums->total() }}</span>
                     <span class="text-gray-600 font-medium">{{ Str::plural('Album', $albums->total()) }}</span>
                 </div>
@@ -216,13 +208,9 @@
                     <!-- Toggle Filters Button -->
                     <button @click="showFilters = !showFilters"
                             class="inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-bold hover:from-blue-600 hover:to-purple-600 transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                        </svg>
+                        <i class="fas fa-filter"></i>
                         Filters & Sort
-                        <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-180': showFilters }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
+                        <i class="fas fa-chevron-down text-sm transition-transform" :class="{ 'rotate-180': showFilters }"></i>
                     </button>
 
                     <!-- Active Filter Indicator -->
@@ -284,16 +272,12 @@
         @else
             <div class="text-center py-20">
                 <div class="inline-flex items-center justify-center w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full mb-6">
-                    <svg class="w-16 h-16 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                    </svg>
+                    <i class="fas fa-music text-6xl text-blue-500"></i>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-800 mb-2">No Albums Available Yet</h3>
                 <p class="text-lg text-gray-600 mb-6">We're working hard to bring you amazing worship music!</p>
                 <a href="{{ route('home') }}" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-6 py-3 rounded-xl font-bold transition-all transform hover:scale-105 shadow-lg">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
+                    <i class="fas fa-home"></i>
                     Return Home
                 </a>
             </div>
@@ -312,9 +296,7 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <!-- Icon -->
         <div class="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full mb-6 border-2 border-white/30">
-            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
+            <i class="fas fa-heart text-3xl"></i>
         </div>
 
         <h2 class="text-4xl md:text-5xl font-black mb-6 leading-tight">
@@ -344,16 +326,12 @@
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a href="{{ route('contact') }}"
                class="group inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-xl font-black text-lg hover:bg-blue-50 transition-all transform hover:scale-105 shadow-2xl">
-                <svg class="w-6 h-6 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
+                <i class="fas fa-envelope group-hover:rotate-12 transition-transform"></i>
                 Contact Us
             </a>
             <a href="{{ route('home') }}"
                class="inline-flex items-center gap-2 bg-transparent text-white px-8 py-4 rounded-xl font-black text-lg hover:bg-white/10 transition-all transform hover:scale-105 border-2 border-white/40 backdrop-blur-sm">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+                <i class="fas fa-info-circle"></i>
                 Learn More About Us
             </a>
         </div>
@@ -363,22 +341,15 @@
             <p class="text-sm text-blue-100 mb-4 font-medium">Trusted by thousands of worshipers worldwide</p>
             <div class="flex justify-center items-center gap-6 flex-wrap text-blue-200">
                 <div class="flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                    </svg>
+                    <i class="fas fa-shield-alt"></i>
                     <span class="text-sm font-medium">Secure Checkout</span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
-                        <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z" />
-                    </svg>
+                    <i class="fas fa-shipping-fast"></i>
                     <span class="text-sm font-medium">Instant Delivery</span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
-                    </svg>
+                    <i class="fas fa-bolt"></i>
                     <span class="text-sm font-medium">Lightning Fast</span>
                 </div>
             </div>

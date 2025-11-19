@@ -17,121 +17,80 @@
                 </div>
             </a>
 
-            <!-- Desktop Navigation - Grouped -->
-            <nav class="hidden md:flex items-center space-x-1" x-data="{
+            <!-- Desktop Navigation - All Items Visible -->
+            <nav class="hidden md:flex items-center space-x-0.5 lg:space-x-1" x-data="{
                 aboutMenuOpen: false,
                 ministryMenuOpen: false
             }" @keyup.escape="aboutMenuOpen = false; ministryMenuOpen = false">
                 <!-- Home -->
-                <a href="/" class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('/') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
-                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="/" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('/') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
+                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
-                    Home
+                    <span class="hidden lg:inline">Home</span>
                 </a>
 
-                <!-- About Group -->
-                <div class="relative" @mouseenter="aboutMenuOpen = true" @mouseleave="aboutMenuOpen = false">
-                    <a href="{{ url('/about') }}"
-                        class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('about*') || request()->is('story*') ? 'bg-emerald-700/50 text-amber-100' : '' }}"
-                        @focus="aboutMenuOpen = true">
-                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <!-- About - Direct Link -->
+                <a href="{{ url('/about') }}" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('about*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
+                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         About
-                        <svg class="w-4 h-4 ml-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                             :class="aboutMenuOpen ? 'rotate-180' : ''">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </a>
-                    <div x-show="aboutMenuOpen"
-                         x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 scale-95"
-                         x-transition:enter-end="opacity-100 scale-100"
-                         x-transition:leave="transition ease-in duration-150"
-                         x-transition:leave-start="opacity-100 scale-100"
-                         x-transition:leave-end="opacity-0 scale-95"
-                         class="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
-                         x-cloak>
-                        <a href="{{ url('/about') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            About Overview
-                        </a>
-                        <a href="{{ route('story') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                </a>
+
+                <!-- Stories - Direct Link -->
+                <a href="{{ route('story') }}" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('story*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
+                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                             </svg>
-                            Member Stories
-                        </a>
-                        <a href="{{ route('committee.index') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    Stories
+                </a>
+
+                <!-- Leadership - Direct Link -->
+                <a href="{{ route('committee.index') }}" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('committee*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
+                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
-                            Leadership
-                        </a>
-                    </div>
-                </div>
+                    <span class="hidden xl:inline">Leadership</span>
+                    <span class="xl:hidden">Leaders</span>
+                </a>
 
-                <!-- Ministry Group -->
-                <div class="relative" @mouseenter="ministryMenuOpen = true" @mouseleave="ministryMenuOpen = false">
-                    <a href="{{ route('events.index') }}"
-                        class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('events*') ? 'bg-emerald-700/50 text-amber-100' : '' }}"
-                        @focus="ministryMenuOpen = true">
-                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                        </svg>
-                        Ministry
-                        <svg class="w-4 h-4 ml-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                             :class="ministryMenuOpen ? 'rotate-180' : ''">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </a>
-                    <div x-show="ministryMenuOpen"
-                         x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 scale-95"
-                         x-transition:enter-end="opacity-100 scale-100"
-                         x-transition:leave="transition ease-in duration-150"
-                         x-transition:leave-start="opacity-100 scale-100"
-                         x-transition:leave-end="opacity-0 scale-95"
-                         class="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
-                         x-cloak>
-                        <a href="{{ route('events.index') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <!-- Events - Direct Link -->
+                <a href="{{ route('events.index') }}" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('events*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
+                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             Events
                         </a>
-                        <a href="{{ route('devotions.index') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                <!-- Devotions - Direct Link -->
+                <a href="{{ route('devotions.index') }}" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('devotions*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
+                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                             </svg>
                             Devotions
                         </a>
-                    </div>
-                </div>
 
                 <!-- Our Music -->
-                <a href="{{ route('shop.index') }}" class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('shop*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
-                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('shop.index') }}" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('shop*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
+                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                     </svg>
-                    Our Music
+                    <span class="hidden xl:inline">Our Music</span>
+                    <span class="xl:hidden">Music</span>
                 </a>
 
                 <!-- Resources -->
-                <a href="{{ route('resources.index') }}" class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('utility-folder*') || request()->is('resources*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
-                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('resources.index') }}" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('utility-folder*') || request()->is('resources*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
+                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
                     Resources
                 </a>
 
-
                 <!-- Contact -->
-                <a href="/contact" class="px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('contact*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
-                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="/contact" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('contact*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
+                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                     Contact

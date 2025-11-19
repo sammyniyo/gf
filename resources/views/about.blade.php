@@ -320,109 +320,85 @@
         </div>
     </section>
 
-    <!-- GF Juniors Section -->
-    <section class="relative z-10 px-4 py-20 sm:px-8 lg:px-12 sm:py-32 bg-gradient-to-br from-amber-50/40 via-white to-emerald-50/30">
-        <div class="mx-auto max-w-7xl">
-            <div class="grid gap-10 lg:gap-12 lg:grid-cols-2 lg:items-center">
-                <!-- Image Section -->
-                <div class="order-2 lg:order-1" data-aos="fade-right">
-                    <div class="relative">
-                        <div class="absolute -inset-6 bg-gradient-to-r from-amber-400 via-emerald-400 to-amber-400 rounded-3xl blur-3xl opacity-30 animate-pulse"></div>
-                        <div class="relative">
-                            <div class="rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
-                                <img src="{{ asset('images/choir_of_god_1761667510314.jpeg') }}" alt="GF Juniors - Young Worshippers" class="w-full h-[340px] sm:h-[500px] lg:h-[550px] object-cover" />
-                                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/30 to-transparent"></div>
-                                <!-- Enhanced Floating Badge -->
-                                <div class="absolute bottom-8 left-8 right-8 rounded-2xl bg-white/97 backdrop-blur-md p-6 shadow-2xl border-2 border-amber-100">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-20 h-20 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center text-white shadow-2xl">
-                                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <p class="text-xs font-black uppercase tracking-wider text-amber-600 mb-1">Since 2012</p>
-                                            <p class="text-xl font-black text-gray-900 leading-tight">Raising the next generation of worshippers</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Decorative Elements -->
-                            <div class="hidden md:block absolute -top-8 -right-8 w-40 h-40 bg-amber-200/50 rounded-full blur-3xl"></div>
-                            <div class="hidden md:block absolute -bottom-8 -left-8 w-48 h-48 bg-emerald-200/50 rounded-full blur-3xl"></div>
-                        </div>
+    <!-- GF Juniors Section - Compact -->
+    <section class="relative z-10 px-4 py-12 sm:px-8 lg:px-12 sm:py-16 bg-white">
+        <div class="mx-auto max-w-5xl">
+            <div class="text-center mb-8">
+                <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 px-4 py-1.5 text-xs font-bold uppercase tracking-wide text-white shadow-lg">
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    Featured Department
+                </span>
+                <h2 class="mt-4 text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900">
+                    GF <span class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 bg-clip-text text-transparent">Juniors</span>
+                </h2>
+                <p class="mt-3 text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
+                    Nurturing young hearts to worship with passion and purpose. A junior choir ensuring continuity across generations.
+                </p>
+            </div>
+
+            <div class="grid gap-6 lg:grid-cols-3 mb-8">
+                <!-- Compact Feature Cards -->
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-amber-50 to-amber-100/50 border border-amber-200">
+                    <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-sm mb-1">Vocal Training</h4>
+                        <p class="text-xs text-gray-600 leading-relaxed">Professional coaching in singing and music theory</p>
                     </div>
                 </div>
 
-                <!-- Content Section -->
-                <div class="order-1 lg:order-2 space-y-6" data-aos="fade-left">
-                    <div class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 px-6 py-2.5 text-xs font-black uppercase tracking-wide text-white shadow-xl">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100/50 border border-emerald-200">
+                    <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
-                        Featured Department
                     </div>
-
-                    <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight">
-                        GF <span class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 bg-clip-text text-transparent animate-gradient-x">Juniors</span>
-                    </h2>
-
-                    <p class="text-lg sm:text-2xl text-gray-700 leading-relaxed font-bold">
-                        Nurturing young hearts to worship with passion and purpose
-                    </p>
-
-                    <p class="text-base sm:text-lg text-gray-600 leading-relaxed font-medium">
-                        GF Juniors is the junior choir formed by children of choir members, ensuring the continuity of this ministry across generations. It's more than a youth choir—it's a family where young worshippers discover their God-given talents, build lifelong friendships, and develop a deep relationship with Christ. Through weekly rehearsals, mentorship programs, and performance opportunities, we're shaping the next generation of worship leaders who will carry the torch forward.
-                    </p>
-
-                    <!-- Enhanced Features List -->
-                    <div class="space-y-4 pt-4">
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white border-2 border-amber-200 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 group">
-                            <div class="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300">
-                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-black text-gray-900 text-lg mb-1">Vocal Training & Music Theory</h4>
-                                <p class="text-sm text-gray-600 leading-relaxed font-medium">Professional coaching in singing, harmonization, and musical fundamentals taught by experienced instructors</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white border-2 border-emerald-200 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 group">
-                            <div class="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300">
-                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-black text-gray-900 text-lg mb-1">Spiritual Mentorship</h4>
-                                <p class="text-sm text-gray-600 leading-relaxed font-medium">Guidance from experienced leaders who invest in character development and spiritual growth</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4 p-5 rounded-2xl bg-white border-2 border-amber-200 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 group">
-                            <div class="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-300">
-                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-black text-gray-900 text-lg mb-1">Performance Opportunities</h4>
-                                <p class="text-sm text-gray-600 leading-relaxed font-medium">Regular chances to minister at events, church services, and community outreaches</p>
-                            </div>
-                        </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-sm mb-1">Spiritual Mentorship</h4>
+                        <p class="text-xs text-gray-600 leading-relaxed">Character development and spiritual growth guidance</p>
                     </div>
+                </div>
 
-                    <!-- CTA -->
-                    <div class="pt-6">
-                        <a href="{{ route('choir.register.form') }}" class="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 px-8 py-4 text-sm sm:text-base font-black text-white shadow-2xl shadow-amber-500/40 transition-all duration-300 hover:shadow-3xl hover:shadow-amber-500/50 hover:-translate-y-1 hover:scale-105">
-                            Join GF Juniors Today
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-amber-50 to-amber-100/50 border border-amber-200">
+                    <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-sm mb-1">Performance</h4>
+                        <p class="text-xs text-gray-600 leading-relaxed">Regular opportunities to minister at events</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compact Image with Badge -->
+            <div class="relative rounded-xl overflow-hidden shadow-lg border-2 border-amber-100">
+                <img src="{{ asset('images/choir_of_god_1761667510314.jpeg') }}" alt="GF Juniors - Young Worshippers" class="w-full h-64 object-cover" />
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent"></div>
+                <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3 bg-white/95 backdrop-blur-sm px-4 py-2.5 rounded-lg shadow-lg">
+                        <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center text-white">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
                             </svg>
-                        </a>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-amber-600 uppercase tracking-wider">Since 2012</p>
+                            <p class="text-sm font-bold text-gray-900">Raising the next generation</p>
+                        </div>
                     </div>
+                    <a href="{{ route('choir.register.form') }}" class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-amber-600 to-amber-700 px-4 py-2.5 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105">
+                        Join Today
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>

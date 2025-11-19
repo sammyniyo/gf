@@ -16,7 +16,7 @@
     </div>
 
     <!-- Content -->
-    <div class="relative z-10 max-w-4xl mx-auto px-6 py-16 text-center">
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 text-center">
         <div class="inline-block mb-6">
             <span class="px-4 py-2 bg-amber-500/20 backdrop-blur-xl border border-amber-400/30 rounded-full text-amber-300 text-sm font-semibold">
                 REGISTRATION
@@ -36,28 +36,28 @@
 </section>
 
 <!-- Registration Form Section -->
-<section class="py-20 bg-gradient-to-b from-gray-50 to-white">
-    <div class="max-w-2xl mx-auto px-6">
+<section class="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-gray-50 to-white">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6">
         <!-- Success Message -->
         @if(session('success'))
-            <div class="mb-8 p-6 bg-green-50 border border-green-200 rounded-2xl">
-                <div class="flex items-center gap-3">
+            <div class="mb-6 sm:mb-8 p-4 sm:p-6 bg-green-50 border border-green-200 rounded-2xl">
+                <div class="flex items-start sm:items-center gap-3">
                     <div class="flex-shrink-0">
-                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 sm:w-8 sm:h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-green-900">Registration Successful!</h3>
-                        <p class="text-green-700">{{ session('success') }}</p>
+                    <div class="flex-1">
+                        <h3 class="text-base sm:text-lg font-bold text-green-900">Registration Successful!</h3>
+                        <p class="text-sm sm:text-base text-green-700 mt-1">{{ session('success') }}</p>
                     </div>
                 </div>
             </div>
         @endif
 
         <!-- Event Info Card -->
-        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
-            <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 border border-gray-100">
+            <div class="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                     <h3 class="text-lg font-bold text-gray-900 mb-4">Event Details</h3>
                     <div class="space-y-3">
@@ -126,37 +126,37 @@
         </div>
 
         <!-- Registration Form -->
-        <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6">Registration Form</h2>
+        <div class="bg-white rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 border border-gray-100">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Registration Form</h2>
 
-            <form action="{{ route('events.register.store', $event) }}" method="POST" class="space-y-6" id="registrationForm">
+            <form action="{{ route('events.register.store', $event) }}" method="POST" class="space-y-4 sm:space-y-6" id="registrationForm">
                 @csrf
 
                 <!-- Registration Type Toggle -->
-                <div class="bg-gradient-to-r from-emerald-50 to-amber-50 rounded-xl p-6 border-2 border-emerald-200">
+                <div class="bg-gradient-to-r from-emerald-50 to-amber-50 rounded-xl p-4 sm:p-6 border-2 border-emerald-200">
                     <label class="block text-sm font-semibold text-gray-900 mb-3">
                         Are you a choir member?
                     </label>
-                    <div class="flex gap-4">
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
                         <label class="flex-1 cursor-pointer">
                             <input type="radio" name="registration_type" value="guest" checked onchange="toggleRegistrationType()" class="sr-only peer">
-                            <div class="p-4 text-center border-2 border-gray-300 rounded-xl cursor-pointer peer-checked:border-emerald-600 peer-checked:bg-emerald-50 peer-checked:text-emerald-900 transition-all hover:border-gray-400">
+                            <div class="p-3 sm:p-4 text-center border-2 border-gray-300 rounded-xl cursor-pointer peer-checked:border-emerald-600 peer-checked:bg-emerald-50 peer-checked:text-emerald-900 transition-all hover:border-gray-400">
                                 <div class="flex items-center justify-center gap-2">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                     </svg>
-                                    <span class="font-bold">Guest</span>
+                                    <span class="font-bold text-sm sm:text-base">Guest</span>
                                 </div>
                             </div>
                         </label>
                         <label class="flex-1 cursor-pointer">
                             <input type="radio" name="registration_type" value="member" onchange="toggleRegistrationType()" class="sr-only peer">
-                            <div class="p-4 text-center border-2 border-gray-300 rounded-xl cursor-pointer peer-checked:border-amber-600 peer-checked:bg-amber-50 peer-checked:text-amber-900 transition-all hover:border-gray-400">
+                            <div class="p-3 sm:p-4 text-center border-2 border-gray-300 rounded-xl cursor-pointer peer-checked:border-amber-600 peer-checked:bg-amber-50 peer-checked:text-amber-900 transition-all hover:border-gray-400">
                                 <div class="flex items-center justify-center gap-2">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                                     </svg>
-                                    <span class="font-bold">Member</span>
+                                    <span class="font-bold text-sm sm:text-base">Member</span>
                                 </div>
                             </div>
                         </label>
@@ -168,16 +168,17 @@
                     <label for="member_code" class="block text-sm font-semibold text-gray-900 mb-2">
                         Member Code <span class="text-red-500">*</span>
                     </label>
-                    <div class="flex gap-3">
+                    <div class="flex flex-col sm:flex-row gap-3">
                         <input type="text"
                                id="member_code"
                                name="member_code"
                                placeholder="e.g., GF2024001"
-                               class="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors uppercase">
-                        <button type="button" onclick="lookupMemberCode()" class="px-6 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold rounded-xl hover:shadow-lg transition-all">
+                               class="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors uppercase text-sm sm:text-base">
+                        <button type="button" onclick="lookupMemberCode()" class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-bold rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
+                            <span class="sm:hidden">Lookup</span>
                         </button>
                     </div>
                     <p id="memberCodeError" class="mt-2 text-sm text-red-600 hidden"></p>
@@ -195,7 +196,7 @@
                                id="name"
                                name="name"
                                value="{{ old('name') }}"
-                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors">
+                               class="w-full px-4 py-2.5 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors text-sm sm:text-base">
                         @error('name')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -211,7 +212,7 @@
                            name="email"
                            value="{{ old('email') }}"
                            required
-                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors">
+                           class="w-full px-4 py-2.5 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors text-sm sm:text-base">
                     @error('email')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -220,14 +221,14 @@
                 <!-- Phone -->
                 <div>
                     <label for="phone" class="block text-sm font-semibold text-gray-900 mb-2">
-                        Phone Number <span class="text-gray-500">(Optional)</span>
+                        Phone Number <span class="text-gray-500 text-xs">(Optional)</span>
                     </label>
                     <input type="tel"
                            id="phone"
                            name="phone"
                            value="{{ old('phone') }}"
                            placeholder="e.g., 0781234567"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors">
+                           class="w-full px-4 py-2.5 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors text-sm sm:text-base">
                     @error('phone')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -239,7 +240,7 @@
                         <label class="block text-sm font-semibold text-gray-900 mb-2">
                             Donation Amount <span class="text-red-500">*</span>
                         </label>
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-3">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 mb-3">
                             @foreach($presets as $preset)
                                 <label class="relative cursor-pointer">
                                     <input type="radio"
@@ -248,8 +249,8 @@
                                            {{ old('amount_preset') == $preset ? 'checked' : '' }}
                                            onchange="selectPresetAmount({{ $preset }})"
                                            class="sr-only peer">
-                                    <div class="p-3 text-center border-2 border-gray-200 rounded-xl cursor-pointer peer-checked:border-emerald-500 peer-checked:bg-emerald-50 peer-checked:text-emerald-700 transition-all hover:border-gray-300">
-                                        <span class="font-semibold text-gray-900 peer-checked:text-emerald-700">
+                                    <div class="p-2.5 sm:p-3 text-center border-2 border-gray-200 rounded-xl cursor-pointer peer-checked:border-emerald-500 peer-checked:bg-emerald-50 peer-checked:text-emerald-700 transition-all hover:border-gray-300">
+                                        <span class="font-semibold text-xs sm:text-sm text-gray-900 peer-checked:text-emerald-700">
                                             {{ $preset == 0 ? 'Free' : number_format($preset) . ' RWF' }}
                                         </span>
                                     </div>
@@ -263,9 +264,9 @@
                                        {{ old('amount_preset') == 'custom' ? 'checked' : '' }}
                                        onchange="selectPresetAmount('custom')"
                                        class="sr-only peer">
-                                <div class="p-3 text-center border-2 border-gray-200 rounded-xl cursor-pointer peer-checked:border-amber-500 peer-checked:bg-amber-50 peer-checked:text-amber-700 transition-all hover:border-gray-300">
-                                    <span class="font-semibold text-gray-900 peer-checked:text-amber-700">
-                                        Custom Amount
+                                <div class="p-2.5 sm:p-3 text-center border-2 border-gray-200 rounded-xl cursor-pointer peer-checked:border-amber-500 peer-checked:bg-amber-50 peer-checked:text-amber-700 transition-all hover:border-gray-300">
+                                    <span class="font-semibold text-xs sm:text-sm text-gray-900 peer-checked:text-amber-700">
+                                        Custom
                                     </span>
                                 </div>
                             </label>
@@ -282,7 +283,7 @@
                                    value="{{ old('custom_amount') }}"
                                    min="0"
                                    placeholder="Enter amount in RWF"
-                                   class="w-full px-4 py-3 border-2 border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors">
+                                   class="w-full px-4 py-2.5 sm:py-3 border-2 border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors text-sm sm:text-base">
                         </div>
 
                         <!-- Hidden field to store the final amount -->
@@ -301,7 +302,7 @@
                                value="{{ old('amount_offered') }}"
                                min="0"
                                placeholder="Enter amount in RWF"
-                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors">
+                               class="w-full px-4 py-2.5 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors text-sm sm:text-base">
                         @error('amount_offered')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -312,23 +313,25 @@
                 <!-- Submit Button -->
                 <div class="pt-4">
                     <button type="submit"
-                            class="w-full inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold text-lg rounded-xl hover:shadow-xl hover:shadow-emerald-500/50 hover:-translate-y-0.5 transition-all duration-300">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="w-full inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold text-base sm:text-lg rounded-xl hover:shadow-xl hover:shadow-emerald-500/50 hover:-translate-y-0.5 transition-all duration-300">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        Complete Registration
+                        <span class="hidden sm:inline">Complete Registration</span>
+                        <span class="sm:hidden">Register</span>
                     </button>
                 </div>
             </form>
 
             <!-- Back to Event -->
-            <div class="mt-6 text-center">
+            <div class="mt-4 sm:mt-6 text-center">
                 <a href="{{ route('events.show', $event) }}"
-                   class="inline-flex items-center gap-2 text-gray-600 hover:text-emerald-600 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   class="inline-flex items-center gap-2 text-sm sm:text-base text-gray-600 hover:text-emerald-600 transition-colors">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                     </svg>
-                    Back to Event Details
+                    <span class="hidden sm:inline">Back to Event Details</span>
+                    <span class="sm:hidden">Back</span>
                 </a>
             </div>
         </div>

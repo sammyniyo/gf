@@ -18,7 +18,7 @@
     <div class="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-emerald-100/20 to-amber-100/20 blur-3xl"></div>
 
     <!-- Hero Section -->
-    <section class="relative z-10 px-4 pt-28 pb-20 sm:px-8 lg:px-12 sm:pt-32 sm:pb-36">
+    <section class="relative z-10 px-4 pt-32 pb-24 sm:px-8 lg:px-12 sm:pt-40 sm:pb-32">
         <div class="mx-auto max-w-6xl">
             <div class="flex flex-col gap-10 lg:gap-12 lg:flex-row lg:items-center">
                 <div class="flex-1 space-y-6">
@@ -37,10 +37,10 @@
                     <p class="max-w-2xl text-base sm:text-lg text-gray-700 leading-[1.8]">
                         For over two decades, we have beautifully blended contemporary expression with timeless truth, serving the words of life to the world through gospel messages.
                     </p>
-                    <div class="pt-2">
-                        <a href="#journey" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-7 py-3 text-sm font-bold text-white shadow-xl shadow-emerald-500/30 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/40 hover:-translate-y-1 hover:scale-105">
+                    <div class="pt-4">
+                        <a href="#journey" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-6 py-3 text-sm font-bold text-white shadow-xl shadow-emerald-500/30 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/40 hover:-translate-y-1 hover:scale-105">
                             Explore our journey
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                             </svg>
                         </a>
@@ -66,9 +66,9 @@
                     </div>
 
                     <!-- Desktop: Enhanced Stacked Images Effect -->
-                    <div class="relative mx-auto max-w-md h-[450px] mb-8 lg:mb-0 hidden lg:block">
+                    <div class="relative mx-auto max-w-md h-[450px] mb-8 lg:mb-0 hidden lg:block -mt-8">
                         <!-- Image 3 - Back (furthest) -->
-                        <div class="absolute top-8 left-8 w-56 h-72 rounded-2xl overflow-hidden shadow-lg transform rotate-6 transition-all duration-500 hover:rotate-12 hover:scale-105 group" style="z-index: 1;">
+                        <div class="absolute top-4 left-8 w-56 h-72 rounded-2xl overflow-hidden shadow-lg transform rotate-6 transition-all duration-500 hover:rotate-12 hover:scale-105 group" style="z-index: 1;">
                             <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/30 via-transparent to-transparent"></div>
                             <div class="relative h-full w-full hero-stack-slider" data-interval="6000">
                                 @foreach($heroBackImages as $i => $img)
@@ -78,7 +78,7 @@
                         </div>
 
                         <!-- Image 2 - Middle -->
-                        <div class="absolute top-4 right-8 w-56 h-72 rounded-2xl overflow-hidden shadow-xl transform -rotate-3 transition-all duration-500 hover:-rotate-6 hover:scale-105 group" style="z-index: 2;">
+                        <div class="absolute top-0 right-8 w-56 h-72 rounded-2xl overflow-hidden shadow-xl transform -rotate-3 transition-all duration-500 hover:-rotate-6 hover:scale-105 group" style="z-index: 2;">
                             <div class="absolute inset-0 bg-gradient-to-t from-amber-900/30 via-transparent to-transparent"></div>
                             <div class="relative h-full w-full hero-stack-slider" data-interval="6000">
                                 @foreach($heroMiddleImages as $i => $img)
@@ -88,7 +88,7 @@
                         </div>
 
                         <!-- Image 1 - Front (Main) -->
-                        <div class="absolute top-12 left-1/2 -translate-x-1/2 w-64 h-80 rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-500 hover:scale-105 border-4 border-white group" style="z-index: 3;">
+                        <div class="absolute top-6 left-1/2 -translate-x-1/2 w-64 h-80 rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-500 hover:scale-105 border-4 border-white group" style="z-index: 3;">
                             <div class="absolute inset-0 bg-gradient-to-t from-gray-900/50 via-transparent to-transparent"></div>
                             <div class="relative h-full w-full hero-stack-slider" data-interval="6000">
                                 @foreach($heroFrontImages as $i => $img)
@@ -113,7 +113,10 @@
     </section>
 
     <!-- Journey Timeline Section -->
-    <section id="journey" class="relative z-10 px-4 py-20 sm:px-8 lg:px-12 sm:py-32 bg-gradient-to-b from-white via-emerald-50/20 to-white">
+    <section id="journey" class="relative z-10 px-4 pt-32 pb-20 sm:px-8 lg:px-12 sm:pt-40 sm:pb-32">
+        <!-- Section Transition -->
+        <div class="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-gray-50 via-white to-transparent"></div>
+        <div class="relative bg-gradient-to-b from-white via-emerald-50/20 to-white">
         <div class="mx-auto max-w-7xl">
             <div class="text-center mb-14 sm:mb-20">
                 <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-6 py-2 text-xs font-bold uppercase tracking-wide text-white shadow-xl">
@@ -317,6 +320,7 @@
                     @endforeach
                 </div>
             </div>
+        </div>
         </div>
     </section>
 

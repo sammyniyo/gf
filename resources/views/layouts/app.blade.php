@@ -8,10 +8,10 @@
 
     @php
         // Get section values with proper fallbacks
-        $pageTitle = view()->hasSection('title') ? trim(e(view()->yieldContent('title'))) : 'Gods Family Choir - ASA UR Nyarugenge SDA';
-        $metaDescription = view()->hasSection('meta_description') ? trim(e(view()->yieldContent('meta_description'))) : 'Gods Family Choir is a vibrant worship ministry serving the words of life to the world through gospel messages. Join our family of over 300 worshippers, musicians, and storytellers.';
-        $ogTitle = view()->hasSection('og:title') ? trim(e(view()->yieldContent('og:title'))) : $pageTitle;
-        $ogDescription = view()->hasSection('og:description') ? trim(e(view()->yieldContent('og:description'))) : $metaDescription;
+        $pageTitle = view()->hasSection('title') ? trim(view()->yieldContent('title')) : 'Gods Family Choir - ASA UR Nyarugenge SDA';
+        $metaDescription = view()->hasSection('meta_description') ? trim(view()->yieldContent('meta_description')) : 'Gods Family Choir is a vibrant worship ministry serving the words of life to the world through gospel messages. Join our family of over 300 worshippers, musicians, and storytellers.';
+        $ogTitle = view()->hasSection('og:title') ? trim(view()->yieldContent('og:title')) : $pageTitle;
+        $ogDescription = view()->hasSection('og:description') ? trim(view()->yieldContent('og:description')) : $metaDescription;
     @endphp
 
     <title>{{ $pageTitle }}</title>

@@ -22,38 +22,6 @@
 
         <!-- Subtle shimmer effect -->
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-
-        <!-- Overlay on hover -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8 z-20">
-            <div class="flex gap-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 relative z-30">
-                @if($album->spotify_url)
-                <a href="{{ $album->spotify_url }}"
-                   target="_blank"
-                   class="bg-green-500 hover:bg-green-600 text-white p-3.5 rounded-full transition-all transform hover:scale-110 shadow-lg relative z-40"
-                   onclick="event.stopPropagation()">
-                    <i class="fab fa-spotify text-lg"></i>
-                </a>
-                @endif
-
-                @if($album->apple_music_url)
-                <a href="{{ $album->apple_music_url }}"
-                   target="_blank"
-                   class="bg-pink-500 hover:bg-pink-600 text-white p-3.5 rounded-full transition-all transform hover:scale-110 shadow-lg relative z-40"
-                   onclick="event.stopPropagation()">
-                    <i class="fab fa-apple text-lg"></i>
-                </a>
-                @endif
-
-                @if($album->youtube_url)
-                <a href="{{ $album->youtube_url }}"
-                   target="_blank"
-                   class="bg-red-500 hover:bg-red-600 text-white p-3.5 rounded-full transition-all transform hover:scale-110 shadow-lg relative z-40"
-                   onclick="event.stopPropagation()">
-                    <i class="fab fa-youtube text-lg"></i>
-                </a>
-                @endif
-            </div>
-        </div>
     </a>
 
     <!-- Album Info -->

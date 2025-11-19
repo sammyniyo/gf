@@ -72,7 +72,7 @@ Route::get('/story', function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     // Birthday emails
     Route::post('/birthdays/send', [App\Http\Controllers\Admin\DashboardController::class, 'sendBirthdayEmails'])->name('birthdays.send');
-    
+
     // Bulk Email
     Route::get('/bulk-email', [App\Http\Controllers\Admin\BulkEmailController::class, 'index'])->name('bulk-email.index');
     Route::post('/bulk-email/send', [App\Http\Controllers\Admin\BulkEmailController::class, 'send'])->name('bulk-email.send');
@@ -342,6 +342,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Contacts Management
     Route::get('contacts', [App\Http\Controllers\Admin\ContactController::class, 'index'])->name('contacts.index');
     Route::get('contacts/{contact}', [App\Http\Controllers\Admin\ContactController::class, 'show'])->name('contacts.show');
+    Route::get('contacts/{contact}/attachment', [App\Http\Controllers\Admin\ContactController::class, 'downloadAttachment'])->name('contacts.attachment');
     Route::delete('contacts/{contact}', [App\Http\Controllers\Admin\ContactController::class, 'destroy'])->name('contacts.destroy');
     Route::patch('contacts/{contact}/read', [App\Http\Controllers\Admin\ContactController::class, 'markAsRead'])->name('contacts.read');
     Route::patch('contacts/{contact}/unread', [App\Http\Controllers\Admin\ContactController::class, 'markAsUnread'])->name('contacts.unread');

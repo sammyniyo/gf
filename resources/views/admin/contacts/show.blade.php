@@ -58,6 +58,28 @@
                         <p class="text-gray-900 whitespace-pre-wrap">{{ $contact->message }}</p>
                     </div>
                 </div>
+
+                @if($contact->attachment)
+                    <div class="pt-6 border-t border-gray-200">
+                        <label class="text-sm font-medium text-gray-600 mb-2 block">Attached Document</label>
+                        <div class="flex items-center gap-3 p-4 bg-amber-50 border-2 border-amber-200 rounded-lg">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-file-alt text-2xl text-amber-600"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-semibold text-gray-900">{{ basename($contact->attachment) }}</p>
+                                <p class="text-xs text-gray-500 mt-1">Event invitation document</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <a href="{{ route('admin.contacts.attachment', $contact) }}"
+                                   class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-amber-600 rounded-lg hover:bg-amber-700 transition-colors">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
 

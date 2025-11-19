@@ -11,7 +11,7 @@
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-blue-100/10 blur-3xl"></div>
 
     <!-- Hero Section -->
-    <section class="relative z-10 px-6 pt-28 pb-16 sm:px-8 lg:px-12 sm:pt-32">
+    <section class="relative z-10 px-6 pt-36 pb-16 sm:px-8 lg:px-12 sm:pt-40">
         <div class="mx-auto max-w-7xl">
             <div class="text-center space-y-6 max-w-4xl mx-auto">
                 <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-6 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-xl">

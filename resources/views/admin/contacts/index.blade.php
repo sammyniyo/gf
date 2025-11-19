@@ -82,7 +82,15 @@
 
                                 <!-- Subject & Preview -->
                                 <div class="p-3 mt-3 rounded-lg bg-slate-50 border border-slate-200">
-                                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Subject</p>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Subject</p>
+                                        @if($contact->attachment)
+                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-semibold text-amber-700 bg-amber-100 rounded-full">
+                                                <i class="fas fa-paperclip text-xs"></i>
+                                                Has Attachment
+                                            </span>
+                                        @endif
+                                    </div>
                                     <p class="mt-1 text-sm font-semibold text-slate-900">{{ $contact->subject ?? 'No subject' }}</p>
 
                                     @if($contact->message ?? false)

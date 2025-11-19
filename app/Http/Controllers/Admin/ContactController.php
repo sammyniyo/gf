@@ -41,5 +41,20 @@ class ContactController extends Controller
         $contact->update(['is_read' => false]);
         return back()->with('success', 'Message marked as unread.');
     }
+
+    public function downloadAttachment(Contact $contact)
+    {
+        if (!$contact->attachment) {
+            return back()->with('error', 'No attachment found for this message.');
+        }
+
+        $filePath = storage_path('app/public/' . $contact->attachment);
+
+        if (!file_exists($filePath)) {
+            return back()->with('error', 'Attachment file not found.');
+        }
+
+        return response()->download($filePath);
+    }
 }
 

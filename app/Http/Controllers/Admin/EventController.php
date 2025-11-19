@@ -55,6 +55,11 @@ class EventController extends Controller
         return redirect()->route('admin.events.index')->with('success', 'Event created successfully!');
     }
 
+    public function show(Event $event)
+    {
+        return redirect()->route('admin.events.edit', $event);
+    }
+
     public function edit(Event $event)
     {
         return view('admin.events.edit', compact('event'));

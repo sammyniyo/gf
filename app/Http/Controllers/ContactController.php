@@ -28,8 +28,16 @@ class ContactController extends Controller
             'phone' => 'nullable|string|max:20',
             'subject' => 'nullable|string|max:255',
             'message' => 'required|string|max:1000',
+            'attachment' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240', // 10MB max
         ]);
 
+        // Handle file upload if present
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('contact_attachments', $filename, 'public');
+            $validated['attachment'] = $path;
+        }
 
         // Store contact to database
         Contact::create($validated);

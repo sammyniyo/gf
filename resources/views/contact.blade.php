@@ -3,101 +3,71 @@
 @section('title', 'Contact Us | God\'s Family Choir')
 
 @section('content')
-<div class="relative overflow-hidden bg-gradient-to-b from-gray-50 to-white">
+<div class="relative overflow-hidden bg-gradient-to-b from-gray-50 via-white to-gray-50">
     <!-- Decorative Background -->
-    <div class="absolute inset-0 bg-gradient-to-br from-emerald-50/50 via-white to-amber-50/30"></div>
-    <div class="absolute -top-32 -left-20 h-96 w-96 rounded-full bg-emerald-200/30 blur-3xl"></div>
-    <div class="absolute bottom-0 right-[-10rem] h-96 w-96 rounded-full bg-amber-200/40 blur-3xl"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-emerald-50/40 via-white to-amber-50/30"></div>
+    <div class="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-emerald-200/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-[-10rem] h-96 w-96 rounded-full bg-amber-200/30 blur-3xl"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-blue-100/10 blur-3xl"></div>
 
     <!-- Hero Section -->
-    <section class="relative z-10 px-6 pt-32 pb-20 sm:px-8 lg:px-12">
+    <section class="relative z-10 px-6 pt-28 pb-16 sm:px-8 lg:px-12 sm:pt-32">
         <div class="mx-auto max-w-7xl">
             <div class="text-center space-y-6 max-w-4xl mx-auto">
-                <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-5 py-2 text-xs font-bold uppercase tracking-wide text-white shadow-xl">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                    </svg>
+                <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-6 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-xl">
+                    <i class="fas fa-envelope text-sm"></i>
                     Get in Touch
                 </span>
-                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-gray-900 leading-tight">
-                    Let's <span class="bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent">Connect</span>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight">
+                    Let's <span class="bg-gradient-to-r from-emerald-600 via-emerald-500 to-amber-600 bg-clip-text text-transparent">Connect</span>
                 </h1>
-                <p class="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                <p class="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
                     Whether you have questions, want to book us for an event, or simply want to say hello — we're here and we'd love to hear from you!
                 </p>
             </div>
         </div>
-</section>
-
-
+    </section>
 
     <!-- Quick Contact Cards -->
-    <section class="relative z-10 px-6 pb-16 sm:px-8 lg:px-12">
+    <section class="relative z-10 px-6 pb-12 sm:px-8 lg:px-12">
         <div class="mx-auto max-w-7xl">
-            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Email Card -->
-                <a href="mailto:asa.godsfamilychoir2017@gmail.com" class="group relative overflow-hidden rounded-2xl border-2 border-emerald-100 bg-white p-6 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-2 hover:border-emerald-300">
+                <a href="mailto:asa.godsfamilychoir2017@gmail.com" class="group relative overflow-hidden rounded-2xl border-2 border-emerald-100 bg-white/80 backdrop-blur-sm p-6 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-2 hover:border-emerald-300">
                     <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-emerald-600/0 opacity-0 transition group-hover:opacity-5"></div>
                     <div class="relative">
                         <div class="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-lg group-hover:scale-110 transition-transform">
-                            <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
+                            <i class="fas fa-envelope text-xl"></i>
                         </div>
                         <h3 class="text-lg font-bold text-gray-900 mb-2">Email Us</h3>
-                        <p class="text-sm text-emerald-600 font-semibold mb-1">asa.godsfamilychoir2017@gmail.com</p>
+                        <p class="text-sm text-emerald-600 font-semibold mb-1 break-all">asa.godsfamilychoir2017@gmail.com</p>
                         <p class="text-xs text-gray-500">We respond within 24 hours</p>
                     </div>
                 </a>
 
-                <!-- Phone Card - hidden per request -->
-                <!--
-                <a href="tel:+250783871782" class="group relative overflow-hidden rounded-2xl border-2 border-amber-100 bg-white p-6 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-2 hover:border-amber-300">
-                    <div class="absolute inset-0 bg-gradient-to-br from-amber-500/0 to-amber-600/0 opacity-0 transition group-hover:opacity-5"></div>
-                    <div class="relative">
-                        <div class="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-lg group-hover:scale-110 transition-transform">
-                            <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-2">Call Us</h3>
-                        <p class="text-sm text-amber-600 font-semibold mb-1">+250 783 871 782</p>
-                        <p class="text-xs text-gray-500">Mon-Sat, 9AM-6PM</p>
-                    </div>
-                </a>
-                -->
-
-                <!-- WhatsApp Card - hidden per request -->
-                <!--
-                <a href="https://wa.me/250783871782" target="_blank" class="group relative overflow-hidden rounded-2xl border-2 border-green-100 bg-white p-6 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-2 hover:border-green-300">
-                    <div class="absolute inset-0 bg-gradient-to-br from-green-500/0 to-green-600/0 opacity-0 transition group-hover:opacity-5"></div>
-                    <div class="relative">
-                        <div class="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg group-hover:scale-110 transition-transform">
-                            <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-2">WhatsApp</h3>
-                        <p class="text-sm text-green-600 font-semibold mb-1">+250 783 871 782</p>
-                        <p class="text-xs text-gray-500">Chat with us instantly</p>
-                    </div>
-                </a>
-                -->
-
                 <!-- Location Card -->
-                <div class="group relative overflow-hidden rounded-2xl border-2 border-blue-100 bg-white p-6 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-2 hover:border-blue-300">
+                <div class="group relative overflow-hidden rounded-2xl border-2 border-blue-100 bg-white/80 backdrop-blur-sm p-6 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-2 hover:border-blue-300">
                     <div class="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-blue-600/0 opacity-0 transition group-hover:opacity-5"></div>
                     <div class="relative">
                         <div class="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg group-hover:scale-110 transition-transform">
-                            <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
+                            <i class="fas fa-map-marker-alt text-xl"></i>
                         </div>
                         <h3 class="text-lg font-bold text-gray-900 mb-2">Visit Us</h3>
                         <p class="text-sm text-blue-600 font-semibold mb-1">Nyamirambo SDA</p>
                         <p class="text-xs text-gray-500">Kigali, Rwanda</p>
+                    </div>
+                </div>
+
+                <!-- Response Time Card -->
+                <div class="group relative overflow-hidden rounded-2xl border-2 border-amber-100 bg-white/80 backdrop-blur-sm p-6 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-2 hover:border-amber-300">
+                    <div class="absolute inset-0 bg-gradient-to-br from-amber-500/0 to-amber-600/0 opacity-0 transition group-hover:opacity-5"></div>
+                    <div class="relative">
+                        <div class="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-lg group-hover:scale-110 transition-transform">
+                            <i class="fas fa-clock text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Quick Response</h3>
+                        <p class="text-sm text-amber-600 font-semibold mb-1">Within 24 Hours</p>
+                        <p class="text-xs text-gray-500">We're here to help</p>
                     </div>
                 </div>
             </div>
@@ -105,112 +75,110 @@
     </section>
 
     <!-- Main Contact Section -->
-    <section class="relative z-10 px-6 py-20 sm:px-8 lg:px-12">
+    <section class="relative z-10 px-6 py-12 sm:px-8 lg:px-12 sm:py-20">
         <div class="mx-auto max-w-7xl">
-            <div class="grid lg:grid-cols-5 gap-12 lg:gap-16">
+            <div class="grid lg:grid-cols-3 gap-8 lg:gap-12">
                 <!-- Left Column - Additional Info -->
-                <div class="lg:col-span-2 space-y-8">
+                <div class="lg:col-span-1 space-y-6">
                     <div class="space-y-4">
-                        <h2 class="text-3xl font-bold text-gray-900">
+                        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">
                             We're Here to <span class="bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent">Help</span>
                         </h2>
-                        <p class="text-lg text-gray-600 leading-relaxed">
+                        <p class="text-base text-gray-600 leading-relaxed">
                             Have a question or want to connect? Fill out the form and we'll get back to you as soon as possible.
                         </p>
                     </div>
 
-                    <!-- Response Time Badge -->
-                    <div class="inline-flex items-center gap-3 rounded-xl border-2 border-emerald-200 bg-emerald-50 px-6 py-4 shadow-md">
-                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 shadow-lg">
-                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold text-emerald-900">Quick Response</p>
-                            <p class="text-xs text-emerald-700">We reply within 24 hours</p>
-                        </div>
-                    </div>
-
                     <!-- What to Expect -->
-                    <div class="rounded-2xl border-2 border-gray-100 bg-white p-6 shadow-lg">
-                        <h3 class="mb-4 text-lg font-bold text-gray-900">What to Expect</h3>
+                    <div class="rounded-2xl border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-6 shadow-lg">
+                        <h3 class="mb-4 text-lg font-bold text-gray-900 flex items-center gap-2">
+                            <i class="fas fa-list-check text-emerald-600"></i>
+                            What to Expect
+                        </h3>
                         <div class="space-y-4">
                             <div class="flex items-start gap-3">
-                                <div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-600">
-                                    <span class="text-sm font-bold">1</span>
+                                <div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 font-bold text-sm">
+                                    1
                                 </div>
                                 <div class="flex-1">
                                     <p class="text-sm font-semibold text-gray-900">Submit Your Message</p>
-                                    <p class="text-xs text-gray-600 mt-1">Fill out the form with your details and inquiry</p>
+                                    <p class="text-xs text-gray-600 mt-1">Fill out the form with your details</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-3">
-                                <div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-600">
-                                    <span class="text-sm font-bold">2</span>
+                                <div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-600 font-bold text-sm">
+                                    2
                                 </div>
                                 <div class="flex-1">
                                     <p class="text-sm font-semibold text-gray-900">We'll Review</p>
-                                    <p class="text-xs text-gray-600 mt-1">Our team will read and assess your message</p>
+                                    <p class="text-xs text-gray-600 mt-1">Our team will assess your message</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-3">
-                                <div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-600">
-                                    <span class="text-sm font-bold">3</span>
+                                <div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 font-bold text-sm">
+                                    3
                                 </div>
                                 <div class="flex-1">
                                     <p class="text-sm font-semibold text-gray-900">Get a Response</p>
-                                    <p class="text-xs text-gray-600 mt-1">We'll reply with helpful information within 24 hours</p>
+                                    <p class="text-xs text-gray-600 mt-1">We'll reply within 24 hours</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Social Media -->
-                    <div class="rounded-2xl border-2 border-gray-100 bg-white p-6 shadow-lg">
-                        <h3 class="mb-4 text-lg font-bold text-gray-900">Follow Our Journey</h3>
+                    <div class="rounded-2xl border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-6 shadow-lg">
+                        <h3 class="mb-4 text-lg font-bold text-gray-900 flex items-center gap-2">
+                            <i class="fas fa-share-alt text-emerald-600"></i>
+                            Follow Our Journey
+                        </h3>
                         <div class="grid grid-cols-3 gap-3">
-                            <a href="https://www.facebook.com/FChoirOfGod" target="_blank" class="flex flex-col items-center gap-2 rounded-xl border-2 border-blue-100 bg-blue-50 p-4 transition-all hover:border-blue-300 hover:shadow-md hover:-translate-y-1">
-                                <i class="fab fa-facebook-f text-2xl text-blue-600"></i>
+                            <a href="https://www.facebook.com/FChoirOfGod" target="_blank" class="flex flex-col items-center gap-2 rounded-xl border-2 border-blue-100 bg-blue-50 p-3 transition-all hover:border-blue-300 hover:shadow-md hover:-translate-y-1">
+                                <i class="fab fa-facebook-f text-xl text-blue-600"></i>
                                 <span class="text-xs font-semibold text-blue-600">Facebook</span>
                             </a>
-                            <a href="https://www.instagram.com/choir_of_god" target="_blank" class="flex flex-col items-center gap-2 rounded-xl border-2 border-pink-100 bg-pink-50 p-4 transition-all hover:border-pink-300 hover:shadow-md hover:-translate-y-1">
-                                <i class="fab fa-instagram text-2xl text-pink-600"></i>
+                            <a href="https://www.instagram.com/choir_of_god" target="_blank" class="flex flex-col items-center gap-2 rounded-xl border-2 border-pink-100 bg-pink-50 p-3 transition-all hover:border-pink-300 hover:shadow-md hover:-translate-y-1">
+                                <i class="fab fa-instagram text-xl text-pink-600"></i>
                                 <span class="text-xs font-semibold text-pink-600">Instagram</span>
                             </a>
-                            <a href="https://www.youtube.com/@godsfamilychoir5583" target="_blank" class="flex flex-col items-center gap-2 rounded-xl border-2 border-red-100 bg-red-50 p-4 transition-all hover:border-red-300 hover:shadow-md hover:-translate-y-1">
-                                <i class="fab fa-youtube text-2xl text-red-600"></i>
+                            <a href="https://www.youtube.com/@godsfamilychoir5583" target="_blank" class="flex flex-col items-center gap-2 rounded-xl border-2 border-red-100 bg-red-50 p-3 transition-all hover:border-red-300 hover:shadow-md hover:-translate-y-1">
+                                <i class="fab fa-youtube text-xl text-red-600"></i>
                                 <span class="text-xs font-semibold text-red-600">YouTube</span>
                             </a>
-                            <a href="https://www.tiktok.com/@gods.family.choir?_t=ZM-90j5gj8DyqC&_r=1" target="_blank" class="flex flex-col items-center gap-2 rounded-xl border-2 border-black/30 bg-black/5 p-4 transition-all hover:border-black/50 hover:shadow-md hover:-translate-y-1">
-                                <i class="fab fa-tiktok text-2xl text-black"></i>
+                            <a href="https://www.tiktok.com/@gods.family.choir?_t=ZM-90j5gj8DyqC&_r=1" target="_blank" class="flex flex-col items-center gap-2 rounded-xl border-2 border-black/30 bg-black/5 p-3 transition-all hover:border-black/50 hover:shadow-md hover:-translate-y-1">
+                                <i class="fab fa-tiktok text-xl text-black"></i>
                                 <span class="text-xs font-semibold text-black">TikTok</span>
                             </a>
-                            <a href="https://open.spotify.com/artist/6qAFmjsmVuuXZEwzrIYy5J" target="_blank" class="flex flex-col items-center gap-2 rounded-xl border-2 border-green-100 bg-green-50 p-4 transition-all hover:border-green-300 hover:shadow-md hover:-translate-y-1">
-                                <i class="fab fa-spotify text-2xl text-green-600"></i>
+                            <a href="https://open.spotify.com/artist/6qAFmjsmVuuXZEwzrIYy5J" target="_blank" class="flex flex-col items-center gap-2 rounded-xl border-2 border-green-100 bg-green-50 p-3 transition-all hover:border-green-300 hover:shadow-md hover:-translate-y-1">
+                                <i class="fab fa-spotify text-xl text-green-600"></i>
                                 <span class="text-xs font-semibold text-green-600">Spotify</span>
                             </a>
-                            <a href="https://music.apple.com/us/artist/gods-family-choir/1793673660" target="_blank" class="flex flex-col items-center gap-2 rounded-xl border-2 border-purple-100 bg-purple-50 p-4 transition-all hover:border-purple-300 hover:shadow-md hover:-translate-y-1">
-                                <i class="fab fa-apple text-2xl text-purple-600"></i>
-                                <span class="text-xs font-semibold text-purple-600">Apple Music</span>
+                            <a href="https://music.apple.com/us/artist/gods-family-choir/1793673660" target="_blank" class="flex flex-col items-center gap-2 rounded-xl border-2 border-purple-100 bg-purple-50 p-3 transition-all hover:border-purple-300 hover:shadow-md hover:-translate-y-1">
+                                <i class="fab fa-apple text-xl text-purple-600"></i>
+                                <span class="text-xs font-semibold text-purple-600">Apple</span>
                             </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Right Column - Contact Form -->
-                <div class="lg:col-span-3">
-                    <div class="rounded-3xl border-2 border-gray-100 bg-white shadow-2xl overflow-hidden">
+                <div class="lg:col-span-2" x-data="{
+                    selectedSubject: '{{ old('subject', '') }}',
+                    showAttachment: false,
+                    fileName: '',
+                    checkSubject() {
+                        this.showAttachment = this.selectedSubject === 'Event Booking';
+                    }
+                }" x-init="checkSubject()">
+                    <div class="rounded-3xl border-2 border-gray-100 bg-white/90 backdrop-blur-sm shadow-2xl overflow-hidden">
                         <!-- Form Header -->
-                        <div class="bg-gradient-to-r from-emerald-600 to-emerald-700 px-8 py-6">
+                        <div class="bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-700 px-6 sm:px-8 py-6">
                             <div class="flex items-center gap-3">
                                 <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
-                                    <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                    </svg>
+                                    <i class="fas fa-paper-plane text-white text-xl"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-2xl font-bold text-white">Send a Message</h3>
+                                    <h3 class="text-xl sm:text-2xl font-bold text-white">Send a Message</h3>
                                     <p class="text-sm text-emerald-100 mt-1">We'd love to hear from you</p>
                                 </div>
                             </div>
@@ -218,12 +186,10 @@
 
                         <!-- Success Message -->
                         @if(session('success'))
-                            <div class="mx-8 mt-6 rounded-xl border-2 border-emerald-200 bg-emerald-50 p-4">
+                            <div class="mx-6 sm:mx-8 mt-6 rounded-xl border-2 border-emerald-200 bg-emerald-50 p-4">
                                 <div class="flex items-center gap-3">
                                     <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-500">
-                                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                        </svg>
+                                        <i class="fas fa-check text-white"></i>
                                     </div>
                                     <p class="text-sm font-semibold text-emerald-900">{{ session('success') }}</p>
                                 </div>
@@ -231,40 +197,45 @@
                         @endif
 
                         <!-- Form -->
-                        <form method="POST" action="{{ route('contact.submit') }}" class="p-8 space-y-6">
+                        <form method="POST" action="{{ route('contact.submit') }}" enctype="multipart/form-data" class="p-6 sm:p-8 space-y-6" x-on:submit="fileName = ''">
                             @csrf
 
-                            <!-- Honeypot field: real users won't see/fill this -->
+                            <!-- Honeypot field -->
                             <div class="hidden" aria-hidden="true">
                                 <label for="website">Website</label>
                                 <input type="text" name="website" id="website" tabindex="-1" autocomplete="off" />
                             </div>
 
-
                             <div class="grid sm:grid-cols-2 gap-6">
                                 <!-- Name -->
                                 <div class="space-y-2">
-                                    <label class="block text-sm font-bold text-gray-900">
+                                    <label class="block text-sm font-bold text-gray-900 flex items-center gap-1">
+                                        <i class="fas fa-user text-emerald-600 text-xs"></i>
                                         Your Name <span class="text-red-500">*</span>
                                     </label>
                                     <input type="text" name="name" value="{{ old('name') }}" required
                                         class="w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-900 transition-all focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none @error('name') border-red-300 @enderror"
                                         placeholder="John Doe">
                                     @error('name')
-                                        <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                                        <p class="text-xs text-red-600 mt-1 flex items-center gap-1">
+                                            <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                                        </p>
                                     @enderror
                                 </div>
 
                                 <!-- Email -->
                                 <div class="space-y-2">
-                                    <label class="block text-sm font-bold text-gray-900">
+                                    <label class="block text-sm font-bold text-gray-900 flex items-center gap-1">
+                                        <i class="fas fa-envelope text-emerald-600 text-xs"></i>
                                         Email Address <span class="text-red-500">*</span>
                                     </label>
                                     <input type="email" name="email" value="{{ old('email') }}" required
                                         class="w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-900 transition-all focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none @error('email') border-red-300 @enderror"
                                         placeholder="john@example.com">
                                     @error('email')
-                                        <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                                        <p class="text-xs text-red-600 mt-1 flex items-center gap-1">
+                                            <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                                        </p>
                                     @enderror
                                 </div>
                             </div>
@@ -272,23 +243,27 @@
                             <div class="grid sm:grid-cols-2 gap-6">
                                 <!-- Phone -->
                                 <div class="space-y-2">
-                                    <label class="block text-sm font-bold text-gray-900">
+                                    <label class="block text-sm font-bold text-gray-900 flex items-center gap-1">
+                                        <i class="fas fa-phone text-emerald-600 text-xs"></i>
                                         Phone Number
                                     </label>
                                     <input type="tel" name="phone" value="{{ old('phone') }}"
                                         class="w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-900 transition-all focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none @error('phone') border-red-300 @enderror"
-                                        placeholder="">
+                                        placeholder="+250 783 871 782">
                                     @error('phone')
-                                        <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                                        <p class="text-xs text-red-600 mt-1 flex items-center gap-1">
+                                            <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                                        </p>
                                     @enderror
                                 </div>
 
                                 <!-- Subject -->
                                 <div class="space-y-2">
-                                    <label class="block text-sm font-bold text-gray-900">
+                                    <label class="block text-sm font-bold text-gray-900 flex items-center gap-1">
+                                        <i class="fas fa-tag text-emerald-600 text-xs"></i>
                                         Subject
                                     </label>
-                                    <select name="subject"
+                                    <select name="subject" x-model="selectedSubject" @change="checkSubject()"
                                         class="w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-900 transition-all focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none @error('subject') border-red-300 @enderror">
                                         <option value="">Select a topic</option>
                                         <option value="General Inquiry" {{ old('subject') === 'General Inquiry' ? 'selected' : '' }}>General Inquiry</option>
@@ -299,52 +274,93 @@
                                         <option value="Feedback" {{ old('subject') === 'Feedback' ? 'selected' : '' }}>Feedback</option>
                                     </select>
                                     @error('subject')
-                                        <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                                        <p class="text-xs text-red-600 mt-1 flex items-center gap-1">
+                                            <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                                        </p>
                                     @enderror
                                 </div>
                             </div>
 
+                            <!-- Attachment Section - Only shows for Event Booking -->
+                            <div x-show="showAttachment"
+                                 x-transition:enter="transition ease-out duration-300"
+                                 x-transition:enter-start="opacity-0 transform -translate-y-2"
+                                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                                 x-cloak
+                                 class="space-y-2">
+                                <label class="block text-sm font-bold text-gray-900 flex items-center gap-2">
+                                    <i class="fas fa-paperclip text-amber-600"></i>
+                                    Attach Invitation Document
+                                    <span class="text-xs font-normal text-gray-500">(Optional)</span>
+                                </label>
+                                <div class="relative">
+                                    <input type="file"
+                                           name="attachment"
+                                           id="attachment"
+                                           accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                                           @change="fileName = $event.target.files[0]?.name || ''"
+                                           class="hidden"
+                                           @error('attachment') class="border-red-300" @enderror>
+                                    <label for="attachment" class="flex items-center gap-3 cursor-pointer rounded-xl border-2 border-dashed border-amber-300 bg-amber-50/50 px-6 py-4 transition-all hover:border-amber-400 hover:bg-amber-50">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas fa-cloud-upload-alt text-2xl text-amber-600"></i>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-semibold text-gray-900" x-text="fileName || 'Click to upload or drag and drop'"></p>
+                                            <p class="text-xs text-gray-500 mt-1">PDF, DOC, DOCX, JPG, PNG (Max 10MB)</p>
+                                        </div>
+                                        <div class="flex-shrink-0">
+                                            <i class="fas fa-file-alt text-xl text-amber-600"></i>
+                                        </div>
+                                    </label>
+                                </div>
+                                @error('attachment')
+                                    <p class="text-xs text-red-600 mt-1 flex items-center gap-1">
+                                        <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                                    </p>
+                                @enderror
+                                <p class="text-xs text-gray-500 flex items-center gap-1">
+                                    <i class="fas fa-info-circle text-blue-500"></i>
+                                    Upload your event invitation, flyer, or any relevant document
+                                </p>
+                            </div>
+
                             <!-- Message -->
                             <div class="space-y-2">
-                                <label class="block text-sm font-bold text-gray-900">
+                                <label class="block text-sm font-bold text-gray-900 flex items-center gap-1">
+                                    <i class="fas fa-comment-alt text-emerald-600 text-xs"></i>
                                     Your Message <span class="text-red-500">*</span>
                                 </label>
                                 <textarea name="message" rows="6" required
                                     class="w-full rounded-xl border-2 border-gray-200 px-4 py-3 text-gray-900 transition-all focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none resize-none @error('message') border-red-300 @enderror"
                                     placeholder="Tell us how we can help you...">{{ old('message') }}</textarea>
                                 @error('message')
-                                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                                    <p class="text-xs text-red-600 mt-1 flex items-center gap-1">
+                                        <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                                    </p>
                                 @enderror
                                 <p class="text-xs text-gray-500">Maximum 1000 characters</p>
                             </div>
 
                             <!-- Submit Button -->
                             <button type="submit"
-                                class="w-full flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 px-8 py-4 text-lg font-bold text-white shadow-xl shadow-emerald-500/30 transition-all hover:shadow-2xl hover:shadow-emerald-500/40 hover:-translate-y-1">
+                                class="w-full flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-700 px-8 py-4 text-base sm:text-lg font-bold text-white shadow-xl shadow-emerald-500/30 transition-all hover:shadow-2xl hover:shadow-emerald-500/40 hover:-translate-y-1 hover:scale-[1.02]">
+                                <i class="fas fa-paper-plane"></i>
                                 <span>Send Message</span>
-                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                </svg>
                             </button>
 
                             <!-- Trust Indicators -->
-                            <div class="flex flex-wrap items-center justify-center gap-6 border-t-2 border-gray-100 pt-6">
-                                <div class="flex items-center gap-2 text-sm text-gray-600">
-                                    <svg class="h-5 w-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                    </svg>
+                            <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 border-t-2 border-gray-100 pt-6">
+                                <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+                                    <i class="fas fa-shield-alt text-emerald-600"></i>
                                     <span class="font-semibold">Secure & Private</span>
                                 </div>
-                                <div class="flex items-center gap-2 text-sm text-gray-600">
-                                    <svg class="h-5 w-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                    </svg>
+                                <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+                                    <i class="fas fa-bolt text-emerald-600"></i>
                                     <span class="font-semibold">Quick Response</span>
                                 </div>
-                                <div class="flex items-center gap-2 text-sm text-gray-600">
-                                    <svg class="h-5 w-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
+                                <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+                                    <i class="fas fa-check-circle text-emerald-600"></i>
                                     <span class="font-semibold">No Spam</span>
                                 </div>
                             </div>
@@ -356,16 +372,17 @@
     </section>
 
     <!-- FAQ Section -->
-    <section class="relative z-10 px-6 py-20 sm:px-8 lg:px-12 bg-gradient-to-br from-emerald-50/30 via-white to-amber-50/30">
+    <section class="relative z-10 px-6 py-16 sm:px-8 lg:px-12 sm:py-20 bg-gradient-to-br from-emerald-50/30 via-white to-amber-50/30">
         <div class="mx-auto max-w-7xl">
-            <div class="text-center mb-16">
+            <div class="text-center mb-12 sm:mb-16">
                 <span class="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-2 text-xs font-bold uppercase tracking-wide text-amber-700">
+                    <i class="fas fa-question-circle"></i>
                     Common Questions
                 </span>
-                <h2 class="mt-6 text-4xl font-bold text-gray-900 sm:text-5xl">
+                <h2 class="mt-6 text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900">
                     Frequently Asked <span class="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">Questions</span>
                 </h2>
-                <p class="mt-4 text-lg text-gray-600">Quick answers to questions you may have</p>
+                <p class="mt-4 text-base sm:text-lg text-gray-600">Quick answers to questions you may have</p>
             </div>
 
             <div class="mx-auto max-w-4xl space-y-4" x-data="{ openFaq: null }">
@@ -381,7 +398,7 @@
                         ],
                         [
                             'question' => 'How can I book the choir for an event?',
-                            'answer' => 'Send us a message through the contact form above with the subject "Event Booking" and include your event details (date, location, type of event, expected audience). We\'ll get back to you within 24 hours with availability and booking information.'
+                            'answer' => 'Select "Event Booking" as your subject in the contact form above and include your event details (date, location, type of event, expected audience). You can also attach an invitation document. We\'ll get back to you within 24 hours with availability and booking information.'
                         ],
                         [
                             'question' => 'When and where do rehearsals take place?',
@@ -393,7 +410,7 @@
                         ],
                         [
                             'question' => 'Can I request the choir to perform at my church or event?',
-                            'answer' => 'Yes! We love ministering at various churches and events. Please fill out the contact form with details about your event, and we\'ll be in touch to discuss availability, requirements, and logistics.'
+                            'answer' => 'Yes! We love ministering at various churches and events. Please fill out the contact form with "Event Booking" as the subject, include details about your event, and attach your invitation if available. We\'ll be in touch to discuss availability, requirements, and logistics.'
                         ],
                     ];
                 @endphp
@@ -402,26 +419,23 @@
                     <div class="overflow-hidden rounded-2xl border-2 border-gray-100 bg-white shadow-lg transition-all hover:shadow-xl"
                          x-data="{ faqIndex: {{ $index }} }">
                         <button @click="openFaq = openFaq === faqIndex ? null : faqIndex"
-                                class="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors hover:bg-gray-50">
-                            <div class="flex items-center gap-4">
+                                class="flex w-full items-center justify-between gap-4 px-4 sm:px-6 py-4 sm:py-5 text-left transition-colors hover:bg-gray-50">
+                            <div class="flex items-center gap-3 sm:gap-4">
                                 <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 text-white font-bold shadow-lg">
                                     {{ $index + 1 }}
                                 </div>
-                                <h3 class="text-lg font-bold text-gray-900">{{ $faq['question'] }}</h3>
+                                <h3 class="text-base sm:text-lg font-bold text-gray-900">{{ $faq['question'] }}</h3>
                             </div>
-                            <svg class="h-6 w-6 flex-shrink-0 text-emerald-600 transition-transform"
-                                 :class="openFaq === faqIndex ? 'rotate-180' : ''"
-                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
+                            <i class="fas fa-chevron-down text-emerald-600 transition-transform flex-shrink-0"
+                               :class="openFaq === faqIndex ? 'rotate-180' : ''"></i>
                         </button>
                         <div x-show="openFaq === faqIndex"
                              x-transition:enter="transition ease-out duration-200"
                              x-transition:enter-start="opacity-0 transform -translate-y-2"
                              x-transition:enter-end="opacity-100 transform translate-y-0"
                              x-cloak
-                             class="border-t-2 border-gray-100 bg-gray-50 px-6 py-5">
-                            <p class="text-gray-700 leading-relaxed pl-14">{{ $faq['answer'] }}</p>
+                             class="border-t-2 border-gray-100 bg-gray-50 px-4 sm:px-6 py-4 sm:py-5">
+                            <p class="text-sm sm:text-base text-gray-700 leading-relaxed pl-0 sm:pl-14">{{ $faq['answer'] }}</p>
                         </div>
                     </div>
                 @endforeach
@@ -430,40 +444,32 @@
     </section>
 
     <!-- Map Section -->
-    <section class="relative z-10 px-6 py-20 sm:px-8 lg:px-12">
+    <section class="relative z-10 px-6 py-16 sm:px-8 lg:px-12 sm:py-20">
         <div class="mx-auto max-w-7xl">
             <div class="text-center mb-12">
                 <span class="inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-xs font-bold uppercase tracking-wide text-blue-700">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
+                    <i class="fas fa-map-marker-alt"></i>
                     Our Location
                 </span>
-                <h2 class="mt-6 text-4xl font-bold text-gray-900 sm:text-5xl">
+                <h2 class="mt-6 text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900">
                     Come <span class="bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">Visit Us</span>
                 </h2>
-                <p class="mt-4 text-lg text-gray-600">Nyamirambo SDA, Kigali, Rwanda</p>
+                <p class="mt-4 text-base sm:text-lg text-gray-600">Nyamirambo SDA, Kigali, Rwanda</p>
             </div>
 
             <div class="overflow-hidden rounded-3xl border-2 border-gray-200 bg-white shadow-2xl">
-                <div class="aspect-[16/9] bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-12">
+                <div class="aspect-[16/9] bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-8 sm:p-12">
                     <div class="text-center space-y-6">
-                        <div class="inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-2xl">
-                            <svg class="h-10 w-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
+                        <div class="inline-flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-2xl">
+                            <i class="fas fa-map-marker-alt text-white text-2xl sm:text-3xl"></i>
                         </div>
                         <div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Nyamirambo SDA</h3>
-                            <p class="text-lg text-gray-600 mb-6">Kigali, Rwanda</p>
+                            <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Nyamirambo SDA</h3>
+                            <p class="text-base sm:text-lg text-gray-600 mb-6">Kigali, Rwanda</p>
                         </div>
                         <a href="https://maps.google.com/?q=Nyamirambo+SDA+Kigali" target="_blank"
-                           class="inline-flex items-center gap-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-4 text-base font-bold text-white shadow-xl shadow-blue-500/30 transition-all hover:shadow-2xl hover:shadow-blue-500/40 hover:-translate-y-1">
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                            </svg>
+                           class="inline-flex items-center gap-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold text-white shadow-xl shadow-blue-500/30 transition-all hover:shadow-2xl hover:shadow-blue-500/40 hover:-translate-y-1">
+                            <i class="fas fa-external-link-alt"></i>
                             <span>Open in Google Maps</span>
                         </a>
                     </div>
@@ -473,19 +479,17 @@
     </section>
 
     <!-- Scripture Quote -->
-    <section class="relative z-10 px-6 pb-32 sm:px-8 lg:px-12">
+    <section class="relative z-10 px-6 pb-24 sm:px-8 lg:px-12 sm:pb-32">
         <div class="mx-auto max-w-4xl">
-            <div class="relative overflow-hidden rounded-3xl border-2 border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-amber-50 p-12 shadow-2xl text-center">
+            <div class="relative overflow-hidden rounded-3xl border-2 border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-amber-50 p-8 sm:p-12 shadow-2xl text-center">
                 <div class="absolute top-0 left-0 w-32 h-32 bg-emerald-200/40 rounded-full blur-3xl"></div>
                 <div class="absolute bottom-0 right-0 w-40 h-40 bg-amber-200/40 rounded-full blur-3xl"></div>
                 <div class="relative">
-                    <svg class="mx-auto mb-6 h-12 w-12 text-emerald-600/30" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M6.5 10c-.223 0-.437.034-.65.065.069-.232.14-.468.254-.68.114-.308.292-.575.469-.844.148-.291.409-.488.601-.737.201-.242.475-.403.692-.604.213-.21.492-.315.714-.463.232-.133.434-.28.65-.35.208-.086.39-.16.539-.222.302-.125.474-.197.474-.197L9.758 4.03c0 0-.218.052-.597.144C8.97 4.222 8.737 4.278 8.472 4.345c-.271.05-.56.187-.882.312C7.272 4.799 6.904 4.895 6.562 5.123c-.344.218-.741.4-1.091.692C5.132 6.116 4.723 6.377 4.421 6.76c-.33.358-.656.734-.909 1.162C3.219 8.33 3.02 8.778 2.81 9.221c-.19.443-.343.896-.468 1.336-.237.882-.343 1.72-.384 2.437-.034.718-.014 1.315.028 1.747.015.204.043.402.063.539.017.109.025.168.025.168l.026-.006C2.535 17.474 4.338 19 6.5 19c2.485 0 4.5-2.015 4.5-4.5S8.985 10 6.5 10zM17.5 10c-.223 0-.437.034-.65.065.069-.232.14-.468.254-.68.114-.308.292-.575.469-.844.148-.291.409-.488.601-.737.201-.242.475-.403.692-.604.213-.21.492-.315.714-.463.232-.133.434-.28.65-.35.208-.086.39-.16.539-.222.302-.125.474-.197.474-.197L20.758 4.03c0 0-.218.052-.597.144-.191.048-.424.104-.689.171-.271.05-.56.187-.882.312-.317.143-.686.238-1.028.467-.344.218-.741.4-1.091.692-.339.301-.748.562-1.05.944-.33.358-.656.734-.909 1.162C14.219 8.33 14.02 8.778 13.81 9.221c-.19.443-.343.896-.468 1.336-.237.882-.343 1.72-.384 2.437-.034.718-.014 1.315.028 1.747.015.204.043.402.063.539.017.109.025.168.025.168l.026-.006C13.535 17.474 15.338 19 17.5 19c2.485 0 4.5-2.015 4.5-4.5S19.985 10 17.5 10z"/>
-                    </svg>
-                    <blockquote class="text-2xl sm:text-3xl font-light italic text-gray-700 leading-relaxed mb-6">
+                    <i class="fas fa-quote-left text-4xl sm:text-5xl text-emerald-600/30 mb-6"></i>
+                    <blockquote class="text-xl sm:text-2xl lg:text-3xl font-light italic text-gray-700 leading-relaxed mb-6">
                         "Let your speech always be gracious, seasoned with salt, so that you may know how you ought to answer each person."
                     </blockquote>
-                    <p class="text-xl font-bold text-emerald-600">— Colossians 4:6</p>
+                    <p class="text-lg sm:text-xl font-bold text-emerald-600">— Colossians 4:6</p>
                 </div>
             </div>
         </div>

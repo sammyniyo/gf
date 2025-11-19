@@ -15,6 +15,7 @@ class Contact extends Model
         'phone',
         'subject',
         'message',
+        'attachment',
         'is_read',
     ];
 

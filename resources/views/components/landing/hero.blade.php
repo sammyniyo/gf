@@ -74,7 +74,7 @@
     </div>
 
     <!-- Main Hero Content -->
-    <div class="relative z-10 min-h-[85vh] sm:min-h-screen flex items-center">
+    <div class="relative z-10 min-h-[85vh] sm:min-h-screen flex items-center pb-24 sm:pb-32">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-16 sm:py-20 w-full">
             <div class="text-center max-w-5xl mx-auto space-y-8 sm:space-y-10">
 
@@ -139,7 +139,7 @@
                 </div>
 
                 <!-- Primary CTA Button -->
-                <div class="flex items-center justify-center animate-fade-in-up animation-delay-800">
+                <div class="flex items-center justify-center animate-fade-in-up animation-delay-800 mb-20 sm:mb-24">
                     <a href="{{ route('registration.member') }}" class="group relative inline-flex items-center gap-3 px-7 py-3.5 sm:px-8 sm:py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-full shadow-2xl shadow-emerald-500/50 transition-all duration-300 hover:shadow-emerald-500/70 hover:-translate-y-1 hover:scale-105 overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-r from-teal-600 to-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                         <svg class="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -153,7 +153,7 @@
     </div>
 
     <!-- Elegant Scroll Indicator -->
-    <div class="absolute bottom-8 sm:bottom-12 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+    <div class="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
         <button onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})" class="flex flex-col items-center gap-3 group">
             <span class="text-white/70 text-xs font-semibold uppercase tracking-wider group-hover:text-emerald-300 transition-colors">Discover More</span>
             <div class="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-1 group-hover:border-emerald-400 transition-all">

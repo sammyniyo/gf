@@ -5,6 +5,13 @@
         scroll-behavior: smooth;
     }
 
+    /* Better section transitions with easing */
+    @media (prefers-reduced-motion: no-preference) {
+        .fade-in-section {
+            transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+    }
+
     /* Respect user's motion preferences */
     @media (prefers-reduced-motion: reduce) {
         *,
@@ -27,14 +34,35 @@
     /* Fade in on scroll animations - Optimized for speed */
     .fade-in-section {
         opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1), transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+        transform: translateY(30px);
+        transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
         will-change: opacity, transform;
     }
 
     .fade-in-section.is-visible {
         opacity: 1;
         transform: translateY(0);
+    }
+
+    /* Smooth section spacing */
+    .fade-in-section + .fade-in-section {
+        margin-top: 0;
+    }
+
+    /* Section padding for better transitions */
+    section,
+    .fade-in-section > section {
+        scroll-margin-top: 80px;
+    }
+
+    /* Ensure sections have proper spacing and don't overlap */
+    .fade-in-section {
+        position: relative;
+    }
+
+    /* Smooth scroll padding for better section visibility */
+    html {
+        scroll-padding-top: 80px;
     }
 
     .fade-in-left {
@@ -201,8 +229,8 @@
     // Intersection Observer for scroll animations - Optimized
     document.addEventListener('DOMContentLoaded', function() {
         const observerOptions = {
-            threshold: 0.05, // Trigger earlier for faster transitions
-            rootMargin: '0px 0px -100px 0px' // Start animation sooner
+            threshold: 0.1, // Trigger when 10% visible for smoother transitions
+            rootMargin: '0px 0px -50px 0px' // Start animation earlier for better flow
         };
 
         const observer = new IntersectionObserver((entries) => {

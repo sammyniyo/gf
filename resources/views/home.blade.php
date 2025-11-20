@@ -18,24 +18,24 @@
     <div class="fade-in-section"><x-landing.hero /></div>
 
     <!-- Audio Player Section -->
-    <div class="fade-in-section"><x-landing.audio-player /></div>
+    <div class="fade-in-section mt-0"><x-landing.audio-player /></div>
 
     <!-- Interactive Photo Gallery -->
-    <div class="fade-in-section"><x-landing.interactive-gallery :galleries="$galleryImages ?? collect([])" /></div>
+    <div class="fade-in-section mt-0"><x-landing.interactive-gallery :galleries="$galleryImages ?? collect([])" /></div>
 
     <!-- Upcoming Events -->
-    <div class="fade-in-section"><x-landing.upcoming-events-dynamic :nextEvent="$nextEvent ?? null" /></div>
+    <div class="fade-in-section mt-0"><x-landing.upcoming-events-dynamic :nextEvent="$nextEvent ?? null" /></div>
 
     <!-- Spotify Albums -->
-    <div class="fade-in-section"><x-landing.spotify-dynamic :spotifyTracks="$spotifyTracks ?? null" /></div>
+    <div class="fade-in-section mt-0"><x-landing.spotify-dynamic :spotifyTracks="$spotifyTracks ?? null" /></div>
 
     <!-- Unlock Power Section -->
 
     <!-- Testimonials -->
-    <div class="fade-in-section"><x-landing.testimonials-redesigned /></div>
+    <div class="fade-in-section mt-0"><x-landing.testimonials-redesigned /></div>
 
     <!-- Final CTA -->
-    <div class="fade-in-section"><x-landing.final-cta /></div>
+    <div class="fade-in-section mt-0"><x-landing.final-cta /></div>
 
     <!-- Footer -->
     <x-static.footer />

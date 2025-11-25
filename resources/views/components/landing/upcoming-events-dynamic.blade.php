@@ -1,35 +1,35 @@
 <!-- Upcoming Events with Countdown Timer (Dynamic from Database) -->
 @if($nextEvent)
-<section class="relative bg-gradient-to-b from-white to-emerald-50/50 py-24 overflow-hidden">
+<section class="relative bg-gradient-to-b from-white to-emerald-50/50 py-16 sm:py-20 lg:py-24 overflow-hidden">
     <!-- Decorative Background -->
     <div class="absolute inset-0 opacity-5">
         <div class="absolute top-0 left-0 w-96 h-96 bg-emerald-500 rounded-full blur-3xl"></div>
         <div class="absolute bottom-0 right-0 w-96 h-96 bg-amber-500 rounded-full blur-3xl"></div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <!-- Section Header -->
-        <div class="text-center mb-16">
+        <div class="text-center mb-10 sm:mb-16">
             <div class="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 rounded-full mb-4">
                 <span class="w-2 h-2 bg-amber-500 rounded-full animate-ping"></span>
                 <span class="text-amber-800 text-sm font-bold uppercase tracking-wide">Next Event</span>
             </div>
-            <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-4 sm:mb-6">
                 Don't Miss Our <span class="bg-gradient-to-r from-emerald-600 to-amber-500 bg-clip-text text-transparent">Upcoming Performances</span>
             </h2>
-            <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+            <p class="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto px-2 sm:px-0">
                 Join us for spirit-filled worship and powerful musical experiences
             </p>
         </div>
 
         <!-- Featured Event with Countdown -->
-        <div class="relative group mb-12">
+        <div class="relative group mb-10 sm:mb-12">
             <div class="absolute -inset-1 bg-gradient-to-r from-emerald-600 via-amber-500 to-emerald-600 rounded-3xl blur-2xl opacity-0 group-hover:opacity-30 transition-all duration-700 ease-out animate-gradient-xy"></div>
 
             <div class="relative bg-white rounded-3xl shadow-2xl overflow-hidden transform group-hover:scale-[1.02] transition-all duration-500 ease-out">
                 <div class="grid lg:grid-cols-2">
                     <!-- Left: Event Image -->
-                    <div class="relative h-64 lg:h-auto overflow-hidden">
+                    <div class="relative h-64 sm:h-80 lg:h-auto overflow-hidden">
                         @if($nextEvent->cover_image)
                             <img src="{{ asset('storage/' . $nextEvent->cover_image) }}" alt="{{ $nextEvent->title }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out">
                         @else
@@ -54,17 +54,17 @@
                     </div>
 
                     <!-- Right: Event Details & Countdown -->
-                    <div class="p-8 lg:p-12 flex flex-col justify-center">
+                    <div class="p-6 sm:p-8 lg:p-12 flex flex-col justify-center">
                         <div class="mb-8">
-                            <h3 class="text-3xl lg:text-4xl font-black text-gray-900 mb-4">
+                            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-3 sm:mb-4">
                                 {{ $nextEvent->title }}
                             </h3>
-                            <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                            <p class="text-gray-600 text-base sm:text-lg leading-relaxed mb-6">
                                 {{ $nextEvent->description ?? 'Join us for an inspiring Seventh-day Adventist worship experience filled with powerful praise, biblical testimonies, and heaven-touching harmonies.' }}
                             </p>
 
                             <!-- Event Info Grid -->
-                            <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                                 <div class="flex items-start gap-3">
                                     <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
                                         <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,23 +119,23 @@
                         </div>
 
                         <!-- Countdown Timer -->
-                        <div class="bg-gradient-to-br from-emerald-50 to-amber-50 rounded-2xl p-6 mb-6">
+                        <div class="bg-gradient-to-br from-emerald-50 to-amber-50 rounded-2xl p-4 sm:p-6 mb-6">
                             <p class="text-center text-gray-700 font-bold mb-4">Event Starts In</p>
-                            <div id="countdown-{{ $nextEvent->id }}" class="grid grid-cols-4 gap-3">
+                            <div id="countdown-{{ $nextEvent->id }}" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                                 <div class="bg-white rounded-xl p-4 shadow-lg text-center transform hover:scale-105 transition-transform">
-                                    <div class="text-3xl lg:text-4xl font-black text-emerald-600" data-days>00</div>
+                                    <div class="text-2xl sm:text-3xl lg:text-4xl font-black text-emerald-600" data-days>00</div>
                                     <div class="text-xs text-gray-500 font-semibold mt-1">DAYS</div>
                                 </div>
                                 <div class="bg-white rounded-xl p-4 shadow-lg text-center transform hover:scale-105 transition-transform">
-                                    <div class="text-3xl lg:text-4xl font-black text-amber-600" data-hours>00</div>
+                                    <div class="text-2xl sm:text-3xl lg:text-4xl font-black text-amber-600" data-hours>00</div>
                                     <div class="text-xs text-gray-500 font-semibold mt-1">HOURS</div>
                                 </div>
                                 <div class="bg-white rounded-xl p-4 shadow-lg text-center transform hover:scale-105 transition-transform">
-                                    <div class="text-3xl lg:text-4xl font-black text-blue-600" data-minutes>00</div>
+                                    <div class="text-2xl sm:text-3xl lg:text-4xl font-black text-blue-600" data-minutes>00</div>
                                     <div class="text-xs text-gray-500 font-semibold mt-1">MINS</div>
                                 </div>
                                 <div class="bg-white rounded-xl p-4 shadow-lg text-center transform hover:scale-105 transition-transform">
-                                    <div class="text-3xl lg:text-4xl font-black text-purple-600" data-seconds>00</div>
+                                    <div class="text-2xl sm:text-3xl lg:text-4xl font-black text-purple-600" data-seconds>00</div>
                                     <div class="text-xs text-gray-500 font-semibold mt-1">SECS</div>
                                 </div>
                             </div>
@@ -165,7 +165,7 @@
 
         <!-- Other Upcoming Events -->
         <div class="text-center">
-            <a href="{{ route('events.index') }}" class="inline-flex items-center gap-2 px-8 py-4 bg-white border-2 border-emerald-600 text-emerald-600 font-bold rounded-xl hover:bg-emerald-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl">
+            <a href="{{ route('events.index') }}" class="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-white border-2 border-emerald-600 text-emerald-600 font-bold rounded-xl hover:bg-emerald-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl">
                 <span>View All Events</span>
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
@@ -238,19 +238,19 @@ document.addEventListener('DOMContentLoaded', initCountdown{{ $nextEvent->id }})
 </script>
 @else
 <!-- No Upcoming Event Message -->
-<section class="relative bg-gradient-to-b from-white to-emerald-50/50 py-24">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-        <div class="bg-white rounded-3xl shadow-xl p-12">
+<section class="relative bg-gradient-to-b from-white to-emerald-50/50 py-16 sm:py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <div class="bg-white rounded-3xl shadow-xl p-8 sm:p-12">
             <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg class="w-10 h-10 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                 </svg>
             </div>
-            <h3 class="text-3xl font-black text-gray-900 mb-4">More Events Coming Soon!</h3>
-            <p class="text-gray-600 text-lg mb-6">
+            <h3 class="text-2xl sm:text-3xl font-black text-gray-900 mb-4">More Events Coming Soon!</h3>
+            <p class="text-gray-600 text-base sm:text-lg mb-6">
                 We're preparing something special. Check back soon for our upcoming worship events.
             </p>
-            <a href="{{ route('events.index') }}" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold rounded-xl hover:shadow-xl transition-all">
+            <a href="{{ route('events.index') }}" class="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold rounded-xl hover:shadow-xl transition-all">
                 <span>View Past Events</span>
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>

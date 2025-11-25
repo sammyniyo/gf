@@ -41,7 +41,7 @@ class EventRegistrationController extends Controller
                     return $query->where('event_id', $event->id);
                 })
             ],
-            'phone' => ['nullable','regex:/^[0-9]{10,15}$/'],
+            'phone' => ['nullable','regex:/^\+?[0-9]{10,15}$/'],
             'member_id' => ['nullable','exists:members,id'],
         ];
 

@@ -13,82 +13,99 @@
             @method('PUT')
 
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <!-- Event Name -->
+                <!-- Event Title -->
                 <div class="md:col-span-2">
-                    <label for="name" class="block text-sm font-medium text-gray-700">Event Name *</label>
-                    <input type="text" name="name" id="name" value="{{ old('name', $event->name) }}" required
+                    <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Event Title *</label>
+                    <input type="text" name="title" id="title" value="{{ old('title', $event->title) }}" required
                         class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                    @error('name')
+                    @error('title')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Event Type -->
+                <div class="md:col-span-2">
+                    <label for="type" class="block text-sm font-medium text-gray-700 mb-2">Event Type *</label>
+                    <select name="type" id="type" required
+                        class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Select Type</option>
+                        <option value="Concert" {{ old('type', $event->type) == 'Concert' ? 'selected' : '' }}>Concert</option>
+                        <option value="Service" {{ old('type', $event->type) == 'Service' ? 'selected' : '' }}>Service</option>
+                        <option value="Workshop" {{ old('type', $event->type) == 'Workshop' ? 'selected' : '' }}>Workshop</option>
+                        <option value="Outreach" {{ old('type', $event->type) == 'Outreach' ? 'selected' : '' }}>Outreach</option>
+                        <option value="Other" {{ old('type', $event->type) == 'Other' ? 'selected' : '' }}>Other</option>
+                    </select>
+                    @error('type')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Description -->
                 <div class="md:col-span-2">
-                    <label for="description" class="block text-sm font-medium text-gray-700">Description *</label>
-                    <textarea name="description" id="description" rows="4" required
+                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea name="description" id="description" rows="4"
                         class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">{{ old('description', $event->description) }}</textarea>
                     @error('description')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Date -->
+                <!-- Start Date & Time -->
                 <div>
-                    <label for="date" class="block text-sm font-medium text-gray-700">Date *</label>
-                    <input type="date" name="date" id="date" value="{{ old('date', $event->date) }}" required
+                    <label for="start_at" class="block text-sm font-medium text-gray-700">Start Date & Time *</label>
+                    <input type="datetime-local" name="start_at" id="start_at" value="{{ old('start_at', optional($event->start_at)->format('Y-m-d\TH:i')) }}" required
                         class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                    @error('date')
+                    @error('start_at')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Time -->
+                <!-- End Date & Time -->
                 <div>
-                    <label for="time" class="block text-sm font-medium text-gray-700">Time *</label>
-                    <input type="time" name="time" id="time" value="{{ old('time', $event->time) }}" required
+                    <label for="end_at" class="block text-sm font-medium text-gray-700">End Date & Time</label>
+                    <input type="datetime-local" name="end_at" id="end_at" value="{{ old('end_at', optional($event->end_at)->format('Y-m-d\TH:i')) }}"
                         class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                    @error('time')
+                    @error('end_at')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Location -->
                 <div class="md:col-span-2">
-                    <label for="location" class="block text-sm font-medium text-gray-700">Location *</label>
-                    <input type="text" name="location" id="location" value="{{ old('location', $event->location) }}" required
+                    <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+                    <input type="text" name="location" id="location" value="{{ old('location', $event->location) }}"
                         class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     @error('location')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Max Attendees -->
+                <!-- Capacity -->
                 <div>
-                    <label for="max_attendees" class="block text-sm font-medium text-gray-700">Max Attendees (Optional)</label>
-                    <input type="number" name="max_attendees" id="max_attendees" value="{{ old('max_attendees', $event->max_attendees) }}" min="1"
+                    <label for="capacity" class="block text-sm font-medium text-gray-700">Capacity (Optional)</label>
+                    <input type="number" name="capacity" id="capacity" value="{{ old('capacity', $event->capacity) }}" min="1"
                         class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                    @error('max_attendees')
+                    @error('capacity')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Current Image -->
-                @if($event->image)
+                <!-- Current Cover Image -->
+                @if($event->cover_image)
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700">Current Image</label>
-                        <img src="{{ Storage::url($event->image) }}" alt="{{ $event->name }}" class="object-cover w-32 h-32 mt-2 rounded-lg">
+                        <label class="block text-sm font-medium text-gray-700">Current Cover Image</label>
+                        <img src="{{ Storage::url($event->cover_image) }}" alt="{{ $event->title }}" class="object-cover w-32 h-32 mt-2 rounded-lg">
                     </div>
                 @endif
 
-                <!-- Image Upload -->
+                <!-- Cover Image Upload -->
                 <div class="md:col-span-2">
-                    <label for="image" class="block text-sm font-medium text-gray-700">
-                        {{ $event->image ? 'Replace Image (Optional)' : 'Event Image (Optional)' }}
+                    <label for="cover_image" class="block text-sm font-medium text-gray-700">
+                        {{ $event->cover_image ? 'Replace Image (Optional)' : 'Event Image (Optional)' }}
                     </label>
-                    <input type="file" name="image" id="image" accept="image/*"
+                    <input type="file" name="cover_image" id="cover_image" accept="image/*"
                         class="block w-full mt-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                    @error('image')
+                    @error('cover_image')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>

@@ -36,6 +36,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
     <style>
+        [x-cloak] { display: none !important; }
+
         :root {
             --admin-bg: #eef2ff;
             --admin-bg-alt: #f8fafc;
@@ -782,21 +784,21 @@
 
                     <div class="flex items-center gap-2.5">
                         <!-- Quick Create -->
-                        <div x-data="{ open:false }" class="relative">
-                            <button @click="open=!open" @click.away="open=false" class="admin-quick-action inline-flex items-center gap-2 px-4 py-2.5 text-sm">
+                        <div x-data="{ open:false }" class="relative" @click.away="open = false">
+                            <button @click="open = !open" class="admin-quick-action inline-flex items-center gap-2 px-4 py-2.5 text-sm">
                                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                                 <span class="hidden sm:inline">Quick Create</span>
                                 <span class="sm:hidden">New</span>
                             </button>
                             <div x-show="open"
+                                 x-cloak
                                  x-transition:enter="transition ease-out duration-200"
                                  x-transition:enter-start="opacity-0 scale-95"
                                  x-transition:enter-end="opacity-100 scale-100"
                                  x-transition:leave="transition ease-in duration-150"
                                  x-transition:leave-start="opacity-100 scale-100"
                                  x-transition:leave-end="opacity-0 scale-95"
-                                 class="absolute right-0 mt-2 w-56 rounded-xl border border-slate-200 bg-white/95 backdrop-blur-md py-2 shadow-xl shadow-slate-200 z-50"
-                                 style="display:none;">
+                                 class="absolute right-0 mt-2 w-56 rounded-xl border border-slate-200 bg-white/95 backdrop-blur-md py-2 shadow-xl shadow-slate-200 z-50">
                                 <a href="{{ route('admin.events.create') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors rounded-lg">
                                     <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />

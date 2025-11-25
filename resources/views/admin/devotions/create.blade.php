@@ -28,9 +28,10 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Content</label>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Content <span class="text-red-500">*</span></label>
                     <div id="editor-container" class="bg-white rounded-lg border border-slate-300"></div>
-                    <textarea name="content" id="content" class="hidden" required>{{ old('content') }}</textarea>
+                    <textarea name="content" id="content" class="hidden">{{ old('content') }}</textarea>
+                    <p id="content-error" class="mt-1 text-sm text-rose-600 hidden">Content is required.</p>
                     @error('content')<p class="mt-1 text-sm text-rose-600">{{ $message }}</p>@enderror
                 </div>
             </div>
@@ -108,12 +109,42 @@
         quill.root.innerHTML = oldContent;
     }
 
-    // Update hidden textarea on form submit
+    // Update hidden textarea on form submit and validate
     const form = document.querySelector('form');
     const contentField = document.querySelector('#content');
+    const contentError = document.querySelector('#content-error');
 
     form.addEventListener('submit', function(e) {
-        contentField.value = quill.root.innerHTML;
+        // Get the text content (without HTML tags) to check if it's empty
+        const textContent = quill.getText().trim();
+        const htmlContent = quill.root.innerHTML;
+
+        // Check if content is empty (only whitespace or just <p><br></p>)
+        if (!textContent || htmlContent === '<p><br></p>' || htmlContent === '<p></p>') {
+            e.preventDefault();
+            contentError.classList.remove('hidden');
+            // Scroll to error
+            contentError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            // Highlight the editor
+            document.getElementById('editor-container').classList.add('border-red-500');
+            return false;
+        }
+
+        // Hide error if content is valid
+        contentError.classList.add('hidden');
+        document.getElementById('editor-container').classList.remove('border-red-500');
+
+        // Set the content value
+        contentField.value = htmlContent;
+    });
+
+    // Remove error styling when user starts typing
+    quill.on('text-change', function() {
+        const textContent = quill.getText().trim();
+        if (textContent) {
+            contentError.classList.add('hidden');
+            document.getElementById('editor-container').classList.remove('border-red-500');
+        }
     });
 </script>
 @endpush

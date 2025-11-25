@@ -12,6 +12,12 @@
         $metaDescription = view()->hasSection('meta_description') ? trim(view()->yieldContent('meta_description')) : 'Gods Family Choir is a vibrant worship ministry serving the words of life to the world through gospel messages. Join our family of over 300 worshippers, musicians, and storytellers.';
         $ogTitle = view()->hasSection('og:title') ? trim(view()->yieldContent('og:title')) : $pageTitle;
         $ogDescription = view()->hasSection('og:description') ? trim(view()->yieldContent('og:description')) : $metaDescription;
+
+        // Prevent search engines from displaying HTML entities (&amp;, &#039;, etc.)
+        $pageTitle = new \Illuminate\Support\HtmlString($pageTitle);
+        $metaDescription = new \Illuminate\Support\HtmlString($metaDescription);
+        $ogTitle = new \Illuminate\Support\HtmlString($ogTitle);
+        $ogDescription = new \Illuminate\Support\HtmlString($ogDescription);
     @endphp
 
     <title>{{ $pageTitle }}</title>

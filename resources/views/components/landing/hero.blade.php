@@ -140,7 +140,7 @@
 
                 <!-- Primary CTA Button -->
                 <div class="flex items-center justify-center animate-fade-in-up animation-delay-800 mb-20 sm:mb-24">
-                    <a href="{{ route('registration.member') }}" class="group relative inline-flex items-center gap-3 px-7 py-3.5 sm:px-8 sm:py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-full shadow-2xl shadow-emerald-500/50 transition-all duration-300 hover:shadow-emerald-500/70 hover:-translate-y-1 hover:scale-105 overflow-hidden">
+                    <a href="{{ route('registration.member') }}" class="group relative inline-flex items-center justify-center gap-3 px-8 py-4 sm:px-10 sm:py-5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-full shadow-2xl shadow-emerald-500/50 transition-all duration-300 hover:shadow-emerald-500/70 hover:-translate-y-1 hover:scale-105 overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-r from-teal-600 to-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                         <svg class="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
@@ -153,7 +153,7 @@
     </div>
 
     <!-- Elegant Scroll Indicator -->
-    <div class="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+    <div class="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce w-full flex justify-center">
         <button onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})" class="flex flex-col items-center gap-3 group">
             <span class="text-white/70 text-xs font-semibold uppercase tracking-wider group-hover:text-emerald-300 transition-colors">Discover More</span>
             <div class="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-1 group-hover:border-emerald-400 transition-all">

@@ -57,10 +57,9 @@
                             </div>
 
                             <!-- Committee Members Grid -->
-                            <div class="flex justify-center">
-                                <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full" style="max-width: 1200px;">
-                                    @foreach($committees[$department] as $member)
-                                        <div class="group relative w-full">
+                            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center xl:justify-items-stretch">
+                                @foreach($committees[$department] as $member)
+                                    <div class="group relative w-full max-w-sm xl:max-w-none">
                                         <div class="relative overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:border-emerald-300">
                                             <!-- Photo Section -->
                                             <div class="relative h-80 overflow-hidden bg-gradient-to-br from-emerald-50 to-gray-100">
@@ -139,8 +138,7 @@
                                             <div class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-emerald-500/10 to-transparent rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                         </div>
                                     </div>
-                                    @endforeach
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     @endif

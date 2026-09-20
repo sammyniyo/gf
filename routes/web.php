@@ -351,6 +351,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('members/export/csv', [App\Http\Controllers\Admin\MemberController::class, 'export'])->name('members.export');
     Route::resource('members', App\Http\Controllers\Admin\MemberController::class);
     Route::get('active-choristers', [App\Http\Controllers\Admin\ActiveChoristerController::class, 'index'])->name('active-choristers.index');
+    Route::delete('active-choristers/{commitment}', [App\Http\Controllers\Admin\ActiveChoristerController::class, 'destroy'])->name('active-choristers.destroy');
 
     // Contacts Management
     Route::get('contacts', [App\Http\Controllers\Admin\ContactController::class, 'index'])->name('contacts.index');

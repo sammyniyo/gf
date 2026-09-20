@@ -85,9 +85,6 @@ class ActiveChoristerController extends Controller
         }
 
         $validated = $request->validate([
-            'name' => 'required|string|min:3|max:120',
-            'phone' => 'required|string|min:8|max:30',
-            'email' => 'nullable|email|max:120',
             'language' => 'required|in:en,rw',
             'read_seconds' => 'required|integer|min:0|max:7200',
             'sections_read' => 'required|integer|min:0|max:10',
@@ -103,17 +100,30 @@ class ActiveChoristerController extends Controller
         }
 
         $memberId = $request->session()->get('active_chorister_member_id');
-        $member = $memberId ? Member::query()->find($memberId) : null;
-
-        if ($member && ! $this->phonesMatch($member->phone, $validated['phone'])) {
-            $member = $this->findMemberByPhone($validated['phone']);
-        }
+        $member = $memberId
+            ? Member::query()->where('member_type', 'member')->find($memberId)
+            : null;
 
         if (! $member) {
-            $member = $this->findMemberByPhone($validated['phone']);
+            return response()->json([
+                'ok' => false,
+                'register' => true,
+                'message' => 'Pick your registered name first. If you are not in the choir register, register as a member.',
+            ], 422);
         }
 
-        $existing = $this->existingCommitment($member, $validated['phone']);
+        $name = $member->name ?: trim($member->first_name.' '.$member->last_name);
+        $phone = $member->phone;
+        $email = $member->email;
+
+        if (! $name || ! $this->lastNine($phone)) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'Your member record is missing a name or phone. Ask the choir office to update it, then try again.',
+            ], 422);
+        }
+
+        $existing = $this->existingCommitment($member, $phone);
 
         if (! $existing) {
             if ((int) $validated['sections_read'] < 5) {
@@ -131,13 +141,13 @@ class ActiveChoristerController extends Controller
             }
         }
 
-        $commitment = DB::transaction(function () use ($validated, $member, $existing, $request) {
+        $commitment = DB::transaction(function () use ($validated, $member, $existing, $request, $name, $phone, $email) {
             $payload = [
-                'member_id' => $member?->id,
-                'name' => $validated['name'],
-                'phone' => $validated['phone'],
-                'email' => $validated['email'] ?: $member?->email,
-                'voice' => $member?->voice ?: $member?->voice_type,
+                'member_id' => $member->id,
+                'name' => $name,
+                'phone' => $phone,
+                'email' => $email,
+                'voice' => $member->voice ?: $member->voice_type,
                 'language' => $validated['language'],
                 'read_seconds' => $existing?->read_seconds ?: $validated['read_seconds'],
                 'sections_read' => $existing?->sections_read ?: $validated['sections_read'],

@@ -503,10 +503,21 @@
             letter-spacing: 0.18em;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1023px) {
             .admin-sidebar {
-                box-shadow: none;
-                border-right: none;
+                box-shadow: var(--admin-shadow-strong);
+                border-right: 1px solid var(--admin-border);
+            }
+
+            .admin-header h2 {
+                max-width: 46vw;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .admin-main .overflow-x-auto {
+                -webkit-overflow-scrolling: touch;
             }
         }
     </style>
@@ -514,7 +525,10 @@
 
     @stack('styles')
 </head>
-<body class="min-h-screen transition-colors admin-body">
+<body class="min-h-screen transition-colors admin-body"
+      x-data="{ sidebarOpen: false }"
+      @keydown.escape.window="sidebarOpen = false"
+      :class="{ 'overflow-hidden': sidebarOpen }">
     <div id="admin-toast-container" aria-live="polite" aria-atomic="true"></div>
     <script>
         window.__adminToastQueue = window.__adminToastQueue || [];
@@ -530,17 +544,28 @@
         </script>
     @endif
     <div class="flex min-h-screen">
+        <div x-show="sidebarOpen" x-cloak
+             class="fixed inset-0 z-40 bg-slate-900/40 lg:hidden"
+             @click="sidebarOpen = false"
+             x-transition.opacity></div>
+
         <!-- Sidebar -->
-        <aside class="hidden lg:flex lg:flex-col lg:w-72 admin-sidebar lg:fixed lg:inset-y-0 lg:left-0 lg:z-40 lg:h-screen lg:overflow-y-auto">
+        <aside class="admin-sidebar fixed inset-y-0 left-0 z-50 flex h-dvh w-72 max-w-[85vw] -translate-x-full flex-col overflow-y-auto transition-transform duration-200 ease-out lg:translate-x-0"
+               :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'">
             <div class="px-6 pt-8 pb-6 sidebar-section">
                 <div class="flex items-center gap-3">
                     <div class="flex items-center justify-center w-12 h-12 admin-brand__mark">
                         <span class="text-base font-black tracking-wide">GF</span>
                     </div>
-                    <div>
+                    <div class="min-w-0 flex-1">
                         <p class="text-xs font-semibold uppercase admin-brand__label">Admin</p>
                         <h1 class="text-base font-semibold leading-tight admin-brand__title">God's Family Choir</h1>
                     </div>
+                    <button type="button" class="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 hover:bg-white/70" @click="sidebarOpen = false" aria-label="Close menu">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
             </div>
 
@@ -558,7 +583,7 @@
                 </div>
             </div>
 
-            <nav class="flex-1 overflow-y-auto px-4 py-8 space-y-8">
+            <nav class="flex-1 overflow-y-auto px-4 py-8 space-y-8" @click="if ($event.target.closest('a')) sidebarOpen = false">
                 <div>
                     <p class="px-3 text-xs font-semibold uppercase section-title">Overview</p>
                     <div class="mt-3 space-y-1.5">
@@ -770,8 +795,16 @@
         <!-- Main Content -->
         <div class="flex flex-col flex-1 overflow-hidden lg:ml-72">
             <header class="sticky top-0 z-30 admin-header">
-                <div class="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 py-5">
-                    <div class="flex items-center gap-4">
+                <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 px-4 sm:px-6 lg:px-8 py-3 sm:py-5">
+                    <div class="flex min-w-0 items-center gap-3 sm:gap-4">
+                        <button type="button"
+                                class="lg:hidden inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm"
+                                @click="sidebarOpen = true"
+                                aria-label="Open menu">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
                         <div class="hidden lg:flex items-center justify-center w-12 h-12 admin-brand__mark">
                             <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -779,8 +812,8 @@
                         </div>
                         <div>
                             <div class="flex items-center gap-2.5">
-                                <h2 class="text-xl font-semibold text-slate-900 tracking-tight">@yield('page-title', 'Dashboard')</h2>
-                                <span class="inline-flex items-center gap-1.5 admin-header__badge">
+                                <h2 class="text-base font-semibold tracking-tight text-slate-900 sm:text-xl">@yield('page-title', 'Dashboard')</h2>
+                                <span class="hidden sm:inline-flex items-center gap-1.5 admin-header__badge">
                                     <span class="admin-header__badge-dot animate-pulse"></span>
                                     Live
                                 </span>
@@ -789,10 +822,10 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-2.5">
+                    <div class="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
                         <!-- Quick Create -->
                         <div x-data="{ open:false }" class="relative" @click.away="open = false">
-                            <button @click="open = !open" class="admin-quick-action inline-flex items-center gap-2 px-4 py-2.5 text-sm">
+                            <button @click="open = !open" class="admin-quick-action inline-flex items-center gap-2 px-3 py-2.5 text-sm sm:px-4">
                                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                                 <span class="hidden sm:inline">Quick Create</span>
                                 <span class="sm:hidden">New</span>
@@ -868,7 +901,7 @@
                                  x-transition:leave="transition ease-in duration-150"
                                  x-transition:leave-start="opacity-100 scale-100"
                                  x-transition:leave-end="opacity-0 scale-95"
-                                 class="absolute right-0 mt-2 w-96 origin-top-right rounded-2xl bg-white/95 border border-slate-200 backdrop-blur-md shadow-xl shadow-slate-200 z-50"
+                                 class="absolute right-0 mt-2 w-[min(22rem,calc(100vw-1.5rem))] origin-top-right rounded-2xl bg-white/95 border border-slate-200 backdrop-blur-md shadow-xl shadow-slate-200 z-50"
                                  style="display: none;">
 
                                 <!-- Header -->
@@ -996,8 +1029,8 @@
                 </div>
             </header>
 
-            <main class="admin-main flex-1 overflow-y-auto">
-                <div class="py-10">
+            <main class="admin-main flex-1 overflow-x-hidden overflow-y-auto">
+                <div class="py-6 sm:py-10">
                     <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
                         @yield('content')
                     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ActiveChoristerCommitment;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -34,5 +35,20 @@ class ActiveChoristerController extends Controller
             'total' => ActiveChoristerCommitment::query()->count(),
             'linked' => ActiveChoristerCommitment::query()->whereNotNull('member_id')->count(),
         ]);
+    }
+
+    public function destroy(ActiveChoristerCommitment $commitment): RedirectResponse
+    {
+        $member = $commitment->member;
+        $commitment->delete();
+
+        if ($member && ! ActiveChoristerCommitment::query()->where('member_id', $member->id)->exists()) {
+            $member->is_active_chorister = false;
+            $member->save();
+        }
+
+        return redirect()
+            ->route('admin.active-choristers.index')
+            ->with('success', 'Commitment deleted.');
     }
 }

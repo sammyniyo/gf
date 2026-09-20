@@ -27,7 +27,7 @@ function activeChorister() {
         matchOpen: false,
         matchIndex: 0,
         picked: false,
-        guestMode: false,
+        registerUrl: @json(route('registration.member')),
         selecting: false,
         matchedMember: '',
         alreadyCommitted: false,
@@ -37,8 +37,8 @@ function activeChorister() {
         whatsapp: '',
         form: { name: '', phone: '', email: '', confirmation: '' },
         rehearsals: [
-            { short: { rw: 'Lun', en: 'Mon' }, day: { rw: 'Kuwa kabiri w’isabato', en: 'Monday' }, sub: { rw: 'Lundi', en: 'Evening rehearsal' }, time: '18:30 – 20:00' },
-            { short: { rw: 'Jeu', en: 'Thu' }, day: { rw: 'Kuwa gatanu w’isabato', en: 'Thursday' }, sub: { rw: 'Jeudi', en: 'Evening rehearsal' }, time: '18:30 – 20:00' },
+            { short: { rw: 'Lun', en: 'Mon' }, day: { rw: 'Kuwa kabiri w’isabato', en: 'Monday' }, sub: { rw: 'Lundi', en: 'Evening rehearsal' }, time: '17:30 – 20:00' },
+            { short: { rw: 'Jeu', en: 'Thu' }, day: { rw: 'Kuwa gatanu w’isabato', en: 'Thursday' }, sub: { rw: 'Jeudi', en: 'Evening rehearsal' }, time: '17:30 – 20:00' },
             { short: { rw: 'Sam', en: 'Sat' }, day: { rw: 'Ku isabato', en: 'Saturday' }, sub: { rw: 'Samedi', en: 'Afternoon rehearsal' }, time: '15:00 – 18:00' },
         ],
         titles: {
@@ -142,8 +142,8 @@ function activeChorister() {
         },
         canSubmit() {
             const phrase = this.lang === 'rw' ? 'NDABYEMEYE' : 'I COMMIT';
-            return this.form.name.trim().length >= 3
-                && this.form.phone.trim().length >= 8
+            return this.picked
+                && this.lookupOk
                 && this.form.confirmation.trim().toUpperCase() === phrase
                 && (this.alreadyCommitted || this.read.every(Boolean));
         },
@@ -182,7 +182,6 @@ function activeChorister() {
         onNameInput() {
             if (this.selecting) return;
             this.picked = false;
-            this.guestMode = false;
             this.lookupOk = false;
             this.matchedMember = '';
             this.alreadyCommitted = false;
@@ -220,24 +219,11 @@ function activeChorister() {
             this.matches = scored.slice(0, 8).map((row) => row.member);
             this.matchOpen = this.matches.length > 0;
             this.matchIndex = 0;
-            this.guestMode = this.matches.length === 0;
             this.lookupMessage = this.matches.length
                 ? ''
                 : (this.lang === 'rw'
-                    ? 'Ntabwo turi mu bitabo. Andika telefoni yawe hasi maze wemeze.'
-                    : 'You are not in our list. Enter your phone below and confirm.');
-        },
-        continueAsGuest() {
-            this.matchOpen = false;
-            this.matches = [];
-            this.picked = false;
-            this.guestMode = true;
-            this.lookupOk = false;
-            this.matchedMember = '';
-            this.lookupMessage = this.lang === 'rw'
-                ? 'Ntabwo turi mu bitabo. Andika telefoni yawe hasi maze wemeze.'
-                : 'You are not in our list. Enter your phone below and confirm.';
-            this.$nextTick(() => this.$refs.phone && this.$refs.phone.focus());
+                    ? 'Ntabwo turi mu bitabo. Banza wiyandikishe nk’umwiririmbyi.'
+                    : 'You are not in our register. Register as a member first.');
         },
         moveMatch(delta) {
             if (!this.matchOpen || !this.matches.length) return;
@@ -281,7 +267,6 @@ function activeChorister() {
                 this.alreadyCommitted = !!data.already_committed;
                 this.lookupOk = true;
                 this.picked = true;
-                this.guestMode = false;
                 this.matches = [];
                 this.$nextTick(() => { this.selecting = false; });
                 this.lookupMessage = this.alreadyCommitted
@@ -468,8 +453,8 @@ function activeChorister() {
         </template>
 
         <template x-if="step === 5">
-            <article class="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_24px_60px_-28px_rgba(15,23,42,0.28)]">
-                <header class="relative border-b border-slate-100 bg-gradient-to-br from-emerald-50 via-white to-slate-50 px-5 py-6 sm:px-7">
+            <article class="rounded-[28px] border border-slate-200/80 bg-white shadow-[0_24px_60px_-28px_rgba(15,23,42,0.28)]">
+                <header class="overflow-hidden rounded-t-[28px] border-b border-slate-100 bg-gradient-to-br from-emerald-50 via-white to-slate-50 px-5 py-6 sm:px-7">
                     <div class="flex items-start gap-4">
                         <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-700 text-white">
                             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -478,10 +463,10 @@ function activeChorister() {
                         </div>
                         <div class="min-w-0">
                             <p class="text-[11px] font-semibold uppercase tracking-wider text-emerald-700" x-text="lang === 'rw' ? 'Intambwe ya 6' : 'Final step'"></p>
-                            <h2 class="mt-1 text-2xl font-semibold tracking-tight text-slate-900" x-text="lang === 'rw' ? 'Emeza umwiririmbyi' : 'Confirm who you are'"></h2>
+                            <h2 class="mt-1 text-2xl font-semibold tracking-tight text-slate-900" x-text="lang === 'rw' ? 'Emeza kuba umuririmbyi' : 'Confirm who you are'"></h2>
                             <p class="mt-1.5 text-sm leading-6 text-slate-600" x-text="lang === 'rw'
-                                ? 'Niba uri mu bitabo, hitamo izina ryawe. Niba utariho, andika amazina n’itelefoni.'
-                                : 'If you are registered, pick your name. If not, type your name and phone.'"></p>
+                                ? 'Hitamo izina ryawe mu bitabo. Niba utariho, banza wiyandikishe.'
+                                : 'Pick your registered name. If you are not on the list, register first.'"></p>
                         </div>
                     </div>
                 </header>
@@ -490,7 +475,7 @@ function activeChorister() {
                     <input type="text" name="website" x-model="honeypot" class="hidden" tabindex="-1" autocomplete="off">
 
                     <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-4 sm:p-5">
-                        <div class="relative" @click.outside="matchOpen = false">
+                        <div @click.outside="matchOpen = false">
                             <label class="block">
                                 <span class="mb-2 block text-sm font-medium text-slate-700" x-text="lang === 'rw' ? 'Amazina' : 'Full name'"></span>
                                 <div class="relative">
@@ -501,7 +486,7 @@ function activeChorister() {
                                         @keydown.arrow-up.prevent="moveMatch(-1)"
                                         @keydown.enter.prevent="matches[matchIndex] ? pickMember(matches[matchIndex]) : null"
                                         @keydown.escape.prevent="matchOpen = false"
-                                        :placeholder="lang === 'rw' ? 'Andika izina...' : 'Start typing your name...'"
+                                        :placeholder="lang === 'rw' ? 'Andika izina ryawe...' : 'Start typing your registered name...'"
                                         class="min-h-[52px] w-full rounded-2xl border border-slate-200 bg-white py-3 pl-12 pr-10 text-sm shadow-sm outline-none ring-emerald-600/20 focus:border-emerald-600 focus:ring-4">
                                     <svg class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 100-15 7.5 7.5 0 000 15z" />
@@ -510,38 +495,42 @@ function activeChorister() {
                                 </div>
                             </label>
                             <div x-show="matchOpen" x-cloak
-                                 class="absolute z-20 mt-2 max-h-72 w-full overflow-y-auto rounded-2xl border border-slate-200 bg-white py-1 shadow-xl">
+                                 class="mt-3 overflow-hidden rounded-2xl border border-slate-200 bg-white">
                                 <template x-for="(member, index) in matches" :key="member.token">
                                     <button type="button" @mousedown.prevent="pickMember(member)"
                                         class="flex w-full items-start gap-3 px-4 py-3 text-left transition"
                                         :class="index === matchIndex ? 'bg-emerald-50' : 'hover:bg-slate-50'">
                                         <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-xs font-semibold text-slate-600 ring-1 ring-slate-200"
                                               x-text="(member.name || '?').slice(0, 1)"></span>
-                                        <span class="min-w-0">
-                                            <span class="block text-sm font-semibold text-slate-900" x-html="highlightName(member.name)"></span>
+                                        <span class="min-w-0 flex-1">
+                                            <span class="block break-words text-sm font-semibold leading-5 text-slate-900" x-html="highlightName(member.name)"></span>
                                             <span class="mt-0.5 block text-xs text-slate-500" x-text="[member.phone_hint, member.voice].filter(Boolean).join(' · ')"></span>
                                         </span>
                                     </button>
                                 </template>
-                                <button type="button" @mousedown.prevent="continueAsGuest()"
-                                    class="w-full border-t border-slate-100 px-4 py-3 text-left text-sm font-medium text-slate-600 hover:bg-slate-50">
-                                    <span x-text="lang === 'rw' ? 'Ntabwo ndi kuri uru rutonde. Komeza n’itelefoni.' : 'I am not on this list. Continue with my phone.'"></span>
-                                </button>
+                                <a :href="registerUrl"
+                                    class="block w-full border-t border-slate-100 px-4 py-3 text-left text-sm font-medium text-emerald-700 hover:bg-emerald-50">
+                                    <span x-text="lang === 'rw' ? 'Ntabwo ndi kuri uru rutonde. Niyandikishe.' : 'I am not on this list. Register as a member.'"></span>
+                                </a>
                             </div>
                             <p class="mt-2 text-sm" :class="lookupOk ? 'text-emerald-700' : 'text-slate-500'" x-text="lookupMessage"></p>
+                            <a x-show="!picked && lookupMessage && !matches.length" x-cloak
+                               :href="registerUrl"
+                               class="mt-3 inline-flex min-h-[44px] items-center justify-center rounded-full bg-emerald-700 px-4 text-sm font-semibold text-white hover:bg-emerald-600"
+                               x-text="lang === 'rw' ? 'Iyandikishe nk’umwiririmbyi' : 'Register as a member'"></a>
                         </div>
                     </div>
 
-                    <div class="grid gap-4 sm:grid-cols-2">
+                    <div x-show="picked" x-cloak class="grid gap-4 sm:grid-cols-2">
                         <label class="block">
                             <span class="mb-1.5 block text-sm font-medium text-slate-700" x-text="lang === 'rw' ? 'Telefoni' : 'Phone'"></span>
-                            <input type="tel" x-model="form.phone" required x-ref="phone"
-                                class="min-h-[48px] w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none ring-emerald-600/20 focus:border-emerald-600 focus:ring-4">
+                            <input type="tel" x-model="form.phone" readonly tabindex="-1"
+                                class="min-h-[48px] w-full cursor-default rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-700">
                         </label>
                         <label class="block">
                             <span class="mb-1.5 block text-sm font-medium text-slate-700">Email</span>
-                            <input type="email" x-model="form.email"
-                                class="min-h-[48px] w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none ring-emerald-600/20 focus:border-emerald-600 focus:ring-4">
+                            <input type="email" x-model="form.email" readonly tabindex="-1"
+                                class="min-h-[48px] w-full cursor-default rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-700">
                         </label>
                     </div>
 
@@ -557,14 +546,7 @@ function activeChorister() {
                         </div>
                     </div>
 
-                    <div x-show="guestMode && !matchedMember" x-cloak class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
-                        <p class="font-semibold" x-text="lang === 'rw' ? 'Ntabwo uri mu bitabo byacu' : 'You are not in our register'"></p>
-                        <p class="mt-1 leading-6" x-text="lang === 'rw'
-                            ? 'Nta kibazo. Andika amazina n’itelefoni, wemere NDABYEMEYE. Tuzabika ko wemeye, n’ubwo utari mu bitabo.'
-                            : 'That is fine. Enter your name and phone, then type I COMMIT. We will still record your agreement.'"></p>
-                    </div>
-
-                    <div class="rounded-2xl border border-slate-200 bg-white p-4">
+                    <div class="rounded-2xl border border-slate-200 bg-white p-4" x-show="picked" x-cloak>
                         <label class="block">
                             <span class="mb-1.5 block text-sm font-medium text-slate-700"
                                   x-text="lang === 'rw' ? 'Andika NDABYEMEYE wemeze' : 'Type I COMMIT to confirm'"></span>
@@ -576,7 +558,7 @@ function activeChorister() {
 
                     <p class="text-sm text-rose-600" x-show="error" x-text="error"></p>
 
-                    <button type="submit" :disabled="submitting || !canSubmit()"
+                    <button type="submit" x-show="picked" x-cloak :disabled="submitting || !canSubmit()"
                         class="inline-flex min-h-[52px] w-full items-center justify-center rounded-full bg-emerald-700 text-sm font-semibold text-white shadow-sm disabled:cursor-not-allowed disabled:bg-slate-300 disabled:shadow-none">
                         <span x-text="submitting
                             ? (lang === 'rw' ? 'Birimo...' : 'Saving...')

@@ -45,6 +45,7 @@
                         <th class="px-4 py-3">Language</th>
                         <th class="px-4 py-3">Read</th>
                         <th class="px-4 py-3">Signed</th>
+                        <th class="px-4 py-3 text-right">Action</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
@@ -70,10 +71,20 @@
                             <td class="px-4 py-3 uppercase text-slate-600">{{ $commitment->language }}</td>
                             <td class="px-4 py-3 text-slate-600">{{ $commitment->sections_read }}/5 · {{ $commitment->read_seconds }}s</td>
                             <td class="px-4 py-3 text-slate-600">{{ $commitment->accepted_at?->format('d M Y H:i') }}</td>
+                            <td class="px-4 py-3 text-right">
+                                <form action="{{ route('admin.active-choristers.destroy', $commitment) }}" method="POST" class="inline"
+                                      onsubmit="return confirm('Delete this commitment? They will need to sign again to rejoin the group.');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="inline-flex items-center gap-1.5 rounded-lg bg-rose-100 px-3 py-1.5 text-xs font-semibold text-rose-700 hover:bg-rose-200">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-4 py-10 text-center text-slate-500">No one has signed yet.</td>
+                            <td colspan="7" class="px-4 py-10 text-center text-slate-500">No one has signed yet.</td>
                         </tr>
                     @endforelse
                 </tbody>

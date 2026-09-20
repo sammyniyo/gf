@@ -507,17 +507,76 @@
             .admin-sidebar {
                 box-shadow: var(--admin-shadow-strong);
                 border-right: 1px solid var(--admin-border);
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+
+            .admin-header {
+                padding-top: env(safe-area-inset-top);
             }
 
             .admin-header h2 {
-                max-width: 46vw;
+                max-width: min(42vw, 11rem);
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
 
-            .admin-main .overflow-x-auto {
+            .admin-main,
+            .admin-main .overflow-x-auto,
+            .admin-main :has(> table) {
                 -webkit-overflow-scrolling: touch;
+            }
+
+            .admin-main :has(> table) {
+                overflow-x: auto;
+                max-width: 100%;
+            }
+
+            .admin-main img,
+            .admin-main video,
+            .admin-main canvas,
+            .admin-main iframe,
+            .admin-main input,
+            .admin-main select,
+            .admin-main textarea {
+                max-width: 100%;
+            }
+
+            .admin-main .flex.items-center.justify-between {
+                flex-wrap: wrap;
+                gap: 0.75rem 1rem;
+            }
+
+            #eventsCalendar {
+                overflow-x: auto;
+            }
+
+            .fc .fc-toolbar {
+                flex-direction: column;
+                gap: 0.75rem;
+                align-items: stretch;
+            }
+
+            .fc .fc-toolbar-chunk {
+                display: flex;
+                justify-content: center;
+            }
+
+            .fc .fc-toolbar-title {
+                font-size: 1.05rem !important;
+            }
+        }
+
+        @media (max-width: 639px) {
+            .admin-main .glass-card {
+                border-radius: 1rem;
+            }
+
+            .admin-main h1 {
+                font-size: 1.15rem;
+                line-height: 1.4;
+                overflow-wrap: anywhere;
             }
         }
     </style>
@@ -525,7 +584,7 @@
 
     @stack('styles')
 </head>
-<body class="min-h-screen transition-colors admin-body"
+<body class="min-h-dvh overflow-x-hidden transition-colors admin-body"
       x-data="{ sidebarOpen: false }"
       @keydown.escape.window="sidebarOpen = false"
       :class="{ 'overflow-hidden': sidebarOpen }">
@@ -543,7 +602,7 @@
             window.__adminToastQueue.push({ type: 'error', message: @json(session('error')) });
         </script>
     @endif
-    <div class="flex min-h-screen">
+    <div class="flex min-h-dvh min-w-0">
         <div x-show="sidebarOpen" x-cloak
              class="fixed inset-0 z-40 bg-slate-900/40 lg:hidden"
              @click="sidebarOpen = false"
@@ -793,9 +852,9 @@
         </aside>
 
         <!-- Main Content -->
-        <div class="flex flex-col flex-1 overflow-hidden lg:ml-72">
+        <div class="flex min-w-0 flex-1 flex-col overflow-hidden lg:ml-72">
             <header class="sticky top-0 z-30 admin-header">
-                <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 px-4 sm:px-6 lg:px-8 py-3 sm:py-5">
+                <div class="mx-auto flex w-full min-w-0 max-w-7xl items-center justify-between gap-2 px-3 py-3 sm:px-6 sm:py-5 lg:px-8">
                     <div class="flex min-w-0 items-center gap-3 sm:gap-4">
                         <button type="button"
                                 class="lg:hidden inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm"
@@ -825,10 +884,9 @@
                     <div class="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
                         <!-- Quick Create -->
                         <div x-data="{ open:false }" class="relative" @click.away="open = false">
-                            <button @click="open = !open" class="admin-quick-action inline-flex items-center gap-2 px-3 py-2.5 text-sm sm:px-4">
+                            <button @click="open = !open" class="admin-quick-action inline-flex h-11 w-11 items-center justify-center sm:h-auto sm:w-auto sm:gap-2 sm:px-4 sm:py-2.5 sm:text-sm">
                                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                                 <span class="hidden sm:inline">Quick Create</span>
-                                <span class="sm:hidden">New</span>
                             </button>
                             <div x-show="open"
                                  x-cloak
@@ -838,7 +896,7 @@
                                  x-transition:leave="transition ease-in duration-150"
                                  x-transition:leave-start="opacity-100 scale-100"
                                  x-transition:leave-end="opacity-0 scale-95"
-                                 class="absolute right-0 mt-2 w-56 rounded-xl border border-slate-200 bg-white/95 backdrop-blur-md py-2 shadow-xl shadow-slate-200 z-50">
+                                 class="absolute right-0 z-50 mt-2 w-[min(16rem,calc(100vw-1.5rem))] rounded-xl border border-slate-200 bg-white/95 py-2 shadow-xl shadow-slate-200 backdrop-blur-md">
                                 <a href="{{ route('admin.events.create') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors rounded-lg">
                                     <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -973,12 +1031,12 @@
 
                         <!-- Profile Dropdown -->
                         <div x-data="{ open: false }" class="relative">
-                            <button @click="open=!open" @click.away="open=false" class="admin-icon-button inline-flex items-center gap-2.5 pl-2 pr-3 py-2 text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2 focus:ring-offset-white">
-                                <div class="flex items-center justify-center w-8 h-8 rounded-lg admin-avatar-badge">
+                            <button @click="open=!open" @click.away="open=false" class="admin-icon-button inline-flex h-11 w-11 items-center justify-center p-0 text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2 focus:ring-offset-white md:h-auto md:w-auto md:gap-2.5 md:px-3 md:py-2">
+                                <div class="flex h-8 w-8 items-center justify-center rounded-lg admin-avatar-badge">
                                     <span class="text-sm font-bold">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>
                                 </div>
                                 <span class="hidden md:block text-sm font-semibold text-slate-600">{{ Auth::user()->name }}</span>
-                                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="hidden h-4 w-4 text-slate-400 md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                 </svg>
                             </button>
@@ -991,7 +1049,7 @@
                                  x-transition:leave="transition ease-in duration-150"
                                  x-transition:leave-start="opacity-100 scale-100"
                                  x-transition:leave-end="opacity-0 scale-95"
-                                 class="absolute right-0 mt-2 w-56 origin-top-right rounded-xl border border-slate-200 bg-white/95 backdrop-blur-md shadow-xl shadow-slate-200 z-50"
+                                 class="absolute right-0 z-50 mt-2 w-[min(14rem,calc(100vw-1.5rem))] origin-top-right rounded-xl border border-slate-200 bg-white/95 shadow-xl shadow-slate-200 backdrop-blur-md"
                                  style="display:none;">
                                 <div class="px-4 py-3 border-b border-slate-200">
                                     <p class="text-sm font-semibold text-slate-900">{{ Auth::user()->name }}</p>
@@ -1029,9 +1087,9 @@
                 </div>
             </header>
 
-            <main class="admin-main flex-1 overflow-x-hidden overflow-y-auto">
-                <div class="py-6 sm:py-10">
-                    <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
+            <main class="admin-main min-w-0 flex-1 overflow-x-hidden overflow-y-auto pb-[env(safe-area-inset-bottom)]">
+                <div class="py-4 sm:py-10">
+                    <div class="mx-auto w-full min-w-0 max-w-7xl space-y-6 px-3 sm:px-6 lg:px-8">
                         @yield('content')
                     </div>
                 </div>

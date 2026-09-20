@@ -3,10 +3,10 @@
 @section('page-title', 'Events Management')
 
 @section('content')
-<div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+<div class="space-y-6">
     <!-- Header -->
-    <div class="mb-6">
-        <div class="flex items-center justify-between">
+    <div class="mb-0">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <h1 class="text-xl font-semibold text-gray-900">Events</h1>
                 <p class="mt-1 text-sm text-gray-500">Manage all events and their registrations</p>

@@ -44,7 +44,7 @@
     @if($unread_contacts_count > 0 || $upcoming_events > 0)
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             @if($unread_contacts_count > 0)
-                <a href="{{ route('admin.contacts.index') }}" class="p-6 bg-gradient-to-br from-rose-50 via-red-50 to-pink-50 rounded-2xl shadow-xl border-2 border-rose-200 hover:scale-105 hover:shadow-2xl transition-all group">
+                <a href="{{ route('admin.contacts.index') }}" class="p-4 sm:p-6 bg-gradient-to-br from-rose-50 via-red-50 to-pink-50 rounded-2xl shadow-xl border-2 border-rose-200 transition-all group sm:hover:shadow-2xl">
                     <div class="flex items-center gap-4">
                         <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-rose-500 to-red-600 shadow-lg">
                             <svg class="w-8 h-8 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -64,7 +64,7 @@
             @endif
 
             @if($upcoming_events > 0)
-                <a href="{{ route('admin.events.index') }}" class="p-6 bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 rounded-2xl shadow-xl border-2 border-indigo-200 hover:scale-105 hover:shadow-2xl transition-all group">
+                <a href="{{ route('admin.events.index') }}" class="p-4 sm:p-6 bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 rounded-2xl shadow-xl border-2 border-indigo-200 transition-all group sm:hover:shadow-2xl">
                     <div class="flex items-center gap-4">
                         <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,7 +84,7 @@
             @endif
 
             @if($total_members > 0)
-                <a href="{{ route('admin.members.index') }}" class="p-6 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 rounded-2xl shadow-xl border-2 border-emerald-200 hover:scale-105 hover:shadow-2xl transition-all group">
+                <a href="{{ route('admin.members.index') }}" class="p-4 sm:p-6 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 rounded-2xl shadow-xl border-2 border-emerald-200 transition-all group sm:hover:shadow-2xl">
                     <div class="flex items-center gap-4">
                         <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 shadow-lg">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,10 +106,10 @@
     @endif
 
     <!-- Events Calendar -->
-    <div class="glass-card p-6">
-        <div class="flex items-center justify-between mb-6">
+    <div class="glass-card p-4 sm:p-6">
+        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                <h2 class="text-lg font-bold text-slate-900 sm:text-xl flex items-center gap-2">
                     <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-100 to-purple-100">
                         <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -124,7 +124,8 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>
-                Create Event
+                <span class="sm:hidden">Create</span>
+                <span class="hidden sm:inline">Create Event</span>
             </a>
         </div>
 
@@ -161,20 +162,20 @@
     </div>
 
     <!-- Birthday Widget - Always show if there are any birthdays this month -->
-    <div class="bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 rounded-3xl shadow-xl border-2 border-pink-200 p-8">
-            <div class="flex items-center justify-between mb-6">
+    <div class="rounded-3xl border-2 border-pink-200 bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 p-4 shadow-xl sm:p-8">
+            <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div class="flex items-center gap-3">
                     <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 shadow-lg">
                         <span class="text-3xl">🎂</span>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-bold text-gray-900">Birthday Celebrations</h2>
+                        <h2 class="text-lg font-bold text-gray-900 sm:text-2xl">Birthday Celebrations</h2>
                         <p class="text-sm text-gray-600">Members to celebrate</p>
                     </div>
                 </div>
                 <form action="{{ route('admin.birthdays.send') }}" method="POST" class="inline">
                     @csrf
-                    <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold rounded-full hover:shadow-lg transition-all">
+                    <button type="submit" class="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-4 py-2 font-semibold text-white transition-all hover:shadow-lg sm:w-auto">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
@@ -287,10 +288,10 @@
                 <div class="absolute -top-32 -right-36 h-64 w-64 rounded-full bg-white/20 blur-3xl"></div>
                 <div class="absolute bottom-0 right-0 h-48 w-48 rounded-full bg-white/10 blur-2xl"></div>
             </div>
-            <div class="relative z-10 flex flex-col gap-8 p-8 sm:p-10">
+            <div class="relative z-10 flex flex-col gap-8 p-5 sm:p-10">
                 <div class="flex flex-col gap-3">
                     <span class="inline-flex w-fit items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest">Today's pulse</span>
-                    <h1 class="text-3xl font-semibold leading-tight sm:text-4xl">
+                    <h1 class="text-2xl font-semibold leading-tight sm:text-4xl">
                         Welcome back, {{ Auth::user()->name }} 👋
                     </h1>
                     <p class="max-w-xl text-sm text-white/80">
@@ -935,13 +936,12 @@
         var calendarEl = document.getElementById('eventsCalendar');
 
         if (calendarEl) {
+            var isMobile = window.innerWidth < 768;
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,listMonth'
-                },
+                initialView: isMobile ? 'listMonth' : 'dayGridMonth',
+                headerToolbar: isMobile
+                    ? { left: 'prev,next', center: 'title', right: 'today' }
+                    : { left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek,listMonth' },
                 height: 'auto',
                 events: '{{ route('admin.calendar.events') }}',
                 eventClick: function(info) {

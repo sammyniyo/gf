@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="space-y-6">
-    <div class="flex items-center justify-between">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
             <h1 class="text-xl font-semibold text-slate-900">Meetings</h1>
             <p class="mt-1 text-sm text-slate-500">Schedule and manage meetings with email invitations</p>

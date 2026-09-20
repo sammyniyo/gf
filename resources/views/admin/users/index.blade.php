@@ -3,9 +3,9 @@
 @section('page-title', 'Admin Users')
 
 @section('content')
-<div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+<div class="space-y-6">
     <!-- Header -->
-    <div class="flex items-center justify-between mb-6">
+    <div class="mb-0 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
             <h1 class="text-xl font-semibold text-gray-900">Admin Users</h1>
             <p class="mt-1 text-sm text-gray-500">Manage admin users for different departments</p>

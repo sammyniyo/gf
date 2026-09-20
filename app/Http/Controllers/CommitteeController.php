@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Committee;
-use Illuminate\Http\Request;
+use App\Models\PageSettings;
 
 class CommitteeController extends Controller
 {
@@ -14,11 +14,15 @@ class CommitteeController extends Controller
     {
         $departments = Committee::getDepartments();
         $committees = Committee::active()
-            ->orderBy('department')
             ->orderBy('order')
+            ->orderBy('name')
             ->get()
             ->groupBy('department');
 
-        return view('committee.index', compact('departments', 'committees'));
+        $pageNotice = optional(
+            PageSettings::query()->where('page_identifier', 'committee')->first()
+        )->custom_message;
+
+        return view('committee.index', compact('departments', 'committees', 'pageNotice'));
     }
 }

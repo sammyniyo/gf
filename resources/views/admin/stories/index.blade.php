@@ -6,7 +6,7 @@
 @section('content')
 <div class="space-y-6">
     <!-- Header with Actions -->
-    <div class="flex items-center justify-between">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
             <h1 class="text-2xl font-bold text-slate-900">Behind Stories</h1>
             <p class="mt-1 text-sm text-slate-500">Manage stories about the choir's journey</p>

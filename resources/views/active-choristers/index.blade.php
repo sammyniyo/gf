@@ -271,8 +271,8 @@ function activeChorister() {
                 this.matches = [];
                 this.$nextTick(() => { this.selecting = false; });
                 this.lookupMessage = this.alreadyCommitted
-                    ? (this.lang === 'rw' ? 'Wari wamaze kwemera. Emeza maze fungura itsinda.' : 'You already signed. Confirm to reopen the group.')
-                    : (this.lang === 'rw' ? 'Twabonye umwiririmbyi. Reba niba amazina ari yo.' : 'Member found. Check that the details are yours.');
+                    ? (this.lang === 'rw' ? 'Wamaze kwiyemeza gukora umurimo, uwiteka azakubashishe!' : 'You have already committed to do the work. The Lord will strengthen you!')
+                    : (this.lang === 'rw' ? 'Twabonye umwirondoro wawe. Reba niba amazina ari yo.' : 'Member found. Check that the details are yours.');
             } catch (e) {
                 this.lookupMessage = this.lang === 'rw' ? 'Habaye ikibazo. Ongera ugerageze.' : 'Something went wrong. Please try again.';
             } finally {
@@ -594,6 +594,9 @@ function activeChorister() {
                 </div>
                 <h2 class="mt-4 text-2xl font-semibold text-slate-900" x-text="lang === 'rw' ? 'Urabyemeye' : 'You are committed'"></h2>
                 <p class="mt-2 text-sm leading-6 text-slate-600" x-text="lang === 'rw'
+                    ? 'Wamaze kwiyemeza gukora umurimo, uwiteka azakubashishe!'
+                    : 'You have already committed to do the work. The Lord will strengthen you!'"></p>
+                <p class="mt-2 text-sm leading-6 text-slate-500" x-text="lang === 'rw'
                     ? 'Ubu dusangira nawe umurongo w’itsinda rya WhatsApp ry’Active Choristers.'
                     : 'We now share the Active Choristers WhatsApp link with you.'"></p>
                 <p class="mt-4 break-all rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-left font-mono text-xs text-slate-700" x-text="whatsapp"></p>

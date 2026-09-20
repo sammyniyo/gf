@@ -40,45 +40,88 @@ class RegistrationController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            // Personal Information
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:members,email',
-            'phone' => 'required|string|max:20|unique:members,phone',
-            'birthdate' => 'required|date',
-            'gender' => 'required|in:male,female',
-            'joining_year' => 'nullable|integer|min:1998|max:'.date('Y'),
-            'address' => 'required|string',
+            'first_name' => ['required', 'string', 'min:2', 'max:80', 'regex:/^[\pL\s\'’.\-]+$/u'],
+            'last_name' => ['required', 'string', 'min:2', 'max:80', 'regex:/^[\pL\s\'’.\-]+$/u'],
+            'email' => ['required', 'email:rfc', 'max:255', 'unique:members,email'],
+            'phone' => [
+                'required',
+                'string',
+                'max:20',
+                function (string $attribute, mixed $value, \Closure $fail) {
+                    $digits = preg_replace('/\D+/', '', (string) $value);
+                    if (strlen($digits) < 9 || strlen($digits) > 15) {
+                        $fail('Enter a valid phone number, for example +250 780 000 000.');
+                    }
+                },
+                function (string $attribute, mixed $value, \Closure $fail) {
+                    $digits = preg_replace('/\D+/', '', (string) $value);
+                    $lastNine = strlen($digits) >= 9 ? substr($digits, -9) : null;
+                    if (! $lastNine) {
+                        return;
+                    }
 
-            // Professional Information
-            'occupation' => 'nullable|string|max:255',
-            'workplace' => 'nullable|string|max:255',
-            'church' => 'nullable|string|max:255',
-            'education_level' => 'nullable|string|in:primary,secondary,diploma,bachelor,master,phd,other',
+                    $exists = Member::query()
+                        ->whereRaw(
+                            "RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(COALESCE(phone,''),' ',''),'+',''),'-',''),'.',''), 9) = ?",
+                            [$lastNine]
+                        )
+                        ->exists();
 
-            // Choir Details
-            'voice' => 'required|string|in:soprano,alto,tenor,bass,unsure',
-            'talent' => 'nullable|string|max:255',
-            'musical_experience' => 'nullable|string',
-            'instruments' => 'nullable|string',
-            'choir_experience' => 'nullable|string',
-            'why_join' => 'nullable|string',
-
-            // Additional
-            'availability' => 'nullable|string',
-            'hobbies' => 'nullable|string|max:255',
-            'skills' => 'nullable|string',
-            'message' => 'nullable|string',
-            'newsletter' => 'boolean',
-            'profile_photo' => 'nullable|image|max:2048',
+                    if ($exists) {
+                        $fail('This phone number is already registered.');
+                    }
+                },
+            ],
+            'birthdate' => ['required', 'date', 'before:today', 'after:'.now()->subYears(90)->toDateString(), 'before_or_equal:'.now()->subYears(8)->toDateString()],
+            'gender' => ['required', 'in:male,female'],
+            'joining_year' => ['nullable', 'integer', 'min:1998', 'max:'.date('Y')],
+            'address' => ['required', 'string', 'min:5', 'max:500'],
+            'occupation' => ['nullable', 'string', 'max:255'],
+            'workplace' => ['nullable', 'string', 'max:255'],
+            'church' => ['nullable', 'string', 'max:255'],
+            'education_level' => ['nullable', 'string', 'in:primary,secondary,diploma,bachelor,master,phd,other'],
+            'voice' => ['required', 'string', 'in:soprano,alto,tenor,bass,unsure'],
+            'talent' => ['nullable', 'string', 'in:singer,instrumentalist,both,choir_director,other'],
+            'musical_experience' => ['nullable', 'string', 'max:2000'],
+            'instruments' => ['nullable', 'string', 'max:255'],
+            'choir_experience' => ['nullable', 'string', 'max:2000'],
+            'why_join' => ['nullable', 'string', 'max:2000'],
+            'availability' => ['nullable', 'string', 'max:1000'],
+            'hobbies' => ['nullable', 'string', 'max:255'],
+            'skills' => ['nullable', 'string', 'max:500'],
+            'message' => ['nullable', 'string', 'max:2000'],
+            'newsletter' => ['nullable', 'boolean'],
+            'profile_photo' => ['nullable', 'image', 'mimes:jpeg,jpg,png,webp', 'max:2048'],
+        ], [
+            'first_name.required' => 'Enter your first name.',
+            'first_name.min' => 'First name is too short.',
+            'first_name.regex' => 'Use letters only in your first name.',
+            'last_name.required' => 'Enter your last name.',
+            'last_name.min' => 'Last name is too short.',
+            'last_name.regex' => 'Use letters only in your last name.',
+            'email.required' => 'Enter your email.',
+            'email.email' => 'Enter a valid email address.',
+            'email.unique' => 'This email address is already registered.',
+            'phone.required' => 'Enter your phone number.',
+            'birthdate.required' => 'Enter your date of birth.',
+            'birthdate.before' => 'Date of birth must be before today.',
+            'birthdate.after' => 'Please check the date of birth.',
+            'birthdate.before_or_equal' => 'You must be at least 8 years old to register.',
+            'gender.required' => 'Select your gender.',
+            'address.required' => 'Enter your address.',
+            'address.min' => 'Enter a fuller address.',
+            'voice.required' => 'Select the part you sing.',
+            'voice.in' => 'Select a valid voice part.',
+            'profile_photo.image' => 'Profile photo must be an image.',
+            'profile_photo.mimes' => 'Use a JPG, PNG, or WebP photo.',
+            'profile_photo.max' => 'Profile photo must be 2MB or smaller.',
         ]);
 
         if ($validator->fails()) {
-            // Check if the error is due to duplicate email or phone
             $hasDuplicateEmail = $validator->errors()->has('email') &&
-                str_contains($validator->errors()->first('email'), 'already been taken');
+                str_contains(strtolower($validator->errors()->first('email')), 'already');
             $hasDuplicatePhone = $validator->errors()->has('phone') &&
-                str_contains($validator->errors()->first('phone'), 'already been taken');
+                str_contains(strtolower($validator->errors()->first('phone')), 'already');
 
             return redirect()->back()
                 ->withErrors($validator)

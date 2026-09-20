@@ -43,22 +43,23 @@ function activeChorister() {
         ],
         titles: {
             rw: [
-                'Gusobanura umuririmbyi ukwiriye kwitwa GF Active Chorister',
+                'Ikaze muri korali umuryango w\'Imana',
                 'Imyitozo',
-                'Presentation',
+                'Ibyerekanwa',
                 'Ivugabutumwa',
-                'Ibindi',
+                'Kwizera',
             ],
             en: [
-                'Who is a GF Active Chorister',
+                'Welcome to God\'s Family Choir',
                 'Rehearsals',
                 'Presentations',
                 'Evangelism',
-                'Other',
+                'Faith',
             ],
         },
         startClock() {
             this.resetSection();
+            this.loadDirectory();
             setInterval(() => {
                 this.readSeconds += 1;
                 if (this.step < 5) {
@@ -222,8 +223,8 @@ function activeChorister() {
             this.lookupMessage = this.matches.length
                 ? ''
                 : (this.lang === 'rw'
-                    ? 'Ntabwo turi mu bitabo. Banza wiyandikishe nk’umwiririmbyi.'
-                    : 'You are not in our register. Register as a member first.');
+                    ? 'Ntabwo ndi kuri uru rutonde?'
+                    : 'Not on this list?');
         },
         moveMatch(delta) {
             if (!this.matchOpen || !this.matches.length) return;
@@ -369,9 +370,13 @@ function activeChorister() {
                          @scroll="onScroll()"
                          class="max-h-[58vh] space-y-5 overflow-y-auto px-5 py-5 text-[15px] leading-7 text-slate-700 sm:max-h-[52vh] sm:px-7">
                         <template x-if="step === 0">
-                            <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
-                                <p x-show="lang === 'rw'" x-cloak>Nemeye ko nk’umuririmbyi wa God’s Family Choir (GF Active Chorister) nzajya nitabira uko bikwiriye ibikorwa byose bya chorale nk’uko bisobanurwa hasi; ndetse ngira uruhare mu bikorwa byose by’iterambere rya Chorale.</p>
-                                <p x-show="lang === 'en'" x-cloak>I agree that as a chorister of God’s Family Choir (GF Active Chorister), I will faithfully attend every choir activity as explained below, and take part in all work that builds up the choir.</p>
+                            <div class="space-y-4">
+                                <p class="text-sm leading-6 text-slate-600" x-show="lang === 'rw'" x-cloak>Ikaze mu muryango w’abaririmbyi ba God’s Family Choir. Mbere yo kwinjira mu itsinda, soma amabwiriza akurikira kandi wemere kuyakurikiza.</p>
+                                <p class="text-sm leading-6 text-slate-600" x-show="lang === 'en'" x-cloak>Welcome to the chorister family of God’s Family Choir. Before you join the group, read the terms below and agree to keep them.</p>
+                                <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
+                                    <p x-show="lang === 'rw'" x-cloak>Nemeye ko nk’umuririmbyi wa God’s Family Choir (GF Active Chorister) nzajya nitabira uko bikwiriye ibikorwa byose bya chorale nk’uko bisobanurwa hasi; ndetse ngira uruhare mu bikorwa byose by’iterambere rya Chorale.</p>
+                                    <p x-show="lang === 'en'" x-cloak>I agree that as a chorister of God’s Family Choir (GF Active Chorister), I will faithfully attend every choir activity as explained below, and take part in all work that builds up the choir.</p>
+                                </div>
                             </div>
                         </template>
 
@@ -487,13 +492,25 @@ function activeChorister() {
                                         @keydown.enter.prevent="matches[matchIndex] ? pickMember(matches[matchIndex]) : null"
                                         @keydown.escape.prevent="matchOpen = false"
                                         :placeholder="lang === 'rw' ? 'Andika izina ryawe...' : 'Start typing your registered name...'"
-                                        class="min-h-[52px] w-full rounded-2xl border border-slate-200 bg-white py-3 pl-12 pr-10 text-sm shadow-sm outline-none ring-emerald-600/20 focus:border-emerald-600 focus:ring-4">
+                                        class="min-h-[52px] w-full rounded-2xl border border-slate-200 bg-white py-3 pl-12 pr-4 text-sm shadow-sm outline-none ring-emerald-600/20 focus:border-emerald-600 focus:ring-4">
                                     <svg class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 100-15 7.5 7.5 0 000 15z" />
                                     </svg>
-                                    <span x-show="looking" class="absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin rounded-full border-2 border-slate-200 border-t-emerald-600"></span>
                                 </div>
                             </label>
+                            <div x-show="looking && !directoryLoaded && form.name.trim().length >= 2" x-cloak
+                                 class="mt-3 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                                <p class="border-b border-slate-100 px-4 py-3 text-sm text-slate-500" x-text="lang === 'rw' ? 'Turimo gushaka amazina...' : 'Looking up names...'"></p>
+                                <template x-for="i in 2" :key="'skel-' + i">
+                                    <div class="flex items-center gap-3 px-4 py-3">
+                                        <span class="h-9 w-9 shrink-0 animate-pulse rounded-full bg-slate-100"></span>
+                                        <span class="min-w-0 flex-1 space-y-2">
+                                            <span class="block h-3 w-2/3 animate-pulse rounded bg-slate-100"></span>
+                                            <span class="block h-2.5 w-1/3 animate-pulse rounded bg-slate-100"></span>
+                                        </span>
+                                    </div>
+                                </template>
+                            </div>
                             <div x-show="matchOpen" x-cloak
                                  class="mt-3 overflow-hidden rounded-2xl border border-slate-200 bg-white">
                                 <template x-for="(member, index) in matches" :key="member.token">
@@ -509,11 +526,11 @@ function activeChorister() {
                                     </button>
                                 </template>
                                 <a :href="registerUrl"
-                                    class="block w-full border-t border-slate-100 px-4 py-3 text-left text-sm font-medium text-emerald-700 hover:bg-emerald-50">
-                                    <span x-text="lang === 'rw' ? 'Ntabwo ndi kuri uru rutonde. Niyandikishe.' : 'I am not on this list. Register as a member.'"></span>
+                                    class="block w-full border-t border-amber-100 bg-amber-50/70 px-4 py-3 text-left text-sm font-medium text-amber-800 hover:bg-amber-50">
+                                    <span x-text="lang === 'rw' ? 'Ntabwo ndi kuri uru rutonde?' : 'Not on this list?'"></span>
                                 </a>
                             </div>
-                            <p class="mt-2 text-sm" :class="lookupOk ? 'text-emerald-700' : 'text-slate-500'" x-text="lookupMessage"></p>
+                            <p class="mt-2 text-sm" :class="lookupOk ? 'text-emerald-700' : 'text-amber-800'" x-text="lookupMessage"></p>
                             <a x-show="!picked && lookupMessage && !matches.length" x-cloak
                                :href="registerUrl"
                                class="mt-3 inline-flex min-h-[44px] items-center justify-center rounded-full bg-emerald-700 px-4 text-sm font-semibold text-white hover:bg-emerald-600"
@@ -541,7 +558,7 @@ function activeChorister() {
                             </svg>
                         </span>
                         <div>
-                            <p class="font-semibold" x-text="lang === 'rw' ? 'Twaguhishe mu bitabo' : 'We found you'"></p>
+                            <p class="font-semibold" x-text="lang === 'rw' ? 'Twagushyize mu bitabo' : 'We found you'"></p>
                             <p class="mt-0.5 text-emerald-800/80" x-text="matchedMember"></p>
                         </div>
                     </div>

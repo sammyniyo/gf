@@ -3,12 +3,12 @@
 @section('title', 'Purchase ' . $album->title . ' | God\'s Family Choir')
 
 @section('content')
-<section class="py-12 bg-gradient-to-b from-blue-50 to-white min-h-screen">
+<section class="py-12 bg-gradient-to-b from-emerald-50 to-white min-h-screen">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Back Button -->
         <div class="mb-8">
             <a href="{{ route('shop.show', $album->id) }}"
-               class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium">
+               class="inline-flex items-center text-emerald-700 hover:text-emerald-800 font-medium">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
@@ -51,7 +51,7 @@
                                    name="customer_name"
                                    value="{{ old('customer_name') }}"
                                    required
-                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                                    placeholder="John Doe">
                             @error('customer_name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -68,7 +68,7 @@
                                    name="customer_email"
                                    value="{{ old('customer_email') }}"
                                    required
-                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                                    placeholder="john@example.com">
                             <p class="mt-1 text-sm text-gray-500">We'll send your download link to this email</p>
                             @error('customer_email')
@@ -85,7 +85,7 @@
                                    id="customer_phone"
                                    name="customer_phone"
                                    value="{{ old('customer_phone') }}"
-                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                                    placeholder="+1234567890">
                             @error('customer_phone')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -97,7 +97,7 @@
 
                         <!-- Submit Button -->
                         <button type="submit"
-                                class="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-bold py-4 px-6 rounded-lg transition-all duration-200 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl flex items-center justify-center gap-2">
+                                class="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-semibold py-4 px-6 rounded-full transition flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76" />
                             </svg>
@@ -135,25 +135,25 @@
 
                     <div class="mt-6 space-y-2 text-sm text-gray-600">
                         <div class="flex items-start">
-                            <svg class="w-5 h-5 text-blue-600 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="w-5 h-5 text-emerald-600 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                             </svg>
                             <span>Instant download access</span>
                         </div>
                         <div class="flex items-start">
-                            <svg class="w-5 h-5 text-blue-600 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="w-5 h-5 text-emerald-600 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                             </svg>
                             <span>High-quality MP3 files</span>
                         </div>
                         <div class="flex items-start">
-                            <svg class="w-5 h-5 text-blue-600 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="w-5 h-5 text-emerald-600 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                             </svg>
                             <span>Up to 5 downloads</span>
                         </div>
                         <div class="flex items-start">
-                            <svg class="w-5 h-5 text-blue-600 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="w-5 h-5 text-emerald-600 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                             </svg>
                             <span>Support our ministry</span>

@@ -1,84 +1,42 @@
 @props(['album', 'featured' => false])
 
-<div class="group relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 overflow-hidden border border-gray-100">
-    <!-- Subtle glow effect on hover -->
-    <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded-3xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500"></div>
-
-    <!-- Featured Badge -->
-    @if($featured)
-    <div class="absolute top-4 right-4 z-30">
-        <span class="bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 text-yellow-900 text-xs font-black px-4 py-2 rounded-full shadow-xl flex items-center gap-1.5 animate-pulse">
-            <i class="fas fa-star"></i>
-            FEATURED
-        </span>
-    </div>
-    @endif
-
-    <!-- Album Cover -->
-    <a href="{{ route('shop.show', $album->id) }}" class="block relative aspect-square overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-        <img src="{{ $album->cover_image_url }}"
-             alt="{{ $album->title }}"
-             class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110">
-
-        <!-- Subtle shimmer effect -->
-        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+<article class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+    <a href="{{ route('shop.show', $album->id) }}" class="relative block aspect-square bg-slate-100">
+        <img src="{{ $album->cover_image_url }}" alt="{{ $album->title }}" class="h-full w-full object-cover">
+        @if($featured)
+            <span class="absolute left-3 top-3 rounded-full bg-emerald-700 px-3 py-1 text-xs font-semibold text-white">Featured</span>
+        @endif
     </a>
 
-    <!-- Album Info -->
-    <div class="p-6">
-        <a href="{{ route('shop.show', $album->id) }}" class="block">
-            <h3 class="text-xl font-black text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                {{ $album->title }}
-            </h3>
-        </a>
+    <div class="p-5">
+        <h3 class="text-lg font-semibold text-slate-900">
+            <a href="{{ route('shop.show', $album->id) }}" class="hover:text-emerald-700">{{ $album->title }}</a>
+        </h3>
 
         @if($album->description)
-        <p class="text-sm text-gray-600 mb-4 line-clamp-2 leading-relaxed">
-            {{ $album->description }}
-        </p>
+            <p class="mt-2 line-clamp-2 text-sm text-slate-600">{{ $album->description }}</p>
         @endif
 
-        <div class="flex items-center justify-between mb-4">
+        <p class="mt-3 text-xs text-slate-500">
             @if($album->track_count > 0)
-            <span class="text-sm text-gray-500 font-medium flex items-center gap-1.5">
-                <i class="fas fa-music text-sm"></i>
-                {{ $album->track_count }} tracks
-            </span>
+                {{ $album->track_count }} {{ Str::plural('track', $album->track_count) }}
             @endif
-
+            @if($album->track_count > 0 && $album->release_date)
+                ·
+            @endif
             @if($album->release_date)
-            <span class="text-sm text-gray-500 font-medium flex items-center gap-1.5">
-                <i class="fas fa-calendar-alt text-sm"></i>
                 {{ $album->release_date->format('Y') }}
-            </span>
             @endif
-        </div>
+        </p>
 
-        <!-- Price and CTA -->
-        <div class="flex items-center justify-between pt-6 mt-2 border-t-2 border-gray-200">
-            <div>
-                @if($album->isFree())
-                <div class="flex items-center gap-2">
-                    <span class="text-3xl font-black bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">FREE</span>
-                    <i class="fas fa-check-circle text-blue-500 animate-bounce"></i>
-                </div>
-                @else
-                <div>
-                    <span class="text-3xl font-black text-gray-900">${{ number_format($album->price, 2) }}</span>
-                    <div class="text-xs text-gray-500 mt-0.5 font-medium">One-time purchase</div>
-                </div>
-                @endif
-            </div>
-
+        <div class="mt-5 flex items-center justify-between gap-3 border-t border-slate-100 pt-4">
+            <span class="text-sm font-semibold {{ $album->isFree() ? 'text-emerald-700' : 'text-slate-900' }}">
+                {{ $album->isFree() ? 'Free' : '$' . number_format($album->price, 2) }}
+            </span>
             <a href="{{ route('shop.show', $album->id) }}"
-               class="group relative bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-6 py-3 rounded-xl font-black transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden">
-                <!-- Subtle shine effect -->
-                <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></span>
-                <span class="relative flex items-center gap-2">
-                    {{ $album->isFree() ? 'Download' : 'Buy Now' }}
-                    <i class="fas fa-arrow-right text-sm transform group-hover:translate-x-1 transition-transform"></i>
-                </span>
+               class="inline-flex rounded-full bg-emerald-700 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-600">
+                {{ $album->isFree() ? 'Listen' : 'View' }}
             </a>
         </div>
     </div>
-</div>
+</article>

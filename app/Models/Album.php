@@ -56,10 +56,23 @@ class Album extends Model
      */
     public function getCoverImageUrlAttribute()
     {
-        if ($this->cover_image) {
-            return Storage::url($this->cover_image);
+        if (!$this->cover_image) {
+            return asset('images/default-album-cover.jpg');
         }
-        return asset('images/default-album-cover.jpg');
+
+        $path = ltrim(str_replace('\\', '/', $this->cover_image), '/');
+        $path = preg_replace('#^storage/#', '', $path);
+
+        if (Storage::disk('public')->exists($path)) {
+            return Storage::disk('public')->url($path);
+        }
+
+        $media = rtrim((string) config('filesystems.media_url'), '/');
+        if ($media !== '') {
+            return $media.'/storage/'.$path;
+        }
+
+        return Storage::disk('public')->url($path);
     }
 
     /**

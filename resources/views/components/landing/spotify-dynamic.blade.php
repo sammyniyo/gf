@@ -47,17 +47,17 @@
     <div class="max-w-7xl mx-auto px-6 relative z-10">
         <!-- Section Header -->
         <div class="text-center mb-8">
-            <span class="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-emerald-700 mb-3">
+            <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-700 mb-3">
                 Our Music
             </span>
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                Latest <span class="bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent">Singles</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
+                Latest <span class="text-emerald-700">Singles</span>
             </h2>
             <p class="text-gray-600 text-sm max-w-xl mx-auto">
                 @if($spotifyTracks && isset($spotifyTracks['tracks']['items']) && count($spotifyTracks['tracks']['items']) > 0)
                     Our newest single releases on Spotify
                 @else
-                    Connect your Spotify API to showcase your latest singles
+                    Stream our worship songs on Spotify
                 @endif
             </p>
         </div>
@@ -107,7 +107,7 @@
 
                                 <!-- Play Button -->
                                 <a href="{{ $track['external_urls']['spotify'] }}" target="_blank"
-                                   class="inline-flex items-center justify-center gap-2 w-full px-3 py-2 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white text-xs font-semibold rounded-full shadow-md shadow-emerald-500/30 hover:shadow-lg hover:shadow-emerald-500/40 transition-all hover:-translate-y-0.5">
+                                   class="inline-flex items-center justify-center gap-2 w-full px-3 py-2 bg-emerald-700 text-white text-xs font-semibold rounded-full hover:bg-emerald-600 transition">
                                     <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
                                     </svg>
@@ -144,16 +144,13 @@
                 <div class="group relative bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-500">
                     <div class="grid md:grid-cols-5 gap-0">
                         <!-- Left: Spotify Icon Column -->
-                        <div class="md:col-span-2 bg-gradient-to-br from-green-50 to-emerald-50 p-6 flex items-center justify-center relative overflow-hidden">
-                            <!-- Animated Background Circles -->
+                        <div class="md:col-span-2 bg-emerald-50 p-6 flex items-center justify-center relative overflow-hidden">
                             <div class="absolute inset-0">
-                                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-green-200/30 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-                                <div class="absolute top-1/4 left-1/4 w-20 h-20 bg-emerald-200/20 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500"></div>
+                                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-emerald-200/40 rounded-full blur-2xl"></div>
                             </div>
 
-                            <!-- Spotify Icon -->
-                            <div class="relative z-10 transform group-hover:scale-110 transition-transform duration-500">
-                                <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-xl shadow-green-500/40 group-hover:shadow-green-500/60 transition-all duration-300 rotate-6 group-hover:rotate-12">
+                            <div class="relative z-10">
+                                <div class="w-16 h-16 bg-emerald-700 rounded-2xl flex items-center justify-center shadow-lg">
                                     <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
                                     </svg>
@@ -164,7 +161,7 @@
                         <!-- Right: Content Column -->
                         <div class="md:col-span-3 p-5 flex flex-col justify-center">
                             <div class="mb-1">
-                                <span class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wide text-green-600">
+                                <span class="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-emerald-700">
                                     <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                     </svg>
@@ -179,7 +176,7 @@
                             </p>
                             <div class="flex flex-wrap gap-2">
                                 <a href="https://open.spotify.com/artist/6qAFmjsmVuuXZEwzrIYy5J" target="_blank"
-                                   class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-semibold rounded-lg shadow-md shadow-green-500/30 hover:shadow-lg hover:shadow-green-500/40 hover:-translate-y-0.5 transition-all duration-300 group/btn">
+                                   class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-700 text-white text-sm font-semibold rounded-full hover:bg-emerald-600 transition group/btn">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
                                     </svg>
@@ -189,7 +186,7 @@
                                     </svg>
                                 </a>
                                 <a href="https://open.spotify.com/artist/6qAFmjsmVuuXZEwzrIYy5J" target="_blank"
-                                   class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 text-sm font-semibold rounded-lg hover:bg-gray-200 transition-all duration-300">
+                                   class="inline-flex items-center gap-2 px-4 py-2 border border-slate-200 text-slate-700 text-sm font-semibold rounded-full hover:bg-slate-50 transition">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
                                     </svg>
@@ -202,35 +199,21 @@
             </div>
 
         @else
-            <!-- Clean Fallback -->
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-white border border-emerald-100 rounded-3xl p-12 text-center shadow-lg">
-                    <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <svg class="w-10 h-10 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
+            <div class="mx-auto max-w-3xl">
+                <div class="rounded-3xl border border-emerald-100 bg-white p-8 text-center shadow-md sm:p-10">
+                    <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100">
+                        <svg class="h-8 w-8 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Connect Your Spotify</h3>
-                    <p class="text-gray-600 text-lg mb-6">
-                        To display your latest tracks, you'll need to configure the Spotify API credentials.
+                    <h3 class="mb-2 text-2xl font-bold text-gray-900">Listen on Spotify</h3>
+                    <p class="mx-auto mb-6 max-w-xl text-gray-600">
+                        Follow God's Family Choir for new worship songs, live recordings, and our latest singles.
                     </p>
-                    <div class="bg-gray-50 rounded-2xl p-6 text-left max-w-2xl mx-auto border border-emerald-100">
-                        <h4 class="text-gray-900 font-bold mb-3 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Setup Instructions:
-                        </h4>
-                        <ol class="text-gray-600 text-sm space-y-2 list-decimal list-inside">
-                            <li>Go to <a href="https://developer.spotify.com/dashboard" target="_blank" class="text-emerald-600 hover:text-emerald-700 hover:underline transition-colors">Spotify Developer Dashboard</a></li>
-                            <li>Create a new app and get your Client ID & Secret</li>
-                            <li>Add these to your <code class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs font-mono">.env</code> file:</li>
-                        </ol>
-                        <div class="bg-gray-900 rounded-lg p-4 mt-4 font-mono text-sm">
-                            <div class="text-emerald-400">SPOTIFY_CLIENT_ID=your_client_id_here</div>
-                            <div class="text-amber-400">SPOTIFY_CLIENT_SECRET=your_client_secret_here</div>
-                        </div>
-                    </div>
+                    <a href="https://open.spotify.com/artist/6qAFmjsmVuuXZEwzrIYy5J" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-600">
+                        Follow on Spotify
+                    </a>
                 </div>
             </div>
         @endif

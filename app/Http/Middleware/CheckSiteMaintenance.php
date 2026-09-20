@@ -18,7 +18,13 @@ class CheckSiteMaintenance
      */
     public function handle(Request $request, Closure $next)
     {
-        $settings = GlobalSiteSetting::getSettings();
+        try {
+            $settings = GlobalSiteSetting::getSettings();
+        } catch (\Throwable $e) {
+            \Log::warning('Site settings unavailable: '.$e->getMessage());
+
+            return $next($request);
+        }
 
         // If site is in coming soon mode
         if ($settings->is_coming_soon) {

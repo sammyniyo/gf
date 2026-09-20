@@ -1,5 +1,5 @@
 <!-- resources/views/components/landing/final-cta.blade.php -->
-<section class="relative bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-950 text-white py-32 overflow-hidden">
+<section class="relative bg-emerald-900 text-white py-20 sm:py-24 overflow-hidden">
     <!-- Decorative Background Elements -->
     <div class="absolute inset-0 opacity-10">
         <div class="absolute top-10 left-10 w-64 h-64 bg-amber-400 rounded-full blur-3xl animate-pulse"></div>
@@ -18,29 +18,28 @@
     <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
         <!-- Main Content -->
         <div class="mb-12">
-            <span class="inline-block px-4 py-2 bg-amber-500/20 backdrop-blur-sm text-amber-300 rounded-full text-sm font-semibold mb-6 border border-amber-400/30">
-                JOIN OUR FAMILY
+            <span class="inline-block px-3 py-1 bg-white/10 text-amber-200 rounded-full text-xs font-semibold mb-4 uppercase tracking-wide">
+                Join our family
             </span>
-            <h2 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+            <h2 class="text-2xl md:text-4xl font-bold mb-4 leading-tight">
                 Your Voice Matters in the
-                <span class="text-amber-400">Symphony of Worship</span>
+                <span class="text-amber-300">Symphony of Worship</span>
             </h2>
-            <p class="text-xl md:text-2xl text-emerald-100 mb-8 max-w-3xl mx-auto leading-relaxed">
+            <p class="text-base md:text-lg text-emerald-100 mb-8 max-w-2xl mx-auto leading-relaxed">
                 Whether you want to join our choir, attend our events, or support our ministry, there's a place for you in God's Family
             </p>
         </div>
 
         <!-- Action Buttons -->
         <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16">
-            <a href="{{ route('choir.register.form') }}" class="group relative inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-amber-400 to-amber-500 text-emerald-950 font-bold rounded-2xl shadow-2xl hover:shadow-amber-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 w-full sm:w-auto justify-center">
-                <svg class="w-6 h-6 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{{ route('choir.register.form') }}" class="group relative inline-flex items-center gap-2 px-6 py-3 bg-amber-500 text-white text-sm font-semibold rounded-full hover:bg-amber-400 transition w-full sm:w-auto justify-center">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
                 </svg>
                 <span>Join the Choir</span>
-                <div class="absolute inset-0 bg-gradient-to-r from-amber-300 to-amber-400 rounded-2xl blur opacity-0 group-hover:opacity-75 transition-opacity -z-10"></div>
             </a>
 
-            <a href="{{ route('events.index') }}" class="group inline-flex items-center gap-3 px-10 py-5 bg-white/10 backdrop-blur-sm text-white font-bold rounded-2xl border-2 border-white/30 hover:bg-white/20 hover:border-white/50 transition-all duration-300 transform hover:-translate-y-2 w-full sm:w-auto justify-center">
+            <a href="{{ route('events.index') }}" class="group inline-flex items-center gap-2 px-6 py-3 bg-white/10 text-white text-sm font-semibold rounded-full border border-white/30 hover:bg-white/20 transition w-full sm:w-auto justify-center">
                 <svg class="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path>
                 </svg>
@@ -74,17 +73,11 @@
 
         <!-- Scripture Quote -->
         <div class="relative max-w-3xl mx-auto">
-            <div class="bg-emerald-800/50 backdrop-blur-sm border border-emerald-700/50 rounded-2xl p-8 shadow-2xl">
-                <div class="text-amber-400 text-5xl mb-4">"</div>
-                <blockquote class="text-xl md:text-2xl font-light italic text-emerald-50 mb-4 leading-relaxed">
-                    Sing to the Lord a new song; sing to the Lord, all the earth. Sing to the Lord, praise his name; proclaim his salvation day after day.
+            <div class="bg-emerald-800/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8">
+                <blockquote class="text-base md:text-lg font-light italic text-emerald-50 mb-3 leading-relaxed">
+                    “Sing to the Lord a new song; sing to the Lord, all the earth. Sing to the Lord, praise his name; proclaim his salvation day after day.”
                 </blockquote>
-                <cite class="text-amber-400 font-semibold text-lg">— Psalm 96:1-2</cite>
-            </div>
-
-            <!-- Decorative Musical Note -->
-            <div class="absolute -top-6 -right-6 w-16 h-16 bg-amber-400 rounded-full flex items-center justify-center text-3xl shadow-xl animate-bounce">
-                ♪
+                <cite class="text-amber-300 font-medium text-sm">— Psalm 96:1-2</cite>
             </div>
         </div>
 

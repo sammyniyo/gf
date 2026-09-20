@@ -1,30 +1,22 @@
 <section class="relative min-h-[85vh] sm:min-h-screen overflow-hidden bg-black">
-    <!-- Slideshow Background Images with Morph Transitions -->
-    <div class="absolute inset-0 z-0">
-        <!-- Image 1 -->
-        <div class="hero-slide active absolute inset-0">
-            <img src="{{ asset('images/gf.jpg') }}" alt="God's Family Choir - Worship"
-                 class="w-full h-full object-cover object-center" />
-        </div>
-        <!-- Image 2 -->
-        <div class="hero-slide absolute inset-0">
-            <img src="{{ asset('images/GF-21.jpg') }}" alt="God's Family Choir - Community"
-                 class="w-full h-full object-cover object-center" />
-        </div>
-        <!-- Image 3 -->
-        <div class="hero-slide absolute inset-0">
-            <img src="{{ asset('images/GF-22.jpg') }}" alt="God's Family Choir - Excellence"
-                 class="w-full h-full object-cover object-center" />
-        </div>
-        <!-- Image 4 -->
-        <div class="hero-slide absolute inset-0">
-            <img src="{{ asset('images/GF-23.jpg') }}" alt="God's Family Choir - Excellence"
-                 class="w-full h-full object-cover object-center" />
-        </div>
-        <!-- Image 5 -->
-        <div class="hero-slide absolute inset-0">
-            <img src="{{ asset('images/GF-24.jpg') }}" alt="God's Family Choir - Excellence"
-                 class="w-full h-full object-cover object-center" />
+    <!-- Slideshow Background -->
+    <div class="absolute inset-0 z-0 overflow-hidden">
+        <div class="hero-track">
+            <div class="hero-slide">
+                <img src="{{ asset('images/gf.jpg') }}" alt="God's Family Choir - Worship" />
+            </div>
+            <div class="hero-slide">
+                <img src="{{ asset('images/GF-21.jpg') }}" alt="God's Family Choir - Community" />
+            </div>
+            <div class="hero-slide">
+                <img src="{{ asset('images/GF-22.jpg') }}" alt="God's Family Choir - Excellence" />
+            </div>
+            <div class="hero-slide">
+                <img src="{{ asset('images/GF-23.jpg') }}" alt="God's Family Choir - Excellence" />
+            </div>
+            <div class="hero-slide">
+                <img src="{{ asset('images/GF-24.jpg') }}" alt="God's Family Choir - Excellence" />
+            </div>
         </div>
 
         <!-- Multi-Layer Overlays for Depth -->
@@ -74,75 +66,60 @@
     </div>
 
     <!-- Main Hero Content -->
-    <div class="relative z-10 min-h-[85vh] sm:min-h-screen flex items-center pb-24 sm:pb-32">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-16 sm:py-20 w-full">
-            <div class="text-center max-w-5xl mx-auto space-y-8 sm:space-y-10">
+    <div class="relative z-10 min-h-[85vh] sm:min-h-screen flex items-center pb-20 sm:pb-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 py-16 sm:py-20 w-full">
+            <div class="text-center space-y-6 sm:space-y-7">
 
-                <!-- Elegant Badge -->
-                <div class="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white shadow-2xl animate-fade-in-up">
+                <div class="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 px-4 py-2 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.22em] text-white/90 shadow-lg animate-fade-in-up">
                     <div class="relative">
-                        <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                        <div class="absolute inset-0 w-2 h-2 bg-emerald-300 rounded-full animate-ping"></div>
+                        <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
                     </div>
                     <span>Uniting Hearts Through Worship</span>
                 </div>
 
-                <!-- Stunning Typography -->
-                <div class="space-y-8">
-                    <h1 class="relative animate-fade-in-up animation-delay-200">
-                        <div class="space-y-4">
-                            <span class="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-white leading-none tracking-tight drop-shadow-2xl">
-                                Sing to the
+                <div class="space-y-4">
+                    <h1 class="animate-fade-in-up animation-delay-200">
+                        <span class="block text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-white leading-tight tracking-tight drop-shadow-lg">
+                            Sing to the
+                        </span>
+                        <span class="block text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-tight tracking-tight">
+                            <span class="bg-gradient-to-r from-emerald-300 to-amber-300 bg-clip-text text-transparent">
+                                Glory of God
                             </span>
-                            <span class="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black leading-none tracking-tight">
-                                <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-400 bg-clip-text text-transparent drop-shadow-2xl animate-gradient-text" style="background-size: 200% 200%;">
-                                    Glory of God
-                                </span>
-                            </span>
-                        </div>
-
-                        <!-- Decorative Line -->
-                        <div class="flex items-center justify-center gap-4 mt-8">
-                            <div class="h-1 w-24 bg-gradient-to-r from-transparent via-emerald-400 to-transparent rounded-full"></div>
-                            <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
-                            <div class="h-1 w-24 bg-gradient-to-r from-transparent via-amber-400 to-transparent rounded-full"></div>
-                        </div>
+                        </span>
                     </h1>
 
-                    <!-- Tagline -->
-                    <p class="text-lg sm:text-xl lg:text-2xl text-white/90 font-light leading-relaxed max-w-3xl mx-auto animate-fade-in-up animation-delay-400 drop-shadow-lg">
-                        Experience divine connection through <span class="text-emerald-300 font-semibold">powerful worship</span> and musical excellence
+                    <div class="flex items-center justify-center gap-3">
+                        <div class="h-px w-12 bg-gradient-to-r from-transparent via-emerald-400 to-transparent"></div>
+                        <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                        <div class="h-px w-12 bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
+                    </div>
+
+                    <p class="text-sm sm:text-base lg:text-lg text-white/80 font-light leading-relaxed max-w-xl mx-auto animate-fade-in-up animation-delay-400">
+                        Experience divine connection through <span class="text-emerald-300 font-medium">powerful worship</span> and musical excellence
                     </p>
                 </div>
 
-                <!-- Clean Stats Row -->
-                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 max-w-md sm:max-w-2xl mx-auto animate-fade-in-up animation-delay-600">
-                    <div class="group">
-                        <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-5 sm:p-6 hover:bg-white/10 hover:border-emerald-400/30 transition-all duration-300 hover:-translate-y-1">
-                            <div class="flex items-baseline justify-center gap-2 mb-2">
-                                <span class="text-4xl lg:text-5xl font-black text-white counter" data-target="300">0</span>
-                                <span class="text-2xl text-emerald-400 font-bold">+</span>
-                            </div>
-                            <div class="text-xs lg:text-sm text-white/70 font-semibold uppercase tracking-wider">Members</div>
+                <div class="grid grid-cols-2 gap-3 sm:gap-4 max-w-xs sm:max-w-sm mx-auto animate-fade-in-up animation-delay-600">
+                    <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl px-4 py-4">
+                        <div class="flex items-baseline justify-center gap-1">
+                            <span class="text-2xl sm:text-3xl font-bold text-white counter" data-target="300">0</span>
+                            <span class="text-lg text-emerald-400 font-semibold">+</span>
                         </div>
+                        <div class="mt-1 text-[10px] sm:text-xs text-white/65 font-medium uppercase tracking-wider">Members</div>
                     </div>
-
-                    <div class="group">
-                        <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-5 sm:p-6 hover:bg-white/10 hover:border-amber-400/30 transition-all duration-300 hover:-translate-y-1">
-                            <div class="flex items-baseline justify-center gap-2 mb-2">
-                                <span class="text-4xl lg:text-5xl font-black text-white counter" data-target="27">0</span>
-                                <span class="text-2xl text-amber-400 font-bold"></span>
-                            </div>
-                            <div class="text-xs lg:text-sm text-white/70 font-semibold uppercase tracking-wider">Years</div>
+                    <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl px-4 py-4">
+                        <div class="flex items-baseline justify-center gap-1">
+                            <span class="text-2xl sm:text-3xl font-bold text-white counter" data-target="27">0</span>
                         </div>
+                        <div class="mt-1 text-[10px] sm:text-xs text-white/65 font-medium uppercase tracking-wider">Years</div>
                     </div>
                 </div>
 
-                <!-- Primary CTA Button -->
-                <div class="flex items-center justify-center animate-fade-in-up animation-delay-800 mb-20 sm:mb-24">
-                    <a href="{{ route('registration.member') }}" class="group relative inline-flex items-center justify-center gap-3 px-8 py-4 sm:px-10 sm:py-5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-full shadow-2xl shadow-emerald-500/50 transition-all duration-300 hover:shadow-emerald-500/70 hover:-translate-y-1 hover:scale-105 overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-r from-teal-600 to-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                        <svg class="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="flex items-center justify-center animate-fade-in-up animation-delay-800">
+                    <a href="{{ route('registration.member') }}" class="group relative inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-7 sm:py-3.5 bg-emerald-700 text-sm sm:text-base text-white font-semibold rounded-full shadow-lg shadow-emerald-900/20 transition hover:bg-emerald-600 hover:-translate-y-0.5 overflow-hidden">
+                        <div class="absolute inset-0 bg-emerald-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                        <svg class="w-4 h-4 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
                         </svg>
                         <span class="relative z-10">Join the Choir</span>
@@ -164,41 +141,28 @@
 </section>
 
 <style>
-    /* Hero Slideshow with Morph Transitions */
-    .hero-slide {
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 2s ease-in-out, visibility 0s 2s, transform 20s ease-in-out;
-        transform: scale(1);
-        z-index: 1;
+    .hero-track {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        height: 100%;
+        transform: translateX(0);
+        transition: transform 0.8s ease-in-out;
+        will-change: transform;
     }
 
-    .hero-slide.active {
-        opacity: 1;
-        visibility: visible;
-        transition: opacity 2s ease-in-out, visibility 0s, transform 20s ease-in-out;
-        z-index: 2;
-        animation: morphZoom 8s ease-in-out forwards;
+    .hero-slide {
+        position: relative;
+        flex: 0 0 100%;
+        width: 100%;
+        height: 100%;
     }
 
     .hero-slide img {
-        filter: blur(0px);
-        transition: filter 2s ease-in-out;
         width: 100%;
         height: 100%;
         object-fit: cover;
-    }
-
-    @keyframes morphZoom {
-        0% {
-            transform: scale(1) rotate(0deg);
-        }
-        50% {
-            transform: scale(1.05) rotate(0.2deg);
-        }
-        100% {
-            transform: scale(1.02) rotate(0deg);
-        }
+        object-position: center;
     }
 
     /* Slideshow Indicators */
@@ -323,30 +287,18 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Hero Slideshow with Smooth Transitions
+    const track = document.querySelector('.hero-track');
     const slides = document.querySelectorAll('.hero-slide');
     const indicators = document.querySelectorAll('.slide-indicator');
     let currentSlide = 0;
-    const slideInterval = 6000; // 6 seconds per slide
+    const slideInterval = 5000;
     let autoPlayInterval;
 
     function showSlide(index) {
-        // Update slides
-        slides.forEach((slide, i) => {
-            if (i === index) {
-                slide.classList.add('active');
-            } else {
-                slide.classList.remove('active');
-            }
-        });
-
-        // Update indicators
+        if (!track || !slides.length) return;
+        track.style.transform = 'translateX(-' + (index * 100) + '%)';
         indicators.forEach((indicator, i) => {
-            if (i === index) {
-                indicator.classList.add('active');
-            } else {
-                indicator.classList.remove('active');
-            }
+            indicator.classList.toggle('active', i === index);
         });
     }
 
@@ -358,17 +310,14 @@ document.addEventListener('DOMContentLoaded', function() {
     function goToSlide(index) {
         currentSlide = index;
         showSlide(currentSlide);
-        // Reset autoplay
         clearInterval(autoPlayInterval);
         autoPlayInterval = setInterval(nextSlide, slideInterval);
     }
 
-    // Indicator click events
     indicators.forEach((indicator, index) => {
         indicator.addEventListener('click', () => goToSlide(index));
     });
 
-    // Start slideshow
     autoPlayInterval = setInterval(nextSlide, slideInterval);
 
     // Counter Animation

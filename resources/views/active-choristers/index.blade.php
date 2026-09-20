@@ -1,0 +1,617 @@
+@extends('layouts.app')
+
+@section('title', 'Active Choristers | God\'s Family Choir')
+@section('meta_description', 'Read the Active Chorister commitment in English and Kinyarwanda, then join the dedicated WhatsApp group.')
+@section('canonical_url', route('active-choristers'))
+@section('og:title', 'Active Choristers Commitment | God\'s Family Choir')
+@section('og:description', 'Committed choristers: read the terms, confirm who you are, then join the Active Choristers WhatsApp group.')
+
+@section('content')
+<script>
+function activeChorister() {
+    return {
+        lang: 'rw',
+        step: 0,
+        remaining: 8,
+        readSeconds: 0,
+        read: [false, false, false, false, false],
+        scrolled: [false, false, false, false, false],
+        openedAt: Date.now(),
+        lookupQuery: '',
+        lookupMessage: '',
+        lookupOk: false,
+        looking: false,
+        directory: [],
+        directoryLoaded: false,
+        matches: [],
+        matchOpen: false,
+        matchIndex: 0,
+        picked: false,
+        guestMode: false,
+        selecting: false,
+        matchedMember: '',
+        alreadyCommitted: false,
+        honeypot: '',
+        submitting: false,
+        error: '',
+        whatsapp: '',
+        form: { name: '', phone: '', email: '', confirmation: '' },
+        rehearsals: [
+            { short: { rw: 'Lun', en: 'Mon' }, day: { rw: 'Kuwa kabiri w’isabato', en: 'Monday' }, sub: { rw: 'Lundi', en: 'Evening rehearsal' }, time: '18:30 – 20:00' },
+            { short: { rw: 'Jeu', en: 'Thu' }, day: { rw: 'Kuwa gatanu w’isabato', en: 'Thursday' }, sub: { rw: 'Jeudi', en: 'Evening rehearsal' }, time: '18:30 – 20:00' },
+            { short: { rw: 'Sam', en: 'Sat' }, day: { rw: 'Ku isabato', en: 'Saturday' }, sub: { rw: 'Samedi', en: 'Afternoon rehearsal' }, time: '15:00 – 18:00' },
+        ],
+        titles: {
+            rw: [
+                'Gusobanura umuririmbyi ukwiriye kwitwa GF Active Chorister',
+                'Imyitozo',
+                'Presentation',
+                'Ivugabutumwa',
+                'Ibindi',
+            ],
+            en: [
+                'Who is a GF Active Chorister',
+                'Rehearsals',
+                'Presentations',
+                'Evangelism',
+                'Other',
+            ],
+        },
+        startClock() {
+            this.resetSection();
+            setInterval(() => {
+                this.readSeconds += 1;
+                if (this.step < 5) {
+                    const elapsed = Math.floor((Date.now() - this.openedAt) / 1000);
+                    this.remaining = Math.max(0, 8 - elapsed);
+                    this.$nextTick(() => this.onScroll());
+                }
+            }, 1000);
+        },
+        resetSection() {
+            this.openedAt = Date.now();
+            this.remaining = 8;
+            this.$nextTick(() => {
+                if (this.$refs.reader) this.$refs.reader.scrollTop = 0;
+                this.onScroll();
+            });
+        },
+        onScroll() {
+            const el = this.$refs.reader;
+            if (!el || this.step > 4) return;
+            const short = el.scrollHeight <= el.clientHeight + 8;
+            const atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 24;
+            if (short || atBottom) this.scrolled[this.step] = true;
+        },
+        canContinue() {
+            return this.remaining === 0 && this.scrolled[this.step];
+        },
+        continueSection() {
+            if (!this.canContinue()) return;
+            this.read[this.step] = true;
+            this.step += 1;
+            if (this.step < 5) this.resetSection();
+            if (this.step === 5) this.loadDirectory();
+        },
+        goBack() {
+            if (this.step === 0) return;
+            this.step -= 1;
+            this.resetSection();
+        },
+        progress() {
+            if (this.step >= 6) return 100;
+            const done = this.read.filter(Boolean).length;
+            return Math.min(100, (done / 6) * 100 + (this.step === 5 ? 10 : 0));
+        },
+        progressLabel() {
+            if (this.lang === 'rw') {
+                if (this.step < 5) return `Igice ${this.step + 1} / 5`;
+                if (this.step === 5) return 'Emeza amazina';
+                return 'Byarangiye';
+            }
+            if (this.step < 5) return `Section ${this.step + 1} of 5`;
+            if (this.step === 5) return 'Confirm your details';
+            return 'Finished';
+        },
+        sectionKicker() {
+            return this.lang === 'rw' ? `Igice ${this.step + 1} / 5` : `Section ${this.step + 1} of 5`;
+        },
+        sectionTitle() {
+            return this.titles[this.lang][this.step];
+        },
+        waitHint() {
+            if (this.remaining > 0) {
+                return this.lang === 'rw'
+                    ? `Soma iki gice cyose. Ushobora gukomeza nyuma y’amasegonda ${this.remaining}.`
+                    : `Read this section. Scroll to the end. Continue unlocks in ${this.remaining}s.`;
+            }
+            if (!this.scrolled[this.step]) {
+                return this.lang === 'rw'
+                    ? 'Komeza hasi kugira ngo ukomeze. Ntushobora gusimbuka.'
+                    : 'Scroll to the end of this section. Skipping is not allowed.';
+            }
+            return '';
+        },
+        continueLabel() {
+            if (!this.canContinue()) {
+                return this.remaining > 0
+                    ? (this.lang === 'rw' ? `Tegereza ${this.remaining}s` : `Wait ${this.remaining}s`)
+                    : (this.lang === 'rw' ? 'Komeza hasi' : 'Scroll to the end');
+            }
+            return this.lang === 'rw' ? 'Nasomye, komeza' : 'I have read this';
+        },
+        canSubmit() {
+            const phrase = this.lang === 'rw' ? 'NDABYEMEYE' : 'I COMMIT';
+            return this.form.name.trim().length >= 3
+                && this.form.phone.trim().length >= 8
+                && this.form.confirmation.trim().toUpperCase() === phrase
+                && (this.alreadyCommitted || this.read.every(Boolean));
+        },
+        csrf() {
+            return {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            };
+        },
+        async loadDirectory() {
+            if (this.directoryLoaded || this.looking) return;
+            this.looking = true;
+            try {
+                const res = await fetch(@json(route('active-choristers.directory')), {
+                    headers: { 'Accept': 'application/json' },
+                });
+                const data = await res.json();
+                this.directory = data.results || [];
+                this.directoryLoaded = true;
+                this.filterMembers();
+            } catch (e) {
+                this.directory = [];
+            } finally {
+                this.looking = false;
+            }
+        },
+        normalize(value) {
+            return String(value || '')
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
+                .replace(/\s+/g, ' ')
+                .trim();
+        },
+        onNameInput() {
+            if (this.selecting) return;
+            this.picked = false;
+            this.guestMode = false;
+            this.lookupOk = false;
+            this.matchedMember = '';
+            this.alreadyCommitted = false;
+            this.lookupMessage = '';
+            if (!this.directoryLoaded) {
+                this.loadDirectory();
+                return;
+            }
+            this.filterMembers();
+        },
+        filterMembers() {
+            const raw = this.form.name.trim();
+            const q = this.normalize(raw);
+            const qDigits = raw.replace(/\D+/g, '');
+
+            if (q.length < 2 && qDigits.length < 3) {
+                this.matches = [];
+                this.matchOpen = false;
+                return;
+            }
+
+            const scored = [];
+            for (const member of this.directory) {
+                const name = this.normalize(member.name);
+                const words = name.split(' ');
+                let score = 99;
+                if (q && name.startsWith(q)) score = 0;
+                else if (q && words.some((word) => word.startsWith(q))) score = 1;
+                else if (q && name.includes(q)) score = 2;
+                else if (qDigits.length >= 3 && (member.phone_digits || '').includes(qDigits)) score = 3;
+                if (score < 99) scored.push({ score, member });
+            }
+
+            scored.sort((a, b) => a.score - b.score || a.member.name.localeCompare(b.member.name));
+            this.matches = scored.slice(0, 8).map((row) => row.member);
+            this.matchOpen = this.matches.length > 0;
+            this.matchIndex = 0;
+            this.guestMode = this.matches.length === 0;
+            this.lookupMessage = this.matches.length
+                ? ''
+                : (this.lang === 'rw'
+                    ? 'Ntabwo turi mu bitabo. Andika telefoni yawe hasi maze wemeze.'
+                    : 'You are not in our list. Enter your phone below and confirm.');
+        },
+        continueAsGuest() {
+            this.matchOpen = false;
+            this.matches = [];
+            this.picked = false;
+            this.guestMode = true;
+            this.lookupOk = false;
+            this.matchedMember = '';
+            this.lookupMessage = this.lang === 'rw'
+                ? 'Ntabwo turi mu bitabo. Andika telefoni yawe hasi maze wemeze.'
+                : 'You are not in our list. Enter your phone below and confirm.';
+            this.$nextTick(() => this.$refs.phone && this.$refs.phone.focus());
+        },
+        moveMatch(delta) {
+            if (!this.matchOpen || !this.matches.length) return;
+            const next = this.matchIndex + delta;
+            this.matchIndex = (next + this.matches.length) % this.matches.length;
+        },
+        highlightName(name) {
+            const q = this.form.name.trim();
+            const safe = this.escapeHtml(name || '');
+            if (q.length < 2) return safe;
+            const needle = this.escapeHtml(q).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            return safe.replace(new RegExp('(' + needle + ')', 'ig'), '<mark class="rounded bg-emerald-100 px-0.5 text-slate-900">$1</mark>');
+        },
+        escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        },
+        async pickMember(member) {
+            if (!member || !member.token) return;
+            this.looking = true;
+            this.matchOpen = false;
+            try {
+                const res = await fetch(@json(route('active-choristers.select')), {
+                    method: 'POST',
+                    headers: this.csrf(),
+                    body: JSON.stringify({ token: member.token }),
+                });
+                const data = await res.json();
+                if (!data.found) {
+                    this.lookupMessage = data.message || (this.lang === 'rw' ? 'Ongera ushake.' : 'Search again.');
+                    return;
+                }
+                this.selecting = true;
+                this.form.name = data.member.name || '';
+                this.form.phone = data.member.phone || '';
+                this.form.email = data.member.email || '';
+                this.matchedMember = [data.member.name, data.member.member_id, data.member.voice].filter(Boolean).join(' · ');
+                this.alreadyCommitted = !!data.already_committed;
+                this.lookupOk = true;
+                this.picked = true;
+                this.guestMode = false;
+                this.matches = [];
+                this.$nextTick(() => { this.selecting = false; });
+                this.lookupMessage = this.alreadyCommitted
+                    ? (this.lang === 'rw' ? 'Wari wamaze kwemera. Emeza maze fungura itsinda.' : 'You already signed. Confirm to reopen the group.')
+                    : (this.lang === 'rw' ? 'Twabonye umwiririmbyi. Reba niba amazina ari yo.' : 'Member found. Check that the details are yours.');
+            } catch (e) {
+                this.lookupMessage = this.lang === 'rw' ? 'Habaye ikibazo. Ongera ugerageze.' : 'Something went wrong. Please try again.';
+            } finally {
+                this.looking = false;
+            }
+        },
+        async submitForm() {
+            if (!this.canSubmit() || this.submitting) return;
+            this.submitting = true;
+            this.error = '';
+            try {
+                const res = await fetch(@json(route('active-choristers.store')), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    },
+                    body: JSON.stringify({
+                        name: this.form.name,
+                        phone: this.form.phone,
+                        email: this.form.email,
+                        language: this.lang,
+                        read_seconds: this.readSeconds,
+                        sections_read: this.read.filter(Boolean).length,
+                        confirmation: this.form.confirmation,
+                        website: this.honeypot,
+                    }),
+                });
+                const data = await res.json();
+                if (!res.ok || !data.ok) {
+                    this.error = data.message || Object.values(data.errors || {})[0]?.[0] || 'Please check the form.';
+                    return;
+                }
+                this.whatsapp = data.whatsapp;
+                this.step = 6;
+            } catch (e) {
+                this.error = this.lang === 'rw' ? 'Habaye ikibazo. Ongera ugerageze.' : 'Something went wrong. Please try again.';
+            } finally {
+                this.submitting = false;
+            }
+        },
+    };
+}
+</script>
+<div class="relative min-h-screen bg-white pt-28 pb-16 sm:pt-32"
+     x-data="activeChorister()"
+     x-init="startClock()">
+    <div class="relative mx-auto max-w-2xl px-4 sm:px-5">
+        <div class="mb-8 text-center">
+            <p class="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-emerald-700">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-600"></span>
+                <span x-text="lang === 'rw' ? 'Itsinda rishya' : 'New group'"></span>
+            </p>
+            <h1 class="mt-4 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+                Active Choristers
+            </h1>
+            <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600 sm:text-base" x-text="lang === 'rw'
+                ? 'Soma amabwiriza yose, hanyuma wemeze amazina yawe mbere yo kwinjira mu itsinda rya WhatsApp.'
+                : 'Read every term, confirm who you are, then the WhatsApp group will open.'"></p>
+        </div>
+
+        <div class="mb-4 flex items-center rounded-full border border-slate-200 bg-slate-50 p-1">
+            <button type="button" @click="lang = 'rw'"
+                class="flex-1 rounded-full px-3 py-2.5 text-sm font-semibold transition"
+                :class="lang === 'rw' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'">
+                Ikinyarwanda
+            </button>
+            <button type="button" @click="lang = 'en'"
+                class="flex-1 rounded-full px-3 py-2.5 text-sm font-semibold transition"
+                :class="lang === 'en' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'">
+                English
+            </button>
+        </div>
+
+        <div class="mb-5">
+            <div class="mb-2 flex items-center justify-between text-xs font-medium text-slate-500">
+                <span x-text="progressLabel()"></span>
+                <span x-text="Math.round(progress()) + '%'"></span>
+            </div>
+            <div class="h-1.5 overflow-hidden rounded-full bg-slate-100">
+                <div class="h-full rounded-full bg-emerald-600 transition-all duration-500" :style="`width: ${progress()}%`"></div>
+            </div>
+        </div>
+
+        <template x-if="step < 5">
+            <article class="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_24px_60px_-28px_rgba(15,23,42,0.28)]">
+                <div class="border-b border-slate-100 bg-gradient-to-br from-emerald-50 via-white to-slate-50 px-5 py-5 sm:px-7">
+                    <p class="text-[11px] font-semibold uppercase tracking-wider text-emerald-700" x-text="sectionKicker()"></p>
+                    <h2 class="mt-1 text-2xl font-semibold tracking-tight text-slate-900" x-text="sectionTitle()"></h2>
+                </div>
+
+                <div class="relative">
+                    <div x-ref="reader"
+                         @scroll="onScroll()"
+                         class="max-h-[58vh] space-y-5 overflow-y-auto px-5 py-5 text-[15px] leading-7 text-slate-700 sm:max-h-[52vh] sm:px-7">
+                        <template x-if="step === 0">
+                            <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
+                                <p x-show="lang === 'rw'" x-cloak>Nemeye ko nk’umuririmbyi wa God’s Family Choir (GF Active Chorister) nzajya nitabira uko bikwiriye ibikorwa byose bya chorale nk’uko bisobanurwa hasi; ndetse ngira uruhare mu bikorwa byose by’iterambere rya Chorale.</p>
+                                <p x-show="lang === 'en'" x-cloak>I agree that as a chorister of God’s Family Choir (GF Active Chorister), I will faithfully attend every choir activity as explained below, and take part in all work that builds up the choir.</p>
+                            </div>
+                        </template>
+
+                        <template x-if="step === 1">
+                            <div class="space-y-5">
+                                <p x-show="lang === 'rw'" x-cloak>Nemeye ko nzitabira imyitozo ihoraho gatatu mu cyumweru ya God’s Family Choir, ndetse n’iyiyongera bitewe n’impamvu runaka. Iyo myitozo ni iyi ikurikira:</p>
+                                <p x-show="lang === 'en'" x-cloak>I agree to attend the three regular weekly rehearsals of God’s Family Choir, and any extra rehearsals added when needed. Those rehearsals are:</p>
+
+                                <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                                    <template x-for="(item, index) in rehearsals" :key="index">
+                                        <div class="flex items-center gap-4 px-4 py-4"
+                                             :class="index < rehearsals.length - 1 ? 'border-b border-slate-100' : ''">
+                                            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-700 text-[11px] font-semibold uppercase tracking-wide text-white" x-text="item.short[lang]"></span>
+                                            <div class="min-w-0 flex-1">
+                                                <p class="font-semibold text-slate-900" x-text="item.day[lang]"></p>
+                                                <p class="text-xs text-slate-500" x-text="item.sub[lang]"></p>
+                                            </div>
+                                            <span class="shrink-0 rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700" x-text="item.time"></span>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="space-y-3">
+                                    <p class="text-[11px] font-semibold uppercase tracking-wider text-emerald-700" x-text="lang === 'rw' ? 'Icyitonderwa' : 'Please note'"></p>
+                                    <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+                                        <p class="text-sm font-semibold text-slate-900" x-text="lang === 'rw' ? 'Umukoro' : 'Homework'"></p>
+                                        <p class="mt-1 text-sm leading-6 text-slate-600" x-text="lang === 'rw'
+                                            ? 'Nemeye ko, mu gihe abatoza batanze umukoro utegura imyitozo, nzitabira imyitozo nakoreye neza umukoro watanzwe, kugira ngo imyitozo igende neza.'
+                                            : 'I agree that when trainers give homework to prepare for rehearsal, I will attend after doing that work well, so rehearsal can move forward.'"></p>
+                                    </div>
+                                    <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+                                        <p class="text-sm font-semibold text-slate-900" x-text="lang === 'rw' ? 'Gusiba no gukererwa' : 'Absence and lateness'"></p>
+                                        <p class="mt-1 text-sm leading-6 text-slate-600" x-text="lang === 'rw'
+                                            ? 'Nemeye ko ntazasiba cyangwa ngo nkererwe, kandi niba bibayeho nzabimenyesha ubuyobozi mbere y’igihe.'
+                                            : 'I agree not to be absent or late. If either happens, I will tell leadership in advance.'"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <template x-if="step === 2">
+                            <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
+                                <p x-show="lang === 'rw'" x-cloak>Nemeye ko nzitabira amateraniro yose Chorale ifitemo gahunda yo kuririmba, kandi nzaririmba, mu gihe nta kimbuza kuririmba kizwi n’ubuyobozi bwa Chorale.</p>
+                                <p x-show="lang === 'en'" x-cloak>I agree to attend every gathering where the choir is scheduled to sing, and to sing, unless leadership already knows a reason that prevents me.</p>
+                            </div>
+                        </template>
+
+                        <template x-if="step === 3">
+                            <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
+                                <p x-show="lang === 'rw'" x-cloak>Nemeye ko nzitabira ibikorwa byose by’ivugabutumwa, byaba byateguwe na chorale ubwayo cyangwa n’itorero. Impamvu yose yatuma ntitabira ibi bikorwa nzayimenyesha ubuyobozi mbere y’igihe.</p>
+                                <p x-show="lang === 'en'" x-cloak>I agree to attend every evangelism activity, whether it is prepared by the choir or by the church. Any reason I cannot attend, I will report to leadership in advance.</p>
+                            </div>
+                        </template>
+
+                        <template x-if="step === 4">
+                            <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
+                                <p x-show="lang === 'rw'" x-cloak>Nemeye kuba umwizera ushimwa n’itorero, nubahiriza amahame yose itorero ry’Abadiventisti b’Umunsi wa Karindwi rigenderaho.</p>
+                                <p x-show="lang === 'en'" x-cloak>I agree to be a believer in good standing with the church, keeping the principles of the Seventh-day Adventist Church.</p>
+                            </div>
+                        </template>
+
+                        <p class="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600" x-show="!canContinue()"
+                           x-text="waitHint()"></p>
+                    </div>
+                    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-white to-transparent"></div>
+                </div>
+
+                <div class="flex items-center gap-3 border-t border-slate-100 px-5 py-4 sm:px-7">
+                    <button type="button" @click="goBack()" x-show="step > 0"
+                        class="rounded-full px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50">
+                        <span x-text="lang === 'rw' ? 'Inyuma' : 'Back'"></span>
+                    </button>
+                    <button type="button" @click="continueSection()" :disabled="!canContinue()"
+                        class="ml-auto inline-flex min-h-[48px] flex-1 items-center justify-center rounded-full bg-emerald-700 px-5 py-3 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:bg-slate-300 sm:flex-none">
+                        <span x-text="continueLabel()"></span>
+                    </button>
+                </div>
+            </article>
+        </template>
+
+        <template x-if="step === 5">
+            <article class="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_24px_60px_-28px_rgba(15,23,42,0.28)]">
+                <header class="relative border-b border-slate-100 bg-gradient-to-br from-emerald-50 via-white to-slate-50 px-5 py-6 sm:px-7">
+                    <div class="flex items-start gap-4">
+                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-700 text-white">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                        <div class="min-w-0">
+                            <p class="text-[11px] font-semibold uppercase tracking-wider text-emerald-700" x-text="lang === 'rw' ? 'Intambwe ya 6' : 'Final step'"></p>
+                            <h2 class="mt-1 text-2xl font-semibold tracking-tight text-slate-900" x-text="lang === 'rw' ? 'Emeza umwiririmbyi' : 'Confirm who you are'"></h2>
+                            <p class="mt-1.5 text-sm leading-6 text-slate-600" x-text="lang === 'rw'
+                                ? 'Niba uri mu bitabo, hitamo izina ryawe. Niba utariho, andika amazina n’itelefoni.'
+                                : 'If you are registered, pick your name. If not, type your name and phone.'"></p>
+                        </div>
+                    </div>
+                </header>
+
+                <form @submit.prevent="submitForm()" class="space-y-5 p-5 sm:p-7">
+                    <input type="text" name="website" x-model="honeypot" class="hidden" tabindex="-1" autocomplete="off">
+
+                    <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-4 sm:p-5">
+                        <div class="relative" @click.outside="matchOpen = false">
+                            <label class="block">
+                                <span class="mb-2 block text-sm font-medium text-slate-700" x-text="lang === 'rw' ? 'Amazina' : 'Full name'"></span>
+                                <div class="relative">
+                                    <input type="text" x-model="form.name" required autocomplete="off"
+                                        @input="onNameInput()"
+                                        @focus="loadDirectory(); matchOpen = matches.length > 0"
+                                        @keydown.arrow-down.prevent="moveMatch(1)"
+                                        @keydown.arrow-up.prevent="moveMatch(-1)"
+                                        @keydown.enter.prevent="matches[matchIndex] ? pickMember(matches[matchIndex]) : null"
+                                        @keydown.escape.prevent="matchOpen = false"
+                                        :placeholder="lang === 'rw' ? 'Andika izina...' : 'Start typing your name...'"
+                                        class="min-h-[52px] w-full rounded-2xl border border-slate-200 bg-white py-3 pl-12 pr-10 text-sm shadow-sm outline-none ring-emerald-600/20 focus:border-emerald-600 focus:ring-4">
+                                    <svg class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 100-15 7.5 7.5 0 000 15z" />
+                                    </svg>
+                                    <span x-show="looking" class="absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin rounded-full border-2 border-slate-200 border-t-emerald-600"></span>
+                                </div>
+                            </label>
+                            <div x-show="matchOpen" x-cloak
+                                 class="absolute z-20 mt-2 max-h-72 w-full overflow-y-auto rounded-2xl border border-slate-200 bg-white py-1 shadow-xl">
+                                <template x-for="(member, index) in matches" :key="member.token">
+                                    <button type="button" @mousedown.prevent="pickMember(member)"
+                                        class="flex w-full items-start gap-3 px-4 py-3 text-left transition"
+                                        :class="index === matchIndex ? 'bg-emerald-50' : 'hover:bg-slate-50'">
+                                        <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-xs font-semibold text-slate-600 ring-1 ring-slate-200"
+                                              x-text="(member.name || '?').slice(0, 1)"></span>
+                                        <span class="min-w-0">
+                                            <span class="block text-sm font-semibold text-slate-900" x-html="highlightName(member.name)"></span>
+                                            <span class="mt-0.5 block text-xs text-slate-500" x-text="[member.phone_hint, member.voice].filter(Boolean).join(' · ')"></span>
+                                        </span>
+                                    </button>
+                                </template>
+                                <button type="button" @mousedown.prevent="continueAsGuest()"
+                                    class="w-full border-t border-slate-100 px-4 py-3 text-left text-sm font-medium text-slate-600 hover:bg-slate-50">
+                                    <span x-text="lang === 'rw' ? 'Ntabwo ndi kuri uru rutonde. Komeza n’itelefoni.' : 'I am not on this list. Continue with my phone.'"></span>
+                                </button>
+                            </div>
+                            <p class="mt-2 text-sm" :class="lookupOk ? 'text-emerald-700' : 'text-slate-500'" x-text="lookupMessage"></p>
+                        </div>
+                    </div>
+
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <label class="block">
+                            <span class="mb-1.5 block text-sm font-medium text-slate-700" x-text="lang === 'rw' ? 'Telefoni' : 'Phone'"></span>
+                            <input type="tel" x-model="form.phone" required x-ref="phone"
+                                class="min-h-[48px] w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none ring-emerald-600/20 focus:border-emerald-600 focus:ring-4">
+                        </label>
+                        <label class="block">
+                            <span class="mb-1.5 block text-sm font-medium text-slate-700">Email</span>
+                            <input type="email" x-model="form.email"
+                                class="min-h-[48px] w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none ring-emerald-600/20 focus:border-emerald-600 focus:ring-4">
+                        </label>
+                    </div>
+
+                    <div x-show="matchedMember" x-cloak class="flex items-start gap-3 rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+                        <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-emerald-700">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </span>
+                        <div>
+                            <p class="font-semibold" x-text="lang === 'rw' ? 'Twaguhishe mu bitabo' : 'We found you'"></p>
+                            <p class="mt-0.5 text-emerald-800/80" x-text="matchedMember"></p>
+                        </div>
+                    </div>
+
+                    <div x-show="guestMode && !matchedMember" x-cloak class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+                        <p class="font-semibold" x-text="lang === 'rw' ? 'Ntabwo uri mu bitabo byacu' : 'You are not in our register'"></p>
+                        <p class="mt-1 leading-6" x-text="lang === 'rw'
+                            ? 'Nta kibazo. Andika amazina n’itelefoni, wemere NDABYEMEYE. Tuzabika ko wemeye, n’ubwo utari mu bitabo.'
+                            : 'That is fine. Enter your name and phone, then type I COMMIT. We will still record your agreement.'"></p>
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-200 bg-white p-4">
+                        <label class="block">
+                            <span class="mb-1.5 block text-sm font-medium text-slate-700"
+                                  x-text="lang === 'rw' ? 'Andika NDABYEMEYE wemeze' : 'Type I COMMIT to confirm'"></span>
+                            <input type="text" x-model="form.confirmation" required autocomplete="off"
+                                :placeholder="lang === 'rw' ? 'NDABYEMEYE' : 'I COMMIT'"
+                                class="min-h-[48px] w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm uppercase tracking-wide outline-none ring-emerald-600/20 focus:border-emerald-600 focus:bg-white focus:ring-4">
+                        </label>
+                    </div>
+
+                    <p class="text-sm text-rose-600" x-show="error" x-text="error"></p>
+
+                    <button type="submit" :disabled="submitting || !canSubmit()"
+                        class="inline-flex min-h-[52px] w-full items-center justify-center rounded-full bg-emerald-700 text-sm font-semibold text-white shadow-sm disabled:cursor-not-allowed disabled:bg-slate-300 disabled:shadow-none">
+                        <span x-text="submitting
+                            ? (lang === 'rw' ? 'Birimo...' : 'Saving...')
+                            : (lang === 'rw' ? 'Emeza kandi injira' : 'Commit and continue')"></span>
+                    </button>
+                </form>
+            </article>
+        </template>
+
+        <template x-if="step === 6">
+            <article class="rounded-3xl border border-emerald-100 bg-white p-6 text-center shadow-sm">
+                <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
+                    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <h2 class="mt-4 text-2xl font-semibold text-slate-900" x-text="lang === 'rw' ? 'Urabyemeye' : 'You are committed'"></h2>
+                <p class="mt-2 text-sm leading-6 text-slate-600" x-text="lang === 'rw'
+                    ? 'Ubu dusangira nawe umurongo w’itsinda rya WhatsApp ry’Active Choristers.'
+                    : 'We now share the Active Choristers WhatsApp link with you.'"></p>
+                <p class="mt-4 break-all rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-left font-mono text-xs text-slate-700" x-text="whatsapp"></p>
+                <div class="mt-3 grid gap-2 sm:grid-cols-2">
+                    <button type="button"
+                        @click="navigator.clipboard.writeText(whatsapp)"
+                        class="inline-flex min-h-[48px] items-center justify-center rounded-full border border-slate-200 px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                        x-text="lang === 'rw' ? 'Koporora umurongo' : 'Copy link'"></button>
+                    <a :href="whatsapp" target="_blank" rel="noopener"
+                       class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 text-sm font-semibold text-white">
+                        <span x-text="lang === 'rw' ? 'Fungura WhatsApp' : 'Open WhatsApp'"></span>
+                    </a>
+                </div>
+            </article>
+        </template>
+    </div>
+</div>
+
+<x-static.footer />
+@endsection

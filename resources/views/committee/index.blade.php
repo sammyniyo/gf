@@ -11,14 +11,14 @@
 
     <section class="relative z-10 px-6 pt-32 pb-20 sm:px-8 lg:px-12">
         <div class="mx-auto max-w-6xl text-center">
-            <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 px-5 py-2 text-xs font-bold uppercase tracking-wide text-white shadow-lg">
+            <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-700">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
                 </svg>
                 Leadership Team
             </span>
-            <h1 class="mt-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
-                The Hearts Behind  <span class="bg-gradient-to-r from-emerald-600 to-amber-500 bg-clip-text text-transparent">God's Family</span>
+            <h1 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                The Hearts Behind <span class="text-emerald-700">God's Family</span>
             </h1>
             <p class="mx-auto mt-6 max-w-3xl text-lg text-gray-600 leading-relaxed">
                 Meet the passionate leaders and dedicated committee members who guide our ministry, nurture talent, and create unity through worship

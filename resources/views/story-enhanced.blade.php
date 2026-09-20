@@ -66,8 +66,8 @@
             <span class="inline-block px-4 py-2 bg-amber-500/20 backdrop-blur-sm text-amber-300 rounded-full text-sm font-semibold mb-6 border border-amber-400/30">
                 OUR JOURNEY
             </span>
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
-                The Story of <span class="text-amber-400">God's Family Choir</span>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">
+                The Story of <span class="text-amber-300">God's Family Choir</span>
             </h1>
             <p class="text-xl md:text-2xl text-emerald-100 mb-8 max-w-3xl mx-auto leading-relaxed">
                 A journey of faith, harmony, and transformation spanning over two decades of worship ministry
@@ -300,16 +300,16 @@
                 <div class="flex flex-col lg:flex-row gap-12 items-start">
                     <!-- Timeline Marker -->
                     <div class="flex-shrink-0">
-                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                        <div class="w-16 h-16 bg-emerald-700 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
                             3
                         </div>
-                        <div class="w-1 h-20 bg-gradient-to-b from-blue-500 to-transparent mx-auto mt-4"></div>
+                        <div class="w-1 h-20 bg-gradient-to-b from-emerald-600 to-transparent mx-auto mt-4"></div>
                     </div>
 
                     <!-- Content -->
                     <div class="flex-1">
                         <div class="mb-8">
-                            <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-sm font-semibold rounded-full mb-4">
+                            <span class="inline-block px-3 py-1 bg-emerald-50 text-emerald-800 text-sm font-semibold rounded-full mb-4">
                                 2015-2020
                             </span>
                             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
@@ -319,7 +319,7 @@
 
                         <!-- Video/Media Placeholder -->
                         <div class="relative mb-8 group">
-                            <div class="w-full h-64 md:h-80 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-xl">
+                            <div class="w-full h-64 md:h-80 bg-emerald-800 rounded-2xl flex items-center justify-center shadow-xl">
                                 <div class="text-center text-white">
                                     <i class="fas fa-play-circle text-6xl mb-4 opacity-80"></i>
                                     <p class="text-lg">Watch: Our Journey Documentary</p>
@@ -350,7 +350,7 @@
                                     </div>
                                 </div>
                                 <div class="flex gap-4 p-4 bg-gray-50 rounded-xl">
-                                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">2019</div>
+                                    <div class="w-12 h-12 bg-emerald-700 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">2019</div>
                                     <div>
                                         <h4 class="font-bold text-gray-900 mb-1">Recording Studio Established</h4>
                                         <p class="text-gray-600">Began producing original worship music</p>
@@ -371,7 +371,7 @@
                 <div class="flex flex-col lg:flex-row gap-12 items-start">
                     <!-- Timeline Marker -->
                     <div class="flex-shrink-0">
-                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                        <div class="w-16 h-16 bg-emerald-700 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
                             4
                         </div>
                     </div>
@@ -379,7 +379,7 @@
                     <!-- Content -->
                     <div class="flex-1">
                         <div class="mb-8">
-                            <span class="inline-block px-3 py-1 bg-purple-100 text-purple-800 text-sm font-semibold rounded-full mb-4">
+                            <span class="inline-block px-3 py-1 bg-emerald-50 text-emerald-800 text-sm font-semibold rounded-full mb-4">
                                 2020-Present
                             </span>
                             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
@@ -403,11 +403,11 @@
                                 <div class="text-3xl font-bold text-amber-600 mb-2">25+</div>
                                 <div class="text-gray-600 font-medium">Countries Reached</div>
                             </div>
-                            <div class="text-center p-6 bg-blue-50 rounded-2xl">
-                                <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <div class="text-center p-6 bg-emerald-50 rounded-2xl">
+                                <div class="w-16 h-16 bg-emerald-700 rounded-full flex items-center justify-center mx-auto mb-4">
                                     <i class="fas fa-heart text-white text-xl"></i>
                                 </div>
-                                <div class="text-3xl font-bold text-blue-600 mb-2">500+</div>
+                                <div class="text-3xl font-bold text-emerald-700 mb-2">500+</div>
                                 <div class="text-gray-600 font-medium">Lives Touched</div>
                             </div>
                         </div>
@@ -418,7 +418,7 @@
                             </p>
 
                             <!-- Future Vision Box -->
-                            <div class="bg-gradient-to-r from-purple-600 to-emerald-600 rounded-2xl p-8 text-white mb-8">
+                            <div class="bg-emerald-800 rounded-2xl p-8 text-white mb-8">
                                 <h3 class="text-2xl font-bold mb-4">
                                     <i class="fas fa-telescope mr-3"></i>
                                     Our Vision for the Future

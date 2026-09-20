@@ -21,6 +21,7 @@ use App\Http\Controllers\CommitteeController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StorageController;
+use App\Http\Controllers\ActiveChoristerController;
 
 
 
@@ -177,6 +178,17 @@ Route::post('/download/id-card', [RegistrationController::class, 'downloadIdCard
 
 // Member Portal - View profile, card, and edit
 Route::get('/member-portal', [RegistrationController::class, 'showMemberPortal'])->name('member.portal');
+
+Route::get('/active-choristers', [ActiveChoristerController::class, 'show'])->name('active-choristers');
+Route::get('/active-choristers/directory', [ActiveChoristerController::class, 'directory'])
+    ->middleware('throttle:20,1')
+    ->name('active-choristers.directory');
+Route::post('/active-choristers/select', [ActiveChoristerController::class, 'select'])
+    ->middleware('throttle:30,1')
+    ->name('active-choristers.select');
+Route::post('/active-choristers', [ActiveChoristerController::class, 'store'])
+    ->middleware('throttle:8,1')
+    ->name('active-choristers.store');
 Route::post('/member-portal', [RegistrationController::class, 'accessMemberPortal'])->name('member.portal.access');
 Route::get('/member-portal/{member}', [RegistrationController::class, 'viewMemberPortal'])->name('member.portal.view');
 Route::get('/member-portal/{member}/edit', [RegistrationController::class, 'editMemberPortal'])->name('member.portal.edit');
@@ -338,6 +350,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Members Management
     Route::get('members/export/csv', [App\Http\Controllers\Admin\MemberController::class, 'export'])->name('members.export');
     Route::resource('members', App\Http\Controllers\Admin\MemberController::class);
+    Route::get('active-choristers', [App\Http\Controllers\Admin\ActiveChoristerController::class, 'index'])->name('active-choristers.index');
 
     // Contacts Management
     Route::get('contacts', [App\Http\Controllers\Admin\ContactController::class, 'index'])->name('contacts.index');

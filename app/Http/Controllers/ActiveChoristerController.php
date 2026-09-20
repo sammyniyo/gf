@@ -1,0 +1,272 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\ActiveChoristerCommitment;
+use App\Models\Member;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
+
+class ActiveChoristerController extends Controller
+{
+    public function show(): View
+    {
+        return view('active-choristers.index');
+    }
+
+    public function directory(): JsonResponse
+    {
+        $results = Cache::remember('active_choristers.directory', 600, function () {
+            return Member::query()
+                ->where('member_type', 'member')
+                ->select(['id', 'name', 'first_name', 'last_name', 'phone', 'voice', 'voice_type'])
+                ->orderBy('first_name')
+                ->get()
+                ->map(function (Member $member) {
+                    $name = $member->name ?: trim($member->first_name.' '.$member->last_name);
+
+                    return [
+                        'token' => $this->memberToken($member->id),
+                        'name' => $name,
+                        'phone_hint' => $this->maskPhone($member->phone),
+                        'phone_digits' => preg_replace('/\D+/', '', (string) $member->phone),
+                        'voice' => $member->voice ?: $member->voice_type,
+                    ];
+                })
+                ->values();
+        });
+
+        return response()->json([
+            'results' => $results,
+        ]);
+    }
+
+    public function select(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'token' => 'required|string',
+        ]);
+
+        $memberId = $this->memberIdFromToken($validated['token']);
+        $member = $memberId ? Member::query()->find($memberId) : null;
+
+        if (! $member) {
+            return response()->json([
+                'found' => false,
+                'message' => 'That member could not be selected. Search again.',
+            ], 422);
+        }
+
+        $already = $this->existingCommitment($member, $member->phone);
+
+        $request->session()->put('active_chorister_member_id', $member->id);
+        $request->session()->put('active_chorister_lookup_at', now()->timestamp);
+
+        return response()->json([
+            'found' => true,
+            'already_committed' => (bool) $already,
+            'member' => [
+                'name' => $member->name ?: trim($member->first_name.' '.$member->last_name),
+                'phone' => $member->phone,
+                'email' => $member->email,
+                'voice' => $member->voice ?: $member->voice_type,
+                'member_id' => $member->member_id,
+            ],
+        ]);
+    }
+
+    public function store(Request $request): JsonResponse
+    {
+        if ($request->filled('website')) {
+            return response()->json(['ok' => true, 'already' => false]);
+        }
+
+        $validated = $request->validate([
+            'name' => 'required|string|min:3|max:120',
+            'phone' => 'required|string|min:8|max:30',
+            'email' => 'nullable|email|max:120',
+            'language' => 'required|in:en,rw',
+            'read_seconds' => 'required|integer|min:0|max:7200',
+            'sections_read' => 'required|integer|min:0|max:10',
+            'confirmation' => 'required|string|max:40',
+        ]);
+
+        $phrase = $validated['language'] === 'rw' ? 'NDABYEMEYE' : 'I COMMIT';
+        if (mb_strtoupper(trim($validated['confirmation'])) !== $phrase) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'Type the confirmation phrase exactly to continue.',
+            ], 422);
+        }
+
+        $memberId = $request->session()->get('active_chorister_member_id');
+        $member = $memberId ? Member::query()->find($memberId) : null;
+
+        if ($member && ! $this->phonesMatch($member->phone, $validated['phone'])) {
+            $member = $this->findMemberByPhone($validated['phone']);
+        }
+
+        if (! $member) {
+            $member = $this->findMemberByPhone($validated['phone']);
+        }
+
+        $existing = $this->existingCommitment($member, $validated['phone']);
+
+        if (! $existing) {
+            if ((int) $validated['sections_read'] < 5) {
+                return response()->json([
+                    'ok' => false,
+                    'message' => 'Please read every section before joining the group.',
+                ], 422);
+            }
+
+            if ((int) $validated['read_seconds'] < 35) {
+                return response()->json([
+                    'ok' => false,
+                    'message' => 'Take a moment to finish reading the terms.',
+                ], 422);
+            }
+        }
+
+        $commitment = DB::transaction(function () use ($validated, $member, $existing, $request) {
+            $payload = [
+                'member_id' => $member?->id,
+                'name' => $validated['name'],
+                'phone' => $validated['phone'],
+                'email' => $validated['email'] ?: $member?->email,
+                'voice' => $member?->voice ?: $member?->voice_type,
+                'language' => $validated['language'],
+                'read_seconds' => $existing?->read_seconds ?: $validated['read_seconds'],
+                'sections_read' => $existing?->sections_read ?: $validated['sections_read'],
+                'ip_address' => $request->ip(),
+                'user_agent' => substr((string) $request->userAgent(), 0, 500),
+                'accepted_at' => $existing?->accepted_at ?: now(),
+            ];
+
+            if ($existing) {
+                $existing->fill($payload);
+                $existing->save();
+                $commitment = $existing;
+            } else {
+                $commitment = ActiveChoristerCommitment::query()->create($payload);
+            }
+
+            if ($member && ! $member->is_active_chorister) {
+                $member->is_active_chorister = true;
+                $member->save();
+            }
+
+            return $commitment;
+        });
+
+        $request->session()->forget(['active_chorister_member_id', 'active_chorister_lookup_at']);
+        $request->session()->put('active_chorister_joined', $commitment->id);
+
+        return response()->json([
+            'ok' => true,
+            'already' => (bool) $existing,
+            'whatsapp' => config('choir.active_choristers_whatsapp'),
+        ]);
+    }
+
+    private function findMemberByPhone(?string $phone): ?Member
+    {
+        $lastNine = $this->lastNine($phone);
+
+        if (! $lastNine) {
+            return null;
+        }
+
+        return Member::query()
+            ->where('member_type', 'member')
+            ->where(function ($builder) use ($lastNine) {
+                $builder->where('phone', 'like', '%'.$lastNine)
+                    ->orWhereRaw(
+                        "REPLACE(REPLACE(REPLACE(REPLACE(phone,' ',''),'+',''),'-',''),'.','') LIKE ?",
+                        ['%'.$lastNine]
+                    );
+            })
+            ->first();
+    }
+
+    private function existingCommitment(?Member $member, ?string $phone): ?ActiveChoristerCommitment
+    {
+        $lastNine = $this->lastNine($phone);
+
+        if (! $member && ! $lastNine) {
+            return null;
+        }
+
+        return ActiveChoristerCommitment::query()
+            ->where(function ($query) use ($member, $lastNine) {
+                if ($member) {
+                    $query->orWhere('member_id', $member->id);
+                }
+
+                if ($lastNine) {
+                    $query->orWhere('phone', 'like', '%'.$lastNine)
+                        ->orWhereRaw(
+                            "REPLACE(REPLACE(REPLACE(REPLACE(phone,' ',''),'+',''),'-',''),'.','') LIKE ?",
+                            ['%'.$lastNine]
+                        );
+                }
+            })
+            ->latest('accepted_at')
+            ->first();
+    }
+
+    private function phonesMatch(?string $left, ?string $right): bool
+    {
+        $a = $this->lastNine($left);
+        $b = $this->lastNine($right);
+
+        return $a && $b && $a === $b;
+    }
+
+    private function lastNine(?string $value): ?string
+    {
+        $digits = preg_replace('/\D+/', '', (string) $value);
+
+        if (strlen($digits) < 8) {
+            return null;
+        }
+
+        return substr($digits, -9);
+    }
+
+    private function maskPhone(?string $phone): ?string
+    {
+        $digits = preg_replace('/\D+/', '', (string) $phone);
+
+        if (strlen($digits) < 7) {
+            return null;
+        }
+
+        return substr($digits, 0, 3).' ••• '.substr($digits, -3);
+    }
+
+    private function memberToken(int $id): string
+    {
+        return $id.'.'.hash_hmac('sha256', (string) $id, (string) config('app.key'));
+    }
+
+    private function memberIdFromToken(string $token): ?int
+    {
+        $parts = explode('.', $token, 2);
+
+        if (count($parts) !== 2 || ! ctype_digit($parts[0])) {
+            return null;
+        }
+
+        $expected = hash_hmac('sha256', $parts[0], (string) config('app.key'));
+
+        if (! hash_equals($expected, $parts[1])) {
+            return null;
+        }
+
+        return (int) $parts[0];
+    }
+}

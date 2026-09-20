@@ -202,11 +202,15 @@
             <div class="next-steps">
                 <h3>Next Steps</h3>
                 <ul>
-                    <li><strong>Review Process:</strong> We'll review your application within 3-5 business days</li>
-                    <li><strong>Audition:</strong> If approved, we'll schedule a brief audition to assess your vocal range and musical abilities</li>
-                    <li><strong>Orientation:</strong> New members attend an orientation session to learn about our choir's mission and expectations</li>
-                    <li><strong>First Rehearsal:</strong> Once everything is complete, you'll join us for your first rehearsal!</li>
+                    <li><strong>Main WhatsApp group:</strong> Join now so you receive choir news while we review your application</li>
+                    <li><strong>Review:</strong> Our team will confirm your application within 24–48 hours</li>
+                    <li><strong>Rehearsals:</strong> After confirmation, come to rehearsals at Nyamirambo SDA</li>
+                    <li><strong>Active Choristers:</strong> Only if you want that group, read the terms on the website first. The invite is not in this email.</li>
                 </ul>
+            </div>
+
+            <div style="text-align: center;">
+                <a href="{{ $mainGroupLink }}" class="cta-button">Join the main WhatsApp group</a>
             </div>
 
             <div class="message">

@@ -149,13 +149,8 @@
     <div class="next-steps">
         <h3>📋 Next Steps</h3>
         <ol>
-            <li>Check your email for WhatsApp group invite links</li>
-            <li>Join our two WhatsApp groups:
-                <ul>
-                    <li>Main Group - for all members and supporters</li>
-                    <li>Active Members Group - for registered choir members</li>
-                </ul>
-            </li>
+            <li>We share the main God's Family WhatsApp group link with you</li>
+            <li>If you want the Active Choristers group, read and accept the terms on the website first</li>
             <li>Wait for confirmation from our team (within 48 hours)</li>
             <li>Attend rehearsals every Monday and Thursday, 5:30-8:00 PM</li>
             <li>Location: ASA UR Nyarugenge SDA Church</li>

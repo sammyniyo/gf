@@ -17,9 +17,6 @@
     <!-- Hero Section -->
     <div class="fade-in-section"><x-landing.hero /></div>
 
-    <!-- Audio Player Section -->
-    <div class="fade-in-section mt-0"><x-landing.audio-player /></div>
-
     <!-- Interactive Photo Gallery -->
     <div class="fade-in-section mt-0"><x-landing.interactive-gallery :galleries="$galleryImages ?? collect([])" /></div>
 
@@ -34,9 +31,5 @@
     <!-- Testimonials -->
     <div class="fade-in-section mt-0"><x-landing.testimonials-redesigned /></div>
 
-    <!-- Final CTA -->
-    <div class="fade-in-section mt-0"><x-landing.final-cta /></div>
-
-    <!-- Footer -->
     <x-static.footer />
 @endsection

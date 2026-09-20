@@ -90,24 +90,28 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(to bottom, #3b82f6, #1d4ed8);
+            background: linear-gradient(to bottom, #059669, #0f766e);
             border-radius: 6px;
             border: 2px solid #f1f5f9;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(to bottom, #2563eb, #1e40af);
+            background: linear-gradient(to bottom, #047857, #0f766e);
         }
 
         /* Firefox */
         html {
             scrollbar-width: thin;
-            scrollbar-color: #3b82f6 #f1f5f9;
+            scrollbar-color: #059669 #f1f5f9;
         }
 
         /* Smooth scrolling */
         html {
             scroll-behavior: smooth;
+        }
+
+        [x-cloak] {
+            display: none !important;
         }
     </style>
 
@@ -116,8 +120,8 @@
     @stack('structured-data')
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+<body class="bg-white font-sans antialiased text-slate-900">
+    <div class="min-h-screen bg-white">
         <x-static.navbar />
 
         <!-- Page Heading -->
@@ -141,7 +145,6 @@
     <!-- Cookie Consent Banner -->
     <x-cookie-consent />
 </body>
-<script src="//unpkg.com/alpinejs" defer></script>
 @stack('scripts')
 
 </html>

@@ -22,7 +22,7 @@
                 REGISTRATION
             </span>
         </div>
-        <h1 class="text-4xl md:text-6xl font-black text-white mb-4 leading-tight">
+        <h1 class="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
             Register for<br>
             <span class="bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">{{ $event->title }}</span>
         </h1>

@@ -1,58 +1,63 @@
-@php($title = 'Remind My Registration Code')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title }}</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <style>
-        body { font-family: Figtree, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background: #f9fafb; color: #111827; }
-        .container { max-width: 540px; margin: 40px auto; padding: 0 16px; }
-        .card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; }
-        h1 { font-size: 22px; margin: 0 0 12px; }
-        p { color: #6b7280; margin-top: 0; }
-        label { display: block; font-weight: 600; margin-bottom: 6px; }
-        input[type="email"] { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 16px; }
-        .error { color: #b91c1c; font-size: 14px; margin-top: 6px; }
-        .success { color: #065f46; background: #ecfdf5; border: 1px solid #d1fae5; padding: 10px 12px; border-radius: 8px; margin-bottom: 12px; }
-        .danger { color: #991b1b; background: #fef2f2; border: 1px solid #fee2e2; padding: 10px 12px; border-radius: 8px; margin-bottom: 12px; }
-        button { background: #16a34a; color: #fff; border: 0; border-radius: 8px; padding: 10px 14px; font-weight: 600; cursor: pointer; }
-        .muted { color: #6b7280; font-size: 14px; }
-        .space { height: 12px; }
-        a { color: #16a34a; text-decoration: none; }
-    </style>
-    </head>
-<body>
-    <div class="container">
-        <div class="card">
-            <h1>{{ $title }}</h1>
-            <p>Enter the email you used during registration. We'll email your code.</p>
+@extends('layouts.app')
 
-            @if (session('success'))
-                <div class="success">{{ session('success') }}</div>
-            @endif
-            @if (session('error'))
-                <div class="danger">{{ session('error') }}</div>
-            @endif
+@section('title', 'Remind my registration code | God\'s Family Choir')
+@section('meta_description', 'Get your God\'s Family Choir member or friend registration code by email.')
 
-            <form method="POST" action="{{ route('registration.remind-code.send') }}">
-                @csrf
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="{{ old('email') }}" required>
-                @error('email')
-                    <div class="error">{{ $message }}</div>
-                @enderror
-                <div class="space"></div>
-                <button type="submit">Email me my code</button>
-            </form>
-
-            <div class="space"></div>
-            <p class="muted">Remembered your code? You can go back to <a href="{{ route('registration.member') }}">Member</a> or <a href="{{ route('registration.friendship') }}">Friendship</a> registration.</p>
+@section('content')
+<div class="relative min-h-screen bg-white pt-28 pb-16 sm:pt-32">
+    <div class="relative mx-auto max-w-lg px-4 sm:px-5">
+        <div class="mb-8 text-center">
+            <p class="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-emerald-700">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-600"></span>
+                Already registered
+            </p>
+            <h1 class="mt-4 text-3xl font-semibold tracking-tight text-slate-900">Remind my code</h1>
+            <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">
+                Enter the email you used to register. We will send your member or friend ID.
+            </p>
         </div>
+
+        <article class="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_24px_60px_-28px_rgba(15,23,42,0.28)]">
+            <form method="POST" action="{{ route('registration.remind-code.send') }}" class="space-y-5 p-5 sm:p-7">
+                @csrf
+
+                @if (session('success'))
+                    <div class="rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="rounded-2xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                <label class="block">
+                    <span class="mb-1.5 block text-sm font-medium text-slate-700">Email</span>
+                    <input type="email" id="email" name="email" value="{{ old('email') }}" required
+                        class="min-h-[48px] w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm outline-none ring-emerald-600/20 focus:border-emerald-600 focus:ring-4">
+                    @error('email')
+                        <p class="mt-1 text-sm text-rose-600">{{ $message }}</p>
+                    @enderror
+                </label>
+
+                <button type="submit"
+                    class="inline-flex min-h-[52px] w-full items-center justify-center rounded-full bg-emerald-700 text-sm font-semibold text-white">
+                    Email me my code
+                </button>
+            </form>
+        </article>
+
+        <p class="mt-6 text-center text-sm text-slate-500">
+            Back to
+            <a href="{{ route('registration.member') }}" class="font-semibold text-emerald-700 underline">member</a>
+            or
+            <a href="{{ route('registration.friendship') }}" class="font-semibold text-amber-700 underline">friend</a>
+            registration.
+        </p>
     </div>
-</body>
-</html>
+</div>
 
-
+<x-static.footer />
+@endsection

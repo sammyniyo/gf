@@ -44,6 +44,8 @@ class MemberRegistrationMail extends Mailable
             with: [
                 'member' => $this->member,
                 'fullName' => $this->member->full_name,
+                'mainGroupLink' => config('choir.main_whatsapp'),
+                'activeChoristersPage' => route('active-choristers'),
             ]
         );
     }

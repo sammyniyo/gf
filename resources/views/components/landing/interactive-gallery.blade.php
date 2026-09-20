@@ -1,15 +1,15 @@
 <!-- Interactive Photo Gallery -->
-<section class="relative bg-white py-24 overflow-hidden">
+<section class="relative bg-white py-16 sm:py-20 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6">
         <!-- Section Header -->
         <div class="text-center mb-16">
-            <span class="inline-block px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-semibold mb-4">
-                GALLERY
+            <span class="inline-block px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-semibold uppercase tracking-wide mb-3">
+                Gallery
             </span>
-            <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6">
-                Moments of <span class="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Worship & Fellowship</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-3">
+                Moments of <span class="text-emerald-700">Worship & Fellowship</span>
             </h2>
-            <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+            <p class="text-slate-600 text-base max-w-2xl mx-auto">
                 Capturing the beautiful moments of worship, praise, and community that define our choir family
             </p>
         </div>
@@ -43,7 +43,7 @@
                         <!-- Overlay -->
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                             <div class="absolute bottom-0 left-0 right-0 p-6">
-                                <span class="inline-block px-3 py-1.5 bg-purple-600/90 backdrop-blur-sm text-white rounded-full text-xs font-semibold mb-3 shadow-lg">
+                                <span class="inline-block px-3 py-1.5 bg-emerald-700/90 backdrop-blur-sm text-white rounded-full text-xs font-semibold mb-3 shadow-lg">
                                     {{ $catLabel }}
                                 </span>
                                 @if($gallery->title)
@@ -91,7 +91,7 @@
                         <!-- Overlay -->
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                             <div class="absolute bottom-0 left-0 right-0 p-6">
-                                <span class="inline-block px-3 py-1.5 bg-purple-600/90 backdrop-blur-sm text-white rounded-full text-xs font-semibold mb-3 shadow-lg">
+                                <span class="inline-block px-3 py-1.5 bg-emerald-700/90 backdrop-blur-sm text-white rounded-full text-xs font-semibold mb-3 shadow-lg">
                                     {{ $photo['category'] }}
                                 </span>
                                 <h3 class="text-white font-bold text-xl mb-3 line-clamp-2">{{ $photo['title'] }}</h3>

@@ -221,31 +221,14 @@
                 Congratulations! Your registration has been successfully received. We are absolutely delighted to welcome you to God's Family Choir family. This is the beginning of an amazing journey of worship, fellowship, and spiritual growth through music.
             </p>
 
-            <!-- WhatsApp Group Section -->
             <div class="whatsapp-section">
-                <h2 style="color: #059669; margin: 0 0 10px 0; font-size: 22px;">Join Our WhatsApp Groups</h2>
-                <p style="color: #6b7280; font-size: 14px; margin-bottom: 20px;">Stay connected with the choir family through our two WhatsApp communities:</p>
-
-                <!-- Main Group -->
-                <div style="margin-bottom: 20px;">
-                    <h3 style="color: #374151; font-size: 16px; margin: 0 0 5px 0;">📱 Main Group</h3>
-                    <p style="color: #6b7280; font-size: 13px; margin: 0 0 10px 0;">For all God's Family members, friends, and supporters</p>
-                    <a href="{{ $mainGroupLink }}" class="whatsapp-button" style="display: inline-block; margin-bottom: 8px;">Join Main Group</a>
-                    <p class="link-instruction" style="margin: 8px 0 0 0;">Or use this link:</p>
-                    <a href="{{ $mainGroupLink }}" class="whatsapp-link">{{ $mainGroupLink }}</a>
-                </div>
-
-                <!-- Divider -->
-                <div style="height: 1px; background: linear-gradient(to right, transparent, #10b981, transparent); margin: 25px 0;"></div>
-
-                <!-- Active Members Group -->
-                <div>
-                    <h3 style="color: #374151; font-size: 16px; margin: 0 0 5px 0;">🎤 Active Members Group</h3>
-                    <p style="color: #6b7280; font-size: 13px; margin: 0 0 10px 0;">For registered choir members who attend rehearsals</p>
-                    <a href="{{ $activeChoristersLink }}" class="whatsapp-button" style="display: inline-block; margin-bottom: 8px;">Join Active Members</a>
-                    <p class="link-instruction" style="margin: 8px 0 0 0;">Or use this link:</p>
-                    <a href="{{ $activeChoristersLink }}" class="whatsapp-link">{{ $activeChoristersLink }}</a>
-                </div>
+                <h2 style="color: #059669; margin: 0 0 10px 0; font-size: 22px;">Join the main WhatsApp group</h2>
+                <p style="color: #6b7280; font-size: 14px; margin-bottom: 20px;">Every registered member and friend starts here. This is the God's Family group for news, events, and fellowship.</p>
+                <a href="{{ $mainGroupLink }}" class="whatsapp-button" style="display: inline-block; margin-bottom: 8px;">Join the main group</a>
+                <p class="link-instruction" style="margin: 8px 0 0 0;">Or use this link:</p>
+                <a href="{{ $mainGroupLink }}" class="whatsapp-link">{{ $mainGroupLink }}</a>
+                <p style="color: #6b7280; font-size: 13px; margin: 20px 0 0 0;">If you want the Active Choristers group, first read and accept the terms here:</p>
+                <p style="margin: 8px 0 0 0;"><a href="{{ $activeChoristersPage }}" class="whatsapp-link">{{ $activeChoristersPage }}</a></p>
             </div>
 
             <!-- Member Profile Card -->

@@ -16,6 +16,12 @@ return [
     'default' => env('FILESYSTEM_DISK', 'local'),
 
     /*
+    | Uploaded media already live on production (album covers, etc.).
+    | Used when the file is not present on the local public disk.
+    */
+    'media_url' => env('MEDIA_URL'),
+
+    /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
     |--------------------------------------------------------------------------

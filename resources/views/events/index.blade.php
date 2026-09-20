@@ -17,11 +17,11 @@
     <!-- Two-Tone Background -->
     <div class="absolute inset-0">
         <!-- Left Side - Light -->
-        <div class="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50"></div>
+        <div class="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-br from-emerald-50 to-white"></div>
         <!-- Right Side - Image -->
         <div class="absolute inset-y-0 right-0 w-1/2">
             <img src="{{ asset('images/gf.jpg') }}" alt="Events" class="w-full h-full object-cover" />
-            <div class="absolute inset-0 bg-gradient-to-l from-white/50 via-blue-100/30 to-blue-50"></div>
+            <div class="absolute inset-0 bg-gradient-to-l from-white/50 via-emerald-100/30 to-emerald-50"></div>
         </div>
 
         <!-- Diagonal Overlay -->
@@ -35,19 +35,19 @@
                 <!-- Left Content -->
                 <div class="text-gray-900 space-y-6">
                     <!-- Compact Badge -->
-                    <div class="inline-flex items-center gap-2 bg-blue-100 backdrop-blur-sm border border-blue-300 rounded-lg px-4 py-2">
-                        <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                        <span class="text-blue-700 text-xs font-bold uppercase tracking-wider">Events & Concerts</span>
+                    <div class="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-100 rounded-full px-3 py-1">
+                        <div class="w-1.5 h-1.5 bg-emerald-600 rounded-full"></div>
+                        <span class="text-emerald-700 text-xs font-semibold uppercase tracking-wide">Events & Concerts</span>
                     </div>
 
                     <!-- Bold Title -->
                     <div>
-                        <h1 class="text-5xl md:text-6xl lg:text-7xl font-black leading-tight mb-4">
-                            <span class="block text-gray-900">Worship</span>
-                            <span class="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Events</span>
+                        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
+                            <span class="block text-slate-900">Worship</span>
+                            <span class="block text-emerald-700">Events</span>
                         </h1>
                         <div class="flex items-center gap-3">
-                            <div class="h-1 w-16 bg-gradient-to-r from-blue-500 to-transparent rounded-full"></div>
+                            <div class="h-px w-12 bg-emerald-400 rounded-full"></div>
                             <p class="text-base text-gray-600">
                                 Discover upcoming worship gatherings
                             </p>
@@ -57,17 +57,17 @@
                     <!-- Compact Stats Row -->
                     <div class="flex items-center gap-6 pt-4">
                         <div class="flex items-baseline gap-2">
-                            <span class="text-4xl font-black text-blue-600">{{ $events->total() }}</span>
+                            <span class="text-3xl font-bold text-emerald-700">{{ $events->total() }}</span>
                             <span class="text-sm text-gray-600 font-medium">Events</span>
                         </div>
                         <div class="w-px h-10 bg-gray-300"></div>
                         <div class="flex items-baseline gap-2">
-                            <span class="text-4xl font-black text-purple-600">{{ $events->where('start_at', '>=', now())->count() }}</span>
+                            <span class="text-3xl font-bold text-emerald-700">{{ $events->where('start_at', '>=', now())->count() }}</span>
                             <span class="text-sm text-gray-600 font-medium">Upcoming</span>
                         </div>
                         <div class="w-px h-10 bg-gray-300"></div>
                         <div class="flex items-baseline gap-2">
-                            <span class="text-4xl font-black text-blue-600">{{ $events->sum('capacity') ?? '∞' }}</span>
+                            <span class="text-3xl font-bold text-emerald-700">{{ $events->sum('capacity') ?? '∞' }}</span>
                             <span class="text-sm text-gray-600 font-medium">Seats</span>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                     <!-- CTA Button -->
                     <div class="pt-2">
                         <button onclick="document.querySelector('#filters').scrollIntoView({behavior: 'smooth'})"
-                                class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-xl hover:shadow-2xl hover:shadow-blue-500/50 hover:-translate-y-1 transition-all">
+                                class="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-700 text-white text-sm font-semibold rounded-full hover:bg-emerald-600 transition">
                             <span>Browse All Events</span>
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
@@ -93,8 +93,8 @@
                         <!-- Card -->
                         <div class="relative bg-white rounded-2xl shadow-2xl p-8 border border-gray-100">
                             <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-2xl font-black text-gray-900">Next Event</h3>
-                                <div class="px-4 py-2 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white text-xs font-bold rounded-lg">
+                                <h3 class="text-xl font-bold text-gray-900">Next Event</h3>
+                                <div class="px-3 py-1 bg-emerald-700 text-white text-xs font-semibold rounded-full">
                                     UPCOMING
                                 </div>
                             </div>
@@ -139,7 +139,7 @@
                                     @endif
 
                                     <a href="{{ route('events.show', $nextEvent) }}"
-                                       class="block text-center w-full px-6 py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-all">
+                                       class="block text-center w-full px-5 py-2.5 bg-emerald-700 text-white text-sm font-semibold rounded-full hover:bg-emerald-600 transition">
                                         View Details
                                     </a>
                                 </div>
@@ -164,22 +164,29 @@
 </section>
 
 <!-- Modern Filters Section -->
-<section id="filters" class="sticky top-0 z-30 bg-white/95 backdrop-blur-2xl border-b border-gray-200 shadow-lg">
-    <div class="max-w-7xl mx-auto px-6 py-6">
+<section id="filters" class="sticky top-16 z-30 bg-white/95 backdrop-blur-xl border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-6 py-4">
         <form method="GET" action="{{ route('events.index') }}" class="space-y-4" id="filterForm">
-            <!-- Main Filter Bar -->
             <div class="flex flex-wrap items-center gap-3">
-                <!-- Status Pills -->
-                @php $current = request('status', 'upcoming'); @endphp
+                @php
+                    $current = request('status', 'upcoming');
+                    $statusFilters = [
+                        'upcoming' => ['label' => 'Upcoming', 'icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'],
+                        'past' => ['label' => 'Past', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'],
+                        'all' => ['label' => 'All', 'icon' => 'M4 6h16M4 10h16M4 14h16M4 18h16'],
+                    ];
+                @endphp
                 <div class="flex gap-2">
-                    @foreach(['upcoming' => ['label' => 'Upcoming', 'icon' => '🎯'], 'past' => ['label' => 'Past', 'icon' => '📅'], 'all' => ['label' => 'All', 'icon' => '📊']] as $key => $data)
-                        <label class="relative cursor-pointer group">
+                    @foreach($statusFilters as $key => $data)
+                        <label class="relative cursor-pointer">
                             <input type="radio" name="status" value="{{ $key }}" class="peer sr-only" {{ $current === $key ? 'checked' : '' }} onchange="this.form.submit()">
-                            <div class="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300
+                            <div class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition
                                 {{ $current === $key
-                                    ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/30 scale-105'
-                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:scale-105' }}">
-                                <span>{{ $data['icon'] }}</span>
+                                    ? 'bg-emerald-700 text-white'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $data['icon'] }}"></path>
+                                </svg>
                                 <span>{{ $data['label'] }}</span>
                             </div>
                         </label>
@@ -191,7 +198,7 @@
                 <!-- Enhanced Search -->
                 <div class="relative flex-1 min-w-[280px]">
                     <input type="text" name="q" value="{{ request('q') }}" placeholder="Search events by name, type, location..."
-                        class="w-full pl-11 pr-4 py-2.5 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-sm transition-all">
+                        class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 text-sm transition-all">
                     <svg class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
@@ -217,7 +224,7 @@
                 </button>
 
                 @if(request()->has(['q', 'type', 'from', 'to', 'open_only']) && request()->filled(['q', 'type', 'from', 'to']) || request()->boolean('open_only'))
-                    <a href="{{ route('events.index') }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-red-600 text-sm font-bold hover:bg-red-50 transition-all">
+                    <a href="{{ route('events.index') }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-slate-600 text-sm font-semibold hover:bg-slate-100 transition">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
@@ -254,7 +261,7 @@
                 </div>
 
                 <div class="flex justify-end">
-                    <button type="submit" class="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 text-white text-sm font-bold shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:scale-105 transition-all">
+                    <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold transition">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
@@ -285,7 +292,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </a>
-                    @endforeach>
+                    @endforeach
                 </div>
             @endif
         </form>
@@ -315,9 +322,9 @@ function toggleAdvanced() {
                         </svg>
                     </div>
                 </div>
-                <h3 class="text-4xl font-black text-gray-900 mb-4">No Events Found</h3>
-                <p class="text-xl text-gray-600 mb-10 max-w-md mx-auto">Try adjusting your filters or check back later for exciting upcoming events</p>
-                <a href="{{ route('events.index') }}" class="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold text-lg rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:scale-105 transition-all">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">No Events Found</h3>
+                <p class="text-gray-600 mb-8 max-w-md mx-auto">Try adjusting your filters or check back later for upcoming events</p>
+                <a href="{{ route('events.index') }}" class="inline-flex items-center gap-2 px-6 py-2.5 bg-emerald-700 hover:bg-emerald-600 text-white font-semibold rounded-full transition">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                     </svg>
@@ -334,49 +341,40 @@ function toggleAdvanced() {
                         $seatsLeft = $event->capacity ? max($event->capacity - $event->registrations_count, 0) : null;
                     @endphp
 
-                    <article class="group relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3">
+                    <article class="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition border border-gray-100">
                         <!-- Enhanced Event Image -->
                         <div class="relative h-64 overflow-hidden">
                             @if($event->cover_image)
                                 <img src="{{ Storage::url($event->cover_image) }}" alt="{{ $event->title }}" class="w-full h-full object-cover transform group-hover:scale-110 group-hover:rotate-2 transition-all duration-700" />
                             @else
-                                <div class="w-full h-full bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500"></div>
+                                <div class="w-full h-full bg-emerald-700"></div>
                             @endif
 
                             <!-- Gradient Overlay - Light for better image visibility -->
                             <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-40 group-hover:opacity-20 transition-opacity"></div>
 
-                            <!-- Enhanced Status Badge -->
                             <div class="absolute top-4 right-4 z-10">
-                                <div class="relative">
-                                    <div class="absolute inset-0 bg-white/30 rounded-full blur-md"></div>
-                                    <span class="relative flex items-center gap-2 px-4 py-2 rounded-full text-xs font-black backdrop-blur-xl border-2
-                                        {{ $isPast ? 'bg-gray-700/90 border-gray-500/50 text-white' :
-                                           ($isFull ? 'bg-red-600/90 border-red-400/50 text-white' :
-                                           'bg-emerald-600/90 border-emerald-400/50 text-white') }}">
-                                        <span class="text-base">{{ $isPast ? '📅' : ($isFull ? '🔒' : '✅') }}</span>
-                                        <span>{{ $isPast ? 'Past Event' : ($isFull ? 'Full' : 'Open') }}</span>
-                                    </span>
-                                </div>
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold
+                                    {{ $isPast ? 'bg-slate-800/90 text-white' :
+                                       ($isFull ? 'bg-slate-700/90 text-white' :
+                                       'bg-emerald-700/90 text-white') }}">
+                                    <span class="w-1.5 h-1.5 rounded-full {{ $isOpen ? 'bg-white' : 'bg-white/70' }}"></span>
+                                    <span>{{ $isPast ? 'Past' : ($isFull ? 'Full' : 'Open') }}</span>
+                                </span>
                             </div>
 
-                            <!-- Enhanced Event Type -->
                             <div class="absolute top-4 left-4 z-10">
-                                <div class="relative">
-                                    <div class="absolute inset-0 bg-amber-500/50 rounded-2xl blur-lg"></div>
-                                    <span class="relative px-4 py-2 bg-white/95 backdrop-blur-sm rounded-2xl text-xs font-black text-gray-900 uppercase tracking-wider shadow-xl">
-                                        {{ $event->type }}
-                                    </span>
-                                </div>
+                                <span class="px-3 py-1.5 bg-white/95 rounded-full text-xs font-semibold text-slate-800 uppercase tracking-wide">
+                                    {{ $event->type }}
+                                </span>
                             </div>
 
-                            <!-- Date Badge at Bottom -->
                             <div class="absolute bottom-4 left-4 right-4 z-10">
-                                <div class="flex items-center gap-3 bg-white/95 backdrop-blur-xl rounded-2xl px-4 py-3 shadow-2xl">
-                                    <div class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl">
+                                <div class="flex items-center gap-3 bg-white/95 backdrop-blur-xl rounded-2xl px-4 py-3 shadow-lg">
+                                    <div class="flex items-center justify-center w-12 h-12 bg-emerald-700 rounded-xl">
                                         <div class="text-center">
-                                            <div class="text-white text-xs font-bold leading-none">{{ $event->start_at->format('M') }}</div>
-                                            <div class="text-white text-lg font-black leading-none mt-0.5">{{ $event->start_at->format('j') }}</div>
+                                            <div class="text-white text-xs font-semibold leading-none">{{ $event->start_at->format('M') }}</div>
+                                            <div class="text-white text-lg font-bold leading-none mt-0.5">{{ $event->start_at->format('j') }}</div>
                                         </div>
                                     </div>
                                     <div class="flex-1">
@@ -401,7 +399,7 @@ function toggleAdvanced() {
                             @endif
 
                             <!-- Title -->
-                            <h3 class="text-2xl font-black text-gray-900 line-clamp-2 group-hover:text-emerald-600 transition-colors leading-tight">
+                            <h3 class="text-xl font-bold text-gray-900 line-clamp-2 group-hover:text-emerald-700 transition-colors leading-tight">
                                 {{ $event->title }}
                             </h3>
 
@@ -417,7 +415,7 @@ function toggleAdvanced() {
                                 <div class="bg-gradient-to-r from-gray-50 to-emerald-50 rounded-2xl p-4 space-y-2">
                                     <div class="flex justify-between items-center text-sm">
                                         <span class="font-bold text-gray-700">Capacity</span>
-                                        <span class="font-black {{ $seatsLeft > 0 ? 'text-emerald-600' : 'text-red-600' }}">
+                                        <span class="font-semibold {{ $seatsLeft > 0 ? 'text-emerald-700' : 'text-slate-600' }}">
                                             {{ $seatsLeft }} / {{ $event->capacity }} seats left
                                         </span>
                                     </div>
@@ -428,30 +426,27 @@ function toggleAdvanced() {
                                     </div>
                                 </div>
                             @else
-                                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-4">
-                                    <p class="text-center text-sm font-bold text-indigo-700">♾️ Unlimited Capacity</p>
+                                <div class="bg-emerald-50 rounded-2xl p-4">
+                                    <p class="text-center text-sm font-semibold text-emerald-700">Unlimited capacity</p>
                                 </div>
                             @endif
 
                             <!-- Enhanced Actions -->
                             <div class="flex gap-3 pt-2">
                                 <a href="{{ route('events.show', $event) }}"
-                                    class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-black text-sm transition-all duration-300
+                                    class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full font-semibold text-sm transition
                                         {{ $isOpen
-                                            ? 'bg-gradient-to-r from-emerald-600 to-emerald-700 text-white shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:-translate-y-1 hover:scale-105'
-                                            : 'bg-gray-200 text-gray-500 cursor-not-allowed' }}">
+                                            ? 'bg-emerald-700 text-white hover:bg-emerald-600'
+                                            : 'bg-gray-100 text-gray-500' }}">
                                     @if($isOpen)
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                                        </svg>
-                                        Register Now
+                                        Register
                                     @else
-                                        <span>{{ $isPast ? '📅 Past Event' : '🔒 Full' }}</span>
+                                        <span>{{ $isPast ? 'Past event' : 'Full' }}</span>
                                     @endif
                                 </a>
 
                                 <a href="{{ route('events.ics', $event) }}"
-                                    class="inline-flex items-center justify-center p-4 rounded-xl border-2 border-gray-200 text-gray-700 hover:border-emerald-600 hover:text-emerald-600 hover:bg-emerald-50 transition-all hover:scale-110"
+                                    class="inline-flex items-center justify-center p-3 rounded-full border border-gray-200 text-gray-700 hover:border-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 transition"
                                     title="Add to calendar">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -474,27 +469,27 @@ function toggleAdvanced() {
 </section>
 
 <!-- CTA Section -->
-<section class="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
-    <div class="absolute inset-0 opacity-40">
-        <div class="absolute top-0 left-0 w-96 h-96 bg-emerald-500 rounded-full blur-3xl animate-blob"></div>
-        <div class="absolute bottom-0 right-0 w-96 h-96 bg-amber-500 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
+<section class="py-20 bg-emerald-900 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+        <div class="absolute top-0 left-0 w-96 h-96 bg-emerald-400 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-amber-300 rounded-full blur-3xl"></div>
     </div>
 
     <div class="relative max-w-4xl mx-auto px-6 text-center">
-        <h2 class="text-4xl md:text-5xl font-black text-white mb-6">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
             Don't See What You're Looking For?
         </h2>
-        <p class="text-xl text-emerald-200 mb-10">
+        <p class="text-lg text-emerald-100 mb-10">
             Stay updated with our latest events and special announcements
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="{{ route('contact.submit') }}" class="inline-flex items-center justify-center gap-3 px-10 py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-black text-lg rounded-xl shadow-2xl shadow-emerald-500/50 hover:scale-105 transition-all">
+            <a href="{{ route('contact') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white text-emerald-800 text-sm font-semibold rounded-full hover:bg-emerald-50 transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                 </svg>
                 Contact Us
             </a>
-            <a href="{{ route('home') }}" class="inline-flex items-center justify-center gap-3 px-10 py-4 bg-white/10 backdrop-blur-xl border-2 border-white/30 text-white font-black text-lg rounded-xl hover:bg-white/20 transition-all">
+            <a href="{{ route('home') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white/10 border border-white/30 text-white text-sm font-semibold rounded-full hover:bg-white/20 transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                 </svg>

@@ -1,285 +1,168 @@
-<header class="bg-gradient-to-r from-emerald-800 to-teal-800 text-white sticky top-0 z-50 shadow-lg backdrop-blur-sm bg-opacity-95 border-b border-emerald-700" x-data="{ mobileMenuOpen: false }">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
-            <!-- Logo -->
-            <a href="/" class="flex items-center space-x-3 group">
-                <img src="{{ asset('adventist-en--white.png') }}" alt="God's Family Choir Logo" class="h-10 w-10 lg:h-12 lg:w-12 object-contain transition-transform duration-300 group-hover:scale-110">
-                <div class="lg:hidden">
-                    <div class="text-base font-bold bg-gradient-to-r from-amber-300 to-amber-100 bg-clip-text text-transparent">
-                        GF Choir
-                    </div>
-                </div>
-                <div class="hidden lg:block">
-                    <div class="text-lg font-bold bg-gradient-to-r from-amber-300 to-amber-100 bg-clip-text text-transparent">
-                        God's Family Choir
-                    </div>
-                    <div class="text-xs text-emerald-200 font-medium">Voices United in Praise</div>
-                </div>
-            </a>
+@php
+    $isHome = request()->is('/');
+    $aboutActive = request()->is('about*') || request()->is('story*') || request()->is('committee*')
+        || request()->is('devotions*') || request()->is('utility-folder*') || request()->is('resources*');
+    $navLink = 'inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 text-sm font-medium text-white/90 transition hover:bg-white/10 hover:text-white';
+    $navActive = 'bg-white/15 text-amber-100 hover:bg-white/20 hover:text-amber-50';
+    $dropPanel = 'absolute top-full z-50 mt-2 w-64 overflow-hidden rounded-xl border border-emerald-100 bg-white py-1.5 text-slate-700 shadow-xl';
+@endphp
 
-            <!-- Desktop Navigation - All Items Visible -->
-            <nav class="hidden md:flex items-center space-x-0.5 lg:space-x-1" x-data="{
-                aboutMenuOpen: false,
-                ministryMenuOpen: false
-            }" @keyup.escape="aboutMenuOpen = false; ministryMenuOpen = false">
-                <!-- Home -->
-                <a href="/" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('/') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
-                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                    <span class="hidden lg:inline">Home</span>
+<header
+    class="pointer-events-none fixed inset-x-0 top-0 z-50"
+    x-data="{
+        mobileMenuOpen: false,
+        scrolled: {{ $isHome ? 'false' : 'true' }},
+        openMenu: null
+    }"
+    x-init="
+        const onScroll = () => { scrolled = {{ $isHome ? 'window.scrollY > 24' : 'true' }}; };
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+    "
+    @keydown.escape.window="openMenu = null; mobileMenuOpen = false">
+    <div class="pointer-events-auto mx-auto mt-3 w-[calc(100%-1.5rem)] max-w-4xl sm:mt-4 sm:w-[calc(100%-2rem)]">
+        <div class="rounded-2xl text-white transition-all duration-300"
+             :class="(scrolled || mobileMenuOpen)
+                ? 'bg-emerald-800/95 shadow-xl shadow-black/20 ring-1 ring-white/10 backdrop-blur-md'
+                : 'bg-white/10 shadow-lg ring-1 ring-white/20 backdrop-blur-md'">
+            <div class="flex h-14 items-center justify-between gap-2 px-3 sm:px-4">
+                <a href="{{ route('home') }}" class="group flex min-w-0 shrink-0 items-center gap-3">
+                    <img src="{{ asset('adventist-en--white.png') }}" alt="God's Family Choir" class="h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-105 sm:h-9 sm:w-9">
+                    <span class="min-w-0">
+                        <span class="block truncate text-base font-semibold tracking-tight text-amber-100">God's Family Choir</span>
+                        <span class="hidden text-[11px] font-medium text-emerald-200/90 sm:block">Voices United in Praise</span>
+                    </span>
                 </a>
 
-                <!-- About - Direct Link -->
-                <a href="{{ url('/about') }}" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('about*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
-                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <nav class="hidden items-center gap-0.5 lg:flex">
+                    <a href="{{ route('home') }}" class="{{ $navLink }} {{ request()->is('/') ? $navActive : '' }}">Home</a>
+
+                    <div class="relative"
+                         @mouseenter="openMenu = 'about'"
+                         @mouseleave="openMenu = openMenu === 'about' ? null : openMenu"
+                         @click.outside="openMenu === 'about' && (openMenu = null)">
+                        <button type="button" @click.stop="openMenu = 'about'" class="{{ $navLink }} {{ $aboutActive ? $navActive : '' }}" :aria-expanded="openMenu === 'about'">
+                            About
+                            <svg class="h-3.5 w-3.5 transition-transform" :class="{ 'rotate-180': openMenu === 'about' }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div x-show="openMenu === 'about'" x-cloak
+                             x-transition:enter="transition ease-out duration-150"
+                             x-transition:enter-start="opacity-0 translate-y-1"
+                             x-transition:enter-end="opacity-100 translate-y-0"
+                             x-transition:leave="transition ease-in duration-100"
+                             x-transition:leave-start="opacity-100"
+                             x-transition:leave-end="opacity-0"
+                             class="{{ $dropPanel }} left-0">
+                            <a href="{{ route('about') }}" class="block px-4 py-2.5 hover:bg-emerald-50 {{ request()->is('about*') ? 'bg-emerald-50' : '' }}">
+                                <span class="block text-sm font-semibold text-slate-900">The choir</span>
+                                <span class="mt-0.5 block text-xs text-slate-500">Who we are and our mission</span>
+                            </a>
+                            <a href="{{ route('story') }}" class="block px-4 py-2.5 hover:bg-emerald-50 {{ request()->is('story*') ? 'bg-emerald-50' : '' }}">
+                                <span class="block text-sm font-semibold text-slate-900">Stories</span>
+                                <span class="mt-0.5 block text-xs text-slate-500">Voices from the family</span>
+                            </a>
+                            <a href="{{ route('committee.index') }}" class="block px-4 py-2.5 hover:bg-emerald-50 {{ request()->is('committee*') ? 'bg-emerald-50' : '' }}">
+                                <span class="block text-sm font-semibold text-slate-900">Leadership</span>
+                                <span class="mt-0.5 block text-xs text-slate-500">Committee and ministry leads</span>
+                            </a>
+                            <div class="my-1 border-t border-slate-100"></div>
+                            <a href="{{ route('devotions.index') }}" class="block px-4 py-2.5 hover:bg-emerald-50 {{ request()->is('devotions*') ? 'bg-emerald-50' : '' }}">
+                                <span class="block text-sm font-semibold text-slate-900">Devotions</span>
+                                <span class="mt-0.5 block text-xs text-slate-500">Reflections for the week</span>
+                            </a>
+                            <a href="{{ route('resources.index') }}" class="block px-4 py-2.5 hover:bg-emerald-50 {{ request()->is('utility-folder*') || request()->is('resources*') ? 'bg-emerald-50' : '' }}">
+                                <span class="block text-sm font-semibold text-slate-900">Resources</span>
+                                <span class="mt-0.5 block text-xs text-slate-500">Scores and study materials</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="{{ route('events.index') }}" class="{{ $navLink }} {{ request()->is('events*') ? $navActive : '' }}">Events</a>
+                    <a href="{{ route('shop.index') }}" class="{{ $navLink }} {{ request()->is('shop*') ? $navActive : '' }}">Music</a>
+                    <a href="{{ route('contact') }}" class="{{ $navLink }} {{ request()->is('contact*') ? $navActive : '' }}">Contact</a>
+                </nav>
+
+                <div class="flex shrink-0 items-center gap-2">
+                    <div class="relative hidden lg:block"
+                         @mouseenter="openMenu = 'join'"
+                         @mouseleave="openMenu = openMenu === 'join' ? null : openMenu"
+                         @click.outside="openMenu === 'join' && (openMenu = null)">
+                        <button type="button" @click.stop="openMenu = 'join'"
+                            class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-amber-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-amber-400"
+                            :aria-expanded="openMenu === 'join'">
+                            Join Us
+                            <svg class="h-3.5 w-3.5 transition-transform" :class="{ 'rotate-180': openMenu === 'join' }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div x-show="openMenu === 'join'" x-cloak
+                             x-transition:enter="transition ease-out duration-150"
+                             x-transition:enter-start="opacity-0 translate-y-1"
+                             x-transition:enter-end="opacity-100 translate-y-0"
+                             x-transition:leave="transition ease-in duration-100"
+                             x-transition:leave-start="opacity-100"
+                             x-transition:leave-end="opacity-0"
+                             class="{{ $dropPanel }} right-0">
+                            <a href="{{ route('registration.member') }}" class="block px-4 py-3 hover:bg-emerald-50">
+                                <span class="block text-sm font-semibold text-slate-900">Join the Choir</span>
+                                <span class="mt-0.5 block text-xs text-slate-500">Register and join the main group</span>
+                            </a>
+                            <a href="{{ route('registration.friendship') }}" class="block px-4 py-3 hover:bg-amber-50">
+                                <span class="block text-sm font-semibold text-slate-900">Become a Friend</span>
+                                <span class="mt-0.5 block text-xs text-slate-500">Support our ministry</span>
+                            </a>
+                            <a href="{{ route('active-choristers') }}" class="block px-4 py-3 hover:bg-emerald-50">
+                                <span class="block text-sm font-semibold text-slate-900">Active Choristers</span>
+                                <span class="mt-0.5 block text-xs text-slate-500">Accept the terms to join that group</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <button type="button"
+                        @click="mobileMenuOpen = !mobileMenuOpen; openMenu = null"
+                        class="inline-flex items-center justify-center rounded-lg p-2 text-white hover:bg-white/10 lg:hidden"
+                        aria-label="Toggle menu">
+                        <svg x-show="!mobileMenuOpen" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
-                        About
-                </a>
-
-                <!-- Stories - Direct Link -->
-                <a href="{{ route('story') }}" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('story*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
-                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                            </svg>
-                    Stories
-                </a>
-
-                <!-- Leadership - Direct Link -->
-                <a href="{{ route('committee.index') }}" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('committee*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
-                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                    <span class="hidden xl:inline">Leadership</span>
-                    <span class="xl:hidden">Leaders</span>
-                </a>
-
-                <!-- Events - Direct Link -->
-                <a href="{{ route('events.index') }}" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('events*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
-                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                            Events
-                        </a>
-
-                <!-- Devotions - Direct Link -->
-                <a href="{{ route('devotions.index') }}" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('devotions*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
-                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                            </svg>
-                            Devotions
-                        </a>
-
-                <!-- Our Music -->
-                <a href="{{ route('shop.index') }}" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('shop*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
-                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                    </svg>
-                    <span class="hidden xl:inline">Our Music</span>
-                    <span class="xl:hidden">Music</span>
-                </a>
-
-                <!-- Resources -->
-                <a href="{{ route('resources.index') }}" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('utility-folder*') || request()->is('resources*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
-                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                    </svg>
-                    Resources
-                </a>
-
-                <!-- Contact -->
-                <a href="/contact" class="px-2 lg:px-3 py-2 rounded-md text-xs lg:text-sm font-medium transition-all duration-200 flex items-center hover:bg-emerald-700/50 hover:text-amber-100 {{ request()->is('contact*') ? 'bg-emerald-700/50 text-amber-100' : '' }}">
-                    <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                    Contact
-                </a>
-            </nav>
-
-            <!-- CTA Buttons - Join Options -->
-            <div class="hidden md:flex items-center space-x-2" x-data="{ joinMenuOpen: false }">
-                <div class="relative">
-                    <button @click="joinMenuOpen = !joinMenuOpen" @click.away="joinMenuOpen = false"
-                    class="px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-amber-500 to-amber-600 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                    </svg>
-                        Join Us
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        <svg x-show="mobileMenuOpen" x-cloak class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
-
-                    <!-- Dropdown Menu -->
-                    <div x-show="joinMenuOpen"
-                         x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 scale-95"
-                         x-transition:enter-end="opacity-100 scale-100"
-                         x-transition:leave="transition ease-in duration-150"
-                         x-transition:leave-start="opacity-100 scale-100"
-                         x-transition:leave-end="opacity-0 scale-95"
-                         class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
-                         x-cloak>
-                        <a href="{{ route('registration.member') }}"
-                           class="flex items-start px-4 py-3 hover:bg-emerald-50 transition-colors group">
-                            <svg class="w-5 h-5 text-emerald-600 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                            </svg>
-                            <div>
-                                <div class="font-semibold text-gray-900 group-hover:text-emerald-600">Join the Choir</div>
-                                <div class="text-xs text-gray-500">Become an active chorister</div>
-                            </div>
-                        </a>
-                        <a href="{{ route('registration.friendship') }}"
-                           class="flex items-start px-4 py-3 hover:bg-amber-50 transition-colors group">
-                            <svg class="w-5 h-5 text-amber-600 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                            </svg>
-                            <div>
-                                <div class="font-semibold text-gray-900 group-hover:text-amber-600">Become a Friend</div>
-                                <div class="text-xs text-gray-500">Support our ministry</div>
-                            </div>
-                        </a>
-                    </div>
                 </div>
             </div>
 
-            <!-- Mobile Menu Button -->
-            <div class="md:hidden flex items-center">
-                <button @click="mobileMenuOpen = !mobileMenuOpen"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition duration-150 ease-in-out">
-                    <svg x-show="!mobileMenuOpen" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                    <svg x-show="mobileMenuOpen" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" x-cloak>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
+            <div x-show="mobileMenuOpen" x-cloak
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 -translate-y-1"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="border-t border-white/10 lg:hidden">
+                <div class="max-h-[70vh] space-y-1 overflow-y-auto px-3 py-3">
+                    <a href="{{ route('home') }}" @click="mobileMenuOpen = false" class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->is('/') ? 'bg-white/15 text-amber-100' : 'text-white hover:bg-white/10' }}">Home</a>
 
-    <!-- Mobile Menu Dropdown -->
-    <div x-show="mobileMenuOpen"
-         x-transition:enter="transition ease-out duration-200 transform"
-         x-transition:enter-start="opacity-0 -translate-y-2"
-         x-transition:enter-end="opacity-100 translate-y-0"
-         x-transition:leave="transition ease-in duration-150 transform"
-         x-transition:leave-start="opacity-100 translate-y-0"
-         x-transition:leave-end="opacity-0 -translate-y-2"
-         @click.away="mobileMenuOpen = false"
-         class="md:hidden bg-emerald-800 shadow-xl border-t border-emerald-700"
-         x-cloak>
-        <div class="px-2 pt-2 pb-3 space-y-1">
-            <!-- Home -->
-            <a href="/" @click="mobileMenuOpen = false"
-                class="flex items-center px-3 py-3 rounded-md text-base font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('/') ? 'bg-emerald-700 text-amber-100' : '' }}">
-                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-                Home
-            </a>
+                    <p class="px-3 pt-3 text-[11px] font-semibold uppercase tracking-wider text-emerald-200">About</p>
+                    <a href="{{ route('about') }}" @click="mobileMenuOpen = false" class="block rounded-lg px-3 py-2 text-sm {{ request()->is('about*') ? 'bg-white/15 text-amber-100' : 'text-white hover:bg-white/10' }}">The choir</a>
+                    <a href="{{ route('story') }}" @click="mobileMenuOpen = false" class="block rounded-lg px-3 py-2 text-sm {{ request()->is('story*') ? 'bg-white/15 text-amber-100' : 'text-white hover:bg-white/10' }}">Stories</a>
+                    <a href="{{ route('committee.index') }}" @click="mobileMenuOpen = false" class="block rounded-lg px-3 py-2 text-sm {{ request()->is('committee*') ? 'bg-white/15 text-amber-100' : 'text-white hover:bg-white/10' }}">Leadership</a>
+                    <a href="{{ route('devotions.index') }}" @click="mobileMenuOpen = false" class="block rounded-lg px-3 py-2 text-sm {{ request()->is('devotions*') ? 'bg-white/15 text-amber-100' : 'text-white hover:bg-white/10' }}">Devotions</a>
+                    <a href="{{ route('resources.index') }}" @click="mobileMenuOpen = false" class="block rounded-lg px-3 py-2 text-sm {{ request()->is('utility-folder*') || request()->is('resources*') ? 'bg-white/15 text-amber-100' : 'text-white hover:bg-white/10' }}">Resources</a>
 
-            <!-- About Section -->
-            <div class="px-3 py-2">
-                <div class="text-xs font-semibold text-emerald-200 uppercase tracking-wider">About Us</div>
-            </div>
-            <a href="{{ url('/about') }}" @click="mobileMenuOpen = false"
-                class="flex items-center px-6 py-2 rounded-md text-sm font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('about*') ? 'bg-emerald-700 text-amber-100' : '' }}">
-                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                About Overview
-            </a>
-            <a href="{{ route('story') }}" @click="mobileMenuOpen = false"
-                class="flex items-center px-6 py-2 rounded-md text-sm font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('story*') ? 'bg-emerald-700 text-amber-100' : '' }}">
-                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-                Member Stories
-            </a>
-            <a href="{{ route('committee.index') }}" @click="mobileMenuOpen = false"
-                class="flex items-center px-6 py-2 rounded-md text-sm font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('committee*') ? 'bg-emerald-700 text-amber-100' : '' }}">
-                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                Leadership
-            </a>
-
-            <!-- Ministry Section -->
-            <div class="px-3 py-2">
-                <div class="text-xs font-semibold text-emerald-200 uppercase tracking-wider">Ministry</div>
-            </div>
-                        <a href="{{ route('events.index') }}" @click="mobileMenuOpen = false"
-                class="flex items-center px-6 py-2 rounded-md text-sm font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('events*') ? 'bg-emerald-700 text-amber-100' : '' }}">
-                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                Events
-            </a>
-            <a href="{{ route('devotions.index') }}" @click="mobileMenuOpen = false"
-                class="flex items-center px-6 py-2 rounded-md text-sm font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('devotions*') ? 'bg-emerald-700 text-amber-100' : '' }}">
-                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-                Devotions
-            </a>
-
-            <!-- Our Music -->
-            <a href="{{ route('shop.index') }}" @click="mobileMenuOpen = false"
-                class="flex items-center px-3 py-3 rounded-md text-base font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('shop*') ? 'bg-emerald-700 text-amber-100' : '' }}">
-                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                </svg>
-                Our Music
-            </a>
-
-            <!-- Resources -->
-            <a href="{{ route('resources.index') }}" @click="mobileMenuOpen = false"
-                class="flex items-center px-3 py-3 rounded-md text-base font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('utility-folder*') || request()->is('resources*') ? 'bg-emerald-700 text-amber-100' : '' }}">
-                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
-                Resources
-            </a>
-
-
-            <!-- Contact -->
-            <a href="/contact" @click="mobileMenuOpen = false"
-                class="flex items-center px-3 py-3 rounded-md text-base font-medium text-white hover:bg-emerald-700 transition-all duration-200 {{ request()->is('contact*') ? 'bg-emerald-700 text-amber-100' : '' }}">
-                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                Contact
-            </a>
-        </div>
-        <div class="px-2 pt-2 pb-4 border-t border-emerald-700 space-y-2">
-            <div class="text-xs font-semibold text-emerald-200 px-3 py-1">Join God's Family</div>
-            <a href="{{ route('registration.member') }}" @click="mobileMenuOpen = false"
-                class="flex items-center px-4 py-3 rounded-md text-white font-semibold bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 transition-all duration-200 shadow-lg">
-                <svg class="h-5 w-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                </svg>
-                <div>
-                    <div class="text-sm">Join the Choir</div>
-                    <div class="text-xs opacity-90">Become a chorister</div>
+                    <p class="px-3 pt-3 text-[11px] font-semibold uppercase tracking-wider text-emerald-200">Listen</p>
+                    <a href="{{ route('events.index') }}" @click="mobileMenuOpen = false" class="block rounded-lg px-3 py-2 text-sm {{ request()->is('events*') ? 'bg-white/15 text-amber-100' : 'text-white hover:bg-white/10' }}">Events</a>
+                    <a href="{{ route('shop.index') }}" @click="mobileMenuOpen = false" class="block rounded-lg px-3 py-2 text-sm {{ request()->is('shop*') ? 'bg-white/15 text-amber-100' : 'text-white hover:bg-white/10' }}">Music</a>
+                    <a href="{{ route('contact') }}" @click="mobileMenuOpen = false" class="block rounded-lg px-3 py-2.5 text-sm font-medium {{ request()->is('contact*') ? 'bg-white/15 text-amber-100' : 'text-white hover:bg-white/10' }}">Contact</a>
                 </div>
-            </a>
-            <a href="{{ route('registration.friendship') }}" @click="mobileMenuOpen = false"
-                class="flex items-center px-4 py-3 rounded-md text-white font-semibold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-lg">
-                <svg class="h-5 w-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-                <div>
-                    <div class="text-sm">Become a Friend</div>
-                    <div class="text-xs opacity-90">Support our ministry</div>
+                <div class="space-y-2 border-t border-white/10 px-3 py-4">
+                    <a href="{{ route('registration.member') }}" @click="mobileMenuOpen = false" class="block rounded-xl bg-emerald-600 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-emerald-500">Join the Choir</a>
+                    <a href="{{ route('registration.friendship') }}" @click="mobileMenuOpen = false" class="block rounded-xl bg-amber-500 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-amber-400">Become a Friend</a>
+                    <a href="{{ route('active-choristers') }}" @click="mobileMenuOpen = false" class="block rounded-xl border border-white/20 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-white/10">Active Choristers</a>
                 </div>
-            </a>
+            </div>
         </div>
     </div>
 </header>

@@ -10,12 +10,12 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <!-- Section Header -->
         <div class="text-center mb-10 sm:mb-16">
-            <div class="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 rounded-full mb-4">
-                <span class="w-2 h-2 bg-amber-500 rounded-full animate-ping"></span>
-                <span class="text-amber-800 text-sm font-bold uppercase tracking-wide">Next Event</span>
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 rounded-full mb-3">
+                <span class="w-1.5 h-1.5 bg-emerald-600 rounded-full"></span>
+                <span class="text-emerald-700 text-xs font-semibold uppercase tracking-wide">Next Event</span>
             </div>
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-4 sm:mb-6">
-                Don't Miss Our <span class="bg-gradient-to-r from-emerald-600 to-amber-500 bg-clip-text text-transparent">Upcoming Performances</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
+                Don't Miss Our <span class="text-emerald-700">Upcoming Performances</span>
             </h2>
             <p class="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto px-2 sm:px-0">
                 Join us for spirit-filled worship and powerful musical experiences
@@ -39,9 +39,9 @@
 
                         <!-- Floating Badge -->
                         <div class="absolute top-6 left-6">
-                            <div class="px-4 py-2 bg-red-600 rounded-full flex items-center gap-2 shadow-lg animate-pulse">
-                                <span class="w-2 h-2 bg-white rounded-full"></span>
-                                <span class="text-white font-bold text-sm">FEATURED EVENT</span>
+                            <div class="px-3 py-1.5 bg-amber-500 rounded-full flex items-center gap-2 shadow-sm">
+                                <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+                                <span class="text-white font-semibold text-xs">Featured</span>
                             </div>
                         </div>
 
@@ -78,8 +78,8 @@
                                 </div>
 
                                 <div class="flex items-start gap-3">
-                                    <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                        <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                         </svg>
                                     </div>
@@ -91,8 +91,8 @@
 
                                 @if($nextEvent->location)
                                 <div class="flex items-start gap-3">
-                                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                         </svg>
@@ -105,8 +105,8 @@
                                 @endif
 
                                 <div class="flex items-start gap-3">
-                                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                        <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"></path>
                                         </svg>
                                     </div>
@@ -119,39 +119,39 @@
                         </div>
 
                         <!-- Countdown Timer -->
-                        <div class="bg-gradient-to-br from-emerald-50 to-amber-50 rounded-2xl p-4 sm:p-6 mb-6">
-                            <p class="text-center text-gray-700 font-bold mb-4">Event Starts In</p>
+                        <div class="bg-emerald-50 rounded-2xl p-4 sm:p-6 mb-6">
+                            <p class="text-center text-slate-700 font-semibold mb-4">Event Starts In</p>
                             <div id="countdown-{{ $nextEvent->id }}" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                                <div class="bg-white rounded-xl p-4 shadow-lg text-center transform hover:scale-105 transition-transform">
-                                    <div class="text-2xl sm:text-3xl lg:text-4xl font-black text-emerald-600" data-days>00</div>
-                                    <div class="text-xs text-gray-500 font-semibold mt-1">DAYS</div>
+                                <div class="bg-white rounded-xl p-4 text-center">
+                                    <div class="text-2xl sm:text-3xl font-bold text-emerald-700" data-days>00</div>
+                                    <div class="text-xs text-slate-500 font-medium mt-1">DAYS</div>
                                 </div>
-                                <div class="bg-white rounded-xl p-4 shadow-lg text-center transform hover:scale-105 transition-transform">
-                                    <div class="text-2xl sm:text-3xl lg:text-4xl font-black text-amber-600" data-hours>00</div>
-                                    <div class="text-xs text-gray-500 font-semibold mt-1">HOURS</div>
+                                <div class="bg-white rounded-xl p-4 text-center">
+                                    <div class="text-2xl sm:text-3xl font-bold text-emerald-700" data-hours>00</div>
+                                    <div class="text-xs text-slate-500 font-medium mt-1">HOURS</div>
                                 </div>
-                                <div class="bg-white rounded-xl p-4 shadow-lg text-center transform hover:scale-105 transition-transform">
-                                    <div class="text-2xl sm:text-3xl lg:text-4xl font-black text-blue-600" data-minutes>00</div>
-                                    <div class="text-xs text-gray-500 font-semibold mt-1">MINS</div>
+                                <div class="bg-white rounded-xl p-4 text-center">
+                                    <div class="text-2xl sm:text-3xl font-bold text-emerald-700" data-minutes>00</div>
+                                    <div class="text-xs text-slate-500 font-medium mt-1">MINS</div>
                                 </div>
-                                <div class="bg-white rounded-xl p-4 shadow-lg text-center transform hover:scale-105 transition-transform">
-                                    <div class="text-2xl sm:text-3xl lg:text-4xl font-black text-purple-600" data-seconds>00</div>
-                                    <div class="text-xs text-gray-500 font-semibold mt-1">SECS</div>
+                                <div class="bg-white rounded-xl p-4 text-center">
+                                    <div class="text-2xl sm:text-3xl font-bold text-emerald-700" data-seconds>00</div>
+                                    <div class="text-xs text-slate-500 font-medium mt-1">SECS</div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- CTA Buttons -->
                         <div class="flex flex-col sm:flex-row gap-3 md:gap-4">
-                            <a href="{{ route('events.show', $nextEvent) }}" class="flex-1 group/btn relative inline-flex items-center justify-center gap-2 px-5 md:px-6 py-3 md:py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold rounded-xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-emerald-500/50 hover:-translate-y-2 text-sm md:text-base">
-                                <div class="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-600 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500 ease-out"></div>
+                            <a href="{{ route('events.show', $nextEvent) }}" class="flex-1 group/btn relative inline-flex items-center justify-center gap-2 px-5 py-3 bg-emerald-700 text-white font-semibold rounded-full overflow-hidden transition hover:bg-emerald-600 text-sm">
+                                <div class="absolute inset-0 bg-emerald-600 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300"></div>
                                 <svg class="w-4 h-4 md:w-5 md:h-5 relative z-10 group-hover/btn:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"></path>
                                 </svg>
                                 <span class="relative z-10 group-hover/btn:translate-x-1 transition-transform duration-300">Reserve Your Place</span>
                             </a>
 
-                            <button onclick="shareEvent{{ $nextEvent->id }}()" class="group/share inline-flex items-center justify-center gap-2 px-5 md:px-6 py-3 md:py-4 bg-gray-100 text-gray-900 font-bold rounded-xl hover:bg-gray-200 hover:-translate-y-1 transition-all duration-500 text-sm md:text-base">
+                            <button onclick="shareEvent{{ $nextEvent->id }}()" class="group/share inline-flex items-center justify-center gap-2 px-5 py-3 border border-slate-200 text-slate-700 font-semibold rounded-full hover:bg-slate-50 transition text-sm">
                                 <svg class="w-4 h-4 md:w-5 md:h-5 group-hover/share:scale-110 group-hover/share:rotate-12 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
                                 </svg>
@@ -165,7 +165,7 @@
 
         <!-- Other Upcoming Events -->
         <div class="text-center">
-            <a href="{{ route('events.index') }}" class="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-white border-2 border-emerald-600 text-emerald-600 font-bold rounded-xl hover:bg-emerald-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl">
+            <a href="{{ route('events.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 text-sm bg-white border border-emerald-700 text-emerald-700 font-semibold rounded-full hover:bg-emerald-700 hover:text-white transition">
                 <span>View All Events</span>
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', initCountdown{{ $nextEvent->id }})
             <p class="text-gray-600 text-base sm:text-lg mb-6">
                 We're preparing something special. Check back soon for our upcoming worship events.
             </p>
-            <a href="{{ route('events.index') }}" class="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-bold rounded-xl hover:shadow-xl transition-all">
+            <a href="{{ route('events.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 text-sm bg-emerald-700 text-white font-semibold rounded-full hover:bg-emerald-600 transition">
                 <span>View Past Events</span>
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>

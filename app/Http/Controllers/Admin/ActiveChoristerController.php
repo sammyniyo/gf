@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\ActiveChoristerCommitment;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+
+class ActiveChoristerController extends Controller
+{
+    public function index(Request $request): View
+    {
+        $query = ActiveChoristerCommitment::query()->with('member')->latest('accepted_at');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($builder) use ($search) {
+                $builder->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('phone', 'like', '%'.$search.'%')
+                    ->orWhere('email', 'like', '%'.$search.'%')
+                    ->orWhereHas('member', function ($member) use ($search) {
+                        $member->where('member_id', 'like', '%'.$search.'%')
+                            ->orWhere('first_name', 'like', '%'.$search.'%')
+                            ->orWhere('last_name', 'like', '%'.$search.'%');
+                    });
+            });
+        }
+
+        $commitments = $query->paginate(25)->withQueryString();
+
+        return view('admin.active-choristers.index', [
+            'commitments' => $commitments,
+            'total' => ActiveChoristerCommitment::query()->count(),
+            'linked' => ActiveChoristerCommitment::query()->whereNotNull('member_id')->count(),
+        ]);
+    }
+}

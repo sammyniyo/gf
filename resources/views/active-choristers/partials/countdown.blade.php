@@ -4,8 +4,9 @@
 @endphp
 
 @if($endsAt)
-<div x-data="activeChoristerCountdown(@js($endsAt))"
-     x-init="start()"
+<div data-ends-at="{{ $endsAt }}"
+     x-data="activeChoristerCountdown()"
+     x-init="bind($el.dataset.endsAt); start()"
      x-show="remainingMs > 0"
      x-cloak
      class="overflow-hidden rounded-[24px] border p-4 sm:p-5"
@@ -36,15 +37,20 @@
     </div>
 </div>
 
+@once
 <script>
-function activeChoristerCountdown(endsAt) {
+function activeChoristerCountdown() {
     return {
-        endsAt: new Date(endsAt).getTime(),
+        endsAt: 0,
         remainingMs: 0,
         days: 0,
         hours: 0,
         minutes: 0,
         seconds: 0,
+        reloaded: false,
+        bind(value) {
+            this.endsAt = new Date(value).getTime();
+        },
         get urgency() {
             const daysLeft = this.remainingMs / 86400000;
             if (daysLeft <= 1) return 'red';
@@ -81,4 +87,5 @@ function activeChoristerCountdown(endsAt) {
     };
 }
 </script>
+@endonce
 @endif

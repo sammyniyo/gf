@@ -59,7 +59,7 @@ class PageSettingsSeeder extends Seeder
                 'status' => 'active',
                 'custom_message' => null,
                 'icon' => 'users',
-                'is_enabled' => true,
+                'is_enabled' => false,
             ],
         ];
 

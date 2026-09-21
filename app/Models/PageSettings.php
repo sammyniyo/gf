@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class PageSettings extends Model
 {
     use HasFactory;
+
+    public const ACTIVE_CHORISTERS_WINDOW_DAYS = 7;
 
     protected $fillable = [
         'page_identifier',
@@ -16,18 +19,17 @@ class PageSettings extends Model
         'custom_message',
         'icon',
         'is_enabled',
+        'timer_ends_at',
     ];
 
     protected $casts = [
         'is_enabled' => 'boolean',
+        'timer_ends_at' => 'datetime',
     ];
 
-    /**
-     * Get the status color for display
-     */
     public function getStatusColorAttribute(): string
     {
-        return match($this->status) {
+        return match ($this->status) {
             'active' => 'green',
             'coming_soon' => 'blue',
             'maintenance' => 'amber',
@@ -36,12 +38,9 @@ class PageSettings extends Model
         };
     }
 
-    /**
-     * Get the icon for display
-     */
     public function getDisplayIconAttribute(): string
     {
-        return match($this->status) {
+        return match ($this->status) {
             'active' => 'check-circle',
             'coming_soon' => 'rocket',
             'maintenance' => 'wrench',
@@ -50,9 +49,6 @@ class PageSettings extends Model
         };
     }
 
-    /**
-     * Check if page is accessible
-     */
     public function isAccessible(): bool
     {
         return $this->is_enabled && $this->status === 'active';
@@ -67,14 +63,36 @@ class PageSettings extends Model
                 'status' => 'active',
                 'custom_message' => null,
                 'icon' => 'users',
-                'is_enabled' => true,
+                'is_enabled' => false,
+                'timer_ends_at' => null,
             ]
         );
     }
 
     public static function activeChoristersRegistrationOpen(): bool
     {
-        return (bool) static::forActiveChoristers()->is_enabled;
+        return (bool) static::activeChoristersWindow()['open'];
+    }
+
+    public static function activeChoristersWindow(): array
+    {
+        $setting = static::forActiveChoristers();
+        $endsAt = $setting->timer_ends_at;
+
+        if ($setting->is_enabled && $endsAt && $endsAt->isPast()) {
+            $setting->is_enabled = false;
+            $setting->timer_ends_at = null;
+            $setting->save();
+            $setting->refresh();
+            $endsAt = null;
+        }
+
+        $open = (bool) $setting->is_enabled && $endsAt instanceof Carbon && $endsAt->isFuture();
+
+        return [
+            'setting' => $setting,
+            'open' => $open,
+            'ends_at' => $open ? $endsAt : null,
+        ];
     }
 }
-

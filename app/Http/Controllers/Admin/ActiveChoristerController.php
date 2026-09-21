@@ -31,25 +31,40 @@ class ActiveChoristerController extends Controller
 
         $commitments = $query->paginate(25)->withQueryString();
 
+        $window = PageSettings::activeChoristersWindow();
+
         return view('admin.active-choristers.index', [
             'commitments' => $commitments,
             'total' => ActiveChoristerCommitment::query()->count(),
             'linked' => ActiveChoristerCommitment::query()->whereNotNull('member_id')->count(),
-            'registrationOpen' => PageSettings::activeChoristersRegistrationOpen(),
+            'registrationOpen' => $window['open'],
+            'timerEndsAt' => $window['ends_at']?->toIso8601String(),
+            'timerEndsAtLabel' => $window['ends_at']?->timezone(config('app.timezone'))->format('d M Y H:i'),
         ]);
     }
 
-    public function toggleRegistration(): RedirectResponse
+    public function toggleRegistration(Request $request): RedirectResponse
     {
         $setting = PageSettings::forActiveChoristers();
-        $setting->is_enabled = ! $setting->is_enabled;
+        $action = $request->input('action', 'close');
+
+        if ($action === 'start') {
+            $setting->is_enabled = true;
+            $setting->timer_ends_at = now()->addDays(PageSettings::ACTIVE_CHORISTERS_WINDOW_DAYS);
+            $setting->save();
+
+            return redirect()
+                ->route('admin.active-choristers.index')
+                ->with('success', 'The 7-day window is open. The public link disappears on '.$setting->timer_ends_at->timezone(config('app.timezone'))->format('d M Y H:i').'.');
+        }
+
+        $setting->is_enabled = false;
+        $setting->timer_ends_at = null;
         $setting->save();
 
         return redirect()
             ->route('admin.active-choristers.index')
-            ->with('success', $setting->is_enabled
-                ? 'Active Choristers registration is open.'
-                : 'Active Choristers registration is closed.');
+            ->with('success', 'The window is closed. The public Active Choristers link is hidden.');
     }
 
     public function destroy(ActiveChoristerCommitment $commitment): RedirectResponse

@@ -83,7 +83,7 @@
                     </div>
                 @endif
 
-                @if($isChoirMember)
+                @if($isChoirMember && \App\Models\PageSettings::activeChoristersRegistrationOpen())
                     <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 text-sm text-slate-600">
                         <p class="font-semibold text-slate-900">Want the Active Choristers group?</p>
                         <p class="mt-1 leading-6">That group is only for people who read and accept the terms. It is not opened from this page.</p>

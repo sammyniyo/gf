@@ -26,7 +26,9 @@ class MemberWelcomeEmail extends Mailable
 
         // Group invite links - Update these with actual group links
         $this->mainGroupLink = config('choir.main_whatsapp');
-        $this->activeChoristersPage = route('active-choristers');
+        $this->activeChoristersPage = \App\Models\PageSettings::activeChoristersRegistrationOpen()
+            ? route('active-choristers')
+            : null;
     }
 
     /**

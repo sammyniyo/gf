@@ -7,6 +7,7 @@ use App\Models\Member;
 use App\Models\PageSettings;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
@@ -14,9 +15,17 @@ class ActiveChoristerController extends Controller
 {
     public function show()
     {
+        $window = PageSettings::activeChoristersWindow();
+        $isAdmin = Auth::check() && Auth::user()->is_admin;
+
+        if (! $window['open'] && ! $isAdmin) {
+            abort(404);
+        }
+
         return response()
             ->view('active-choristers.index', [
-                'registrationOpen' => PageSettings::activeChoristersRegistrationOpen(),
+                'registrationOpen' => $window['open'],
+                'timerEndsAt' => $window['ends_at']?->toIso8601String(),
             ])
             ->header('Cache-Control', 'private, no-store, no-cache, must-revalidate');
     }

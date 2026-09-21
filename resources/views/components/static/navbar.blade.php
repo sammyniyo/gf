@@ -5,6 +5,7 @@
     $navLink = 'inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 text-sm font-medium text-white/90 transition hover:bg-white/10 hover:text-white';
     $navActive = 'bg-white/15 text-amber-100 hover:bg-white/20 hover:text-amber-50';
     $dropPanel = 'absolute top-full z-50 mt-2 w-64 overflow-hidden rounded-xl border border-emerald-100 bg-white py-1.5 text-slate-700 shadow-xl';
+    $activeChoristersOpen = \App\Models\PageSettings::activeChoristersRegistrationOpen();
 @endphp
 
 <header
@@ -113,10 +114,12 @@
                                 <span class="block text-sm font-semibold text-slate-900">Become a Friend</span>
                                 <span class="mt-0.5 block text-xs text-slate-500">Support our ministry</span>
                             </a>
+                            @if($activeChoristersOpen)
                             <a href="{{ route('active-choristers') }}" class="block px-4 py-3 hover:bg-emerald-50">
                                 <span class="block text-sm font-semibold text-slate-900">Active Choristers</span>
                                 <span class="mt-0.5 block text-xs text-slate-500">Accept the terms to join that group</span>
                             </a>
+                            @endif
                         </div>
                     </div>
 
@@ -160,7 +163,9 @@
                 <div class="space-y-2 border-t border-white/10 px-3 py-4">
                     <a href="{{ route('registration.member') }}" @click="mobileMenuOpen = false" class="block rounded-xl bg-emerald-600 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-emerald-500">Join the Choir</a>
                     <a href="{{ route('registration.friendship') }}" @click="mobileMenuOpen = false" class="block rounded-xl bg-amber-500 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-amber-400">Become a Friend</a>
+                    @if($activeChoristersOpen)
                     <a href="{{ route('active-choristers') }}" @click="mobileMenuOpen = false" class="block rounded-xl border border-white/20 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-white/10">Active Choristers</a>
+                    @endif
                 </div>
             </div>
         </div>

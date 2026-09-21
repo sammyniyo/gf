@@ -227,8 +227,10 @@
                 <a href="{{ $mainGroupLink }}" class="whatsapp-button" style="display: inline-block; margin-bottom: 8px;">Join the main group</a>
                 <p class="link-instruction" style="margin: 8px 0 0 0;">Or use this link:</p>
                 <a href="{{ $mainGroupLink }}" class="whatsapp-link">{{ $mainGroupLink }}</a>
+                @if($activeChoristersPage)
                 <p style="color: #6b7280; font-size: 13px; margin: 20px 0 0 0;">If you want the Active Choristers group, first read and accept the terms here:</p>
                 <p style="margin: 8px 0 0 0;"><a href="{{ $activeChoristersPage }}" class="whatsapp-link">{{ $activeChoristersPage }}</a></p>
+                @endif
             </div>
 
             <!-- Member Profile Card -->

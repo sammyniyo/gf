@@ -9,29 +9,51 @@
             <h1 class="text-xl font-semibold text-slate-900">Active Chorister commitments</h1>
             <p class="mt-1 text-sm text-slate-500">People who read the terms and asked to join the WhatsApp group.</p>
         </div>
-        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <form action="{{ route('admin.active-choristers.registration') }}" method="POST"
-                  onsubmit="return confirm(@json($registrationOpen ? 'Close Active Choristers registration? People will not be able to sign or join the WhatsApp group from the site.' : 'Open Active Choristers registration again?'));">
-                @csrf
+        <div class="flex flex-col gap-3 sm:items-end">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <form action="{{ route('admin.active-choristers.registration') }}" method="POST"
+                      onsubmit="return confirm(@json($registrationOpen ? 'Close now? The public link will disappear immediately.' : 'Start a 7-day window? The public link will appear now and disappear when the timer ends.'));">
+                    @csrf
+                    @if($registrationOpen)
+                        <input type="hidden" name="action" value="close">
+                        <button type="submit" class="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-rose-600 px-4 text-sm font-semibold text-white hover:bg-rose-500">
+                            Close now
+                        </button>
+                    @else
+                        <input type="hidden" name="action" value="start">
+                        <button type="submit" class="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-emerald-600 px-4 text-sm font-semibold text-white hover:bg-emerald-500">
+                            Start 7-day window
+                        </button>
+                    @endif
+                </form>
                 @if($registrationOpen)
-                    <button type="submit" class="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-rose-600 px-4 text-sm font-semibold text-white hover:bg-rose-500">
-                        Close registration
-                    </button>
-                @else
-                    <button type="submit" class="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-emerald-600 px-4 text-sm font-semibold text-white hover:bg-emerald-500">
-                        Open registration
-                    </button>
+                    <form action="{{ route('admin.active-choristers.registration') }}" method="POST"
+                          onsubmit="return confirm('Start a new 7-day window from now?');">
+                        @csrf
+                        <input type="hidden" name="action" value="start">
+                        <button type="submit" class="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                            Restart 7 days
+                        </button>
+                    </form>
                 @endif
-            </form>
-            <a href="{{ route('active-choristers') }}" target="_blank" class="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
-                Open public page
-            </a>
+                <a href="{{ route('active-choristers') }}" target="_blank" class="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+                    Open public page
+                </a>
+            </div>
         </div>
     </div>
 
-    @if(! $registrationOpen)
-        <div class="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-            Registration is closed. The public page still opens, but people cannot sign or join the group.
+    @if($registrationOpen)
+        <div class="glass-card space-y-3 p-5">
+            <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                <p class="text-sm font-semibold text-slate-900">Public window is open</p>
+                <p class="text-xs text-slate-500">Closes {{ $timerEndsAtLabel }}</p>
+            </div>
+            @include('active-choristers.partials.countdown', ['endsAt' => $timerEndsAt])
+        </div>
+    @else
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+            The public Active Choristers link is hidden. Start the 7-day window to show it. When the timer ends, the link disappears again.
         </div>
     @endif
 

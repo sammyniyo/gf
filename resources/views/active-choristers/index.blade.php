@@ -35,6 +35,8 @@ function activeChorister() {
         submitting: false,
         error: '',
         whatsapp: '',
+        timerEndsAt: @json($timerEndsAt ?? null),
+        timer: { days: 0, hours: 0, minutes: 0, seconds: 0, ms: 0 },
         form: { name: '', phone: '', email: '', confirmation: '' },
         rehearsals: [
             { short: { rw: 'Lun', en: 'Mon' }, day: { rw: 'Kuwa kabiri w’isabato', en: 'Monday' }, sub: { rw: 'Lundi', en: 'Evening rehearsal' }, time: '17:30 – 20:00' },
@@ -60,14 +62,41 @@ function activeChorister() {
         startClock() {
             this.resetSection();
             this.loadDirectory();
+            this.tickTimer();
             setInterval(() => {
                 this.readSeconds += 1;
+                this.tickTimer();
                 if (this.step < 5) {
                     const elapsed = Math.floor((Date.now() - this.openedAt) / 1000);
                     this.remaining = Math.max(0, 8 - elapsed);
                     this.$nextTick(() => this.onScroll());
                 }
             }, 1000);
+        },
+        timerUrgency() {
+            const daysLeft = this.timer.ms / 86400000;
+            if (daysLeft <= 1) return 'red';
+            if (daysLeft <= 3) return 'amber';
+            return 'emerald';
+        },
+        padTime(value) {
+            return String(value).padStart(2, '0');
+        },
+        timerReloaded: false,
+        tickTimer() {
+            if (!this.timerEndsAt) return;
+            const ms = Math.max(0, new Date(this.timerEndsAt).getTime() - Date.now());
+            this.timer = {
+                days: Math.floor(ms / 86400000),
+                hours: Math.floor((ms % 86400000) / 3600000),
+                minutes: Math.floor((ms % 3600000) / 60000),
+                seconds: Math.floor((ms % 60000) / 1000),
+                ms,
+            };
+            if (ms === 0 && !this.timerReloaded) {
+                this.timerReloaded = true;
+                window.location.reload();
+            }
         },
         resetSection() {
             this.openedAt = Date.now();
@@ -400,6 +429,53 @@ function activeChorister() {
                 English
             </button>
         </div>
+
+        @if($registrationOpen)
+        <div x-show="timerEndsAt && timer.ms > 0" x-cloak class="mb-5 overflow-hidden rounded-[24px] border p-4 sm:p-5"
+             :class="timerUrgency() === 'red' ? 'border-rose-300 bg-rose-50' : (timerUrgency() === 'amber' ? 'border-amber-300 bg-amber-50' : 'border-emerald-200 bg-emerald-50')">
+            <div class="flex flex-col items-center text-center">
+                <p class="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider"
+                   :class="timerUrgency() === 'red' ? 'text-rose-700' : (timerUrgency() === 'amber' ? 'text-amber-800' : 'text-emerald-700')">
+                    <span class="h-1.5 w-1.5 rounded-full"
+                          :class="timerUrgency() === 'red' ? 'animate-pulse bg-rose-600' : (timerUrgency() === 'amber' ? 'bg-amber-500' : 'bg-emerald-600')"></span>
+                    <span x-show="timerUrgency() === 'red'" x-cloak x-text="lang === 'rw' ? 'Igihe gihuye' : 'Time is running out'"></span>
+                    <span x-show="timerUrgency() !== 'red'" x-text="lang === 'rw' ? 'Iyi nyandiko ifunga mu' : 'This invitation closes in'"></span>
+                </p>
+                <p x-show="timerUrgency() === 'red'" x-cloak class="mt-1 text-sm font-semibold text-rose-800"
+                   x-text="lang === 'rw' ? 'Injira mbere yuko umurongo usiba.' : 'Join before this link disappears.'"></p>
+                <div class="mt-4 grid w-full grid-cols-4 gap-2 sm:gap-3">
+                    <div class="rounded-2xl bg-white px-2 py-3 shadow-sm ring-1"
+                         :class="timerUrgency() === 'red' ? 'ring-rose-200' : (timerUrgency() === 'amber' ? 'ring-amber-200' : 'ring-emerald-100')">
+                        <p class="text-2xl font-semibold tabular-nums tracking-tight sm:text-3xl"
+                           :class="timerUrgency() === 'red' ? 'text-rose-700' : (timerUrgency() === 'amber' ? 'text-amber-800' : 'text-slate-900')"
+                           x-text="padTime(timer.days)"></p>
+                        <p class="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500" x-text="lang === 'rw' ? 'Iminsi' : 'Days'"></p>
+                    </div>
+                    <div class="rounded-2xl bg-white px-2 py-3 shadow-sm ring-1"
+                         :class="timerUrgency() === 'red' ? 'ring-rose-200' : (timerUrgency() === 'amber' ? 'ring-amber-200' : 'ring-emerald-100')">
+                        <p class="text-2xl font-semibold tabular-nums tracking-tight sm:text-3xl"
+                           :class="timerUrgency() === 'red' ? 'text-rose-700' : (timerUrgency() === 'amber' ? 'text-amber-800' : 'text-slate-900')"
+                           x-text="padTime(timer.hours)"></p>
+                        <p class="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500" x-text="lang === 'rw' ? 'Amasaha' : 'Hours'"></p>
+                    </div>
+                    <div class="rounded-2xl bg-white px-2 py-3 shadow-sm ring-1"
+                         :class="timerUrgency() === 'red' ? 'ring-rose-200' : (timerUrgency() === 'amber' ? 'ring-amber-200' : 'ring-emerald-100')">
+                        <p class="text-2xl font-semibold tabular-nums tracking-tight sm:text-3xl"
+                           :class="timerUrgency() === 'red' ? 'text-rose-700' : (timerUrgency() === 'amber' ? 'text-amber-800' : 'text-slate-900')"
+                           x-text="padTime(timer.minutes)"></p>
+                        <p class="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500" x-text="lang === 'rw' ? 'Iminota' : 'Min'"></p>
+                    </div>
+                    <div class="rounded-2xl bg-white px-2 py-3 shadow-sm ring-1"
+                         :class="timerUrgency() === 'red' ? 'ring-rose-200' : (timerUrgency() === 'amber' ? 'ring-amber-200' : 'ring-emerald-100')">
+                        <p class="text-2xl font-semibold tabular-nums tracking-tight sm:text-3xl"
+                           :class="timerUrgency() === 'red' ? 'text-rose-700' : (timerUrgency() === 'amber' ? 'text-amber-800' : 'text-slate-900')"
+                           x-text="padTime(timer.seconds)"></p>
+                        <p class="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500" x-text="lang === 'rw' ? 'Amaseg.' : 'Sec'"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
 
         @if(! $registrationOpen)
             <article class="rounded-[28px] border border-slate-200/80 bg-white p-8 text-center shadow-[0_24px_60px_-28px_rgba(15,23,42,0.28)]">

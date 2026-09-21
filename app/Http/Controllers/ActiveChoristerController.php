@@ -8,13 +8,14 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
 
 class ActiveChoristerController extends Controller
 {
-    public function show(): View
+    public function show()
     {
-        return view('active-choristers.index');
+        return response()
+            ->view('active-choristers.index')
+            ->header('Cache-Control', 'private, no-store, no-cache, must-revalidate');
     }
 
     public function directory(): JsonResponse
@@ -41,7 +42,7 @@ class ActiveChoristerController extends Controller
 
         return response()->json([
             'results' => $results,
-        ]);
+        ])->header('Cache-Control', 'private, no-store');
     }
 
     public function select(Request $request): JsonResponse

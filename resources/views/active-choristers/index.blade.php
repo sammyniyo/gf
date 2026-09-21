@@ -149,23 +149,41 @@ function activeChorister() {
                 && (this.alreadyCommitted || this.read.every(Boolean));
         },
         csrf() {
-            return {
+            const meta = document.querySelector('meta[name="csrf-token"]')?.content || '';
+            const match = document.cookie.match(/(?:^|; )XSRF-TOKEN=([^;]*)/);
+            const xsrf = match ? decodeURIComponent(match[1]) : '';
+            const headers = {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'X-Requested-With': 'XMLHttpRequest',
             };
+            if (xsrf) {
+                headers['X-XSRF-TOKEN'] = xsrf;
+            } else if (meta) {
+                headers['X-CSRF-TOKEN'] = meta;
+            }
+            return headers;
+        },
+        sessionMessage() {
+            return this.lang === 'rw'
+                ? 'Ongera usubire kuri iyi paji, noneho hitamo izina ryawe.'
+                : 'Refresh the page, then pick your name again.';
+        },
+        async fetchDirectory() {
+            const res = await fetch(@json(route('active-choristers.directory', [], false)), {
+                credentials: 'same-origin',
+                headers: { 'Accept': 'application/json' },
+            });
+            const data = await res.json();
+            this.directory = data.results || [];
+            this.directoryLoaded = true;
+            this.filterMembers();
         },
         async loadDirectory() {
             if (this.directoryLoaded || this.looking) return;
             this.looking = true;
             try {
-                const res = await fetch(@json(route('active-choristers.directory')), {
-                    headers: { 'Accept': 'application/json' },
-                });
-                const data = await res.json();
-                this.directory = data.results || [];
-                this.directoryLoaded = true;
-                this.filterMembers();
+                await this.fetchDirectory();
             } catch (e) {
                 this.directory = [];
             } finally {
@@ -245,19 +263,30 @@ function activeChorister() {
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;');
         },
-        async pickMember(member) {
+        async pickMember(member, retried) {
             if (!member || !member.token) return;
             this.looking = true;
             this.matchOpen = false;
             try {
-                const res = await fetch(@json(route('active-choristers.select')), {
+                const res = await fetch(@json(route('active-choristers.select', [], false)), {
                     method: 'POST',
+                    credentials: 'same-origin',
                     headers: this.csrf(),
                     body: JSON.stringify({ token: member.token }),
                 });
-                const data = await res.json();
+                const data = await res.json().catch(() => ({}));
+                if (res.status === 419 && !retried) {
+                    await this.fetchDirectory();
+                    return this.pickMember(member, true);
+                }
+                if (res.status === 419) {
+                    this.lookupMessage = this.sessionMessage();
+                    return;
+                }
                 if (!data.found) {
-                    this.lookupMessage = data.message || (this.lang === 'rw' ? 'Ongera ushake.' : 'Search again.');
+                    this.lookupMessage = data.message && !/csrf/i.test(data.message)
+                        ? data.message
+                        : (this.lang === 'rw' ? 'Ongera ushake.' : 'Search again.');
                     return;
                 }
                 this.selecting = true;
@@ -284,13 +313,10 @@ function activeChorister() {
             this.submitting = true;
             this.error = '';
             try {
-                const res = await fetch(@json(route('active-choristers.store')), {
+                const res = await fetch(@json(route('active-choristers.store', [], false)), {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    },
+                    credentials: 'same-origin',
+                    headers: this.csrf(),
                     body: JSON.stringify({
                         name: this.form.name,
                         phone: this.form.phone,
@@ -302,9 +328,14 @@ function activeChorister() {
                         website: this.honeypot,
                     }),
                 });
-                const data = await res.json();
+                const data = await res.json().catch(() => ({}));
+                if (res.status === 419) {
+                    this.error = this.sessionMessage();
+                    return;
+                }
                 if (!res.ok || !data.ok) {
-                    this.error = data.message || Object.values(data.errors || {})[0]?.[0] || 'Please check the form.';
+                    const raw = data.message || Object.values(data.errors || {})[0]?.[0] || '';
+                    this.error = /csrf/i.test(raw) ? this.sessionMessage() : (raw || 'Please check the form.');
                     return;
                 }
                 this.whatsapp = data.whatsapp;

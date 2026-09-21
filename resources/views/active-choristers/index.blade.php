@@ -390,10 +390,10 @@ function activeChorister() {
             <p class="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-emerald-700">
                 <span class="h-1.5 w-1.5 rounded-full bg-emerald-600"></span>
                 @if($registrationOpen)
-                    <span x-show="lang === 'rw'">Itsinda rishya</span>
-                    <span x-show="lang === 'en'" x-cloak>New group</span>
+                    <span x-show="lang === 'rw'">Group ya WhatsApp nshya</span>
+                    <span x-show="lang === 'en'" x-cloak>New WhatsApp group</span>
                 @else
-                    <span x-show="lang === 'rw'">Kwiyandikisha byafunze</span>
+                    <span x-show="lang === 'rw'">Kwiyandikisha byafunzwe</span>
                     <span x-show="lang === 'en'" x-cloak>Registration closed</span>
                 @endif
             </p>
@@ -402,14 +402,14 @@ function activeChorister() {
             </h1>
             @if($registrationOpen)
                 <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600 sm:text-base" x-show="lang === 'rw'">
-                    Soma amabwiriza yose, hanyuma wemeze amazina yawe mbere yo kwinjira mu itsinda rya WhatsApp.
+                    Soma amabwiriza yose, hanyuma wemeze amazina yawe mbere yo kwinjira muri group ya WhatsApp.
                 </p>
                 <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600 sm:text-base" x-show="lang === 'en'" x-cloak>
                     Read every term, confirm who you are, then the WhatsApp group will open.
                 </p>
             @else
                 <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600 sm:text-base" x-show="lang === 'rw'">
-                    Kwiyandikisha kw’abarinrimbyi bakora umurimo byafunze. Andikira ubuyobozi niba ukeneye ubufasha.
+                    Kwiyandikisha kw’abarinrimbyi bakora umurimo byafunzwe. Andikira ubuyobozi niba ukeneye ubufasha.
                 </p>
                 <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600 sm:text-base" x-show="lang === 'en'" x-cloak>
                     Signing for Active Choristers is closed. Write to the choir office if you need help.
@@ -480,10 +480,10 @@ function activeChorister() {
         @if(! $registrationOpen)
             <article class="rounded-[28px] border border-slate-200/80 bg-white p-8 text-center shadow-[0_24px_60px_-28px_rgba(15,23,42,0.28)]">
                 <p class="text-[11px] font-semibold uppercase tracking-wider text-emerald-700">Active Choristers</p>
-                <h2 class="mt-2 text-2xl font-semibold tracking-tight text-slate-900" x-show="lang === 'rw'">Kwiyandikisha byafunze</h2>
+                <h2 class="mt-2 text-2xl font-semibold tracking-tight text-slate-900" x-show="lang === 'rw'">Kwiyandikisha byafunzwe</h2>
                 <h2 class="mt-2 text-2xl font-semibold tracking-tight text-slate-900" x-show="lang === 'en'" x-cloak>Registration is closed</h2>
                 <p class="mt-2 text-sm leading-6 text-slate-600" x-show="lang === 'rw'">
-                    Niba ushaka kwinjira mu itsinda rya WhatsApp, andikira ubuyobozi bwa korali.
+                    Niba ushaka kwinjira muri group ya WhatsApp, andikira ubuyobozi bwa korali.
                 </p>
                 <p class="mt-2 text-sm leading-6 text-slate-600" x-show="lang === 'en'" x-cloak>
                     If you need the WhatsApp group, write to the choir office.
@@ -518,7 +518,7 @@ function activeChorister() {
                          class="max-h-[58vh] space-y-5 overflow-y-auto px-5 py-5 text-[15px] leading-7 text-slate-700 sm:max-h-[52vh] sm:px-7">
                         <template x-if="step === 0">
                             <div class="space-y-4">
-                                <p class="text-sm leading-6 text-slate-600" x-show="lang === 'rw'" x-cloak>Ikaze mu muryango w’abaririmbyi ba God’s Family Choir. Mbere yo kwinjira mu itsinda, soma amabwiriza akurikira kandi wemere kuyakurikiza.</p>
+                                <p class="text-sm leading-6 text-slate-600" x-show="lang === 'rw'" x-cloak>Ikaze mu muryango w’abaririmbyi ba God’s Family Choir. Mbere yo kwinjira mu muri group, soma amabwiriza akurikira kandi wemere kuyakurikiza.</p>
                                 <p class="text-sm leading-6 text-slate-600" x-show="lang === 'en'" x-cloak>Welcome to the chorister family of God’s Family Choir. Before you join the group, read the terms below and agree to keep them.</p>
                                 <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
                                     <p x-show="lang === 'rw'" x-cloak>Nemeye ko nk’umuririmbyi wa God’s Family Choir (GF Active Chorister) nzajya nitabira uko bikwiriye ibikorwa byose bya chorale nk’uko bisobanurwa hasi; ndetse ngira uruhare mu bikorwa byose by’iterambere rya Chorale.</p>
@@ -744,7 +744,7 @@ function activeChorister() {
                     ? 'Wamaze kwiyemeza gukora umurimo, uwiteka azakubashishe!'
                     : 'You have already committed to do the work. The Lord will strengthen you!'"></p>
                 <p class="mt-2 text-sm leading-6 text-slate-500" x-text="lang === 'rw'
-                    ? 'Ubu dusangira nawe umurongo w’itsinda rya WhatsApp ry’Active Choristers.'
+                    ? 'Ubu tugusangije link ya WhatsApp ry’Active Choristers.'
                     : 'We now share the Active Choristers WhatsApp link with you.'"></p>
                 <p class="mt-4 break-all rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-left font-mono text-xs text-slate-700" x-text="whatsapp"></p>
                 <div class="mt-3 grid gap-2 sm:grid-cols-2">

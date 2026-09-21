@@ -237,6 +237,60 @@
             backdrop-filter: blur(18px);
         }
 
+        .admin-header h2 {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .admin-sidebar {
+            width: 18rem;
+            max-width: 85vw;
+        }
+
+        .admin-header-clock,
+        .admin-header-name,
+        .admin-header-wide {
+            display: none;
+        }
+
+        .admin-header-name {
+            max-width: 9rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 768px) {
+            .admin-header-name,
+            .admin-header-wide {
+                display: block;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .admin-header-clock {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 1023px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .admin-sidebar.translate-x-0 {
+                transform: translateX(0);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .admin-shell {
+                margin-left: 18rem;
+            }
+        }
+
         .admin-header__badge {
             border-radius: 9999px;
             border: 1px solid rgba(99, 102, 241, 0.24);
@@ -852,7 +906,7 @@
         </aside>
 
         <!-- Main Content -->
-        <div class="flex min-w-0 flex-1 flex-col overflow-hidden lg:ml-72">
+        <div class="admin-shell flex min-w-0 flex-1 flex-col overflow-hidden lg:ml-72">
             <header class="sticky top-0 z-30 admin-header">
                 <div class="mx-auto flex w-full min-w-0 max-w-7xl items-center justify-between gap-2 px-3 py-3 sm:px-6 sm:py-5 lg:px-8">
                     <div class="flex min-w-0 items-center gap-3 sm:gap-4">
@@ -877,16 +931,18 @@
                                     Live
                                 </span>
                             </div>
-                            <p class="mt-0.5 text-sm text-slate-500 hidden sm:block font-medium">Manage your choir's operations efficiently</p>
+                            <p class="mt-0.5 hidden text-sm font-medium text-slate-500 xl:block">Manage your choir's operations efficiently</p>
                         </div>
                     </div>
 
-                    <div class="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
+                    <div class="flex min-w-0 items-center justify-end gap-1.5 sm:gap-2.5">
                         <!-- Quick Create -->
-                        <div x-data="{ open:false }" class="relative" @click.away="open = false">
-                            <button @click="open = !open" class="admin-quick-action inline-flex h-11 w-11 items-center justify-center sm:h-auto sm:w-auto sm:gap-2 sm:px-4 sm:py-2.5 sm:text-sm">
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                                <span class="hidden sm:inline">Quick Create</span>
+                        <div x-data="{ open:false }" class="relative shrink-0" @click.away="open = false">
+                            <button @click="open = !open" class="admin-quick-action inline-flex h-11 items-center justify-center gap-2 px-4 text-sm sm:h-auto sm:py-2.5">
+                                <svg class="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                </svg>
+                                <span>Quick Create</span>
                             </button>
                             <div x-show="open"
                                  x-cloak
@@ -1022,21 +1078,21 @@
                             </div>
                         </div>
 
-                        <div class="hidden lg:flex items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-sm shadow-slate-200/60">
+                        <div class="admin-header-clock shrink-0 items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-sm shadow-slate-200/60">
                             <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span id="current-time" class="text-slate-600">{{ now()->format('M d, Y · H:i') }}</span>
+                            <span id="current-time" class="whitespace-nowrap text-slate-600">{{ now()->format('M d, Y · H:i') }}</span>
                         </div>
 
                         <!-- Profile Dropdown -->
-                        <div x-data="{ open: false }" class="relative">
+                        <div x-data="{ open: false }" class="relative shrink-0">
                             <button @click="open=!open" @click.away="open=false" class="admin-icon-button inline-flex h-11 w-11 items-center justify-center p-0 text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2 focus:ring-offset-white md:h-auto md:w-auto md:gap-2.5 md:px-3 md:py-2">
-                                <div class="flex h-8 w-8 items-center justify-center rounded-lg admin-avatar-badge">
+                                <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg admin-avatar-badge">
                                     <span class="text-sm font-bold">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>
                                 </div>
-                                <span class="hidden md:block text-sm font-semibold text-slate-600">{{ Auth::user()->name }}</span>
-                                <svg class="hidden h-4 w-4 text-slate-400 md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <span class="admin-header-name text-sm font-semibold text-slate-600">{{ Auth::user()->name }}</span>
+                                <svg class="admin-header-wide h-4 w-4 shrink-0 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                 </svg>
                             </button>

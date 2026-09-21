@@ -439,7 +439,7 @@ function activeChorister() {
                     <span class="h-1.5 w-1.5 rounded-full"
                           :class="timerUrgency() === 'red' ? 'animate-pulse bg-rose-600' : (timerUrgency() === 'amber' ? 'bg-amber-500' : 'bg-emerald-600')"></span>
                     <span x-show="timerUrgency() === 'red'" x-cloak x-text="lang === 'rw' ? 'Igihe gihuye' : 'Time is running out'"></span>
-                    <span x-show="timerUrgency() !== 'red'" x-text="lang === 'rw' ? 'Iyi nyandiko ifunga mu' : 'This invitation closes in'"></span>
+                    <span x-show="timerUrgency() !== 'red'" x-text="lang === 'rw' ? 'Iyi link izifunga mu' : 'This invitation closes in'"></span>
                 </p>
                 <p x-show="timerUrgency() === 'red'" x-cloak class="mt-1 text-sm font-semibold text-rose-800"
                    x-text="lang === 'rw' ? 'Injira mbere yuko umurongo usiba.' : 'Join before this link disappears.'"></p>

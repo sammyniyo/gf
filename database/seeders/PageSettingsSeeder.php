@@ -53,6 +53,14 @@ class PageSettingsSeeder extends Seeder
                 'icon' => 'users',
                 'is_enabled' => true,
             ],
+            [
+                'page_identifier' => 'active-choristers',
+                'page_name' => 'Active Choristers',
+                'status' => 'active',
+                'custom_message' => null,
+                'icon' => 'users',
+                'is_enabled' => true,
+            ],
         ];
 
         foreach ($pages as $page) {

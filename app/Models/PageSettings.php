@@ -57,5 +57,24 @@ class PageSettings extends Model
     {
         return $this->is_enabled && $this->status === 'active';
     }
+
+    public static function forActiveChoristers(): self
+    {
+        return static::query()->firstOrCreate(
+            ['page_identifier' => 'active-choristers'],
+            [
+                'page_name' => 'Active Choristers',
+                'status' => 'active',
+                'custom_message' => null,
+                'icon' => 'users',
+                'is_enabled' => true,
+            ]
+        );
+    }
+
+    public static function activeChoristersRegistrationOpen(): bool
+    {
+        return (bool) static::forActiveChoristers()->is_enabled;
+    }
 }
 

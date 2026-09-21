@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ActiveChoristerCommitment;
+use App\Models\PageSettings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -34,7 +35,21 @@ class ActiveChoristerController extends Controller
             'commitments' => $commitments,
             'total' => ActiveChoristerCommitment::query()->count(),
             'linked' => ActiveChoristerCommitment::query()->whereNotNull('member_id')->count(),
+            'registrationOpen' => PageSettings::activeChoristersRegistrationOpen(),
         ]);
+    }
+
+    public function toggleRegistration(): RedirectResponse
+    {
+        $setting = PageSettings::forActiveChoristers();
+        $setting->is_enabled = ! $setting->is_enabled;
+        $setting->save();
+
+        return redirect()
+            ->route('admin.active-choristers.index')
+            ->with('success', $setting->is_enabled
+                ? 'Active Choristers registration is open.'
+                : 'Active Choristers registration is closed.');
     }
 
     public function destroy(ActiveChoristerCommitment $commitment): RedirectResponse

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ActiveChoristerCommitment;
 use App\Models\Member;
+use App\Models\PageSettings;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -14,12 +15,17 @@ class ActiveChoristerController extends Controller
     public function show()
     {
         return response()
-            ->view('active-choristers.index')
+            ->view('active-choristers.index', [
+                'registrationOpen' => PageSettings::activeChoristersRegistrationOpen(),
+            ])
             ->header('Cache-Control', 'private, no-store, no-cache, must-revalidate');
     }
 
     public function directory(): JsonResponse
     {
+        if ($closed = $this->closedResponse()) {
+            return $closed;
+        }
         $results = Cache::remember('active_choristers.directory', 600, function () {
             return Member::query()
                 ->where('member_type', 'member')
@@ -47,6 +53,10 @@ class ActiveChoristerController extends Controller
 
     public function select(Request $request): JsonResponse
     {
+        if ($closed = $this->closedResponse()) {
+            return $closed;
+        }
+
         $validated = $request->validate([
             'token' => 'required|string',
         ]);
@@ -81,6 +91,10 @@ class ActiveChoristerController extends Controller
 
     public function store(Request $request): JsonResponse
     {
+        if ($closed = $this->closedResponse()) {
+            return $closed;
+        }
+
         if ($request->filled('website')) {
             return response()->json(['ok' => true, 'already' => false]);
         }
@@ -181,6 +195,20 @@ class ActiveChoristerController extends Controller
             'already' => (bool) $existing,
             'whatsapp' => config('choir.active_choristers_whatsapp'),
         ]);
+    }
+
+    private function closedResponse(): ?JsonResponse
+    {
+        if (PageSettings::activeChoristersRegistrationOpen()) {
+            return null;
+        }
+
+        return response()->json([
+            'ok' => false,
+            'closed' => true,
+            'found' => false,
+            'message' => 'Active Choristers registration is closed.',
+        ], 403);
     }
 
     private function findMemberByPhone(?string $phone): ?Member

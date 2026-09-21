@@ -350,20 +350,42 @@ function activeChorister() {
 }
 </script>
 <div class="relative min-h-screen bg-white pt-28 pb-16 sm:pt-32"
-     x-data="activeChorister()"
-     x-init="startClock()">
+     @if($registrationOpen)
+         x-data="activeChorister()"
+         x-init="startClock()"
+     @else
+         x-data="{ lang: 'rw' }"
+     @endif>
     <div class="relative mx-auto max-w-2xl px-4 sm:px-5">
         <div class="mb-8 text-center">
             <p class="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-emerald-700">
                 <span class="h-1.5 w-1.5 rounded-full bg-emerald-600"></span>
-                <span x-text="lang === 'rw' ? 'Itsinda rishya' : 'New group'"></span>
+                @if($registrationOpen)
+                    <span x-show="lang === 'rw'">Itsinda rishya</span>
+                    <span x-show="lang === 'en'" x-cloak>New group</span>
+                @else
+                    <span x-show="lang === 'rw'">Kwiyandikisha byafunze</span>
+                    <span x-show="lang === 'en'" x-cloak>Registration closed</span>
+                @endif
             </p>
             <h1 class="mt-4 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
                 Active Choristers
             </h1>
-            <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600 sm:text-base" x-text="lang === 'rw'
-                ? 'Soma amabwiriza yose, hanyuma wemeze amazina yawe mbere yo kwinjira mu itsinda rya WhatsApp.'
-                : 'Read every term, confirm who you are, then the WhatsApp group will open.'"></p>
+            @if($registrationOpen)
+                <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600 sm:text-base" x-show="lang === 'rw'">
+                    Soma amabwiriza yose, hanyuma wemeze amazina yawe mbere yo kwinjira mu itsinda rya WhatsApp.
+                </p>
+                <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600 sm:text-base" x-show="lang === 'en'" x-cloak>
+                    Read every term, confirm who you are, then the WhatsApp group will open.
+                </p>
+            @else
+                <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600 sm:text-base" x-show="lang === 'rw'">
+                    Kwiyandikisha kw’abarinrimbyi bakora umurimo byafunze. Andikira ubuyobozi niba ukeneye ubufasha.
+                </p>
+                <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600 sm:text-base" x-show="lang === 'en'" x-cloak>
+                    Signing for Active Choristers is closed. Write to the choir office if you need help.
+                </p>
+            @endif
         </div>
 
         <div class="mb-4 flex items-center rounded-full border border-slate-200 bg-slate-50 p-1">
@@ -379,6 +401,24 @@ function activeChorister() {
             </button>
         </div>
 
+        @if(! $registrationOpen)
+            <article class="rounded-[28px] border border-slate-200/80 bg-white p-8 text-center shadow-[0_24px_60px_-28px_rgba(15,23,42,0.28)]">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-emerald-700">Active Choristers</p>
+                <h2 class="mt-2 text-2xl font-semibold tracking-tight text-slate-900" x-show="lang === 'rw'">Kwiyandikisha byafunze</h2>
+                <h2 class="mt-2 text-2xl font-semibold tracking-tight text-slate-900" x-show="lang === 'en'" x-cloak>Registration is closed</h2>
+                <p class="mt-2 text-sm leading-6 text-slate-600" x-show="lang === 'rw'">
+                    Niba ushaka kwinjira mu itsinda rya WhatsApp, andikira ubuyobozi bwa korali.
+                </p>
+                <p class="mt-2 text-sm leading-6 text-slate-600" x-show="lang === 'en'" x-cloak>
+                    If you need the WhatsApp group, write to the choir office.
+                </p>
+                <a href="{{ route('contact') }}"
+                   class="mt-6 inline-flex min-h-[48px] items-center justify-center rounded-full bg-emerald-700 px-5 text-sm font-semibold text-white hover:bg-emerald-600">
+                    <span x-show="lang === 'rw'">Andikira ubuyobozi</span>
+                    <span x-show="lang === 'en'" x-cloak>Contact the office</span>
+                </a>
+            </article>
+        @else
         <div class="mb-5">
             <div class="mb-2 flex items-center justify-between text-xs font-medium text-slate-500">
                 <span x-text="progressLabel()"></span>
@@ -643,6 +683,7 @@ function activeChorister() {
                 </div>
             </article>
         </template>
+        @endif
     </div>
 </div>
 

@@ -9,10 +9,31 @@
             <h1 class="text-xl font-semibold text-slate-900">Active Chorister commitments</h1>
             <p class="mt-1 text-sm text-slate-500">People who read the terms and asked to join the WhatsApp group.</p>
         </div>
-        <a href="{{ route('active-choristers') }}" target="_blank" class="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
-            Open public page
-        </a>
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <form action="{{ route('admin.active-choristers.registration') }}" method="POST"
+                  onsubmit="return confirm(@json($registrationOpen ? 'Close Active Choristers registration? People will not be able to sign or join the WhatsApp group from the site.' : 'Open Active Choristers registration again?'));">
+                @csrf
+                @if($registrationOpen)
+                    <button type="submit" class="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-rose-600 px-4 text-sm font-semibold text-white hover:bg-rose-500">
+                        Close registration
+                    </button>
+                @else
+                    <button type="submit" class="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-emerald-600 px-4 text-sm font-semibold text-white hover:bg-emerald-500">
+                        Open registration
+                    </button>
+                @endif
+            </form>
+            <a href="{{ route('active-choristers') }}" target="_blank" class="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+                Open public page
+            </a>
+        </div>
     </div>
+
+    @if(! $registrationOpen)
+        <div class="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            Registration is closed. The public page still opens, but people cannot sign or join the group.
+        </div>
+    @endif
 
     <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div class="glass-card p-5">

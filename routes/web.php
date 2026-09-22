@@ -189,6 +189,9 @@ Route::post('/active-choristers/select', [ActiveChoristerController::class, 'sel
 Route::post('/active-choristers', [ActiveChoristerController::class, 'store'])
     ->middleware('throttle:8,1')
     ->name('active-choristers.store');
+Route::get('/active-choristers/join-group', [ActiveChoristerController::class, 'joinGroup'])
+    ->middleware('throttle:12,1')
+    ->name('active-choristers.join-group');
 Route::post('/member-portal', [RegistrationController::class, 'accessMemberPortal'])->name('member.portal.access');
 Route::get('/member-portal/{member}', [RegistrationController::class, 'viewMemberPortal'])->name('member.portal.view');
 Route::get('/member-portal/{member}/edit', [RegistrationController::class, 'editMemberPortal'])->name('member.portal.edit');

@@ -6,6 +6,7 @@ use App\Models\ActiveChoristerCommitment;
 use App\Models\Member;
 use App\Models\PageSettings;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -22,10 +23,13 @@ class ActiveChoristerController extends Controller
             abort(404);
         }
 
+        $canRejoin = $this->refreshJoinSession(request());
+
         return response()
             ->view('active-choristers.index', [
                 'registrationOpen' => $window['open'],
                 'timerEndsAt' => $window['ends_at']?->toIso8601String(),
+                'canRejoin' => $canRejoin,
             ])
             ->header('Cache-Control', 'private, no-store, no-cache, must-revalidate');
     }
@@ -85,9 +89,14 @@ class ActiveChoristerController extends Controller
         $request->session()->put('active_chorister_member_id', $member->id);
         $request->session()->put('active_chorister_lookup_at', now()->timestamp);
 
+        if ($already) {
+            $this->grantJoinSession($request, $already);
+        }
+
         return response()->json([
             'found' => true,
             'already_committed' => (bool) $already,
+            'can_join' => (bool) $already,
             'member' => [
                 'name' => $member->name ?: trim($member->first_name.' '.$member->last_name),
                 'phone' => $member->phone,
@@ -197,13 +206,68 @@ class ActiveChoristerController extends Controller
         });
 
         $request->session()->forget(['active_chorister_member_id', 'active_chorister_lookup_at']);
-        $request->session()->put('active_chorister_joined', $commitment->id);
+        $this->grantJoinSession($request, $commitment);
 
         return response()->json([
             'ok' => true,
             'already' => (bool) $existing,
-            'whatsapp' => config('choir.active_choristers_whatsapp'),
         ]);
+    }
+
+    public function joinGroup(Request $request): RedirectResponse
+    {
+        $window = PageSettings::activeChoristersWindow();
+        $isAdmin = Auth::check() && Auth::user()->is_admin;
+
+        if (! $window['open'] && ! $isAdmin) {
+            abort(404);
+        }
+
+        $commitment = $this->sessionCommitment($request);
+
+        if (! $commitment) {
+            abort(403, 'Pick your name again, then open WhatsApp.');
+        }
+
+        $url = config('choir.active_choristers_whatsapp');
+
+        if (! is_string($url) || $url === '') {
+            abort(404);
+        }
+
+        return redirect()
+            ->away($url)
+            ->header('Cache-Control', 'private, no-store, no-cache, must-revalidate');
+    }
+
+    private function grantJoinSession(Request $request, ActiveChoristerCommitment $commitment): void
+    {
+        $request->session()->put('active_chorister_joined', $commitment->id);
+        $request->session()->put('active_chorister_joined_at', now()->timestamp);
+    }
+
+    private function sessionCommitment(Request $request): ?ActiveChoristerCommitment
+    {
+        $commitmentId = $request->session()->get('active_chorister_joined');
+
+        if (! $commitmentId) {
+            return null;
+        }
+
+        return ActiveChoristerCommitment::query()->find($commitmentId);
+    }
+
+    private function refreshJoinSession(Request $request): bool
+    {
+        $commitment = $this->sessionCommitment($request);
+
+        if (! $commitment) {
+            return false;
+        }
+
+        $this->grantJoinSession($request, $commitment);
+
+        return true;
     }
 
     private function closedResponse(): ?JsonResponse

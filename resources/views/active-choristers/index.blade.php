@@ -31,10 +31,10 @@ function activeChorister() {
         selecting: false,
         matchedMember: '',
         alreadyCommitted: false,
+        resumeJoin: @json($canRejoin ?? false),
         honeypot: '',
         submitting: false,
         error: '',
-        whatsapp: '',
         timerEndsAt: @json($timerEndsAt ?? null),
         timer: { days: 0, hours: 0, minutes: 0, seconds: 0, ms: 0 },
         form: { name: '', phone: '', email: '', confirmation: '' },
@@ -60,6 +60,9 @@ function activeChorister() {
             ],
         },
         startClock() {
+            if (this.resumeJoin) {
+                this.step = 6;
+            }
             this.resetSection();
             this.loadDirectory();
             this.tickTimer();
@@ -127,6 +130,10 @@ function activeChorister() {
             if (this.step === 0) return;
             this.step -= 1;
             this.resetSection();
+        },
+        goToNameStep() {
+            this.step = 5;
+            this.loadDirectory();
         },
         progress() {
             if (this.step >= 6) return 100;
@@ -331,6 +338,9 @@ function activeChorister() {
                 this.lookupMessage = this.alreadyCommitted
                     ? (this.lang === 'rw' ? 'Wamaze kwiyemeza gukora umurimo, uwiteka azakubashishe!' : 'You have already committed to do the work. The Lord will strengthen you!')
                     : (this.lang === 'rw' ? 'Twabonye umwirondoro wawe. Reba niba amazina ari yo.' : 'Member found. Check that the details are yours.');
+                if (data.can_join) {
+                    this.step = 6;
+                }
             } catch (e) {
                 this.lookupMessage = this.lang === 'rw' ? 'Habaye ikibazo. Ongera ugerageze.' : 'Something went wrong. Please try again.';
             } finally {
@@ -367,7 +377,6 @@ function activeChorister() {
                     this.error = /csrf/i.test(raw) ? this.sessionMessage() : (raw || 'Please check the form.');
                     return;
                 }
-                this.whatsapp = data.whatsapp;
                 this.step = 6;
             } catch (e) {
                 this.error = this.lang === 'rw' ? 'Habaye ikibazo. Ongera ugerageze.' : 'Something went wrong. Please try again.';
@@ -407,6 +416,11 @@ function activeChorister() {
                 <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600 sm:text-base" x-show="lang === 'en'" x-cloak>
                     Read every term, confirm who you are, then the WhatsApp group will open.
                 </p>
+                <button type="button" x-show="step < 5" x-cloak @click="goToNameStep()"
+                    class="mt-3 text-sm font-semibold text-emerald-700 hover:text-emerald-600">
+                    <span x-show="lang === 'rw'">Wamaze kwiyemeza? Hitamo izina ryawe, fungura WhatsApp.</span>
+                    <span x-show="lang === 'en'" x-cloak>Already committed? Pick your name to open WhatsApp again.</span>
+                </button>
             @else
                 <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600 sm:text-base" x-show="lang === 'rw'">
                     Kwiyandikisha kw’abarinrimbyi bakora umurimo byafunzwe. Andikira ubuyobozi niba ukeneye ubufasha.
@@ -733,7 +747,8 @@ function activeChorister() {
         </template>
 
         <template x-if="step === 6">
-            <article class="rounded-3xl border border-emerald-100 bg-white p-6 text-center shadow-sm">
+            <article class="select-none rounded-3xl border border-emerald-100 bg-white p-6 text-center shadow-sm"
+                     @copy.prevent @cut.prevent @contextmenu.prevent>
                 <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
                     <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -744,19 +759,12 @@ function activeChorister() {
                     ? 'Wamaze kwiyemeza gukora umurimo, uwiteka azakubashishe!'
                     : 'You have already committed to do the work. The Lord will strengthen you!'"></p>
                 <p class="mt-2 text-sm leading-6 text-slate-500" x-text="lang === 'rw'
-                    ? 'Ubu tugusangije link ya WhatsApp ry’Active Choristers.'
-                    : 'We now share the Active Choristers WhatsApp link with you.'"></p>
-                <p class="mt-4 break-all rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-left font-mono text-xs text-slate-700" x-text="whatsapp"></p>
-                <div class="mt-3 grid gap-2 sm:grid-cols-2">
-                    <button type="button"
-                        @click="navigator.clipboard.writeText(whatsapp)"
-                        class="inline-flex min-h-[48px] items-center justify-center rounded-full border border-slate-200 px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-                        x-text="lang === 'rw' ? 'Koporora umurongo' : 'Copy link'"></button>
-                    <a :href="whatsapp" target="_blank" rel="noopener"
-                       class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 text-sm font-semibold text-white">
-                        <span x-text="lang === 'rw' ? 'Fungura WhatsApp' : 'Open WhatsApp'"></span>
-                    </a>
-                </div>
+                    ? 'Fungura WhatsApp hano. Iyi group ntiyagombye gukopororwa cyangwa gusangizwa uwo utasomye amabwiriza.'
+                    : 'Open WhatsApp here. Do not copy or share this group with anyone who has not read the terms.'"></p>
+                <a href="{{ route('active-choristers.join-group', [], false) }}" rel="noopener"
+                   class="mt-5 inline-flex min-h-[52px] w-full items-center justify-center rounded-full bg-[#25D366] px-4 text-sm font-semibold text-white sm:w-auto sm:min-w-[220px]">
+                    <span x-text="lang === 'rw' ? 'Fungura WhatsApp' : 'Open WhatsApp'"></span>
+                </a>
             </article>
         </template>
         @endif

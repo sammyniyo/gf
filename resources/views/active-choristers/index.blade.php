@@ -551,7 +551,7 @@ function activeChorister() {
                                     <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
                                         <p class="text-sm font-semibold text-slate-900" x-text="lang === 'rw' ? 'Umukoro' : 'Homework'"></p>
                                         <p class="mt-1 text-sm leading-6 text-slate-600" x-text="lang === 'rw'
-                                            ? 'Nemeye ko, mu gihe abatoza batanze umukoro utegura imyitozo, nzitabira imyitozo nakoreye neza umukoro watanzwe, kugira ngo imyitozo igende neza.'
+                                            ? 'Nemeye ko, mu gihe abatoza batanze umukoro utegura imyitozo, nzitabira imyitozo kandi nakoze neza umukoro watanzwe, kugira ngo imyitozo igende neza.'
                                             : 'I agree that when trainers give homework to prepare for rehearsal, I will attend after doing that work well, so rehearsal can move forward.'"></p>
                                     </div>
                                     <div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">

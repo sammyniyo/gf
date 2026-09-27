@@ -76,23 +76,33 @@ class PageSettings extends Model
 
     public static function activeChoristersWindow(): array
     {
-        $setting = static::forActiveChoristers();
-        $endsAt = $setting->timer_ends_at;
+        try {
+            $setting = static::forActiveChoristers();
+            $endsAt = $setting->timer_ends_at;
 
-        if ($setting->is_enabled && $endsAt && $endsAt->isPast()) {
-            $setting->is_enabled = false;
-            $setting->timer_ends_at = null;
-            $setting->save();
-            $setting->refresh();
-            $endsAt = null;
+            if ($setting->is_enabled && $endsAt && $endsAt->isPast()) {
+                $setting->is_enabled = false;
+                $setting->timer_ends_at = null;
+                $setting->save();
+                $setting->refresh();
+                $endsAt = null;
+            }
+
+            $open = (bool) $setting->is_enabled && $endsAt instanceof Carbon && $endsAt->isFuture();
+
+            return [
+                'setting' => $setting,
+                'open' => $open,
+                'ends_at' => $open ? $endsAt : null,
+            ];
+        } catch (\Throwable $e) {
+            report($e);
+
+            return [
+                'setting' => null,
+                'open' => false,
+                'ends_at' => null,
+            ];
         }
-
-        $open = (bool) $setting->is_enabled && $endsAt instanceof Carbon && $endsAt->isFuture();
-
-        return [
-            'setting' => $setting,
-            'open' => $open,
-            'ends_at' => $open ? $endsAt : null,
-        ];
     }
 }

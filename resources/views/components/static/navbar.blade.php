@@ -5,7 +5,12 @@
     $navLink = 'inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 text-sm font-medium text-white/90 transition hover:bg-white/10 hover:text-white';
     $navActive = 'bg-white/15 text-amber-100 hover:bg-white/20 hover:text-amber-50';
     $dropPanel = 'absolute top-full z-50 mt-2 w-64 overflow-hidden rounded-xl border border-emerald-100 bg-white py-1.5 text-slate-700 shadow-xl';
-    $activeChoristersOpen = \App\Models\PageSettings::activeChoristersRegistrationOpen();
+    $activeChoristersOpen = false;
+    try {
+        $activeChoristersOpen = \App\Models\PageSettings::activeChoristersRegistrationOpen();
+    } catch (\Throwable $e) {
+        report($e);
+    }
 @endphp
 
 <header

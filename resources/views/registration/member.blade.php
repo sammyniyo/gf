@@ -29,6 +29,18 @@ function memberRegister() {
         submitting: false,
         titles: ['Who you are', 'Work and church', 'Your voice', 'A little more'],
         errors: Object.assign({}, @json($memberClientErrors)),
+        attempted: { 0: {{ $errors->any() ? 'true' : 'false' }}, 1: false, 2: false, 3: false },
+        fields: {
+            first_name: @json(old('first_name', '')),
+            last_name: @json(old('last_name', '')),
+            email: @json(old('email', '')),
+            phone: @json(old('phone', '')),
+            birthdate: @json(old('birthdate', '')),
+            gender: @json(old('gender', '')),
+            joining_year: @json(old('joining_year', '')),
+            address: @json(old('address', '')),
+            voice: @json(old('voice', '')),
+        },
         stepFields: {
             0: ['first_name', 'last_name', 'email', 'phone', 'birthdate', 'gender', 'joining_year', 'address'],
             1: ['occupation', 'workplace', 'church', 'education_level'],
@@ -42,8 +54,11 @@ function memberRegister() {
             return this.$el.querySelector('form');
         },
         fieldValue(name) {
+            if (Object.prototype.hasOwnProperty.call(this.fields, name)) {
+                return this.fields[name] ?? '';
+            }
             const form = this.formEl();
-            const el = form ? form.elements.namedItem(name) : null;
+            const el = form ? form.querySelector(`[name="${name}"]`) : null;
             return el ? el.value : '';
         },
         fieldClass(name, extra = '') {
@@ -53,7 +68,19 @@ function memberRegister() {
                 : `${base} border border-slate-200 ring-emerald-600/20 focus:border-emerald-600 focus:ring-4`;
         },
         setError(name, message) {
-            this.errors[name] = message || '';
+            if (message) this.errors[name] = message;
+            else delete this.errors[name];
+        },
+        maybeValidate(name) {
+            if (!this.attempted[this.step]) return;
+            this.validateField(name);
+        },
+        normalizeBirthdate() {
+            const value = String(this.fields.birthdate || '').trim();
+            if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(value)) {
+                const [month, day, year] = value.split('/');
+                this.fields.birthdate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+            }
         },
         nameError(value, label) {
             const text = String(value || '').trim();
@@ -76,7 +103,11 @@ function memberRegister() {
         },
         birthError(value) {
             if (!value) return 'Enter your date of birth.';
-            const birth = new Date(`${value}T00:00:00`);
+            let birth = new Date(`${value}T00:00:00`);
+            if (Number.isNaN(birth.getTime()) && /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(value)) {
+                const [month, day, year] = value.split('/');
+                birth = new Date(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T00:00:00`);
+            }
             if (Number.isNaN(birth.getTime())) return 'Enter a valid date of birth.';
             const today = new Date();
             today.setHours(0, 0, 0, 0);
@@ -139,6 +170,8 @@ function memberRegister() {
             return -1;
         },
         goNext() {
+            this.normalizeBirthdate();
+            this.attempted[this.step] = true;
             if (!this.validateStep(this.step)) {
                 this.$nextTick(() => {
                     const first = this.formEl()?.querySelector('.border-rose-300');
@@ -154,14 +187,19 @@ function memberRegister() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         },
         onBirthday(value) {
-            this.validateField('birthdate');
+            this.fields.birthdate = value;
+            this.maybeValidate('birthdate');
             if (!value) {
                 this.birthdayNote = '';
                 return;
             }
-            const birth = new Date(`${value}T00:00:00`);
+            let birth = new Date(`${value}T00:00:00`);
+            if (Number.isNaN(birth.getTime()) && /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(value)) {
+                const [month, day, year] = value.split('/');
+                birth = new Date(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T00:00:00`);
+            }
             const today = new Date();
-            if (birth.getMonth() === today.getMonth() && birth.getDate() === today.getDate()) {
+            if (!Number.isNaN(birth.getTime()) && birth.getMonth() === today.getMonth() && birth.getDate() === today.getDate()) {
                 this.birthdayNote = 'Happy birthday. Welcome to God\'s Family.';
             } else {
                 this.birthdayNote = '';
@@ -185,7 +223,16 @@ function memberRegister() {
             }
         },
         submitForm(event) {
+            if (event) event.preventDefault();
+            if (this.step < 3) {
+                this.goNext();
+                return;
+            }
             if (this.submitting) return;
+            this.normalizeBirthdate();
+            this.attempted[0] = true;
+            this.attempted[2] = true;
+            this.attempted[3] = true;
             const invalid = this.firstErrorStep();
             if (invalid !== -1) {
                 this.step = invalid;
@@ -196,7 +243,7 @@ function memberRegister() {
                 return;
             }
             this.submitting = true;
-            event.target.submit();
+            this.formEl()?.submit();
         },
     };
 }
@@ -243,10 +290,21 @@ function memberRegister() {
         @endif
 
         <form action="{{ route('registration.member.store') }}" method="POST" enctype="multipart/form-data"
-              class="space-y-5" novalidate @submit.prevent="submitForm($event)">
+              class="relative space-y-5" novalidate x-cloak @submit.prevent="submitForm($event)">
             @csrf
 
-            <article x-show="step === 0" x-cloak x-ref="step0"
+            <input type="hidden" name="first_name" :value="fields.first_name">
+            <input type="hidden" name="last_name" :value="fields.last_name">
+            <input type="hidden" name="email" :value="fields.email">
+            <input type="hidden" name="phone" :value="fields.phone">
+            <input type="hidden" name="birthdate" :value="fields.birthdate">
+            <input type="hidden" name="gender" :value="fields.gender">
+            <input type="hidden" name="joining_year" :value="fields.joining_year">
+            <input type="hidden" name="address" :value="fields.address">
+            <input type="hidden" name="voice" :value="fields.voice">
+
+            <article x-ref="step0"
+                     :class="step === 0 ? '' : 'pointer-events-none invisible absolute h-0 overflow-hidden'"
                      class="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_24px_60px_-28px_rgba(15,23,42,0.28)]">
                 <header class="border-b border-slate-100 bg-gradient-to-br from-emerald-50 via-white to-slate-50 px-5 py-6 sm:px-7">
                     <p class="text-[11px] font-semibold uppercase tracking-wider text-emerald-700">Step 1</p>
@@ -258,17 +316,17 @@ function memberRegister() {
                     <div class="grid gap-4 sm:grid-cols-2">
                         <label class="block">
                             <span class="mb-1.5 block text-sm font-medium text-slate-700">First name <span class="text-rose-500">*</span></span>
-                            <input type="text" name="first_name" value="{{ old('first_name') }}" required maxlength="80" autocomplete="given-name"
+                            <input type="text" x-model="fields.first_name" maxlength="80" autocomplete="given-name"
                                 placeholder="e.g. Samuel"
-                                @blur="validateField('first_name')" @input="validateField('first_name')"
+                                @blur="maybeValidate('first_name')" @input="maybeValidate('first_name')"
                                 :class="fieldClass('first_name')">
                             <p class="mt-1 text-sm text-rose-600" x-show="errors.first_name" x-text="errors.first_name"></p>
                         </label>
                         <label class="block">
                             <span class="mb-1.5 block text-sm font-medium text-slate-700">Last name <span class="text-rose-500">*</span></span>
-                            <input type="text" name="last_name" value="{{ old('last_name') }}" required maxlength="80" autocomplete="family-name"
+                            <input type="text" x-model="fields.last_name" maxlength="80" autocomplete="family-name"
                                 placeholder="e.g. Niyonsenga"
-                                @blur="validateField('last_name')" @input="validateField('last_name')"
+                                @blur="maybeValidate('last_name')" @input="maybeValidate('last_name')"
                                 :class="fieldClass('last_name')">
                             <p class="mt-1 text-sm text-rose-600" x-show="errors.last_name" x-text="errors.last_name"></p>
                         </label>
@@ -277,17 +335,17 @@ function memberRegister() {
                     <div class="grid gap-4 sm:grid-cols-2">
                         <label class="block">
                             <span class="mb-1.5 block text-sm font-medium text-slate-700">Email <span class="text-rose-500">*</span></span>
-                            <input type="email" name="email" value="{{ old('email') }}" required maxlength="255" autocomplete="email"
+                            <input type="email" x-model="fields.email" maxlength="255" autocomplete="email"
                                 placeholder="you@email.com"
-                                @blur="validateField('email')" @input="validateField('email')"
+                                @blur="maybeValidate('email')" @input="maybeValidate('email')"
                                 :class="fieldClass('email')">
                             <p class="mt-1 text-sm text-rose-600" x-show="errors.email" x-text="errors.email"></p>
                         </label>
                         <label class="block">
                             <span class="mb-1.5 block text-sm font-medium text-slate-700">Phone <span class="text-rose-500">*</span></span>
-                            <input type="tel" name="phone" value="{{ old('phone') }}" required maxlength="20" autocomplete="tel"
+                            <input type="tel" x-model="fields.phone" maxlength="20" autocomplete="tel"
                                 placeholder="e.g. +250 780 000 000"
-                                @blur="validateField('phone')" @input="validateField('phone')"
+                                @blur="maybeValidate('phone')" @input="maybeValidate('phone')"
                                 :class="fieldClass('phone')">
                             <p class="mt-1 text-sm text-rose-600" x-show="errors.phone" x-text="errors.phone"></p>
                         </label>
@@ -317,7 +375,7 @@ function memberRegister() {
                     <div class="grid gap-4 sm:grid-cols-2">
                         <label class="block">
                             <span class="mb-1.5 block text-sm font-medium text-slate-700">Date of birth <span class="text-rose-500">*</span></span>
-                            <input type="date" name="birthdate" value="{{ old('birthdate') }}" required
+                            <input type="date" x-model="fields.birthdate"
                                 min="{{ now()->subYears(90)->toDateString() }}"
                                 max="{{ now()->subYears(8)->toDateString() }}"
                                 @change="onBirthday($event.target.value)"
@@ -327,10 +385,10 @@ function memberRegister() {
                         </label>
                         <label class="block">
                             <span class="mb-1.5 block text-sm font-medium text-slate-700">Gender <span class="text-rose-500">*</span></span>
-                            <select name="gender" required @change="validateField('gender')" :class="fieldClass('gender')">
-                                <option value="" disabled {{ old('gender') ? '' : 'selected' }}>Select gender</option>
-                                <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
-                                <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
+                            <select x-model="fields.gender" @change="maybeValidate('gender')" :class="fieldClass('gender')">
+                                <option value="">Select gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
                             </select>
                             <p class="mt-1 text-sm text-rose-600" x-show="errors.gender" x-text="errors.gender"></p>
                         </label>
@@ -338,9 +396,9 @@ function memberRegister() {
 
                     <label class="block">
                         <span class="mb-1.5 block text-sm font-medium text-slate-700">Year you joined the choir</span>
-                        <input type="number" name="joining_year" value="{{ old('joining_year') }}" min="1998" max="{{ date('Y') }}"
+                        <input type="number" x-model="fields.joining_year" min="1998" max="{{ date('Y') }}"
                             placeholder="e.g. 2019"
-                            @blur="validateField('joining_year')" @input="validateField('joining_year')"
+                            @blur="maybeValidate('joining_year')" @input="maybeValidate('joining_year')"
                             :class="fieldClass('joining_year')">
                         <p class="mt-1 text-xs text-slate-500">Leave blank if you are joining now.</p>
                         <p class="mt-1 text-sm text-rose-600" x-show="errors.joining_year" x-text="errors.joining_year"></p>
@@ -348,15 +406,16 @@ function memberRegister() {
 
                     <label class="block">
                         <span class="mb-1.5 block text-sm font-medium text-slate-700">Address <span class="text-rose-500">*</span></span>
-                        <textarea name="address" rows="2" required maxlength="500" placeholder="e.g. Nyamirambo, Kigali"
-                            @blur="validateField('address')" @input="validateField('address')"
-                            :class="fieldClass('address', 'w-full rounded-2xl bg-white px-4 py-3 text-sm outline-none placeholder:text-slate-400')">{{ old('address') }}</textarea>
+                        <textarea x-model="fields.address" rows="2" maxlength="500" placeholder="e.g. Nyamirambo, Kigali"
+                            @blur="maybeValidate('address')" @input="maybeValidate('address')"
+                            :class="fieldClass('address', 'w-full rounded-2xl bg-white px-4 py-3 text-sm outline-none placeholder:text-slate-400')"></textarea>
                         <p class="mt-1 text-sm text-rose-600" x-show="errors.address" x-text="errors.address"></p>
                     </label>
                 </div>
             </article>
 
-            <article x-show="step === 1" x-cloak x-ref="step1"
+            <article x-ref="step1"
+                     :class="step === 1 ? '' : 'pointer-events-none invisible absolute h-0 overflow-hidden'"
                      class="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_24px_60px_-28px_rgba(15,23,42,0.28)]">
                 <header class="border-b border-slate-100 bg-gradient-to-br from-emerald-50 via-white to-slate-50 px-5 py-6 sm:px-7">
                     <p class="text-[11px] font-semibold uppercase tracking-wider text-emerald-700">Step 2</p>
@@ -396,7 +455,8 @@ function memberRegister() {
                 </div>
             </article>
 
-            <article x-show="step === 2" x-cloak x-ref="step2"
+            <article x-ref="step2"
+                     :class="step === 2 ? '' : 'pointer-events-none invisible absolute h-0 overflow-hidden'"
                      class="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_24px_60px_-28px_rgba(15,23,42,0.28)]">
                 <header class="border-b border-slate-100 bg-gradient-to-br from-emerald-50 via-white to-slate-50 px-5 py-6 sm:px-7">
                     <p class="text-[11px] font-semibold uppercase tracking-wider text-emerald-700">Step 3</p>
@@ -407,13 +467,13 @@ function memberRegister() {
                     <div class="grid gap-4 sm:grid-cols-2">
                         <label class="block">
                             <span class="mb-1.5 block text-sm font-medium text-slate-700">Voice <span class="text-rose-500">*</span></span>
-                            <select name="voice" required @change="validateField('voice')" :class="fieldClass('voice')">
-                                <option value="" disabled {{ old('voice') ? '' : 'selected' }}>Select voice</option>
-                                <option value="soprano" {{ old('voice') == 'soprano' ? 'selected' : '' }}>Soprano</option>
-                                <option value="alto" {{ old('voice') == 'alto' ? 'selected' : '' }}>Alto</option>
-                                <option value="tenor" {{ old('voice') == 'tenor' ? 'selected' : '' }}>Tenor</option>
-                                <option value="bass" {{ old('voice') == 'bass' ? 'selected' : '' }}>Bass</option>
-                                <option value="unsure" {{ old('voice') == 'unsure' ? 'selected' : '' }}>Not sure</option>
+                            <select x-model="fields.voice" @change="maybeValidate('voice')" :class="fieldClass('voice')">
+                                <option value="">Select voice</option>
+                                <option value="soprano">Soprano</option>
+                                <option value="alto">Alto</option>
+                                <option value="tenor">Tenor</option>
+                                <option value="bass">Bass</option>
+                                <option value="unsure">Not sure</option>
                             </select>
                             <p class="mt-1 text-sm text-rose-600" x-show="errors.voice" x-text="errors.voice"></p>
                         </label>
@@ -453,7 +513,8 @@ function memberRegister() {
                 </div>
             </article>
 
-            <article x-show="step === 3" x-cloak x-ref="step3"
+            <article x-ref="step3"
+                     :class="step === 3 ? '' : 'pointer-events-none invisible absolute h-0 overflow-hidden'"
                      class="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_24px_60px_-28px_rgba(15,23,42,0.28)]">
                 <header class="border-b border-slate-100 bg-gradient-to-br from-emerald-50 via-white to-slate-50 px-5 py-6 sm:px-7">
                     <p class="text-[11px] font-semibold uppercase tracking-wider text-emerald-700">Step 4</p>

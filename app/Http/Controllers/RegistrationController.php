@@ -39,6 +39,17 @@ class RegistrationController extends Controller
             $request->files->set('profile_photo', $request->file('photo_path'));
         }
 
+        $birthdate = trim((string) $request->input('birthdate', ''));
+        if (preg_match('/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/', $birthdate, $match)) {
+            $request->merge([
+                'birthdate' => sprintf('%04d-%02d-%02d', $match[3], $match[1], $match[2]),
+            ]);
+        }
+
+        if ($request->input('joining_year') === '') {
+            $request->merge(['joining_year' => null]);
+        }
+
         $validator = Validator::make($request->all(), [
             'first_name' => ['required', 'string', 'min:2', 'max:80', 'regex:/^[\pL\s\'’.\-]+$/u'],
             'last_name' => ['required', 'string', 'min:2', 'max:80', 'regex:/^[\pL\s\'’.\-]+$/u'],

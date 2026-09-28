@@ -195,13 +195,14 @@ class RegistrationController extends Controller
         // Create member
         $member = Member::create($data);
 
-        // Send registration notification email (not welcome email - that comes after confirmation)
-        try {
-            Mail::to($member->email)->send(new MemberRegistrationMail($member));
-            \Log::info('Member registration notification email sent to: ' . $member->email);
-        } catch (\Exception $e) {
-            \Log::error('Failed to send registration notification email: ' . $e->getMessage());
-        }
+        dispatch(function () use ($member) {
+            try {
+                Mail::to($member->email)->send(new MemberRegistrationMail($member));
+                \Log::info('Member registration notification email sent to: ' . $member->email);
+            } catch (\Exception $e) {
+                \Log::error('Failed to send registration notification email: ' . $e->getMessage());
+            }
+        })->afterResponse();
 
         return redirect()->route('registration.success')
             ->with('success', 'Thank you for registering! Check your email for next steps.')
@@ -285,13 +286,14 @@ class RegistrationController extends Controller
         // Create member
         $member = Member::create($data);
 
-        // Send welcome email immediately to avoid requiring a queue worker
-        try {
-            Mail::to($member->email)->send(new FriendshipWelcomeEmail($member));
-            \Log::info('Friendship welcome email sent to: ' . $member->email);
-        } catch (\Exception $e) {
-            \Log::error('Failed to send friendship welcome email: ' . $e->getMessage());
-        }
+        dispatch(function () use ($member) {
+            try {
+                Mail::to($member->email)->send(new FriendshipWelcomeEmail($member));
+                \Log::info('Friendship welcome email sent to: ' . $member->email);
+            } catch (\Exception $e) {
+                \Log::error('Failed to send friendship welcome email: ' . $e->getMessage());
+            }
+        })->afterResponse();
 
         return redirect()->route('registration.success')
             ->with('success', 'Thank you for joining God\'s Family! Check your email.')

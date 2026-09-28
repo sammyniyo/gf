@@ -223,18 +223,22 @@ function memberRegister() {
             }
         },
         submitForm(event) {
-            if (event) event.preventDefault();
             if (this.step < 3) {
+                event.preventDefault();
                 this.goNext();
                 return;
             }
-            if (this.submitting) return;
+            if (this.submitting) {
+                event.preventDefault();
+                return;
+            }
             this.normalizeBirthdate();
             this.attempted[0] = true;
             this.attempted[2] = true;
             this.attempted[3] = true;
             const invalid = this.firstErrorStep();
             if (invalid !== -1) {
+                event.preventDefault();
                 this.step = invalid;
                 this.$nextTick(() => {
                     const first = this.formEl()?.querySelector('.border-rose-300');
@@ -243,7 +247,6 @@ function memberRegister() {
                 return;
             }
             this.submitting = true;
-            this.formEl()?.submit();
         },
     };
 }
@@ -290,7 +293,7 @@ function memberRegister() {
         @endif
 
         <form action="{{ route('registration.member.store') }}" method="POST" enctype="multipart/form-data"
-              class="relative space-y-5" novalidate x-cloak @submit.prevent="submitForm($event)">
+              class="relative space-y-5" novalidate x-cloak @submit="submitForm($event)">
             @csrf
 
             <input type="hidden" name="first_name" :value="fields.first_name">
@@ -578,8 +581,9 @@ function memberRegister() {
                     class="ml-auto inline-flex min-h-[48px] flex-1 items-center justify-center rounded-full bg-emerald-700 px-5 text-sm font-semibold text-white sm:flex-none">
                     Continue
                 </button>
-                <button type="submit" x-show="step === 3" x-cloak :disabled="submitting"
-                    class="ml-auto inline-flex min-h-[52px] flex-1 items-center justify-center rounded-full bg-emerald-700 px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-300">
+                <button type="submit" x-show="step === 3" x-cloak
+                    :class="submitting ? 'cursor-wait bg-slate-300' : 'bg-emerald-700'"
+                    class="ml-auto inline-flex min-h-[52px] flex-1 items-center justify-center rounded-full px-5 text-sm font-semibold text-white">
                     <span x-text="submitting ? 'Sending...' : 'Submit application'"></span>
                 </button>
             </div>

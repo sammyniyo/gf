@@ -69,7 +69,11 @@ function friendRegister() {
             };
             reader.readAsDataURL(file);
         },
-        onSubmit() {
+        onSubmit(event) {
+            if (this.submitting) {
+                event.preventDefault();
+                return;
+            }
             this.submitting = true;
         },
         init() {
@@ -138,7 +142,7 @@ function friendRegister() {
         @endif
 
         <form action="{{ route('registration.friendship.store') }}" method="POST" enctype="multipart/form-data"
-              class="space-y-5" id="friendship-form" @submit="onSubmit()">
+              class="space-y-5" id="friendship-form" @submit="onSubmit($event)">
             @csrf
 
             <article x-show="step === 0" x-cloak x-ref="step0"
@@ -300,8 +304,9 @@ function friendRegister() {
                     class="ml-auto inline-flex min-h-[48px] flex-1 items-center justify-center rounded-full bg-amber-500 px-5 text-sm font-semibold text-white sm:flex-none">
                     Continue
                 </button>
-                <button type="submit" x-show="step === 1" x-cloak :disabled="submitting"
-                    class="ml-auto inline-flex min-h-[52px] flex-1 items-center justify-center rounded-full bg-amber-500 px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-300">
+                <button type="submit" x-show="step === 1" x-cloak
+                    :class="submitting ? 'cursor-wait bg-slate-300' : 'bg-amber-500'"
+                    class="ml-auto inline-flex min-h-[52px] flex-1 items-center justify-center rounded-full px-5 text-sm font-semibold text-white">
                     <span x-text="submitting ? 'Sending...' : 'Join as a friend'"></span>
                 </button>
             </div>

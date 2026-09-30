@@ -200,10 +200,14 @@ class RegistrationController extends Controller
             : ($request->hasFile('photo_path') ? 'photo_path' : null);
 
         if ($photoField) {
-            $photo = $request->file($photoField);
-            $photoName = $memberId . '_' . time() . '.' . $photo->getClientOriginalExtension();
-            $photo->storeAs('public/member-photos', $photoName);
-            $data['profile_photo'] = $photoName;
+            try {
+                $photo = $request->file($photoField);
+                $photoName = $memberId . '_' . time() . '.' . $photo->getClientOriginalExtension();
+                $photo->storeAs('public/member-photos', $photoName);
+                $data['profile_photo'] = $photoName;
+            } catch (\Throwable $e) {
+                \Log::error('Member photo upload failed: '.$e->getMessage());
+            }
         }
 
         try {
@@ -221,15 +225,6 @@ class RegistrationController extends Controller
                 ->withInput()
                 ->with('error', 'Could not save your application. Please try again.');
         }
-
-        dispatch(function () use ($member) {
-            try {
-                Mail::to($member->email)->send(new MemberRegistrationMail($member));
-                \Log::info('Member registration notification email sent to: ' . $member->email);
-            } catch (\Exception $e) {
-                \Log::error('Failed to send registration notification email: ' . $e->getMessage());
-            }
-        })->afterResponse();
 
         return $this->registrationSuccess($request, $member, 'Thank you for registering! Check your email for next steps.');
     }
@@ -331,15 +326,6 @@ class RegistrationController extends Controller
                 ->withInput()
                 ->with('error', 'Could not save your application. Please try again.');
         }
-
-        dispatch(function () use ($member) {
-            try {
-                Mail::to($member->email)->send(new FriendshipWelcomeEmail($member));
-                \Log::info('Friendship welcome email sent to: ' . $member->email);
-            } catch (\Exception $e) {
-                \Log::error('Failed to send friendship welcome email: ' . $e->getMessage());
-            }
-        })->afterResponse();
 
         return $this->registrationSuccess($request, $member, 'Thank you for joining God\'s Family! Check your email.');
     }
@@ -554,7 +540,8 @@ class RegistrationController extends Controller
     protected function registrationSuccess(Request $request, Member $member, string $message)
     {
         $request->session()->flash('success', $message);
-        $request->session()->flash('member', $member);
+        $request->session()->flash('member_id', $member->member_id);
+        $request->session()->flash('member_type', $member->member_type);
 
         if ($this->wantsJson($request)) {
             return response()->json([
@@ -563,8 +550,6 @@ class RegistrationController extends Controller
             ]);
         }
 
-        return redirect()->route('registration.success')
-            ->with('success', $message)
-            ->with('member', $member);
+        return redirect()->route('registration.success');
     }
 }

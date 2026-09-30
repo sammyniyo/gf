@@ -275,11 +275,14 @@ function memberRegister() {
             Object.entries(this.fields).forEach(([name, value]) => {
                 body.set(name, value == null ? '' : String(value));
             });
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 15000);
             try {
-                const res = await fetch(form.getAttribute('action'), {
+                const res = await fetch(form.getAttribute('action') || '/join/member', {
                     method: 'POST',
                     body,
                     credentials: 'same-origin',
+                    signal: controller.signal,
                     headers: {
                         Accept: 'application/json',
                         'X-Requested-With': 'XMLHttpRequest',
@@ -304,7 +307,11 @@ function memberRegister() {
                 this.setError('form', payload.message || 'Could not send your application. Please try again.');
             } catch (error) {
                 this.submitting = false;
-                this.setError('form', 'Check your connection and try again.');
+                this.setError('form', error && error.name === 'AbortError'
+                    ? 'This is taking too long. Please try again.'
+                    : 'Check your connection and try again.');
+            } finally {
+                clearTimeout(timer);
             }
         },
     };

@@ -76,11 +76,14 @@ function friendRegister() {
             this.submitting = true;
             this.submitError = '';
             const form = this.$el.querySelector('form');
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 15000);
             try {
                 const res = await fetch(form.getAttribute('action'), {
                     method: 'POST',
                     body: new FormData(form),
                     credentials: 'same-origin',
+                    signal: controller.signal,
                     headers: {
                         Accept: 'application/json',
                         'X-Requested-With': 'XMLHttpRequest',
@@ -95,7 +98,11 @@ function friendRegister() {
                 this.submitError = payload.message || 'Could not send your application. Please try again.';
             } catch (error) {
                 this.submitting = false;
-                this.submitError = 'Check your connection and try again.';
+                this.submitError = error && error.name === 'AbortError'
+                    ? 'This is taking too long. Please try again.'
+                    : 'Check your connection and try again.';
+            } finally {
+                clearTimeout(timer);
             }
         },
         init() {

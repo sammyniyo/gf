@@ -5,7 +5,11 @@
 
 @php
     $member = session('member');
-    $isChoirMember = $member && method_exists($member, 'isMember') && $member->isMember();
+    if (! $member && session('member_id')) {
+        $member = \App\Models\Member::query()->where('member_id', session('member_id'))->first();
+    }
+    $isChoirMember = ($member && method_exists($member, 'isMember') && $member->isMember())
+        || session('member_type') === 'member';
     $mainWhatsapp = config('choir.main_whatsapp');
 @endphp
 

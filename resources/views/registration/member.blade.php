@@ -50,8 +50,37 @@ function memberRegister() {
         progress() {
             return ((this.step + 1) / 4) * 100;
         },
-        formEl() {
-            return this.$el.querySelector('form');
+        formEl(event) {
+            const fromEvent = event && (event.currentTarget || event.target);
+            if (fromEvent && fromEvent.tagName === 'FORM') return fromEvent;
+            if (fromEvent && typeof fromEvent.closest === 'function') {
+                const closest = fromEvent.closest('form');
+                if (closest) return closest;
+            }
+            if (this.$refs && this.$refs.registerForm) return this.$refs.registerForm;
+            if (this.$el && this.$el.tagName === 'FORM') return this.$el;
+            if (this.$el && typeof this.$el.querySelector === 'function') {
+                const nested = this.$el.querySelector('form');
+                if (nested) return nested;
+            }
+            return document.querySelector('form[action*="/join/member"]');
+        },
+        buildBody(form) {
+            const body = (form && form.tagName === 'FORM') ? new FormData(form) : new FormData();
+            const token = (form && form.querySelector && form.querySelector('[name="_token"]')?.value)
+                || document.querySelector('meta[name="csrf-token"]')?.content
+                || '';
+            if (token) body.set('_token', token);
+            Object.entries(this.fields).forEach(([name, value]) => {
+                body.set(name, value == null ? '' : String(value));
+            });
+            if (form && form.tagName === 'FORM') {
+                const photo = form.querySelector('input[name="profile_photo"]');
+                if (photo && photo.files && photo.files[0]) {
+                    body.set('profile_photo', photo.files[0]);
+                }
+            }
+            return body;
         },
         fieldValue(name) {
             if (Object.prototype.hasOwnProperty.call(this.fields, name)) {
@@ -270,15 +299,13 @@ function memberRegister() {
                 return;
             }
             this.submitting = true;
-            const form = this.formEl();
-            const body = new FormData(form);
-            Object.entries(this.fields).forEach(([name, value]) => {
-                body.set(name, value == null ? '' : String(value));
-            });
+            const form = this.formEl(event);
+            const body = this.buildBody(form);
             const controller = new AbortController();
             const timer = setTimeout(() => controller.abort(), 15000);
             try {
-                const res = await fetch(form.getAttribute('action') || '/join/member', {
+                const action = (form && form.getAttribute && form.getAttribute('action')) || '/join/member';
+                const res = await fetch(action, {
                     method: 'POST',
                     body,
                     credentials: 'same-origin',
@@ -361,8 +388,8 @@ function memberRegister() {
         <p class="mb-5 rounded-2xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm text-rose-700"
            x-show="errors.form" x-cloak x-text="errors.form"></p>
 
-        <form action="{{ route('registration.member.store') }}" method="POST" enctype="multipart/form-data"
-              class="relative space-y-5" novalidate x-cloak @submit.prevent="submitForm($event)">
+        <form x-ref="registerForm" action="{{ route('registration.member.store') }}" method="POST" enctype="multipart/form-data"
+              class="relative space-y-5" novalidate @submit.prevent="submitForm($event)">
             @csrf
 
             <input type="hidden" name="first_name" x-model="fields.first_name">

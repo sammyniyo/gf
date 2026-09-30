@@ -75,13 +75,17 @@ function friendRegister() {
             if (this.submitting) return;
             this.submitting = true;
             this.submitError = '';
-            const form = this.$el.querySelector('form');
+            const form = (event && event.currentTarget && event.currentTarget.tagName === 'FORM')
+                ? event.currentTarget
+                : (this.$refs.friendForm || document.querySelector('#friendship-form'));
+            const body = (form && form.tagName === 'FORM') ? new FormData(form) : new FormData();
             const controller = new AbortController();
             const timer = setTimeout(() => controller.abort(), 15000);
             try {
-                const res = await fetch(form.getAttribute('action'), {
+                const action = (form && form.getAttribute && form.getAttribute('action')) || '/join/friendship';
+                const res = await fetch(action, {
                     method: 'POST',
-                    body: new FormData(form),
+                    body,
                     credentials: 'same-origin',
                     signal: controller.signal,
                     headers: {
@@ -170,7 +174,7 @@ function friendRegister() {
             </div>
         @endif
 
-        <form action="{{ route('registration.friendship.store') }}" method="POST" enctype="multipart/form-data"
+        <form x-ref="friendForm" action="{{ route('registration.friendship.store') }}" method="POST" enctype="multipart/form-data"
               class="space-y-5" id="friendship-form" @submit.prevent="onSubmit($event)">
             @csrf
 

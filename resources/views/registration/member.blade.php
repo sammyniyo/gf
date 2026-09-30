@@ -222,23 +222,46 @@ function memberRegister() {
                 box.classList.add('hidden');
             }
         },
-        submitForm(event) {
+        stepForField(name) {
+            for (let i = 0; i <= 3; i++) {
+                if ((this.stepFields[i] || []).includes(name)) return i;
+            }
+            return 0;
+        },
+        applyServerErrors(payload) {
+            const errors = payload.errors || {};
+            let jumped = false;
+            Object.keys(errors).forEach((name) => {
+                const messages = errors[name];
+                const message = Array.isArray(messages) ? messages[0] : messages;
+                this.setError(name, message);
+                if (!jumped) {
+                    this.step = this.stepForField(name);
+                    this.attempted[this.step] = true;
+                    jumped = true;
+                }
+            });
+            if (payload.show_reminder) {
+                this.setError('form', 'This email or phone is already registered. Use the code reminder page if you need your code.');
+                this.step = 0;
+            } else if (payload.message) {
+                this.setError('form', payload.message);
+            }
+        },
+        async submitForm(event) {
+            event.preventDefault();
             if (this.step < 3) {
-                event.preventDefault();
                 this.goNext();
                 return;
             }
-            if (this.submitting) {
-                event.preventDefault();
-                return;
-            }
+            if (this.submitting) return;
             this.normalizeBirthdate();
             this.attempted[0] = true;
             this.attempted[2] = true;
             this.attempted[3] = true;
+            this.setError('form', '');
             const invalid = this.firstErrorStep();
             if (invalid !== -1) {
-                event.preventDefault();
                 this.step = invalid;
                 this.$nextTick(() => {
                     const first = this.formEl()?.querySelector('.border-rose-300');
@@ -247,6 +270,42 @@ function memberRegister() {
                 return;
             }
             this.submitting = true;
+            const form = this.formEl();
+            const body = new FormData(form);
+            Object.entries(this.fields).forEach(([name, value]) => {
+                body.set(name, value == null ? '' : String(value));
+            });
+            try {
+                const res = await fetch(form.getAttribute('action'), {
+                    method: 'POST',
+                    body,
+                    credentials: 'same-origin',
+                    headers: {
+                        Accept: 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                });
+                const payload = await res.json().catch(() => ({}));
+                if (res.status === 419) {
+                    this.submitting = false;
+                    this.setError('form', 'Your session expired. Refresh the page and try again.');
+                    return;
+                }
+                if (res.status === 422) {
+                    this.submitting = false;
+                    this.applyServerErrors(payload);
+                    return;
+                }
+                if (payload.redirect) {
+                    window.location.assign(payload.redirect);
+                    return;
+                }
+                this.submitting = false;
+                this.setError('form', payload.message || 'Could not send your application. Please try again.');
+            } catch (error) {
+                this.submitting = false;
+                this.setError('form', 'Check your connection and try again.');
+            }
         },
     };
 }
@@ -292,19 +351,22 @@ function memberRegister() {
             </div>
         @endif
 
+        <p class="mb-5 rounded-2xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+           x-show="errors.form" x-cloak x-text="errors.form"></p>
+
         <form action="{{ route('registration.member.store') }}" method="POST" enctype="multipart/form-data"
-              class="relative space-y-5" novalidate x-cloak @submit="submitForm($event)">
+              class="relative space-y-5" novalidate x-cloak @submit.prevent="submitForm($event)">
             @csrf
 
-            <input type="hidden" name="first_name" :value="fields.first_name">
-            <input type="hidden" name="last_name" :value="fields.last_name">
-            <input type="hidden" name="email" :value="fields.email">
-            <input type="hidden" name="phone" :value="fields.phone">
-            <input type="hidden" name="birthdate" :value="fields.birthdate">
-            <input type="hidden" name="gender" :value="fields.gender">
-            <input type="hidden" name="joining_year" :value="fields.joining_year">
-            <input type="hidden" name="address" :value="fields.address">
-            <input type="hidden" name="voice" :value="fields.voice">
+            <input type="hidden" name="first_name" x-model="fields.first_name">
+            <input type="hidden" name="last_name" x-model="fields.last_name">
+            <input type="hidden" name="email" x-model="fields.email">
+            <input type="hidden" name="phone" x-model="fields.phone">
+            <input type="hidden" name="birthdate" x-model="fields.birthdate">
+            <input type="hidden" name="gender" x-model="fields.gender">
+            <input type="hidden" name="joining_year" x-model="fields.joining_year">
+            <input type="hidden" name="address" x-model="fields.address">
+            <input type="hidden" name="voice" x-model="fields.voice">
 
             <article x-ref="step0"
                      :class="step === 0 ? '' : 'pointer-events-none invisible absolute h-0 overflow-hidden'"
@@ -587,6 +649,7 @@ function memberRegister() {
                     <span x-text="submitting ? 'Sending...' : 'Submit application'"></span>
                 </button>
             </div>
+            <p class="text-sm text-rose-600" x-show="step === 3 && errors.form" x-cloak x-text="errors.form"></p>
         </form>
 
         <div class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-sm text-slate-600">

@@ -69,12 +69,34 @@ function friendRegister() {
             };
             reader.readAsDataURL(file);
         },
-        onSubmit(event) {
-            if (this.submitting) {
-                event.preventDefault();
-                return;
-            }
+        submitError: '',
+        async onSubmit(event) {
+            event.preventDefault();
+            if (this.submitting) return;
             this.submitting = true;
+            this.submitError = '';
+            const form = this.$el.querySelector('form');
+            try {
+                const res = await fetch(form.getAttribute('action'), {
+                    method: 'POST',
+                    body: new FormData(form),
+                    credentials: 'same-origin',
+                    headers: {
+                        Accept: 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                });
+                const payload = await res.json().catch(() => ({}));
+                if (payload.redirect) {
+                    window.location.assign(payload.redirect);
+                    return;
+                }
+                this.submitting = false;
+                this.submitError = payload.message || 'Could not send your application. Please try again.';
+            } catch (error) {
+                this.submitting = false;
+                this.submitError = 'Check your connection and try again.';
+            }
         },
         init() {
             this.$nextTick(() => {
@@ -142,7 +164,7 @@ function friendRegister() {
         @endif
 
         <form action="{{ route('registration.friendship.store') }}" method="POST" enctype="multipart/form-data"
-              class="space-y-5" id="friendship-form" @submit="onSubmit($event)">
+              class="space-y-5" id="friendship-form" @submit.prevent="onSubmit($event)">
             @csrf
 
             <article x-show="step === 0" x-cloak x-ref="step0"
@@ -310,6 +332,7 @@ function friendRegister() {
                     <span x-text="submitting ? 'Sending...' : 'Join as a friend'"></span>
                 </button>
             </div>
+            <p class="text-sm text-rose-600" x-show="submitError" x-cloak x-text="submitError"></p>
         </form>
 
         <div class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-sm text-slate-600">

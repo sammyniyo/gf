@@ -134,6 +134,14 @@ class RegistrationController extends Controller
             $hasDuplicatePhone = $validator->errors()->has('phone') &&
                 str_contains(strtolower($validator->errors()->first('phone')), 'already');
 
+            if ($this->wantsJson($request)) {
+                return response()->json([
+                    'ok' => false,
+                    'errors' => $validator->errors(),
+                    'show_reminder' => $hasDuplicateEmail || $hasDuplicatePhone,
+                ], 422);
+            }
+
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput()
@@ -144,7 +152,13 @@ class RegistrationController extends Controller
         $memberId = MemberIdService::generateUnique();
 
         // Prepare member data
-        $data = $request->except(['profile_photo', 'photo_path']);
+        $data = $request->only([
+            'first_name', 'last_name', 'email', 'phone', 'birthdate', 'gender',
+            'joining_year', 'address', 'occupation', 'workplace', 'church',
+            'education_level', 'voice', 'talent', 'musical_experience', 'instruments',
+            'choir_experience', 'why_join', 'hobbies', 'skills', 'availability',
+            'message', 'newsletter',
+        ]);
 
         if (!empty($data['education_level'])) {
             $educationLevelMap = [
@@ -192,8 +206,21 @@ class RegistrationController extends Controller
             $data['profile_photo'] = $photoName;
         }
 
-        // Create member
-        $member = Member::create($data);
+        try {
+            $member = Member::create($data);
+        } catch (\Throwable $e) {
+            \Log::error('Member registration failed: '.$e->getMessage());
+            if ($this->wantsJson($request)) {
+                return response()->json([
+                    'ok' => false,
+                    'message' => 'Could not save your application. Please try again.',
+                ], 500);
+            }
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Could not save your application. Please try again.');
+        }
 
         dispatch(function () use ($member) {
             try {
@@ -204,9 +231,7 @@ class RegistrationController extends Controller
             }
         })->afterResponse();
 
-        return redirect()->route('registration.success')
-            ->with('success', 'Thank you for registering! Check your email for next steps.')
-            ->with('member', $member);
+        return $this->registrationSuccess($request, $member, 'Thank you for registering! Check your email for next steps.');
     }
 
     /**
@@ -249,11 +274,19 @@ class RegistrationController extends Controller
         ]);
 
         if ($validator->fails()) {
-            // Check if the error is due to duplicate email or phone
             $hasDuplicateEmail = $validator->errors()->has('email') &&
                 str_contains($validator->errors()->first('email'), 'already been taken');
             $hasDuplicatePhone = $validator->errors()->has('phone') &&
                 str_contains($validator->errors()->first('phone'), 'already been taken');
+
+            if ($this->wantsJson($request)) {
+                return response()->json([
+                    'ok' => false,
+                    'errors' => $validator->errors(),
+                    'show_reminder' => $hasDuplicateEmail || $hasDuplicatePhone,
+                    'message' => $validator->errors()->first(),
+                ], 422);
+            }
 
             return redirect()->back()
                 ->withErrors($validator)
@@ -283,8 +316,21 @@ class RegistrationController extends Controller
             $data['photo_path'] = $photoName;
         }
 
-        // Create member
-        $member = Member::create($data);
+        try {
+            $member = Member::create($data);
+        } catch (\Throwable $e) {
+            \Log::error('Friendship registration failed: '.$e->getMessage());
+            if ($this->wantsJson($request)) {
+                return response()->json([
+                    'ok' => false,
+                    'message' => 'Could not save your application. Please try again.',
+                ], 500);
+            }
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Could not save your application. Please try again.');
+        }
 
         dispatch(function () use ($member) {
             try {
@@ -295,9 +341,7 @@ class RegistrationController extends Controller
             }
         })->afterResponse();
 
-        return redirect()->route('registration.success')
-            ->with('success', 'Thank you for joining God\'s Family! Check your email.')
-            ->with('member', $member);
+        return $this->registrationSuccess($request, $member, 'Thank you for joining God\'s Family! Check your email.');
     }
 
     /**
@@ -500,5 +544,27 @@ class RegistrationController extends Controller
 
         return redirect()->route('member.portal.view', $member)
             ->with('success', 'Your profile has been updated successfully!');
+    }
+
+    protected function wantsJson(Request $request): bool
+    {
+        return $request->expectsJson() || $request->ajax();
+    }
+
+    protected function registrationSuccess(Request $request, Member $member, string $message)
+    {
+        $request->session()->flash('success', $message);
+        $request->session()->flash('member', $member);
+
+        if ($this->wantsJson($request)) {
+            return response()->json([
+                'ok' => true,
+                'redirect' => route('registration.success'),
+            ]);
+        }
+
+        return redirect()->route('registration.success')
+            ->with('success', $message)
+            ->with('member', $member);
     }
 }

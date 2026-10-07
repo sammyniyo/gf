@@ -30,8 +30,8 @@ class ActiveChoristerController extends Controller
         }
 
         $commitments = $query->paginate(25)->withQueryString();
-
         $window = PageSettings::activeChoristersWindow();
+        $setting = $window['setting'] ?? PageSettings::forActiveChoristers();
 
         return view('admin.active-choristers.index', [
             'commitments' => $commitments,
@@ -40,7 +40,28 @@ class ActiveChoristerController extends Controller
             'registrationOpen' => $window['open'],
             'timerEndsAt' => $window['ends_at']?->toIso8601String(),
             'timerEndsAtLabel' => $window['ends_at']?->timezone(config('app.timezone'))->format('d M Y H:i'),
+            'joinUrl' => $setting->join_url ?: '',
+            'fallbackJoinUrl' => config('choir.active_choristers_whatsapp'),
         ]);
+    }
+
+    public function updateLink(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'join_url' => ['nullable', 'string', 'max:500', 'url'],
+        ], [
+            'join_url.url' => 'Enter a full link, starting with https://',
+        ]);
+
+        $setting = PageSettings::forActiveChoristers();
+        $setting->join_url = $validated['join_url'] ?: null;
+        $setting->save();
+
+        return redirect()
+            ->route('admin.active-choristers.index')
+            ->with('success', $setting->join_url
+                ? 'The Active Choristers join link is saved. People only reach it after they commit.'
+                : 'The custom join link was cleared. The site will use the default group link.');
     }
 
     public function toggleRegistration(Request $request): RedirectResponse
@@ -48,23 +69,41 @@ class ActiveChoristerController extends Controller
         $setting = PageSettings::forActiveChoristers();
         $action = $request->input('action', 'close');
 
-        if ($action === 'start') {
-            $setting->is_enabled = true;
-            $setting->timer_ends_at = now()->addDays(PageSettings::ACTIVE_CHORISTERS_WINDOW_DAYS);
+        if ($action === 'close') {
+            $setting->is_enabled = false;
+            $setting->timer_ends_at = null;
             $setting->save();
 
             return redirect()
                 ->route('admin.active-choristers.index')
-                ->with('success', 'The 7-day window is open. The public link disappears on '.$setting->timer_ends_at->timezone(config('app.timezone'))->format('d M Y H:i').'.');
+                ->with('success', 'The window is closed. The public Active Choristers link is hidden.');
         }
 
-        $setting->is_enabled = false;
-        $setting->timer_ends_at = null;
+        $minutes = $this->durationMinutes($request);
+
+        if ($minutes < 1) {
+            return redirect()
+                ->route('admin.active-choristers.index')
+                ->withErrors(['days' => 'Set at least 1 minute, or add days or hours.'])
+                ->withInput();
+        }
+
+        if ($action === 'extend' && $setting->is_enabled && $setting->timer_ends_at && $setting->timer_ends_at->isFuture()) {
+            $setting->timer_ends_at = $setting->timer_ends_at->copy()->addMinutes($minutes);
+        } else {
+            $setting->is_enabled = true;
+            $setting->timer_ends_at = now()->addMinutes($minutes);
+        }
+
         $setting->save();
+
+        $ends = $setting->timer_ends_at->timezone(config('app.timezone'))->format('d M Y H:i');
 
         return redirect()
             ->route('admin.active-choristers.index')
-            ->with('success', 'The window is closed. The public Active Choristers link is hidden.');
+            ->with('success', $action === 'extend'
+                ? 'The window now runs until '.$ends.'.'
+                : 'The window is open. The public link disappears on '.$ends.'.');
     }
 
     public function destroy(ActiveChoristerCommitment $commitment): RedirectResponse
@@ -80,5 +119,14 @@ class ActiveChoristerController extends Controller
         return redirect()
             ->route('admin.active-choristers.index')
             ->with('success', 'Commitment deleted.');
+    }
+
+    private function durationMinutes(Request $request): int
+    {
+        $days = max(0, (int) $request->input('days', 0));
+        $hours = max(0, (int) $request->input('hours', 0));
+        $minutes = max(0, (int) $request->input('minutes', 0));
+
+        return ($days * 1440) + ($hours * 60) + $minutes;
     }
 }

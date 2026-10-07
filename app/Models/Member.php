@@ -385,6 +385,11 @@ class Member extends Model
         return $this->hasMany(ActiveChoristerCommitment::class);
     }
 
+    public function rehearsalAttendances()
+    {
+        return $this->hasMany(RehearsalAttendance::class);
+    }
+
     /**
      * Get total contributions amount.
      */

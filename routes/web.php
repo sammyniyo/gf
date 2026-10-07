@@ -355,7 +355,18 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('members', App\Http\Controllers\Admin\MemberController::class);
     Route::get('active-choristers', [App\Http\Controllers\Admin\ActiveChoristerController::class, 'index'])->name('active-choristers.index');
     Route::post('active-choristers/registration', [App\Http\Controllers\Admin\ActiveChoristerController::class, 'toggleRegistration'])->name('active-choristers.registration');
+    Route::post('active-choristers/join-link', [App\Http\Controllers\Admin\ActiveChoristerController::class, 'updateLink'])->name('active-choristers.join-link');
     Route::delete('active-choristers/{commitment}', [App\Http\Controllers\Admin\ActiveChoristerController::class, 'destroy'])->name('active-choristers.destroy');
+
+    Route::get('attendance', [App\Http\Controllers\Admin\RehearsalController::class, 'index'])->name('attendance.index');
+    Route::post('attendance', [App\Http\Controllers\Admin\RehearsalController::class, 'store'])->name('attendance.store');
+    Route::get('attendance/analysis', [App\Http\Controllers\Admin\RehearsalController::class, 'analysis'])->name('attendance.analysis');
+    Route::get('attendance/{rehearsal}', [App\Http\Controllers\Admin\RehearsalController::class, 'show'])->name('attendance.show');
+    Route::post('attendance/{rehearsal}/mark', [App\Http\Controllers\Admin\RehearsalController::class, 'mark'])->name('attendance.mark');
+    Route::post('attendance/{rehearsal}/mark-remaining', [App\Http\Controllers\Admin\RehearsalController::class, 'markRemainingPresent'])->name('attendance.mark-remaining');
+    Route::post('attendance/{rehearsal}/close', [App\Http\Controllers\Admin\RehearsalController::class, 'close'])->name('attendance.close');
+    Route::post('attendance/{rehearsal}/reopen', [App\Http\Controllers\Admin\RehearsalController::class, 'reopen'])->name('attendance.reopen');
+    Route::delete('attendance/{rehearsal}', [App\Http\Controllers\Admin\RehearsalController::class, 'destroy'])->name('attendance.destroy');
 
     // Contacts Management
     Route::get('contacts', [App\Http\Controllers\Admin\ContactController::class, 'index'])->name('contacts.index');

@@ -20,6 +20,7 @@ class PageSettings extends Model
         'icon',
         'is_enabled',
         'timer_ends_at',
+        'join_url',
     ];
 
     protected $casts = [
@@ -104,5 +105,19 @@ class PageSettings extends Model
                 'ends_at' => null,
             ];
         }
+    }
+
+    public static function activeChoristersJoinUrl(): string
+    {
+        try {
+            $url = trim((string) static::forActiveChoristers()->join_url);
+            if ($url !== '') {
+                return $url;
+            }
+        } catch (\Throwable $e) {
+            report($e);
+        }
+
+        return (string) config('choir.active_choristers_whatsapp');
     }
 }

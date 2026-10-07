@@ -5,47 +5,92 @@
 @section('content')
 <div class="space-y-6">
     <section class="glass-card p-5">
+        <div class="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="text-sm font-semibold text-slate-900">Join link</p>
+                <p class="mt-1 text-sm text-slate-600">This is the group people open after they commit. They never see the raw link on the public page.</p>
+            </div>
+            <a href="{{ route('admin.attendance.index') }}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-500">Open attendance</a>
+        </div>
+        <form action="{{ route('admin.active-choristers.join-link') }}" method="POST" class="mt-4 space-y-3">
+            @csrf
+            <label class="block">
+                <span class="mb-1.5 block text-sm font-medium text-slate-700">WhatsApp or group link</span>
+                <input type="url" name="join_url" value="{{ old('join_url', $joinUrl) }}"
+                    placeholder="{{ $fallbackJoinUrl }}"
+                    class="min-h-[48px] w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none ring-emerald-600/20 focus:border-emerald-600 focus:ring-4">
+            </label>
+            @error('join_url')
+                <p class="text-sm text-rose-600">{{ $message }}</p>
+            @enderror
+            <p class="text-xs text-slate-500">Leave blank to keep the default site link.</p>
+            <button type="submit" class="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-slate-900 px-4 text-sm font-semibold text-white hover:bg-slate-800">
+                Save link
+            </button>
+        </form>
+    </section>
+
+    <section class="glass-card p-5">
         <div class="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
             <div class="min-w-0 space-y-1">
                 @if($registrationOpen)
                     <p class="text-sm font-semibold text-emerald-800">Public window is open</p>
-                    <p class="text-sm text-slate-600">The public link is visible until {{ $timerEndsAtLabel }}. Close it now to hide the page immediately.</p>
+                    <p class="text-sm text-slate-600">The public page stays visible until {{ $timerEndsAtLabel }}. Close it now, or add more time.</p>
                 @else
                     <p class="text-sm font-semibold text-slate-900">Public link is hidden</p>
-                    <p class="text-sm text-slate-600">Start a 7-day window to show Active Choristers. When the timer ends, the link disappears again.</p>
+                    <p class="text-sm text-slate-600">Set days, hours, or minutes, then open the window. When the timer ends, the page hides again.</p>
                 @endif
             </div>
-            <div class="flex flex-wrap items-center gap-2">
-                <form action="{{ route('admin.active-choristers.registration') }}" method="POST"
-                      onsubmit="return confirm(@json($registrationOpen ? 'Close now? The public link will disappear immediately.' : 'Start a 7-day window? The public link will appear now and disappear when the timer ends.'));">
-                    @csrf
-                    @if($registrationOpen)
-                        <input type="hidden" name="action" value="close">
-                        <button type="submit" class="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-rose-600 px-4 text-sm font-semibold text-white hover:bg-rose-500">
-                            Close now
-                        </button>
-                    @else
-                        <input type="hidden" name="action" value="start">
-                        <button type="submit" class="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-emerald-600 px-4 text-sm font-semibold text-white hover:bg-emerald-500">
-                            Start 7-day window
-                        </button>
-                    @endif
-                </form>
-                @if($registrationOpen)
-                    <form action="{{ route('admin.active-choristers.registration') }}" method="POST"
-                          onsubmit="return confirm('Start a new 7-day window from now?');">
-                        @csrf
-                        <input type="hidden" name="action" value="start">
-                        <button type="submit" class="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50">
-                            Restart 7 days
-                        </button>
-                    </form>
-                @endif
-                <a href="{{ route('active-choristers') }}" target="_blank" class="inline-flex min-h-[44px] items-center text-sm font-semibold text-indigo-600 hover:text-indigo-500">
-                    Open public page
-                </a>
-            </div>
+            <a href="{{ route('active-choristers') }}" target="_blank" class="inline-flex min-h-[44px] items-center text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+                Open public page
+            </a>
         </div>
+
+        <form action="{{ route('admin.active-choristers.registration') }}" method="POST" class="mt-5 grid gap-3 sm:grid-cols-3">
+            @csrf
+            <label class="block">
+                <span class="mb-1.5 block text-sm font-medium text-slate-700">Days</span>
+                <input type="number" name="days" min="0" max="90" value="{{ old('days', $registrationOpen ? 0 : 7) }}"
+                    class="min-h-[48px] w-full rounded-xl border border-slate-200 bg-white px-4 text-sm">
+            </label>
+            <label class="block">
+                <span class="mb-1.5 block text-sm font-medium text-slate-700">Hours</span>
+                <input type="number" name="hours" min="0" max="23" value="{{ old('hours', 0) }}"
+                    class="min-h-[48px] w-full rounded-xl border border-slate-200 bg-white px-4 text-sm">
+            </label>
+            <label class="block">
+                <span class="mb-1.5 block text-sm font-medium text-slate-700">Minutes</span>
+                <input type="number" name="minutes" min="0" max="59" value="{{ old('minutes', 0) }}"
+                    class="min-h-[48px] w-full rounded-xl border border-slate-200 bg-white px-4 text-sm">
+            </label>
+            @error('days')
+                <p class="sm:col-span-3 text-sm text-rose-600">{{ $message }}</p>
+            @enderror
+            <div class="sm:col-span-3 flex flex-wrap items-center gap-2">
+                @if($registrationOpen)
+                    <button type="submit" name="action" value="extend"
+                        class="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                        Add this time
+                    </button>
+                    <button type="submit" name="action" value="start"
+                        onclick="return confirm('Restart the window from now with this time?')"
+                        class="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-emerald-600 px-4 text-sm font-semibold text-white hover:bg-emerald-500">
+                        Restart from now
+                    </button>
+                    <button type="submit" name="action" value="close"
+                        onclick="return confirm('Close now? The public link will disappear immediately.')"
+                        class="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-rose-600 px-4 text-sm font-semibold text-white hover:bg-rose-500">
+                        Close now
+                    </button>
+                @else
+                    <button type="submit" name="action" value="start"
+                        class="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-emerald-600 px-4 text-sm font-semibold text-white hover:bg-emerald-500">
+                        Open window
+                    </button>
+                @endif
+            </div>
+        </form>
+
         @if($registrationOpen)
             <div class="mt-5">
                 @include('active-choristers.partials.countdown', ['endsAt' => $timerEndsAt])

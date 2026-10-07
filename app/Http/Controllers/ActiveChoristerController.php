@@ -229,7 +229,7 @@ class ActiveChoristerController extends Controller
             abort(403, 'Pick your name again, then open WhatsApp.');
         }
 
-        $url = config('choir.active_choristers_whatsapp');
+        $url = PageSettings::activeChoristersJoinUrl();
 
         if (! is_string($url) || $url === '') {
             abort(404);
